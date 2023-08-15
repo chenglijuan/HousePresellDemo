@@ -1,0 +1,200 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tgpf_RemainRight" table="Tgpf_RemainRight" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_RemainRight</param>
+			</generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<property name="enterTimeStamp">
+			<column name="enterTimeStamp">
+				<comment>入账日期</comment>
+			</column>
+		</property>
+		<property name="buyer">
+			<column name="buyer">
+				<comment>买受人姓名</comment>
+			</column>
+		</property>
+		<property name="theNameOfCreditor">
+			<column name="theNameOfCreditor">
+				<comment>借款人名称</comment>
+			</column>
+		</property>
+		<property name="idNumberOfCreditor">
+			<column name="idNumberOfCreditor">
+				<comment>借款人证件号码</comment>
+			</column>
+		</property>
+		<property name="eCodeOfContractRecord">
+			<column name="eCodeOfContractRecord">
+				<comment>合同备案号</comment>
+			</column>
+		</property>
+		<property name="eCodeOfTripleAgreement">
+			<column name="eCodeOfTripleAgreement">
+				<comment>三方协议号</comment>
+			</column>
+		</property>
+		<property name="srcBusiType">
+			<column name="srcBusiType">
+				<comment>来源业务类型</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_ProjectInfo" name="project" foreign-key="null">
+			<column name="project">
+				<comment>关联项目</comment>
+			</column>
+		</many-to-one>
+		<property name="theNameOfProject">
+			<column name="theNameOfProject">
+				<comment>项目名称-冗余</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_BuildingInfo" name="building" foreign-key="null">
+			<column name="building">
+				<comment>所属楼栋</comment>
+			</column>
+		</many-to-one>
+		<property name="eCodeOfBuilding">
+			<column name="eCodeOfBuilding">
+				<comment>楼幢号</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_UnitInfo" name="buildingUnit" foreign-key="null">
+			<column name="buildingUnit">
+				<comment>所属单元</comment>
+			</column>
+		</many-to-one>
+		<property name="eCodeOfBuildingUnit">
+			<column name="eCodeOfBuildingUnit">
+				<comment>单元号</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_HouseInfo" name="house" foreign-key="null">
+			<column name="house">
+				<comment>户室</comment>
+			</column>
+		</many-to-one>
+		<property name="eCodeFromRoom">
+			<column name="eCodeFromRoom">
+				<comment>房间号</comment>
+			</column>
+		</property>
+		<property name="actualDepositAmount">
+			<column name="actualDepositAmount">
+				<comment>实际入账金额</comment>
+			</column>
+		</property>
+		<property name="depositAmountFromLoan">
+			<column name="depositAmountFromLoan">
+				<comment>按揭贷款入账金额</comment>
+			</column>
+		</property>
+		<property name="theAccountFromLoan">
+			<column name="theAccountFromLoan">
+				<comment>贷款账号</comment>
+			</column>
+		</property>
+		<property name="fundProperty">
+			<column name="fundProperty">
+				<comment>资金性质</comment>
+			</column>
+		</property>
+		<many-to-one class="Emmp_BankInfo" name="bank" foreign-key="null">
+			<column name="bank">
+				<comment>入账银行</comment>
+			</column>
+		</many-to-one>
+		<property name="theNameOfBankPayedIn">
+			<column name="theNameOfBankPayedIn">
+				<comment>入账银行名称</comment>
+			</column>
+		</property>
+		<property name="theRatio">
+			<column name="theRatio">
+				<comment>留存权益系数</comment>
+			</column>
+		</property>
+		<property name="theAmount">
+			<column name="theAmount">
+				<comment>留存权益总金额</comment>
+			</column>
+		</property>
+		<property name="limitedRetainRight">
+			<column name="limitedRetainRight">
+				<comment>受限权益</comment>
+			</column>
+		</property>
+		<property name="withdrawableRetainRight">
+			<column name="withdrawableRetainRight">
+				<comment>可支取权益</comment>
+			</column>
+		</property>
+		<property name="currentDividedAmout">
+			<column name="currentDividedAmout">
+				<comment>本次分摊金额</comment>
+			</column>
+		</property>
+		<property name="remark">
+			<column name="remark" length="4000">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<many-to-one class="Tgpf_BuildingRemainRightLog" name="buildingRemainRightLog" foreign-key="null">
+			<column name="buildingRemainRightLog">
+				<comment>楼幢留存权益</comment>
+			</column>
+		</many-to-one>
+
+	</class>
+</hibernate-mapping>

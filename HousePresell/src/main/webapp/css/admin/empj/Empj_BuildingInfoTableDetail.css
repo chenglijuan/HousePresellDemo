@@ -1,0 +1,192 @@
+.building-active{
+	background: #cf000d;
+	border-color: transparent;
+	color: #fff;
+}
+.btn-default:focus{
+	color: #fff;
+    background-color: #cf000d;
+    border-color: transparent;
+}
+.building-btn .btn{
+	margin-right: 10px;
+}
+.building-tip .inline{
+	margin-right: 20px;
+	font-size: 14px;
+}
+.building-bg{
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+.building-text1{
+	color: #000;
+	margin-bottom: 10px;
+}
+.bg0{
+	/* background: #a6b9c3!important; */
+	/* background: #AFC4DE!important; */
+	background: #b3babc !important;
+	
+}
+.bg1{
+	/* background: #ffcc42!important; 
+	background: #009A37!important;*/
+	background: #31b932!important;
+}
+.bg2{
+	/* background: #86c8fd!important; */
+	/* ackground: #FFD609!important; */
+	background: #F3cc00!important;
+}
+.bg3{
+	/* background: #5addd3!important; */
+	/* background: #FF9A35!important; */
+	background: #FFb956!important;
+}
+.bg4{
+	/* background: #83dd7c!important; */
+	/* background: #5ABFDE!important; */
+	background: #6bdbff!important;
+}
+.unit-color{
+	color:white;
+}
+.unit-select{
+	color:#2548dd;
+}
+.state-text0{
+	color: #a6b9c3;
+}
+.state-text1{
+	color: #ffcc42;
+}
+.state-text2{
+	color: #86c8fd;
+}
+.state-text3{
+	color: #5addd3;
+}
+.state-text4{
+	color: #83dd7c;
+}
+.building-info{
+	width: 190px;
+	padding: 10px;
+	border-radius: 4px;
+}
+.building-text2{
+	width: 50px;
+}
+.building-list{
+	overflow-x: auto;
+	font-size: 15px;
+}
+.building-list .table{
+	display: block;
+	border: none;
+	margin-bottom: 0;
+}
+.building-list .table tbody{
+	border: 2px solid #648cca;
+	width: 1600px;
+}
+.building-list .table-bordered>tbody>tr>td{
+	border: none;
+	box-shadow: 0px 0px 0px 6px #fff inset;
+	vertical-align: middle;
+	height: 110px;
+}
+.building-list .table th,.building-list .table td:first-child{
+	background: #bfdbff;
+	border: 2px solid #648cca;
+	box-shadow: none;
+}
+.building-list .table-bordered>thead>tr>th{
+	border: 2px solid #648cca;
+}
+.building-list .table>thead:first-child>tr:first-child>th{
+	border-top: 2px solid #648cca;
+}
+.building-car{
+	margin-top: -2px;
+}
+@media (min-width: 1500px){
+	.building-dialog{
+		width: 1500px;
+	}
+}
+.building-dialog .csm-body,.business-dialog .csm-body{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 15px;
+    padding-bottom: 35px;
+}
+.info-title{
+	text-align: center;
+	font-weight: 600;
+	font-size: 15px;
+	margin: 10px 0;
+}
+.business-dialog{
+	font-size: 0;
+}
+.business-module{
+	display: inline-block;
+	width: 20%;
+	text-align: center;
+	margin-bottom: 50px;
+	cursor: pointer;
+	vertical-align: top;
+}
+.business-text1{
+	font-size: 16px;
+	color: #666666;
+	margin-top: 15px;
+	margin-bottom: 35px;
+	text-align: center;
+}
+.business-text2{
+	font-size: 15px;
+	color: #000000;
+	margin-top: 25px;
+}
+@media (min-width: 900px){
+	.business-dialog{
+		width: 900px;
+	}
+}
+.house-links{
+	position: absolute;
+	background: #fff;
+	min-width: 200px;
+	line-height: 1.8;
+	display: none;
+}
+.house-links a{
+	display: block;
+	color: #000;
+	padding: 0 15px;
+}
+.house-links a:hover{
+	background: #cfe6ff;
+}
+.house-shadow{
+	padding:10px 0px;
+	box-shadow: 0px 0px 20px 3px rgba(0,0,0,0.35);
+}
+.el-table thead.is-group th{
+	background:#e4f1fe
+}
+.csm-body .el-table thead th{
+	/* font-weight:normal; */
+    padding: 6px 0;
+}
+.csm-body .el-table thead th .cell{
+	font-size:15px
+	
+}

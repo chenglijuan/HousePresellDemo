@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-存单管理编辑</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="Sm_ApprovalProcess_DepositManagementDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button  v-if="isNeedBackup" class="btn btn-warning" data-toggle="modal" data-target="#examine" @click="showModal" data-backdrop="static" data-keyboard=false>
+						<img src="../image/list_btn_ico_examine.png" width="18">
+						<span>审批记录</span>
+					</button>
+					<button  v-if="isNeedBackup && sourcePage == 1" class="btn btn-warning" @click="approvalHandle">
+						<img src="../image/detail_btn_ico_record.png" width="18">
+						<span>备案</span>
+					</button>
+					<button v-if="!isNeedBackup" class="btn btn-warning" data-toggle="modal" data-target="#examine" @click="showModal" data-backdrop="static" data-keyboard=false>
+						<img src="../image/list_btn_ico_examine.png" width="18">
+						<span>审批</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">存单号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_DepositManagementModel.eCode" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">托管账号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_DepositManagementModel.escrowAcountAcount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">存期单位：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_DepositManagementModel.storagePeriodCompany" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">到期日：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_DepositManagementModel.stopDateStr" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">预计利息：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_DepositManagementModel.expectedInterest" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作人：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_DepositManagementModel.userUpdateName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">银行名称：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_DepositManagementModel.bankName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">存款性质：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_DepositManagementModel.depositProperty" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">存期：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_DepositManagementModel.storagePeriod" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">本金金额（元）：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_DepositManagementModel.principalAmount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">浮动年利率（%）：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_DepositManagementModel.floatAnnualRate" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作时间：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_DepositManagementModel.lastUpdateTimeStampStr" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">开户行：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_DepositManagementModel.bankOfDepositName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">开户证实书：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_DepositManagementModel.openAccountCertificate" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">起息日：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_DepositManagementModel.startDateStr" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">年利率（%）：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_DepositManagementModel.annualRate" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group  cs-mb-0">
+							<span class="detail-text1">经办人：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_DepositManagementModel.agent" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group  cs-mb-0">
+							<span class="detail-text1">计算规则：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_DepositManagementModel.calculationRule" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--附件材料开始-->
+			<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+			<!--附件材料结束-->
+		</div>
+		
+		<script src="../components/vue-components.js"></script>
+		
+		<script src="../js/admin/sm/Sm_ApprovalProcess_DepositManagementDetail.js"></script>
+	</body>
+</html>	

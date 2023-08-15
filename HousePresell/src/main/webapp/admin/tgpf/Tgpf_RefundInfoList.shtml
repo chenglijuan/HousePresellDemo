@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-退房退款-贷款已结清</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap"  id="tgpf_RefundInfoListDiv">
+			<div class="cs-content">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input" placeholder="请输入合同备案号、三方协议号、买受人名称、退款申请编号搜索" v-model="keyword" @keyup.enter="search">
+							</div>
+							<div class="inline">
+							    <span>退款日期：</span>
+							    <input type="text" name="" id="refundInfoSearch" class="form-control cs-input" v-model="refundTimeStamp" placeholder="请选择退款日期"/>
+							    <img src="../image/list_search_calendar.png" class="ico-date"/>
+							</div>
+							
+							<div class="inline">
+								<span>项目名称：</span>
+								<vue-listselect defaultname="请选择项目" :thevalue="projectId"
+												:optionlist="projectList"
+												@callbackfun="changeprojectListener"
+												@emptybackfun="changeProjectEmpty"></vue-listselect>
+							</div>
+							
+							<div class="inline">
+							    <span>退款状态：</span>
+							    <vue-listselect defaultname="请选择退款状态" :thevalue="refundStatus"
+												:optionlist="refundStatusList"
+												@callbackfun="changeRefundStatus"
+												@emptybackfun="changeRefundStatusEmpty"></vue-listselect>
+												
+							    <!-- <select  class="form-control cs-select" v-model="refundStatus" >
+							    	<option value= 0 >待提交</option>
+							    	<option value= 1 >申请中</option>
+							    	<option value= 2 >已退款</option>
+							    </select> -->
+							</div>
+							
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="resetSearch">重置</button>
+						</div>
+						<div class="top-btns">
+							<button class="btn btn-success" @click="reFundInfoAddHandle" data-editNum="06120201_ADD_01">
+								<img src="../image/list_btn_ico_add.png"/>
+								<span>新增</span>
+							</button>
+							<button class="btn btn-primary" @click="reFundInfoEditHandle" :disabled="editDisabled" data-editNum="06120201_MOD_01">
+								<img src="../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+							<button class="btn btn-danger"  @click="showDelModal" :disabled="delDisabled" data-editNum="06120201_DEL_01">
+								<img src="../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="tgpf_RefundInfoList" stripe :default-sort = "{prop: 'index'}" @selection-change="checkCheckBox">
+							<el-table-column type="selection"   width="50" fixed align="center"></el-table-column>
+							<el-table-column type="index" :index="indexMethod" label="序号" width="60" fixed align="center"></el-table-column><!-- :index="indexMethod"  -->
+				            <el-table-column prop="eCodeOfContractRecord" label="合同备案号" width="220">
+				            	<template scope="scope">
+							        <el-button type="text" size="small" @click="reFundInfoDetailHandle(scope.row.tableId)">{{scope.row.eCodeOfContractRecord}}</el-button>
+								</template>
+				            </el-table-column>
+				            <el-table-column prop="eCodeOfTripleAgreement" label="三方协议号" width="220">
+				            	<template scope="scope">
+							        <el-button type="text" size="small" @click="reFundInfoDetailHandle(scope.row.tableId)">{{scope.row.eCodeOfTripleAgreement}}</el-button>
+								</template>
+				            </el-table-column>
+							<el-table-column prop="theNameOfProject" label="项目名称" width="360"></el-table-column>
+							<el-table-column prop="theNameOfBuyer" label="买受人名称" width="280"></el-table-column>
+							<el-table-column prop="theNameOfCreditor" label="主借款人" width="280"></el-table-column>
+							<el-table-column prop="eCode" label="退款申请编号" width="220"></el-table-column>	
+							<el-table-column prop="refundAmount" label="本次退款金额（元）" width="190" sortable header-align="center" align="right"></el-table-column>
+							<el-table-column prop="actualRefundAmount" label="实际退款金额（元）" width="190" sortable header-align="center" align="right"></el-table-column>
+							<el-table-column prop="refundTimeStamp" label="退款日期" width="120" align="center"></el-table-column>
+							<el-table-column prop="busiState" label="退款状态" width="100" align="center">
+								<template scope="scope">
+							        <button  v-if="scope.row.busiState == '未备案'" class="btn btn-state-warning">申请中</button>
+							        <button  v-if="scope.row.busiState == '待提交'" class="btn btn-state-warning">待提交</button>
+							    	<button  v-if="scope.row.busiState == '已备案'" class="btn btn-state-success">已退款</button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+				
+				
+			</div>
+			
+			<!-- del modal -->
+			<div class="modal fade" id="deleteRefundInfoList" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_warning.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1">确认要删除这条信息吗？</div>
+								<div class="del-text2">删除后不可恢复</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure"  @click="tgpf_RefundInfoDel">
+								确定
+							</button>
+							<button type="button" class="btn foot-cancel" data-dismiss="modal">
+								取消
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!-- error modal -->
+			<div class="modal fade" id="edModelRefundInfoList" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">{{errMsg}}</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!-- success modal -->
+			<div class="modal fade" id="sdModelRefundInfoList" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+		</div>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tgpf/Tgpf_RefundInfoList.js"></script>
+	</body>
+</html>	

@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Empj_UnitInfo" table="Empj_UnitInfo" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_BuildingInfo" name="building" foreign-key="null">
+			<column name="building">
+				<comment>关联楼幢</comment>
+			</column>
+		</many-to-one>
+		<property name="eCodeOfBuilding">
+			<column name="eCodeOfBuilding">
+				<comment>楼幢编号</comment>
+			</column>
+		</property>
+		<property name="theName">
+			<column name="theName">
+				<comment>名称</comment>
+			</column>
+		</property>
+		<property name="upfloorNumber">
+			<column name="upfloorNumber">
+				<comment>地上楼层数</comment>
+			</column>
+		</property>
+		<property name="upfloorHouseHoldNumber">
+			<column name="upfloorHouseHoldNumber">
+				<comment>地上每层户数</comment>
+			</column>
+		</property>
+		<property name="downfloorNumber">
+			<column name="downfloorNumber">
+				<comment>地下楼层数</comment>
+			</column>
+		</property>
+		<property name="downfloorHouseHoldNumber">
+			<column name="downfloorHouseHoldNumber">
+				<comment>地下每层户数</comment>
+			</column>
+		</property>
+		<property name="elevatorNumber">
+			<column name="elevatorNumber">
+				<comment>电梯数</comment>
+			</column>
+		</property>
+		<property name="hasSecondaryWaterSupply">
+			<column name="hasSecondaryWaterSupply">
+				<comment>有无二次供水</comment>
+			</column>
+		</property>
+		<property name="remark">
+			<column name="remark" length="4000">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<property name="logId">
+			<column name="logId">
+				<comment>关联日志Id</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

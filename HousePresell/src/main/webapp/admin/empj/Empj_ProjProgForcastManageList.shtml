@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="UTF-8">
+    <title>housepresell管理后台-申请表-工程进度巡查管理列表</title>
+    <link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+</head>
+<body>
+<div class="content-wrap">
+    <div class="cs-content" id="Empj_ProjProgForcast_ManageListDiv">
+        <!--顶部搜索开始-->
+        <div class="content-top">
+            <div class="pull-left">
+                <div class="top-input">
+                    <div class="inline">
+                        <span>关键字：</span>
+                        <input type="text" class="form-control cs-input"  v-model="keyword" @keyup.enter="search"
+                               placeholder="">
+                    </div>
+                    <div class="inline">
+                        <span>项目：</span>
+                        <vue-listselect defaultname="请选择项目" :thevalue="projectId"
+                                        :optionlist="projectList"
+                                        @callbackfun="changeprojectListener"
+                                        @emptybackfun="changeProjectEmpty"></vue-listselect>
+                    </div>
+                    <div class="inline">
+                        <span>楼幢：</span>
+                        <vue-listselect defaultname="请选择楼幢" :thevalue="buildId"
+                                        :optionlist="buildList"
+                                        @callbackfun="changebuildListener"
+                                        @emptybackfun="changebuildEmpty"></vue-listselect>
+                    </div>
+                    <div class="inline">
+                        <span>网站推送状态：</span>
+                        <vue-listselect defaultname="请选择推送状态" :thevalue="pushId"
+                                        :optionlist="pushList"
+                                        @callbackfun="changepushListener"
+                                        @emptybackfun="changepushEmpty"></vue-listselect>
+                    </div>
+                    <div class="inline">
+                        <span>网站审核状态：</span>
+                        <vue-listselect defaultname="请选择审核状态" :thevalue="handleId"
+                                        :optionlist="handleList"
+                                        @callbackfun="changehandleListener"
+                                        @emptybackfun="changehandleEmpty"></vue-listselect>
+                    </div>
+                    <button class="btn btn-search" @click="search">搜索</button>
+                    <button class="btn btn-reset" @click="resetSearch">重置</button>
+                </div>
+                <!-- <div class="top-btns">
+                    <button class="btn btn-primary" @click="mainEditHandle" :disabled="upDisabled" data-editNum="03030206_MOD_01">
+                        <img src="../image/list_btn_ico_edit.png"/>
+                        <span>修改</span>
+                    </button>
+                </div> -->
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!--顶部搜索结束-->
+        <!--表格开始-->
+        <div class="cs-table">
+            <div>
+                <el-table :data="empj_ProjProgForcast_ManageList" stripe :default-sort="{prop: 'index'}"
+                          @selection-change="listItemSelectHandle" @sort-change='sortChange'>
+                    <el-table-column type="selection" width="50" fixed></el-table-column>
+                    <el-table-column align="center" type="index" :index="indexMethod" label="序号" width="60" fixed></el-table-column>
+                    <el-table-column prop="afCode" label="巡查单号" min-width="180">
+                        <template scope="scope">
+                            <el-button type="text" size="small" @click="mainDetailHandle(scope.row.tableId)">{{scope.row.afCode}}</el-button>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="areaName" label="区域名称" min-width="100" align="center" ></el-table-column>
+                    <el-table-column prop="projectName" label="项目名称" min-width="140" align="center" ></el-table-column>
+                    <el-table-column prop="buildCode" label="楼幢名称" min-width="100" align="center" ></el-table-column>
+                    <el-table-column label="网站推送状态" min-width="120" align="center" >
+                    	<template scope="scope">
+					        <button  v-if="scope.row.webPushState == '未推送'" class="btn btn-state-danger">未推送</button>
+					    	<button  v-if="scope.row.webPushState == '推送中'" class="btn btn-state-warning">推送中</button>
+					    	<button  v-if="scope.row.webPushState == '已推送'" class="btn btn-state-success">已推送</button>
+						</template>
+                    </el-table-column>
+                    <el-table-column label="网站审核状态" min-width="120" align="center" >
+                    	<template scope="scope">
+					        <button  v-if="scope.row.webHandelState == '不通过'" class="btn btn-state-danger">不通过</button>
+					    	<button  v-if="scope.row.webHandelState == '未审核'" class="btn btn-state-warning">未审核</button>
+					    	<button  v-if="scope.row.webHandelState == '审核通过'" class="btn btn-state-success">审核通过</button>
+						</template>
+                    </el-table-column>
+                    <el-table-column prop="forcastTime" label="巡查时间" min-width="120" align="center" ></el-table-column>
+                    <el-table-column prop="forcastPeople" label="巡查人" min-width="150" align="center" ></el-table-column>
+                    <el-table-column prop="submitDate" label="提交时间" min-width="180" align="center" ></el-table-column>
+                    <el-table-column label="单据状态" min-width="100" align="center" >
+                    	<template scope="scope">
+					        <button  v-if="scope.row.approvalState == '待提交'" class="btn btn-state-danger">待提交</button>
+					    	<button  v-if="scope.row.approvalState == '审核中'" class="btn btn-state-warning">审核中</button>
+					    	<button  v-if="scope.row.approvalState == '已完结'" class="btn btn-state-success">已完结</button>
+						</template>
+                    </el-table-column>
+                </el-table>
+                <vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount"
+                         :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"
+                         v-on:countperpagechange="changeCountPerPage">
+                </vue-nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- error modal -->
+			<div class="modal fade" id="edModelList" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">{{errMsg}}</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		</div>
+		<!-- success modal -->
+			<div class="modal fade" id="sdModelList" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+ <script src="../js/tabCommon.js"></script>
+<!-- Pages JS -->
+<script src="../js/admin/empj/Empj_ProjProgForcast_ManageList.js"></script>
+</body>
+</html>	

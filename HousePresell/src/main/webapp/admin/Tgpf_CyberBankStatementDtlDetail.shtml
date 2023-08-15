@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-网银对账-后台上传的账单原始Excel数据-明细表详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+		<style>
+			.myCell .el-checkbox__input {
+		        display: none
+		    }
+		</style>
+	</head>
+	<body>
+		<div class="content-wrap" id="tgpf_CyberBankStatementDtlDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">银行名称：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="bankName" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">记账日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="billTimeStamp" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">托管账户：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="escrowedAccount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">托管账号名称：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="escrowedAccountTheName" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--数据对账列表开始-->
+			<div class="detail-title">
+				<h1 class="inline">数据对账列表</h1>
+			</div>
+			<div class="cs-content">
+				<div class="content-top">
+					<div class="inline">
+						<button class="btn btn-success" @click="manualReconciliation">
+							<img src="../image/detail_btn_ico_submit.png" width="18">
+							<span>人工对账</span>
+						</button>
+						<!--<button class="btn btn-danger" @click="delAccount">
+							<img src="../image/list_btn_ico_del.png" width="18">
+							<span>删除</span>
+						</button>-->
+						<button class="btn btn-primary" @click="confirmAccount">
+							<img src="../image/detail_btn_ico_submit.png" width="18">
+							<span>对账完成确认</span>
+						</button>
+					</div>
+					<div class="inline pull-right">
+						<el-checkbox-group v-model="checkList" @change="checkAccountHandle"><!--@change="handleCheckedCitiesChange"-->
+						    <el-checkbox label="记账日期" disabled></el-checkbox>
+						    <el-checkbox label="对方账户"></el-checkbox>
+						    <el-checkbox label="对方户名"></el-checkbox>
+						    <el-checkbox label="贷款金额" disabled></el-checkbox>
+						    <el-checkbox label="摘要"></el-checkbox>
+						</el-checkbox-group>
+					</div>
+				</div>
+				<div class="detail-content"><!--//:summary-method="getSummaries" :header-cell-style="tableHeader" -->
+					<el-table 
+						:data="Tgpf_CyberBankStatementDtlDetail" 
+						stripe 
+						border
+						:header-cell-style="tableHeader" 
+						:default-sort = "{prop: 'index'}" 
+						@selection-change="checkCheckBox"
+						:span-method = "arraySpanMethod"
+						:cell-style = "tableCell"
+						:cell-class-name="cellcb"
+						>
+						<el-table-column label="">
+							<el-table-column width="60" fixed type="selection"  align="center"></el-table-column>
+							<!--<div  v-if="item.flag == true">
+								<el-table-column width="60" fixed type="selection"  align="center"></el-table-column>
+							</div>
+							<div v-if="item.flag == false"> 
+								<el-table-column prop="flag" label="" width="60" fixed >
+									<template scope="scope">
+										<el-button type="text" size="small" >合计</el-button>v-if="scope.row.tableId == undefined"
+									</template>
+								</el-table-column>
+							</div>-->
+							<!--<template scope="scope">
+								{{scope.row.flag}}
+						       <div  v-if="scope.row.flag == 1">
+									<el-table-column width="60" fixed type="selection"  align="center"></el-table-column>
+								</div>
+								<div v-if="scope.row.flag != 1"> 
+									<el-table-column width="60" fixed label="合计"></el-table-column>
+								</div>
+								
+						    </template>-->
+						    
+						</el-table-column>	
+						<el-table-column  label="网银上传数据">
+							<el-table-column prop="index" label="序号"  width="90" sortable fixed></el-table-column>
+							<el-table-column prop="tradeTimeStamp" label="记账日期" width="160"></el-table-column>
+							<el-table-column prop="recipientAccount" label="对方账户" width="200"></el-table-column>
+							<el-table-column prop="recipientName" label="对方户名" width="120"></el-table-column>
+							<el-table-column prop="income" label="贷方金额（元）" width="200"></el-table-column>
+							<el-table-column prop="remark" label="摘要" width="200"></el-table-column>
+							<el-table-column prop="cyBankTripleAgreementNum" label="三方协议编号" width="200">
+								<template scope="scope">
+							      <div >
+							       <el-input size="small" placeholder="请输入三方协议编号" v-model="scope.row.cyBankTripleAgreementNum"></el-input>
+							      </div>
+							    </template>
+							</el-table-column>
+							
+						</el-table-column>
+						<el-table-column prop="reconciliationState" width="180" label="对账结果" align="center">
+							<template scope="scope">
+								<span v-if="scope.row.reconciliationState == '1'" style="font-size: 20px;">&radic;</span>
+								<span v-else-if="scope.row.reconciliationState == '0'" style="font-size: 20px;">&times;</span>
+								<span v-else="scope.row.reconciliationState == ''"></span>
+							</template>
+						</el-table-column>	
+						<el-table-column label="托管业务数据">
+							<el-table-column prop="tripleAgreementNum" label="三方协议编号" width="180"></el-table-column>
+							<el-table-column prop="busTradeTimeStamp" label="记账日期" width="120"></el-table-column>
+							<el-table-column prop="busIecipientAccount" label="对方账户" width="120"></el-table-column>
+							<el-table-column prop="busRecipientName" label="对方户名" width="200"></el-table-column>
+							<el-table-column prop="busIncome" label="贷方金额（元）" width="140"></el-table-column>
+							<el-table-column prop="busRemark" label="摘要" width="200"></el-table-column>
+						</el-table-column>
+					</el-table>
+					
+				</div>
+				
+			</div>	
+			<!--数据对账列表结束-->
+		</div>
+		
+		<script src="../components/vue-components.js"></script>
+		
+		<script src="../js/admin/Tgpf_CyberBankStatementDtlDetail.js"></script>
+	</body>
+</html>	

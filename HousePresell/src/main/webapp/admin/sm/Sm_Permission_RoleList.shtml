@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-管理角色</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="sm_Permission_RoleListDiv">
+			<div class="cs-content">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input"   v-model="keyword" placeholder="请输入角色编码、角色名称搜索">
+							</div>
+							<div class="inline">
+							    <span>机构类型：</span>
+							    <vue-listselect defaultname="请选择机构类型" :thevalue="companyType" :optionlist="companyTypeList" @callbackfun="onCompanyTypeChange" @emptybackfun = "emptyCompanyType"></vue-listselect>
+							    <!-- <select name="" class="form-control cs-select" v-model="companyType" @change="onCompanyTypeChange">
+							    	<option value="">请选择所属机构</option>
+							    	<option :value="companyType.theValue" v-for="companyType in companyTypeList">{{companyType.theName}}</option>
+							    </select> -->
+							</div>
+							<div class="inline">
+							    <span>启用状态：</span>
+							     <vue-listselect defaultname="请选择启用状态" :thevalue="busiType" :optionlist="busiTypeList" @callbackfun="isUsingChange" @emptybackfun = "emptyIsUsingChange"></vue-listselect>
+							    <!-- <select name="" class="form-control cs-select" v-model="busiType" @change="isUsingChange">
+							    
+							    	<option value="">全部</option>
+							    	<option value="1">否</option>
+							    	<option value="0">是</option>
+							    </select> -->
+							</div>
+							<div class="inline">
+							    <span>启用时间：</span>
+							    <input type="text" value="" class="form-control cs-input-date" id="date01010201" placeholder="起始时间  ~ 终止时间 "/>
+								<img src="../image/list_search_calendar.png" class="ico-date"/>
+							</div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="reset">重置</button>
+						</div>
+						<div class="top-btns">
+							<button class="btn btn-success" @click="sm_Permission_RoleAdd" data-editNum="010102_ADD_01">
+								<img src="../image/list_btn_ico_add.png"/>
+								<span>新增</span>
+							</button>
+							<button class="btn btn-primary"  @click="sm_Permission_RoleEdit" :disabled="upDisabled" data-editNum="010102_MOD_01">
+								<img src="../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+							<!-- <button class="btn btn-info">
+								<img src="../image/list_btn_ico_see.png"/>
+								<span>日志</span>
+							</button> -->
+							<button class="btn btn-danger" @click="sm_Permission_RoleDel" :disabled="deDisabled" data-editNum="010102_DEL_01">
+								<img src="../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+						</div>
+					</div>
+					<div class="pull-right text-right">
+						<!-- <div class="top-excel">
+							<button class="btn btn-excel" @click="permissionRoleExportExcel">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div> -->
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="sm_Permission_RoleList" stripe :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle"  @sort-change='sortChange'>
+							<el-table-column type="selection" width="50" fixed align="center"></el-table-column>
+							<el-table-column type="index" :index="indexMethod" label="序号" width="60" fixed align="center"></el-table-column>
+							<el-table-column prop="eCode" label="角色编码" min-width="150" sortable='custom'>
+								<template scope="scope">
+									<div class="el-button--text hover" @click="sm_Permission_RoleDetail(scope.row.tableId)">{{scope.row.eCode}}</div>
+								</template>
+							</el-table-column>
+							<el-table-column prop="theName" label="角色名称" min-width="180" sortable='custom'></el-table-column>
+							<el-table-column prop="parameterName" label="机构类型" min-width="180"></el-table-column>
+							<el-table-column prop="enableTimeStamp" label="启用日期" min-width="120" sortable='custom' align="center">
+								<template scope="scope">
+									{{scope.row.enableDate}}
+								</template>
+							</el-table-column>
+							<el-table-column prop="downDate" label="停用日期" min-width="120" align="center"></el-table-column>
+							<el-table-column prop="isEnable" label="状态" min-width="100" align="center">
+								<template scope="scope">
+									<button  v-if="scope.row.busiType == '1'" class="btn btn-state-warning">停用</button>
+									<button  v-if="scope.row.busiType == '0'" class="btn btn-state-success">启用</button>
+								</template>
+							</el-table-column>
+						</el-table>
+					    <vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Pages JS -->
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/sm/Sm_Permission_RoleList.js"></script>
+	</body>
+</html>	

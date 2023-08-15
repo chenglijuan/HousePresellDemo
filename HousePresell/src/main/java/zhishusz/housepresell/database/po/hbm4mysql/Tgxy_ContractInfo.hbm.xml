@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tgxy_ContractInfo" table="Tgxy_ContractInfo"
+		dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate"
+			foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord"
+			foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<property name="eCodeOfContractRecord">
+			<column name="eCodeOfContractRecord">
+				<comment>合同备案号</comment>
+			</column>
+		</property>
+		<many-to-one class="Emmp_CompanyInfo" name="company"
+			foreign-key="null">
+			<column name="company">
+				<comment>关联企业</comment>
+			</column>
+		</many-to-one>
+		<property name="theNameFormCompany">
+			<column name="theNameFormCompany">
+				<comment>企业名称-冗余</comment>
+			</column>
+		</property>
+		<property name="theNameOfProject">
+			<column name="theNameOfProject">
+				<comment>项目名称-冗余</comment>
+			</column>
+		</property>
+		<property name="eCodeFromConstruction">
+			<column name="eCodeFromConstruction">
+				<comment>施工编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_HouseInfo" name="houseInfo"
+			foreign-key="null">
+			<column name="houseInfo">
+				<comment>关联户室</comment>
+			</column>
+		</many-to-one>
+		<property name="eCodeOfHouseInfo">
+			<column name="eCodeOfHouseInfo">
+				<comment>户室编号</comment>
+			</column>
+		</property>
+		<property name="roomIdOfHouseInfo">
+			<column name="roomIdOfHouseInfo">
+				<comment>室号</comment>
+			</column>
+		</property>
+		<property name="contractSumPrice">
+			<column name="contractSumPrice">
+				<comment>合同总价</comment>
+			</column>
+		</property>
+		<property name="buildingArea">
+			<column name="buildingArea">
+				<comment>建筑面积（㎡）</comment>
+			</column>
+		</property>
+		<property name="position">
+			<column name="position">
+				<comment>房屋座落</comment>
+			</column>
+		</property>
+		<property name="contractSignDate">
+			<column name="contractSignDate">
+				<comment>合同签订日期</comment>
+			</column>
+		</property>
+		<property name="paymentMethod">
+			<column name="paymentMethod">
+				<comment>付款方式</comment>
+			</column>
+		</property>
+		<property name="loanBank">
+			<column name="loanBank">
+				<comment>贷款银行</comment>
+			</column>
+		</property>
+		<property name="firstPaymentAmount">
+			<column name="firstPaymentAmount">
+				<comment>首付款金额（元）</comment>
+			</column>
+		</property>
+		<property name="loanAmount">
+			<column name="loanAmount">
+				<comment>贷款金额（元）</comment>
+			</column>
+		</property>
+		<property name="escrowState">
+			<column name="escrowState">
+				<comment>托管状态</comment>
+			</column>
+		</property>
+		<property name="payDate">
+			<column name="payDate">
+				<comment>交付日期</comment>
+			</column>
+		</property>
+		<property name="eCodeOfBuilding">
+			<column name="eCodeOfBuilding">
+				<comment>备案系统楼幢编号</comment>
+			</column>
+		</property>
+		<property name="eCodeFromPublicSecurity">
+			<column name="eCodeFromPublicSecurity">
+				<comment>公安编号</comment>
+			</column>
+		</property>
+		<property name="contractRecordDate">
+			<column name="contractRecordDate">
+				<comment>合同备案日期</comment>
+			</column>
+		</property>
+		<property name="syncPerson">
+			<column name="syncPerson">
+				<comment>同步人</comment>
+			</column>
+		</property>
+		<property name="syncDate">
+			<column name="syncDate">
+				<comment>同步日期</comment>
+			</column>
+		</property>
+		<property name="externalCode">
+			<column name="externalCode">
+				<comment>外来数据关联字段</comment>
+			</column>
+		</property>
+		<property name="externalId">
+			<column name="externalId">
+				<comment>外来数据关联主键</comment>
+			</column>
+		</property>
+		<property name="resourceNote">
+			<column name="resourceNote">
+				<comment>数据来源说明</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_BuildingInfo" name="buildingInfo"
+			foreign-key="null">
+			<column name="buildingInfo">
+				<comment>关联楼幢</comment>
+			</column>
+		</many-to-one>
+
+	</class>
+</hibernate-mapping>

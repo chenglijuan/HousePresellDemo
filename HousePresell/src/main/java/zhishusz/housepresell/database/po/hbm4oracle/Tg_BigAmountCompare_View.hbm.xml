@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tg_BigAmountCompare_View" table="Tg_BigAmountCompare_View" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_BigAmtCompareView</param>
+			</generator>
+		</id>
+		<property name="theNameOfBank">
+			<column name="theNameOfBank">
+				<comment>存款银行</comment>
+			</column>
+		</property>
+		<property name="theNameOfDepositBank">
+			<column name="theNameOfDepositBank">
+				<comment>银行名称（开户行）</comment>
+			</column>
+		</property>
+		<property name="depositNature">
+			<column name="depositNature">
+				<comment>存款性质</comment>
+			</column>
+		</property>
+		<property name="theAccountOfEscrow">
+			<column name="theAccountOfEscrow">
+				<comment>托管账户</comment>
+			</column>
+		</property>
+		<property name="theNameOfEscrow">
+			<column name="theNameOfEscrow">
+				<comment>托管账户名称</comment>
+			</column>
+		</property>
+		<property name="depositDate">
+			<column name="depositDate">
+				<comment>存入时间</comment>
+			</column>
+		</property>
+		<property name="dueDate">
+			<column name="dueDate">
+				<comment>到期时间</comment>
+			</column>
+		</property>
+		<property name="drawDate">
+			<column name="drawDate">
+				<comment>提取时间</comment>
+			</column>
+		</property>
+		<property name="depositAmount">
+			<column name="depositAmount">
+				<comment>存款金额</comment>
+			</column>
+		</property>
+		<property name="depositTimeLimit">
+			<column name="depositTimeLimit">
+				<comment>存款期限</comment>
+			</column>
+		</property>
+		<property name="interestRate">
+			<column name="interestRate">
+				<comment>利率</comment>
+			</column>
+		</property>
+		<property name="expectInterest">
+			<column name="expectInterest">
+				<comment>预计利息</comment>
+			</column>
+		</property>
+		<property name="realInterest">
+			<column name="realInterest">
+				<comment>实际到期利息</comment>
+			</column>
+		</property>
+		<property name="compareDifference">
+			<column name="compareDifference">
+				<comment>差异</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-附件配置添加</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="sm_AttachmentCfgDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="add()">
+						<img src="../image/detail_btn_ico_save.png" width="18">
+						<span>保存</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+				
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">业务类型：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								<span class="required">*</span>
+								<el-select class="block" v-model="busiType" filterable placeholder="请选择"  @change="changeBusiType">
+								    <el-option
+								      v-for="item in busTypeList"
+								      :key="item.theName"
+								      :label="item.theValue+item.theName"
+								      :value="item.theName"
+								      >
+								    </el-option>
+								  </el-select>
+								    <!-- <vue-select defaultname="业务类型" :thevalue="theName" :optionlist="busTypeList" @callbackfun="getDevelopCompanyId"></vue-select>
+									<select class="form-control" v-model="busiType" @change="changeBusiType">
+										<option value="">--请选择--</option>
+										<template v-for="item in busTypeList">
+											<option :value="item.theName">{{item.theValue}}+{{item.theName}} </option>
+										</template>
+									</select> -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">创建人：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="userStart" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">创建时间：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="createTimeStamp" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>-->
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--附件类型信息开始-->
+			<div class="detail-title">
+				<h1 class="inline">附件类型信息</h1>
+			</div>
+			<div class="cs-content">
+				<div class="content-top">
+					<button class="btn btn-success" @click="addFileHadle">
+						<img src="../image/list_btn_ico_add.png"/>
+						<span>新增</span>
+					</button>
+					<button class="btn btn-primary" :disabled="editDisabled" @click="editFileHandle">
+						<img src="../image/list_btn_ico_edit.png"/>
+						<span>修改</span>
+					</button>
+					<button class="btn btn-danger" :disabled="delDisabled"  @click="showDelModel">
+						<img src="../image/list_btn_ico_del.png"/>
+						<span>删除</span>
+					</button>
+				</div>
+				<div class="detail-content">
+					<el-table :data="Sm_AttachmentCfgAddList" border :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle">
+						<el-table-column type="selection"  width="50" fixed align="center"></el-table-column>
+						<el-table-column type="index" :index="indexMethod" label="序号" width="60" fixed align="center"></el-table-column><!-- :index="indexMethod"  -->
+						<el-table-column prop="theName" label="附件类型名称" min-width="200"></el-table-column>
+						<el-table-column prop="acceptFileType" label="可接受文件类型" width="260"></el-table-column>
+						<el-table-column prop="acceptFileCount" label="可接受文件数量" width="140"></el-table-column>
+						<el-table-column prop="minFileSize" label="单个文件大小限制（kb）" width="220"></el-table-column>
+						<el-table-column prop="isCfgSignature" label="是否签章" width="120">
+							<template scope="scope">
+								<span v-if="scope.row.isCfgSignature == 1">是</span>
+								<span v-if="scope.row.isCfgSignature == 0">否</span>
+							</template>
+						</el-table-column>
+						<el-table-column prop="isImage" label="是否是图片" width="120">
+							<template scope="scope">
+								<span v-if="scope.row.isImage == true">是</span>
+								<span v-if="scope.row.isImage == false">否</span>
+							</template>
+						</el-table-column>
+						<el-table-column prop="isNeeded" label="是否必须上传" width="120">
+							<template scope="scope">
+								<span v-if="scope.row.isNeeded == true">是</span>
+								<span v-if="scope.row.isNeeded == false">否</span>
+							</template>
+						</el-table-column>
+						<el-table-column prop="listType" label="附件列表类型" width="120"></el-table-column>
+						<el-table-column prop="remark" label="备注" width="300"></el-table-column>
+					</el-table>
+					 <vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav> 
+				</div>
+				
+			</div>	
+			<!--附件类型信息结束-->
+			<!-- add modal -->
+			<div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="col-md-6 col-md-offset-3"><!--modal-dialog-->
+					<div class="modal-content">
+						<div class="modal-header" style="height: 40px;line-height: 40px;">
+			                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			                <h4 class="modal-title" style="line-height: 40px;">新增附件类型</h4>
+			            </div>
+			            <div class="clearfix"></div>
+						<div class="modal-body">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<span class="detail-text1">附件类型名称：</span>
+										<div class="detail-info2">
+											<div class="detail-edit">
+											    <span class="required">*</span>
+												<input type="text" class="form-control" v-model="theName" placeholder="请输入附件类型名称"/>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<span class="detail-text1">可接受文件类型：</span>
+										<div class="detail-info2">
+											<div class="detail-edit" style="padding: 6px 0px;">
+											    <span class="required">*</span>
+												<el-checkbox-group v-model="checkList">
+												    <el-checkbox label="图片"></el-checkbox>
+												    <el-checkbox label="压缩文件"></el-checkbox>
+												    <el-checkbox label="Word"></el-checkbox>
+												    <el-checkbox label="Excel"></el-checkbox>
+												    <el-checkbox label="PDF"></el-checkbox>
+												    <el-checkbox label="其他"></el-checkbox>
+												</el-checkbox-group>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<span class="detail-text1">可接收文件数量：</span>
+										<div class="detail-info2">
+											<div class="detail-edit">
+											    <span class="required">*</span>
+												<input type="text" class="form-control" v-model="acceptFileCount" placeholder="请输入可接收文件数量"/>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<span class="detail-text1">单个文件大小显示：</span>
+										<div class="detail-info2">
+											<div class="detail-edit">
+											    <span class="required">*</span>
+												<input type="text" class="form-control" style="width: 40%;display: inline-block;" v-model="minFileSize" placeholder="请输入最小值"/> 
+												<span>~</span>
+												<input type="text" class="form-control" style="width: 40%;display: inline-block;" v-model="maxFileSize" placeholder="请输入最大值"/>
+												<span>KB</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<span class="detail-text1">是否是图片：</span>
+										<div class="detail-info2">
+											<div class="detail-edit">
+											    <span class="required">*</span>
+											    <vue-select defaultname="请选择是否是图片" :thevalue="isImage" :optionlist="isImageList" @callbackfun="isImageChange" @emptybackfun = "emptyIsImage"></vue-select>
+												<!-- <select class="form-control" v-model="isImage">
+													<option value="1">是</option>
+													<option value="0">否</option>
+												</select> -->
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<span class="detail-text1">是否必须上传：</span>
+										<div class="detail-info2">
+											<div class="detail-edit">
+											    <span class="required">*</span>
+											    <vue-select defaultname="请选择是否必须上传" :thevalue="isNeeded" :optionlist="isNeededList" @callbackfun="isNeededChange" @emptybackfun = "emptyIsNeeded"></vue-select>
+												<!-- <select class="form-control" v-model="isNeeded">
+													<option value="1">是</option>
+													<option value="0">否</option>
+												</select> -->
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<span class="detail-text1">附件列表类型：</span>
+										<div class="detail-info2">
+											<div class="detail-edit">
+											    <span class="required">*</span>
+											    <vue-select defaultname="请选择是否必须上传" :thevalue="listType" :optionlist="listTypeList" @callbackfun="listTypeChange" @emptybackfun = "emptyListType"></vue-select>
+												<!-- <select class="form-control" v-model="listType">
+													<option value="text">文本</option>
+													<option value="picture-card">图片</option>
+												</select> -->
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<span class="detail-text1">是否需要签章：</span>
+										<div class="detail-info2">
+											<div class="detail-edit">
+											    <span class="required">*</span>
+											    <vue-select defaultname="请选择是否需要签章" :thevalue="isCfgSignature" :optionlist="isCfgSignatureList" @callbackfun="isCfgSignatureChange" @emptybackfun = "emptyIsCfgSignature"></vue-select>
+												<!-- <select class="form-control" v-model="isNeeded">
+													<option value="1">是</option>
+													<option value="0">否</option>
+												</select> -->
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<span class="detail-text1">备注：</span>
+										<div class="detail-info2">
+											<div class="detail-edit">
+											    <span class="required">*</span>
+												<textarea class="form-control" v-model="remark" placeholder="请输入备注"></textarea>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" @click="saveFileType"><!--data-dismiss="modal"-->
+								确定
+							</button>
+							<button type="button" class="btn foot-cancel" data-dismiss="modal">
+								取消
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!-- del modal -->
+			<div class="modal fade" id="deleteAttachmentCfgAddList" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_warning.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1">确认要删除这条信息吗？</div>
+								<div class="del-text2">删除后不可恢复</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure"   @click="delFileHandle">
+								确定
+							</button>
+							<button type="button" class="btn foot-cancel" data-dismiss="modal">
+								取消
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!-- error modal -->
+			<div class="modal fade" id="edModelAttachmentCfgAdd" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">{{errMsg}}</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!-- success modal -->
+			<div class="modal fade" id="sdModelAttachmentCfgAdd" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			
+		</div>
+		<script src="../components/vue-components.js"></script>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/sm/Sm_AttachmentCfgAdd.js"></script>
+	</body>
+</html>	

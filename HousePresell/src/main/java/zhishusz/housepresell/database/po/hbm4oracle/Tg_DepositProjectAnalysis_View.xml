@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tg_DepositProjectAnalysis_View" table="Tg_DepositProjectAnalysis_View" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_DepositProjectAnalysis_View</param>
+			</generator>
+		</id>
+
+		<property name="cityRegion">
+			<column name="cityRegion">
+				<comment>区域</comment>
+			</column>
+		</property>
+		<property name="busiKind">
+			<column name="busiKind">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="escrowArea">
+			<column name="escrowArea">
+				<comment>已签约托管面积（㎡）</comment>
+			</column>
+		</property>
+		<property name="escrowAreaRatio">
+			<column name="escrowAreaRatio">
+				<comment>已签约托管面积区域占比（%）</comment>
+			</column>
+		</property>
+		<property name="preEscrowArea">
+			<column name="preEscrowArea">
+				<comment>已预售托管面积（㎡）</comment>
+			</column>
+		</property>
+		<property name="preEscrowAreaRatio">
+			<column name="preEscrowAreaRatio">
+				<comment>已预售托管面积区域占比（%）</comment>
+			</column>
+		</property>
+		<property name="depositTime">
+			<column name="depositTime">
+				<comment>托管时间</comment>
+			</column>
+		</property>
+		<property name="queryYear">
+			<column name="queryYear">
+				<comment>查询年份</comment>
+			</column>
+		</property>
+		<property name="queryQuarter">
+			<column name="queryQuarter">
+				<comment>查询季度</comment>
+			</column>
+		</property>
+		<property name="queryMonth">
+			<column name="queryMonth">
+				<comment>查询月份</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_CityRegionInfo" name="cityRegionInfo" foreign-key="null">
+			<column name="cityRegionInfo">
+				<comment>所属区域</comment>
+			</column>
+		</many-to-one>
+		
+	</class>
+</hibernate-mapping>

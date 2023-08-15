@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>机构管理-开发企业</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input" style="width:200px"  placeholder="请输入开发企业关键字搜索">
+							</div>
+							<div class="inline">
+							    <span>审批状态：</span>
+							    <select  class="form-control cs-select">
+							    	<option value="">申请中</option>
+							    	<option value="">已备案</option>
+							    </select>
+							</div>
+							<button class="btn btn-search">搜索</button>
+							<button class="btn btn-reset">重置</button>
+						</div>
+						<div class="top-btns">
+							<button class="btn btn-success">
+								<img src="../image/list_btn_ico_add.png"/>
+								<span>新增</span>
+							</button>
+							<button class="btn btn-success">
+								<img src="../image/list_btn_ico_import.png"/>
+								<span>导入</span>
+							</button>
+							<button class="btn btn-primary">
+								<img src="../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+							<button class="btn btn-info">
+								<img src="../image/list_btn_ico_see.png"/>
+								<span>日志</span>
+							</button>
+							<button class="btn btn-danger">
+								<img src="../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+						</div>
+					</div>
+					<div class="pull-right text-right">
+						<div class="top-excel">
+							<button class="btn btn-excel">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+						<div class="top-batch">
+							<button class="btn btn-pass">
+								<img src="../image/list_check_yes.png"/>
+								<span>审批通过</span>
+							</button>
+							<button class="btn btn-fail">
+								<img src="../image/list_check_no.png"/>
+								<span>审批退回</span>
+							</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div id="table">
+						<el-table :data="tableData3" stripe :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle">
+							<el-table-column type="selection"  width="55" fixed></el-table-column>
+							<el-table-column prop="index" label="序号"  width="90" sortable fixed></el-table-column>
+							<el-table-column prop="number" label="机构编号" width="180" fixed></el-table-column>
+							<el-table-column prop="JGname" label="机构名称" width="315"></el-table-column>
+							<el-table-column prop="address" label="地址" width="315"></el-table-column>
+							<el-table-column prop="creditCode" label="统一社会信用代码" width="210"></el-table-column>
+							<el-table-column prop="date" label="成立日期" width="110"></el-table-column>
+							<el-table-column prop="perName" label="法定代表人" width="120"></el-table-column>
+							<el-table-column prop="proName" label="项目联系人" width="120"></el-table-column>
+							<el-table-column prop="applyState" label="状态" width="120">
+								<template scope="scope">
+							        <button v-if="scope.row.applyState == 1" class="btn btn-state-warning">申请中</button>
+							    	<button v-if="scope.row.applyState == 2" class="btn btn-state-success">已备案</button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :sidepagecount="4"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script src="../components/vue-components.js"></script>
+		<script>
+			new Vue({
+				el: '#table',
+				data: {
+					tableData3: [{
+						index:1,
+						number: 'JG8012345698',
+						JGname: '常州市正昌房地产开发有限公司',
+						address: '上海市普陀区金沙江路 1518 弄',
+						creditCode:'9132059407639910XG',
+						date:'2018-05-12',
+						perName:"王晓晓",
+						proName:"王小明",
+						applyState:"1"
+					}, {
+						index:2,
+						number: 'JG8012345698',
+						JGname: '常州市正昌房地产开发有限公司',
+						address: '上海市普陀区金沙江路 1518 弄',
+						creditCode:'9132059407639910XG',
+						date:'2018-05-12',
+						perName:"王晓晓",
+						proName:"王小明",
+						applyState:"2"
+					}, {
+						index:3,
+						number: 'JG8012345698',
+						JGname: '常州市正昌房地产开发有限公司',
+						address: '上海市普陀区金沙江路 1518 弄',
+						creditCode:'9132059407639910XG',
+						date:'2018-05-12',
+						perName:"王晓晓",
+						proName:"王小明",
+						applyState:"2"
+					}, {
+						index:4,
+						number: 'JG8012345698',
+						JGname: '常州市正昌房地产开发有限公司',
+						address: '上海市普陀区金沙江路 1518 弄',
+						creditCode:'9132059407639910XG',
+						date:'2018-05-12',
+						perName:"王晓晓",
+						proName:"王小明",
+						applyState:"2"
+					}, {
+						index:5,
+						number: 'JG8012345698',
+						JGname: '常州市正昌房地产开发有限公司',
+						address: '上海市普陀区金沙江路 1518 弄',
+						creditCode:'9132059407639910XG',
+						date:'2018-05-12',
+						perName:"王晓晓",
+						proName:"王小明",
+						applyState:"1"
+					}, {
+						index:6,
+						number: 'JG8012345698',
+						JGname: '常州市正昌房地产开发有限公司',
+						address: '上海市普陀区金沙江路 1518 弄',
+						creditCode:'9132059407639910XG',
+						date:'2018-05-12',
+						perName:"王晓晓",
+						proName:"王小明",
+						applyState:"1"
+					}, {
+						index:7,
+						number: 'JG8012345698',
+						JGname: '常州市正昌房地产开发有限公司',
+						address: '上海市普陀区金沙江路 1518 弄',
+						creditCode:'9132059407639910XG',
+						date:'2018-05-12',
+						perName:"王晓晓",
+						proName:"王小明",
+						applyState:"1"
+					}],
+					pageNumber : 1,
+					countPerPage : 1,
+					totalPage : 10,
+					totalCount : 1,
+				},
+				components : {
+					'vue-nav' : PageNavigationVue
+				},
+				methods: {}
+			})
+		</script>
+	</body>
+</html>	

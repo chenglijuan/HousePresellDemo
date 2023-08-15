@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Sm_Permission_Role" table="Sm_Permission_Role" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编码</comment>
+			</column>
+		</property>
+		<property name="theName">
+			<column name="theName">
+				<comment>角色名称</comment>
+			</column>
+		</property>
+		<property name="remark">
+			<column name="remark" length="4000">
+				<comment>备注说明</comment>
+			</column>
+		</property>
+		<property name="theState">
+			<column name="theState">
+				<comment>状态：0正常、1删除</comment>
+			</column>
+		</property>
+		<property name="uiPermissionJson">
+			<column name="uiPermissionJson">
+				<comment>UI权限JSON数据-冗余</comment>
+			</column>
+		</property>
+		<property name="busiType">
+			<column name="busiType">
+				<comment>是否启用</comment>
+			</column>
+		</property>
+		<property name="enableTimeStamp">
+			<column name="enableTimeStamp">
+				<comment>启用时间</comment>
+			</column>
+		</property>
+		<property name="downTimeStamp">
+			<column name="downTimeStamp">
+				<comment>停用时间</comment>
+			</column>
+		</property>
+		<property name="companyType">
+			<column name="companyType">
+				<comment>机构类型</comment>
+			</column>
+		</property>
+		<list name="uiResourceList" cascade="all" table="Rel_Role_UIResource">
+			<key column="role"/>
+			<list-index column="theIndex"/>
+			<many-to-many class="Sm_Permission_UIResource" column="uiResource"/>
+		</list>
+	</class>
+</hibernate-mapping>

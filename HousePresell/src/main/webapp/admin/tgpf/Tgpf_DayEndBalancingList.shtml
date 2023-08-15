@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-业务对账-日终结算</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+		
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="tgpf_DayEndBalancingListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input"  placeholder="请输入关键字搜索" v-model="keyword">
+							</div>
+							<div class="inline">
+							    <span>记账日期：</span>
+							    <input type="text" name="" id="dayEndBalanceingResearch" class="form-control cs-input" v-model="billTimeStamp"/>
+							    <img src="../image/list_search_calendar.png" class="ico-date"/>
+							</div>
+							<div class="inline">
+							    <span>对账状态：</span>
+							    <vue-listselect defaultname="请选择对账状态" :thevalue="reconciliationState"
+												:optionlist="reconciliationStateList"
+												@callbackfun="changeReconciliationState"
+												@emptybackfun="changeReconciliationStateEmpty"></vue-listselect>
+												
+							   <!--  <select  class="form-control cs-select" v-model="reconciliationState">
+							    	<option value="">全部</option>
+							    	<option value="0">未对账</option>
+							    	<option value="1">已对账</option>
+							    </select> -->
+							</div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="resetSearch">重置</button>
+						</div>
+						<div class="top-btns">
+							<button class="btn btn-success" @click="balanceAccount" data-editNum="200202_OST_01">
+								<img src="../image/list_btn_ico_add.png" />
+								<span>对账</span>
+							</button>
+							<button class="btn btn-danger" @click="cancelBalanceAccount" :disabled="accDisabled" data-editNum="200202_RBC_01">
+								<img src="../image/list_btn_ico_del.png"/>
+								<span>撤销</span>
+							</button>
+						</div>
+					</div>
+					<!--<div class="pull-right text-right">
+						<div class="top-excel">
+							<button class="btn btn-excel" @click="exportForm">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+					</div>-->
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="tgpf_DayEndBalancingList" stripe :default-sort = "{prop: 'index'}" @selection-change="checkCheckBox">
+							<el-table-column type="selection"    fixed align="center"></el-table-column>
+							<el-table-column type="index" :index="indexMethod" label="序号" width="60" fixed align="center"></el-table-column>
+							<el-table-column prop="billTimeStamp" label="记账日期" width="120">
+								<template scope="scope">
+									<el-button type="text" size="small" @click="dayEndBalancingHandle(scope.row.tableId)">{{scope.row.billTimeStamp}}</el-button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="bankName" label="银行名称" width="160">
+								<template scope="scope">
+									<el-button type="text" size="small" @click="dayEndBalancingHandle(scope.row.tableId)">{{scope.row.bankName}}</el-button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="escrowedAccount" label="托管账号" width="280">
+								<template scope="scope">
+									<el-button type="text" size="small" @click="dayEndBalancingHandle(scope.row.tableId)">{{scope.row.escrowedAccount}}</el-button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="escrowedAccountTheName" label="开户行名称" width="360">
+								<template scope="scope">
+									<el-button type="text" size="small" @click="dayEndBalancingHandle(scope.row.tableId)">{{scope.row.escrowedAccountTheName}}</el-button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="centerTotalCount" label="业务总笔数" width="120" header-align="center" align="right"></el-table-column>
+							<el-table-column prop="centerTotalAmount" label="业务总金额（元）" width="180" header-align="center" align="right" sortable></el-table-column>
+							<el-table-column prop="bankTotalCount" label="银行总笔数" width="120" header-align="center" align="right"></el-table-column>
+							<el-table-column prop="bankTotalAmount" label="银行总金额（元）" width="180" header-align="center" align="right" sortable></el-table-column>
+							
+							<el-table-column prop="reconciliationState" label="对账状态" width="100" align="center">
+								<template scope="scope">
+							        <button  v-if="scope.row.reconciliationState == 0" class="btn btn-state-warning">未对账</button>
+							    	<button  v-if="scope.row.reconciliationState == 1" class="btn btn-state-success">已对账</button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			
+			<!-- del modal -->
+			<div class="modal fade" id="deleteBalanceAccount" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_warning.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1">确认要撤销这条信息吗？</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure"  @click="tgpf_DayEndBalancingDel"><!-- tgpf_CyberBankStatementDtlDel -->
+								确定
+							</button>
+							<button type="button" class="btn foot-cancel" data-dismiss="modal">
+								取消
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!-- del modal -->
+			<div class="modal fade" id="balanceAccountModal" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_warning.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1">是否全部对账？</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure"  @click="balanceAccountAll"><!-- tgpf_CyberBankStatementDtlDel -->
+								确定
+							</button>
+							<button type="button" class="btn foot-cancel" data-dismiss="modal">
+								取消
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!-- waiting modal -->
+			<div class="modal fade" id="waitingModalDayEndBalancingList" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<div class="loading">
+							    <span></span>
+							</div>
+							<div style="text-align: center;color: #B6232A;font-weight: bold;font-size: 18px;margin-top: 30px;">
+								自动对账中，请稍等...
+							</div>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		</div>	
+		</div>
+		
+		
+		
+		
+		
+		<script src="../components/vue-components.js"></script>
+	
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/tgpf/Tgpf_DayEndBalancingList.js"></script>
+	</body>
+</html>	

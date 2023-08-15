@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-预售系统买卖合同编辑</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tgxy_ContractInfoDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="update()">
+						<img src="../image/detail_btn_ico_save.png" width="18">
+						<span>保存</span>
+					</button>
+					<!-- <button class="btn btn-primary">
+						<img src="../image/detail_btn_ico_submit.png" width="18">
+						<span>提交</span>
+					</button> -->
+					<button class="btn btn-warning">
+						<img src="../image/detail_btn_ico_record.png" width="18">
+						<span>备案</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+				
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">状态 S_TheState 初始为Normal：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.theState" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">业务状态：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.busiState" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">编号：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.eCode" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">创建时间：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.createTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">最后修改日期：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.lastUpdateTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">备案日期：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.recordTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">合同备案号：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.eCodeOfContractRecord" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">企业名称-冗余：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.theNameFormCompany" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">项目名称-冗余：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.theNameOfProject" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">施工编号：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.eCodeFromConstruction" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">户室编号：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.eCodeOfHouseInfo" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">室号：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.roomIdOfHouseInfo" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">合同总价：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.contractSumPrice" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">建筑面积（㎡）：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.buildingArea" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">房屋座落：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.position" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">合同签订日期：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.contractSignDate" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">付款方式：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.paymentMethod" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">贷款银行：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.loanBank" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">首付款金额（元）：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.firstPaymentAmount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">贷款金额（元）：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.loanAmount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">托管状态：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.escrowState" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">交付日期：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.payDate" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">备案系统楼幢编号：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.eCodeOfBuilding" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">公安编号：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.eCodeFromPublicSecurity" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">合同备案日期：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.contractRecordDate" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">同步人：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.syncPerson" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">同步日期：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="tgxy_ContractInfoModel.syncDate" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--附件材料开始-->
+			<div class="detail-title">
+				<h1 class="inline">附件材料</h1>
+			</div>
+			<div class="cs-content detail-content">
+				<div class="form-group">
+					<div class="detail-text2">
+						<span class="text-danger">*</span>
+						<span>营业执照：</span>
+					</div>
+					<div class="row attachments-wrap">
+						<div class="col-md-2">
+							<div class="attachments1">
+								<img src="../image/test.jpg" width="100%"/>
+								<img src="../image/detail_pic_del.png" class="ico-close"/>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="attachments1">
+								<img src="../image/test2.jpg" width="100%"/>
+								<img src="../image/detail_pic_del.png" class="ico-close"/>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="attachments1">
+								<img src="../image/detail_pic_add.png" class="ico-up"/>
+								<input type="file" value="" class="ico-input" />
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="detail-explain">jpg、png格式的图片，单张不超过2M</div>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="form-group">
+					<div class="detail-text2">
+						<span class="text-danger" style="opacity: 0;">*</span>
+						<span>其他附件：</span>
+					</div>
+					<div class="attachments-wrap">
+						<div class="attachments2">
+							<button class="btn btn-selFile">选取文件</button>
+							<input type="file" value="" />
+						</div>
+						<div class="hover file-item">
+							<img src="../image/detail_file_doc.png"/>
+							<span>资质证明.doc</span>
+							<img src="../image/detail_file_del.png" class="file-del"/>
+						</div>
+						<div class="hover file-item">
+							<img src="../image/detail_file_excel.png"/>
+							<span>资质证明.xlsx</span>
+							<img src="../image/detail_file_del.png" class="file-del"/>
+						</div>
+						<div class="hover file-item">
+							<img src="../image/detail_file_jpg.png"/>
+							<span>资质证明.jpg</span>
+							<img src="../image/detail_file_del.png" class="file-del"/>
+						</div>
+						<div class="hover file-item">
+							<img src="../image/detail_file_pdf.png"/>
+							<span>资质证明.pdf</span>
+							<img src="../image/detail_file_del.png" class="file-del"/>
+						</div>
+						<div class="hover file-item">
+							<img src="../image/detail_file_png.png"/>
+							<span>资质证明.png</span>
+							<img src="../image/detail_file_del.png" class="file-del"/>
+						</div>
+						<div class="hover file-item">
+							<img src="../image/detail_file_rar.png"/>
+							<span>资质证明.rar</span>
+							<img src="../image/detail_file_del.png" class="file-del"/>
+						</div>
+						<div class="hover file-item">
+							<img src="../image/detail_file_zip.png"/>
+							<span>资质证明.zip</span>
+							<img src="../image/detail_file_del.png" class="file-del"/>
+						</div>
+						<div class="hover file-item">
+							<img src="../image/detail_file_other.png"/>
+							<span>其他类型文件</span>
+							<img src="../image/detail_file_del.png" class="file-del"/>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			<!--附件材料结束-->
+		</div>
+		
+		<script src="../components/vue-components.js"></script>
+		
+		<script src="../js/admin/Tgxy_ContractInfoEdit.js"></script>
+	</body>
+</html>	

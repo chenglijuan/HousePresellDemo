@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-日志-业务状态</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/admin/sm/Sm_View_LogList.css"/>
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="sm_BusiState_LogListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input"  v-model="keyword" @keyup.enter="search" placeholder="请输入操作人搜索">
+							</div>
+							<!--<div class="inline">-->
+							    <!--<span>审批状态：</span>-->
+							    <!--<select  class="form-control cs-select">-->
+							    	<!--<option value="">申请中</option>-->
+							    	<!--<option value="">已备案</option>-->
+							    <!--</select>-->
+							<!--</div>-->
+							<button class="btn btn-search"  @click="search">搜索</button>
+							<button class="btn btn-reset" @click="resetSearch">重置</button>
+						</div>
+						<!--<div class="top-btns">-->
+							<!--<button class="btn btn-success">-->
+								<!--<img src="../image/list_btn_ico_add.png"/>-->
+								<!--<span>新增</span>-->
+							<!--</button>-->
+							<!--<button class="btn btn-success">-->
+								<!--<img src="../image/list_btn_ico_import.png"/>-->
+								<!--<span>导入</span>-->
+							<!--</button>-->
+							<!--<button class="btn btn-primary">-->
+								<!--<img src="../image/list_btn_ico_edit.png"/>-->
+								<!--<span>修改</span>-->
+							<!--</button>-->
+							<!--<button class="btn btn-info">-->
+								<!--<img src="../image/list_btn_ico_see.png"/>-->
+								<!--<span>日志</span>-->
+							<!--</button>-->
+							<!--<button class="btn btn-danger">-->
+								<!--<img src="../image/list_btn_ico_del.png"/>-->
+								<!--<span>删除</span>-->
+							<!--</button>-->
+						<!--</div>-->
+					</div>
+					<!--<div class="pull-right text-right">-->
+						<!--<div class="top-excel">-->
+							<!--<button class="btn btn-excel">-->
+								<!--<img src="../image/export_ico_excel.png"/>-->
+								<!--<span>导出为Excel</span>-->
+							<!--</button>-->
+						<!--</div>-->
+						<!--<div class="top-batch">-->
+							<!--<button class="btn btn-pass">-->
+								<!--<img src="../image/list_check_yes.png"/>-->
+								<!--<span>审批通过</span>-->
+							<!--</button>-->
+							<!--<button class="btn btn-fail">-->
+								<!--<img src="../image/list_check_no.png"/>-->
+								<!--<span>审批退回</span>-->
+							<!--</button>-->
+						<!--</div>-->
+					<!--</div>-->
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="sm_BusiState_LogList" stripe :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle">
+							<!--<el-table-column type="selection"  width="55" fixed></el-table-column>-->
+							<el-table-column align="center" type="index" :index="indexMethod" label="序号" width="60" fixed></el-table-column>
+							
+							<el-table-column prop="updateUserName" label="变更人" width="120"></el-table-column>
+							<el-table-column align="center" prop="updateTimeString" label="变更时间" min-width="180"></el-table-column>
+							<el-table-column prop="content" label="变更内容">
+								<template scope="scope">
+									<el-button type="text" size="small"
+											   @click="getLogDetail(scope.row)">
+										查看详情
+									</el-button>
+								</template>
+							</el-table-column>
+
+							<!--<el-table-column prop="applyState" label="状态" width="120">-->
+								<!--<template scope="scope">-->
+							        <!--<button  v-if="scope.row.applyState == 1" class="btn btn-state-warning">申请中</button>-->
+							    	<!--<button  v-if="scope.row.applyState == 2" class="btn btn-state-success">已备案</button>-->
+								<!--</template>-->
+							<!--</el-table-column>-->
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount"
+								 :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"
+								 v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+
+				<!--detail modal 开始-->
+				<!--<div class="modal fade" id="logDetail" tabindex="-1" role="dialog" aria-hidden="true">-->
+					<!--<div class="modal-dialog modal-log">-->
+						<!--<div class="modal-content">-->
+							<!--<div class="modal-header">-->
+								<!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">-->
+									<!--&times;-->
+								<!--</button>-->
+								<!--<h4 class="modal-title csm-title">-->
+									<!--查看变更详情-->
+								<!--</h4>-->
+							<!--</div>-->
+							<!--<div class="modal-body">-->
+								<!--<table class="table">-->
+									<!--<tbody>-->
+									<!--<tr>-->
+										<!--<td colspan="3" class="log-text1 log-bg1">-->
+											<!--&lt;!&ndash;<span>变更人：{{changeUserName}}</span>&ndash;&gt;-->
+											<!--<span>变更人：{{changeUserName}}</span>-->
+											<!--&lt;!&ndash;<span class="log-time" v-text="changeTimeString">变更时间：{{changeTimeString}}（红色背景说明有变更）</span>&ndash;&gt;-->
+											<!--<span class="log-time">变更时间：{{changeTimeString}}（红色背景说明有变更）</span>-->
+										<!--</td>-->
+									<!--</tr>-->
+
+									<!--<tr class="log-bg2">-->
+										<!--<td></td>-->
+										<!--<td>变更前</td>-->
+										<!--<td>变更后</td>-->
+									<!--</tr>-->
+
+									<!--<template v-for="differ in differList">-->
+										<!--<tr :class="{'log-bg3':!differ.same}">-->
+										<!--&lt;!&ndash;<tr>&ndash;&gt;-->
+											<!--<td>{{differ.fieldRemarkName}}</td>-->
+											<!--<td>{{differ.objAValue}}</td>-->
+											<!--<td>{{differ.objBValue}}</td>-->
+										<!--</tr>-->
+									<!--</template>-->
+
+									<!--&lt;!&ndash;<tr>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>用户编码</td>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>UC001</td>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>UC001</td>&ndash;&gt;-->
+									<!--&lt;!&ndash;</tr>&ndash;&gt;-->
+									<!--&lt;!&ndash;<tr>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>用户名称</td>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>李四</td>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>李四</td>&ndash;&gt;-->
+									<!--&lt;!&ndash;</tr>&ndash;&gt;-->
+									<!--&lt;!&ndash;<tr class="log-bg3">&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>所属机构</td>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>常州绿城置业有限公司</td>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>常州锦瑟置业有限公司</td>&ndash;&gt;-->
+									<!--&lt;!&ndash;</tr>&ndash;&gt;-->
+									<!--&lt;!&ndash;<tr>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>证件类型</td>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>身份证</td>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>身份证</td>&ndash;&gt;-->
+									<!--&lt;!&ndash;</tr>&ndash;&gt;-->
+									<!--&lt;!&ndash;<tr>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>证件号码</td>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>32032415878451254</td>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>32032415878451254</td>&ndash;&gt;-->
+									<!--&lt;!&ndash;</tr>&ndash;&gt;-->
+									<!--&lt;!&ndash;<tr>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>是否加密</td>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>是</td>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>是</td>&ndash;&gt;-->
+									<!--&lt;!&ndash;</tr>&ndash;&gt;-->
+									<!--&lt;!&ndash;<tr class="log-bg3">&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>联系电话</td>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>180-1251-4152</td>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>180-1251-4142</td>&ndash;&gt;-->
+									<!--&lt;!&ndash;</tr>&ndash;&gt;-->
+									<!--&lt;!&ndash;<tr>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>加密设备序列号</td>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>9854AFGH12334555</td>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>9854AFGH123347854</td>&ndash;&gt;-->
+									<!--&lt;!&ndash;</tr>&ndash;&gt;-->
+									<!--&lt;!&ndash;<tr class="log-bg3">&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>是否锁定</td>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>是</td>&ndash;&gt;-->
+										<!--&lt;!&ndash;<td>否</td>&ndash;&gt;-->
+									<!--&lt;!&ndash;</tr>&ndash;&gt;-->
+									<!--</tbody>-->
+								<!--</table>-->
+							<!--</div>-->
+							<!--<div class="modal-footer">-->
+								<!--<button type="button" class="btn foot-sure" data-dismiss="modal">-->
+									<!--确定-->
+								<!--</button>-->
+								<!--&lt;!&ndash;<button type="button" class="btn foot-cancel" data-dismiss="modal">&ndash;&gt;-->
+									<!--&lt;!&ndash;取消&ndash;&gt;-->
+								<!--&lt;!&ndash;</button>&ndash;&gt;-->
+							<!--</div>-->
+						<!--</div>&lt;!&ndash; /.modal-content &ndash;&gt;-->
+					<!--</div>&lt;!&ndash; /.modal &ndash;&gt;-->
+				<!--</div>-->
+				<!--detail modal 结束-->
+			</div>
+		</div>
+		
+		<script src="../components/vue-components.js"></script>
+	
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/sm/Sm_BusiState_LogList.js"></script>
+	</body>
+</html>	

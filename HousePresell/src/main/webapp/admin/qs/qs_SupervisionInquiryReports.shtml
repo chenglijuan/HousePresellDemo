@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-监理查询报告</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<style>
+			.el-input__inner {
+		        height:28px;
+		        line-height:28px;
+		    }
+		    .el-input__icon {
+		        line-height: 25px;
+		    }
+		</style>
+	</head>
+	<body>
+		<div class="content-wrap" id="supervisionInquiryReportsDiv">
+			<div class="cs-content">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left content-top-left">
+						<div class="top-input">
+							<!-- <div class="inline">
+							    <span style="margin-left:20px">监理公司：</span>
+							    <input type="text" class="form-control cs-input"  placeholder="请输入监理公司" v-model="companyName">
+							</div> -->
+							
+							<div class="inline">
+							    <span style="float:left">监理公司：</span>
+							    <vue-listselect defaultname="请选择监理公司" :thevalue="companyId" :optionlist="qs_companyNameList" @callbackfun="getCompanyId" @emptybackfun="emptyCompanyId"></vue-listselect>
+						        <span style="clear:both"></span>
+							</div>
+								
+							<div class="inline">
+							    <span style="margin-left:20px">完成时间：</span>
+							    <input type="text" name="" id="openingQuotationSearch" class="form-control cs-input-date" placeholder="开始日期     ~    结束日期"/>
+							    <img src="../image/list_search_calendar.png" class="ico-date"/> 
+							</div>
+							<button class="btn btn-search" style="height:28px" @click="search">搜索</button>
+						    <button class="btn btn-reset" style="height:28px" @click="resetSearch">重置</button>
+						</div>
+					</div>
+					<div class="pull-right">
+						<div class="top-excel">
+							<button class="btn btn-excel" @click="exportForm" >
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+					</div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="inquiryList" stripe :default-sort = "{prop: 'index'}" border >
+						    <el-table-column type="index" :index="indexMethod"  label="序号" width="60" fixed align="center"></el-table-column>
+							<el-table-column prop="companyName" label="监理公司"  ></el-table-column>
+							<el-table-column prop="buildCount" label="楼幢数" ></el-table-column>
+							<el-table-column prop="projectName" label="项目"  ></el-table-column>
+							<el-table-column prop="areaName" label="区域" ></el-table-column>
+							
+							<el-table-column label="业务单号" >
+								<template scope="scope">
+									<el-button type="text" size="small" @click="toDetail(scope.row.busiId)">{{scope.row.busiCode}}</el-button>
+								</template>
+							</el-table-column>
+							<!-- <el-table-column prop="busiCode" label="业务单号" align="center" ></el-table-column> -->
+							<el-table-column prop="completeDate" label="完成时间"  align="center"></el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+			<!-- error modal -->
+			<div class="modal fade" id="edModel" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">{{errMsg}}</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		</div>
+		<!-- success modal -->
+			<div class="modal fade" id="sdModel" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		<script src="../components/vue-components.js"></script>
+	
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/qs/qs_SupervisionInquiryReports.js"></script>
+	</body>
+</html>	

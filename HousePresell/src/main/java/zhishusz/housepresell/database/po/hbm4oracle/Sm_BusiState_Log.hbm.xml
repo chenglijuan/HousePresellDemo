@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Sm_BusiState_Log" table="Sm_BusiState_Log" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_BusiStateLog</param>
+			</generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userOperate" foreign-key="null">
+			<column name="userOperate">
+				<comment>操作人员</comment>
+			</column>
+		</many-to-one>
+		<property name="remoteAddress">
+			<column name="remoteAddress">
+				<comment>访问来源IP</comment>
+			</column>
+		</property>
+		<property name="operateTimeStamp">
+			<column name="operateTimeStamp">
+				<comment>操作时间</comment>
+			</column>
+		</property>
+		<property name="sourceId">
+			<column name="sourceId">
+				<comment>数据源Id</comment>
+			</column>
+		</property>
+		<property name="sourceType">
+			<column name="sourceType">
+				<comment>数据源类型</comment>
+			</column>
+		</property>
+		<property name="orgObjJsonFilePath">
+			<column name="orgObjJsonFilePath">
+				<comment>修改前数据Json文件路径</comment>
+			</column>
+		</property>
+		<property name="newObjJsonFilePath">
+			<column name="newObjJsonFilePath">
+				<comment>修改后数据Json文件路径</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

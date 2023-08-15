@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-审批流-流程配置</title>
+		<!-- Vendor CSS-->
+		<link rel="stylesheet" href="../../assets/bootstrap-3.3.7/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="../../assets/bootstrap-tab-master/css/font-awesome.css">
+		<link rel="stylesheet" href="../../assets/bootstrap-tab-master/css/bootstrap-tab.css">
+		<!-- Page CSS-->
+		<link rel="stylesheet" type="text/css" href="../../css/main.css"/>
+		<link rel="stylesheet" type="text/css" href="../../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="sm_ApprovalProcess_CfgListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input"  v-model="keyword"  placeholder="请输入业务编码、流程编码、流程名称搜索">
+							</div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="reset">重置</button>
+						</div>
+						<div class="top-btns">
+							<button class="btn btn-success" @click="sm_ApprovalProcess_CfgAdd" data-editNum="01030101_ADD_01">
+								<img src="../../image/list_btn_ico_add.png"/>
+								<span>新增</span>
+							</button>
+							<button class="btn btn-primary" @click="sm_ApprovalProcess_CfgEdit" :disabled="upDisabled" data-editNum="01030101_MOD_01">
+								<img src="../../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+							<button class="btn btn-danger" @click="sm_ApprovalProcess_CfgDel" :disabled="deDisabled" data-editNum="01030101_DEL_01">
+								<img src="../../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="sm_ApprovalProcess_CfgList" stripe :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle" @sort-change="sortChange">
+							<el-table-column  align="center" type="selection" width="50" fixed></el-table-column>
+							<el-table-column  align="center" type="index" :index="indexMethod" label="序号" width="60" fixed></el-table-column>
+							<el-table-column prop="busiCode" label="业务编码" min-width="300" sortable='custom' ></el-table-column>
+							<el-table-column prop="eCode" label="流程编号" min-width="180" sortable='custom' >
+								<template scope="scope">
+									<div class="el-button--text hover" @click="sm_ApprovalProcess_CfgDetail(scope.row.tableId)">{{scope.row.eCode}}</div>
+								</template>
+							</el-table-column>
+							<el-table-column prop="theName" label="流程名称" min-width="220"></el-table-column>
+							<el-table-column prop="remark" label="备注" min-width="870"></el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="../../assets/jquery/jquery.min.js" type="text/javascript"></script>
+		<!-- Pages JS -->
+		<script src="../../assets/vue/vue.min.js" type="text/javascript"></script>
+		<script src="../../assets/element/js/element.js" type="text/javascript"></script>
+		<script src="../../assets/bootstrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="../../assets/bootstrap-tab-master/js/bootstrap-tab.js" type="text/javascript"></script>
+		<script src="../../assets/laydate/laydate.js"></script>
+
+		<!-- Noty Js -->
+		<script src="../../assets/noty/jquery.noty.js"></script>
+		<script src="../../assets/noty/layouts/top.js"></script>
+		<script src="../../assets/noty/layouts/center.js"></script>
+		<script src="../../assets/noty/themes/default.js"></script>
+
+		<!-- Pushlet Js -->
+		<script src="../../assets/pushlet/ajax-pushlet-client.js"></script>
+
+		<script src="../../js/ServerInterface.js"></script>
+		<script src="../../assets/moment/moment.js"></script>
+		<script src="../../js/admin/test/Test_BaseJs.js"></script>
+		<script src="../../js/viewer.min.js"></script>
+
+		<script src="../../components/vue-componentsTest.js"></script>
+
+		<script src="../../js/tabCommon.js"></script>
+		<script src="../../js/admin/test/Test_ApprovalProcess_CfgList.js"></script>
+	</body>
+</html>	

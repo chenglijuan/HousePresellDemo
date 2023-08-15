@@ -1,0 +1,236 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tgpf_RefundInfo" table="Tgpf_RefundInfo" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_RefundInfo</param>
+			</generator>
+		</id>
+		<version name="version" type="java.lang.Long"></version>
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="approvalState">
+			<column name="approvalState">
+				<comment>流程状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<property name="refundCode">
+			<column name="refundCode">
+				<comment>退款申请编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Tgxy_TripleAgreement" name="tripleAgreement" foreign-key="null">
+			<column name="tripleAgreement">
+				<comment>三方协议</comment>
+			</column>
+		</many-to-one>
+		<property name="eCodeOfTripleAgreement">
+			<column name="eCodeOfTripleAgreement">
+				<comment>三方协议号</comment>
+			</column>
+		</property>
+		<property name="eCodeOfContractRecord">
+			<column name="eCodeOfContractRecord">
+				<comment>合同备案号</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_ProjectInfo" name="project" foreign-key="null">
+			<column name="project">
+				<comment>所属项目</comment>
+			</column>
+		</many-to-one>
+		<property name="theNameOfProject">
+			<column name="theNameOfProject">
+				<comment>项目名称</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_BuildingInfo" name="building" foreign-key="null">
+			<column name="building">
+				<comment>楼幢-户室</comment>
+			</column>
+		</many-to-one>
+		<property name="positionOfBuilding">
+			<column name="positionOfBuilding">
+				<comment>房屋坐落</comment>
+			</column>
+		</property>
+		<!-- <many-to-one class="Tgxy_BuyerInfo" name="buyer" foreign-key="null">
+			<column name="buyer">
+				<comment>买受人</comment>
+			</column>
+		</many-to-one> -->
+		<!-- <set name="buyerInfoSet">
+			<key>
+				<column name="refundInfo" not-null="false">
+					<comment>退房退款</comment>
+				</column>
+			</key>
+			<one-to-many class="Tgxy_BuyerInfo" />
+		</set> -->
+		
+		<!-- <list name="buyerInfoList" cascade="all" table="Rel_RefundInfo_Buyer">
+			<key column="tgpf_RefundInfo"/>
+			<list-index column="theIndex"/>
+			<many-to-many class="Tgxy_BuyerInfo"  column="tgxy_BuyerInfo"/>
+		</list> -->
+		
+		<property name="theNameOfBuyer">
+			<column name="theNameOfBuyer">
+				<comment>买受人名称</comment>
+			</column>
+		</property>
+		<property name="certificateNumberOfBuyer">
+			<column name="certificateNumberOfBuyer">
+				<comment>买受人证件号码</comment>
+			</column>
+		</property>
+		<property name="contactPhoneOfBuyer">
+			<column name="contactPhoneOfBuyer">
+				<comment>联系电话</comment>
+			</column>
+		</property>
+		<property name="theNameOfCreditor">
+			<column name="theNameOfCreditor">
+				<comment>主借款人</comment>
+			</column>
+		</property>
+		<property name="fundOfTripleAgreement">
+			<column name="fundOfTripleAgreement">
+				<comment>合同金额（元）</comment>
+			</column>
+		</property>
+		<property name="fundFromLoan">
+			<column name="fundFromLoan">
+				<comment>总贷款金额（元） </comment>
+			</column>
+		</property>
+		<property name="retainRightAmount">
+			<column name="retainRightAmount">
+				<comment>留存权益总金额（元）</comment>
+			</column>
+		</property>
+		<property name="expiredAmount">
+			<column name="expiredAmount">
+				<comment>到期权益金额（元）</comment>
+			</column>
+		</property>
+		<property name="unexpiredAmount">
+			<column name="unexpiredAmount">
+				<comment>未到期权益金额（元）</comment>
+			</column>
+		</property>
+		<property name="refundAmount">
+			<column name="refundAmount">
+				<comment>本次退款金额（元）</comment>
+			</column>
+		</property>
+		<property name="receiverType">
+			<column name="receiverType">
+				<comment>收款人类型</comment>
+			</column>
+		</property>
+		<property name="receiverName">
+			<column name="receiverName">
+				<comment>收款人名称</comment>
+			</column>
+		</property>
+		<property name="receiverBankName">
+			<column name="receiverBankName">
+				<comment>收款银行</comment>
+			</column>
+		</property>
+		<property name="refundType">
+			<column name="refundType">
+				<comment>退房退款类型（贷款已结清、贷款未结清）</comment>
+			</column>
+		</property>
+		<property name="receiverBankAccount">
+			<column name="receiverBankAccount">
+				<comment>收款账号</comment>
+			</column>
+		</property>
+		<property name="actualRefundAmount">
+			<column name="actualRefundAmount">
+				<comment>实际退款金额</comment>
+			</column>
+		</property>
+		<property name="refundBankName">
+			<column name="refundBankName">
+				<comment>退款银行名称</comment>
+			</column>
+		</property>
+		<property name="refundBankAccount">
+			<column name="refundBankAccount">
+				<comment>退款账号</comment>
+			</column>
+		</property>
+		<property name="refundTimeStamp">
+			<column name="refundTimeStamp">
+				<comment>退款日期</comment>
+			</column>
+		</property>
+		<property name="pushState">
+			<column name="pushState">
+				<comment>反馈状态 0-发起中 1-成功 2-失败</comment>
+			</column>
+		</property>
+		<property name="pushInfo">
+			<column name="pushInfo">
+				<comment>反馈信息</comment>
+			</column>
+		</property>
+		
+		<many-to-one class="Tgxy_BankAccountEscrowed" name="theBankAccountEscrowed" foreign-key="null">
+			<column name="theBankAccountEscrowed">
+				<comment>退款账号</comment>
+			</column>
+		</many-to-one>
+
+	</class>
+</hibernate-mapping>

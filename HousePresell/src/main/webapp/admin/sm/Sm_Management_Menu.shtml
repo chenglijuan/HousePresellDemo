@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-菜单管理</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		
+		<!-- zTree CSS -->
+		<link rel="stylesheet" type="text/css" href="../assets/zTree/css/zTreeStyle/zTreeStyle.css"/>
+		
+		<!-- Page CSS -->
+		<link rel="stylesheet" type="text/css" href="../css/admin/sm/Sm_Management_Menu.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="sm_Management_MenuDiv">
+			<div class="cs-content menu-content">
+				<div class="row">
+					<div class="col-md-4 menu-left">
+						<div class="menu-border">
+							<h1 class="menu-title">菜单项</h1>
+							<div class="zTreeDemoBackground left">
+								<ul id="treeDemo_MenuList" class="ztree"></ul>
+							</div>
+							<div id="rMenu_MenuList" class="rMenu">
+								<ul class="menu-add">
+									<li id="m_add_MenuList" @click="addNextMenu();">新建下级菜单</li>
+									<li id="m_del_MenuList" @click="delNowMenu();">删除</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="addOrUpdateMenuDiv" class="col-md-8" style="display: none;">
+						<div class="menu-border">
+							<h1 class="menu-title">菜单项</h1>
+							<div class="menu-info">
+								<div class="form-group">
+									<span class="menu-text1">菜单类型：</span>
+									<div class="menu-info1">
+										<select id="theTypeSelect" v-model="theType" @change="theTypeChange" class="form-control">
+											<option value="1">实体菜单</option>
+											<option value="2">虚拟菜单</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<span class="menu-text1">菜单名称：</span>
+									<div class="menu-info1">
+										<input type="text" v-model="theName" value="" placeholder="请填写菜单名称" class="form-control" />
+									</div>
+								</div>
+								<div class="form-group">
+									<span class="menu-text1">业务编码：</span>
+									<div class="menu-info1">
+										<vue-select defaultname="请选择业务编码" :thevalue="busiCode" :optionlist="busiCodeList"  @callbackfun="baseParameterChange" ></vue-select>
+										<!-- <input type="text" value="" placeholder="请填写业务编码" class="form-control" /> -->
+										<!-- <select v-model="busiCode" class="form-control">
+											<option value="">请选择业务编码</option>
+											<option v-for="busiCodeObj in busiCodeList" :value="busiCodeObj.theValue">{{busiCodeObj.theValue}}</option>
+										</select> -->
+									</div>
+								</div>
+								<div class="form-group" v-if="parentUI != null && parentUI.tableId > 0">
+									<span class="menu-text1">上级菜单：</span>
+									<div class="menu-info1">
+										<input type="text" disabled="disabled" :data-parentUIId="parentUI.tableId" :value="parentUI.theName" class="form-control" />
+									</div>
+								</div>
+								<div class="form-group">
+									<span class="menu-text1">排序编号：</span>
+									<div class="menu-info1">
+										<input type="text" v-model="theIndex" value="" placeholder="请输入排序编号，数字小的排前面，从1开始的正数(至多10位小数),例如1或1.1" class="form-control" />
+									</div>
+								</div>
+								<div class="form-group" v-if="theType == 1">
+									<span class="menu-text1">资源URL：</span>
+									<div class="menu-info1">
+										<select v-model="resourceUIId" @change="resourceUIChange($event)" class="form-control">
+											<option value="">请选择资源URL</option>
+											<option v-for="resourceUI in resourceUIList" :value="resourceUI.tableId" :data-childrenbtn="resourceUI.childrenBtnList">{{resourceUI.theResource}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group" v-if="theType == 1 && childrenBtnList != null && childrenBtnList.length > 0">
+									<span class="menu-text1 cs-mt-0">功能按钮：</span>
+									<div class="menu-info1">
+										<span v-for="childrenBtn in childrenBtnList">{{childrenBtn.theName}} </span>
+									</div>
+								</div>
+								<div class="form-group">
+									<span class="menu-text1">图标：</span>
+									<div class="menu-info1">
+										<el-upload
+										  class="avatar-uploader"
+										  :action="loadUploadObj.data.upLoadUrl"
+										  :accept="loadUploadObj.acceptFileType"
+										  :data="loadUploadObj.data"
+										  :show-file-list="false"
+										  :on-success="handleAvatarSuccess"
+										  :before-upload="beforeAvatarUpload">
+										  <img v-if="iconPath" :src="iconPath" class="avatar">
+										  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+										</el-upload>
+									</div>
+								</div>
+								<div class="form-group">
+									<span class="menu-text1">备注：</span>
+									<div class="menu-info1">
+										<textarea class="form-control" v-model="remark" rows="4" placeholder="请输入备注"></textarea>
+									</div>
+								</div>
+								<div class="text-center top-btns">
+									<button @click="addOrUpdate" type="button" class="btn foot-sure"> 
+										保存
+									</button>
+									<button @click="showCancelModal" type="button" class="btn foot-cancel">
+										取消
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-8" id="noChooseMenuDiv">
+						<div class="menu-border">
+							<h1 class="menu-title">菜单项</h1>
+							<div class="menu-empty">
+								<img src="../image/menu_pic_click.png"/>
+								<div>请单击左边的菜单项进行编辑</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- select modal 开始 -->
+			<div class="modal fade" id="deletSmManagementMenuModal" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_warning.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">友情提示</div>
+								<div id="deletSmManagementMenuMsg" class="del-text2"></div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" @click="delMenu">
+								确定
+							</button>
+							<button type="button" class="btn foot-cancel" data-dismiss="modal">
+								取消
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			<!-- select modal 结束 -->
+			
+			
+			<!-- del modal -->
+			<div class="modal fade" id="confirmCancelModal" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_warning.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1">确认取消吗？</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure"  @click="cancelSave">
+								确定
+							</button>
+							<button type="button" class="btn foot-cancel" data-dismiss="modal">
+								取消
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+		</div>
+		
+		<!-- zTree Js -->
+		<script type="text/javascript" src="../assets/zTree/js/jquery.ztree.core.js"></script>
+		<script type="text/javascript" src="../assets/zTree/js/jquery.ztree.excheck.js"></script>
+		<script type="text/javascript" src="../assets/zTree/js/jquery.ztree.exedit.js"></script>
+		
+		<!-- Pages JS -->
+		<script src="../js/BaseJs.js"></script>
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/sm/Sm_Management_Menu.js"></script>
+	</body>
+</html>	

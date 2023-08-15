@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Sm_ProjProgParameter" table="Sm_ProjProgParameter" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_ProjProgParameter</param>
+			</generator>
+		</id>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		
+		
+		<many-to-one class="Empj_ProjectInfo" name="project" foreign-key="null">
+			<column name="project">
+				<comment>项目</comment>
+			</column>
+		</many-to-one>
+		<property name="projectCode">
+			<column name="projectCode">
+				<comment>项目编号</comment>
+			</column>
+		</property>
+		<property name="projectName">
+			<column name="projectName">
+				<comment>项目名称</comment>
+			</column>
+		</property>
+		
+		<many-to-one class="Sm_CityRegionInfo" name="area" foreign-key="null">
+			<column name="area">
+				<comment>区域</comment>
+			</column>
+		</many-to-one>
+		<property name="areaName">
+			<column name="areaName">
+				<comment>区域名称</comment>
+			</column>
+		</property>
+		<property name="parameterOne">
+			<column name="parameterOne">
+				<comment>参数一（每层建设天数）</comment>
+			</column>
+		</property>
+		<property name="parameterTwo">
+			<column name="parameterTwo">
+				<comment>参数二（主体结构封顶至外立面装饰完工的跨度天数）</comment>
+			</column>
+		</property>
+		
+		<property name="parameterThree">
+			<column name="parameterThree">
+				<comment>参数三（外立面装饰室内装修跨度天数）</comment>
+			</column>
+		</property>
+		<property name="hasAll">
+			<column name="hasAll">
+				<comment>是否全局（0-否 1-是）</comment>
+			</column>
+		</property>
+		<property name="remark">
+			<column name="remark">
+				<comment>备注</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Sm_PolicyRecord" table="Sm_PolicyRecord" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_PolicyRecord</param>
+			</generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		
+		<property name="policyIsbrow">
+			<column name="policyIsbrow">
+				<comment>是否轮播 0：否 1：是</comment>
+			</column>
+		</property>
+		<property name="policyIstop">
+			<column name="policyIstop">
+				<comment>是否置顶 0：否 1：是</comment>
+			</column>
+		</property>
+		<property name="policyDate">
+			<column name="policyDate">
+				<comment>发布时间</comment>
+			</column>
+		</property>
+		<property name="policyType">
+			<column name="policyType">
+				<comment>政策类型 从基础参数表中读取</comment>
+			</column>
+		</property>
+		<property name="policyTypeCode">
+			<column name="policyTypeCode">
+				<comment>政策类型标志 theValue</comment>
+			</column>
+		</property>
+		<property name="policyTitle">
+			<column name="policyTitle">
+				<comment>政策标题</comment>
+			</column>
+		</property>
+		<property name="policyContent">
+			<column name="policyContent">
+				<comment>政策内容</comment>
+			</column>
+		</property>
+		<property name="policyState">
+			<column name="policyState">
+				<comment>政策状态 S_PolicyState</comment>
+			</column>
+		</property>
+		<property name="browseTimes">
+			<column name="browseTimes">
+				<comment>浏览次数</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,450 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+    <class name="Empj_BuildingInfo" table="Empj_BuildingInfo" dynamic-update="true" dynamic-insert="true">
+        <id name="tableId">
+            <generator class="sequence">
+                <param name="sequence">Seq_BuildingInfo</param>
+            </generator>
+        </id>
+
+        <property name="theState">
+            <column name="theState">
+                <comment>状态 S_TheState 初始为Normal</comment>
+            </column>
+        </property>
+        <property name="busiState">
+            <column name="busiState">
+                <comment>业务状态</comment>
+            </column>
+        </property>
+        <property name="approvalState">
+            <column name="approvalState">
+                <comment>流程状态</comment>
+            </column>
+        </property>
+        <property name="eCode">
+            <column name="eCode">
+                <comment>编号</comment>
+            </column>
+        </property>
+        <many-to-one class="Sm_User" name="userStart" foreign-key="null">
+            <column name="userStart">
+                <comment>创建人</comment>
+            </column>
+        </many-to-one>
+        <property name="createTimeStamp">
+            <column name="createTimeStamp">
+                <comment>创建时间</comment>
+            </column>
+        </property>
+        <many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+            <column name="userUpdate">
+                <comment>修改人</comment>
+            </column>
+        </many-to-one>
+        <property name="lastUpdateTimeStamp">
+            <column name="lastUpdateTimeStamp">
+                <comment>最后修改日期</comment>
+            </column>
+        </property>
+        <many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+            <column name="userRecord">
+                <comment>备案人</comment>
+            </column>
+        </many-to-one>
+        <property name="recordTimeStamp">
+            <column name="recordTimeStamp">
+                <comment>备案日期</comment>
+            </column>
+        </property>
+        <many-to-one class="Empj_ProjectInfo" name="project" foreign-key="null">
+            <column name="project">
+                <comment>关联项目</comment>
+            </column>
+        </many-to-one>
+        <property name="theNameOfProject">
+            <column name="theNameOfProject">
+                <comment>项目名称-冗余</comment>
+            </column>
+        </property>
+        <property name="eCodeOfProject">
+            <column name="eCodeOfProject">
+                <comment>项目编号-冗余</comment>
+            </column>
+        </property>
+        <many-to-one class="Tgpj_BuildingAccount" name="buildingAccount" foreign-key="null">
+            <column name="buildingAccount">
+                <comment>关联楼幢账户</comment>
+            </column>
+        </many-to-one>
+        <many-to-one class="Empj_BuildingExtendInfo" name="extendInfo" foreign-key="null">
+            <column name="extendInfo">
+                <comment>扩展信息</comment>
+            </column>
+        </many-to-one>
+        <property name="theNameFromPresellSystem">
+            <column name="theNameFromPresellSystem">
+                <comment>预售项目名称</comment>
+            </column>
+        </property>
+        <property name="eCodeOfProjectFromPresellSystem">
+            <column name="eCodeOfPjFromPS">
+                <comment>预售系统所属项目编号</comment>
+            </column>
+        </property>
+        <property name="eCodeFromPresellSystem">
+            <column name="eCodeFromPresellSystem">
+                <comment>预售系统楼幢编号</comment>
+            </column>
+        </property>
+        <property name="theNameFromFinancialAccounting">
+            <column name="theNameFromFA">
+                <comment>财务核算项目名称</comment>
+            </column>
+        </property>
+        <property name="eCodeFromPresellCert">
+            <column name="eCodeFromPresellCert">
+                <comment>预售证号</comment>
+            </column>
+        </property>
+        <property name="eCodeFromConstruction">
+            <column name="eCodeFromConstruction">
+                <comment>施工编号</comment>
+            </column>
+        </property>
+        <property name="eCodeFromPublicSecurity">
+            <column name="eCodeFromPublicSecurity">
+                <comment>公安编号</comment>
+            </column>
+        </property>
+        <!--<list name="bankAccountSupervisedList" cascade="save-update" table="Rel_Building_BankAccountSup">-->
+        <!--<key column="empj_BuildingInfo"/>-->
+        <!--<list-index column="theIndex"/>-->
+        <!--<many-to-many class="Tgpj_BankAccountSupervised" column="tgpj_BankAccountSupervised"></many-to-many>-->
+        <!--</list>-->
+        <property name="eCodeOfProjectPartition">
+            <column name="eCodeOfProjectPartition">
+                <comment>项目分区编号</comment>
+            </column>
+        </property>
+        <property name="zoneCode">
+            <column name="zoneCode">
+                <comment>行政区划</comment>
+            </column>
+        </property>
+        <many-to-one class="Sm_CityRegionInfo" name="cityRegion" foreign-key="null">
+            <column name="cityRegion">
+                <comment>所属区域</comment>
+            </column>
+        </many-to-one>
+        <property name="theNameOfCityRegion">
+            <column name="theNameOfCityRegion">
+                <comment>区域名称</comment>
+            </column>
+        </property>
+        <many-to-one class="Sm_StreetInfo" name="streetInfo" foreign-key="null">
+            <column name="streetInfo">
+                <comment>所属街道</comment>
+            </column>
+        </many-to-one>
+        <property name="theNameOfStreet">
+            <column name="theNameOfStreet">
+                <comment>街道名称</comment>
+            </column>
+        </property>
+        <property name="eCodeOfGround">
+            <column name="eCodeOfGround">
+                <comment>宗地号</comment>
+            </column>
+        </property>
+        <property name="eCodeOfLand">
+            <column name="eCodeOfLand">
+                <comment>幢编号（国土）</comment>
+            </column>
+        </property>
+        <property name="position">
+            <column name="position">
+                <comment>楼幢坐落</comment>
+            </column>
+        </property>
+        <property name="purpose">
+            <column name="purpose">
+                <comment>房屋用途</comment>
+            </column>
+        </property>
+        <property name="structureProperty">
+            <column name="structureProperty">
+                <comment>结构属性</comment>
+            </column>
+        </property>
+        <property name="theType">
+            <column name="theType">
+                <comment>楼幢类型</comment>
+            </column>
+        </property>
+        <property name="theProperty">
+            <column name="theProperty">
+                <comment>楼幢性质</comment>
+            </column>
+        </property>
+        <property name="decorationType">
+            <column name="decorationType">
+                <comment>装修类型</comment>
+            </column>
+        </property>
+        <property name="combType">
+            <column name="combType">
+                <comment>组合形式</comment>
+            </column>
+        </property>
+        <property name="floorNumer">
+            <column name="floorNumer">
+                <comment>总层数</comment>
+            </column>
+        </property>
+        <property name="upfloorNumber">
+            <column name="upfloorNumber">
+                <comment>地上楼层数</comment>
+            </column>
+        </property>
+        <property name="downfloorNumber">
+            <column name="downfloorNumber">
+                <comment>地下楼层数</comment>
+            </column>
+        </property>
+        <property name="heigh">
+            <column name="heigh">
+                <comment>层高</comment>
+            </column>
+        </property>
+        <property name="unitNumber">
+            <column name="unitNumber">
+                <comment>单元数</comment>
+            </column>
+        </property>
+        <property name="sumFamilyNumber">
+            <column name="sumFamilyNumber">
+                <comment>总户数</comment>
+            </column>
+        </property>
+        <property name="buildingArea">
+            <column name="buildingArea">
+                <comment>建筑面积（㎡）</comment>
+            </column>
+        </property>
+        <property name="occupyArea">
+            <column name="occupyArea">
+                <comment>占地面积（㎡）</comment>
+            </column>
+        </property>
+        <property name="shareArea">
+            <column name="shareArea">
+                <comment>分摊面积（㎡）</comment>
+            </column>
+        </property>
+        <property name="beginDate">
+            <column name="beginDate">
+                <comment>开工日期yyyyMMdd</comment>
+            </column>
+        </property>
+        <property name="endDate">
+            <column name="endDate">
+                <comment>竣工日期yyyyMMdd</comment>
+            </column>
+        </property>
+        <property name="deliveryDate">
+            <column name="deliveryDate">
+                <comment>交付日期yyyyMMdd</comment>
+            </column>
+        </property>
+        <property name="deliveryType">
+            <column name="deliveryType">
+                <comment>交付类型</comment>
+            </column>
+        </property>
+        <property name="warrantyDate">
+            <column name="warrantyDate">
+                <comment>保修日期yyyyMMdd</comment>
+            </column>
+        </property>
+        <property name="geoCoordinate">
+            <column name="geoCoordinate">
+                <comment>地理坐标</comment>
+            </column>
+        </property>
+        <property name="eCodeOfGis">
+            <column name="eCodeOfGis">
+                <comment>GIS图幅编号</comment>
+            </column>
+        </property>
+        <property name="eCodeOfMapping">
+            <column name="eCodeOfMapping">
+                <comment>测绘编号</comment>
+            </column>
+        </property>
+        <property name="eCodeOfPicture">
+            <column name="eCodeOfPicture">
+                <comment>图幅号</comment>
+            </column>
+        </property>
+        <property name="buildingFacilities">
+            <column name="buildingFacilities">
+                <comment>楼幢配套</comment>
+            </column>
+        </property>
+        <property name="buildingArround">
+            <column name="buildingArround">
+                <comment>楼幢周边</comment>
+            </column>
+        </property>
+        <property name="introduction">
+            <column name="introduction">
+                <comment>楼幢简介</comment>
+            </column>
+        </property>
+        <many-to-one class="Emmp_CompanyInfo" name="developCompany" foreign-key="null">
+            <column name="developCompany">
+                <comment>关联开发企业</comment>
+            </column>
+        </many-to-one>
+        <property name="eCodeOfDevelopCompany">
+            <column name="eCodeOfDevelopCompany">
+                <comment>开发企业编号</comment>
+            </column>
+        </property>
+        <many-to-one class="Emmp_CompanyInfo" name="busCompany" foreign-key="null">
+            <column name="busCompany">
+                <comment>关联物业公司</comment>
+            </column>
+        </many-to-one>
+        <property name="eCodeOfBusCompany">
+            <column name="eCodeOfBusCompany">
+                <comment>物业公司编号</comment>
+            </column>
+        </property>
+        <many-to-one class="Emmp_CompanyInfo" name="ownerCommittee" foreign-key="null">
+            <column name="ownerCommittee">
+                <comment>关联业主委员会</comment>
+            </column>
+        </many-to-one>
+        <property name="eCodeOfOwnerCommittee">
+            <column name="eCodeOfOwnerCommittee">
+                <comment>业主委员会编号</comment>
+            </column>
+        </property>
+        <many-to-one class="Emmp_CompanyInfo" name="mappingUnit" foreign-key="null">
+            <column name="mappingUnit">
+                <comment>关联测绘单位</comment>
+            </column>
+        </many-to-one>
+        <property name="eCodeOfMappingUnit">
+            <column name="eCodeOfMappingUnit">
+                <comment>测绘单位编号</comment>
+            </column>
+        </property>
+        <many-to-one class="Emmp_CompanyInfo" name="saleAgencyUnit" foreign-key="null">
+            <column name="saleAgencyUnit">
+                <comment>关联销售代理单位</comment>
+            </column>
+        </many-to-one>
+        <property name="eCodeOfS">
+            <column name="eCodeOfS">
+                <comment>销售代理单位编号</comment>
+            </column>
+        </property>
+        <many-to-one class="Emmp_CompanyInfo" name="consUnit" foreign-key="null">
+            <column name="consUnit">
+                <comment>施工建设单位</comment>
+            </column>
+        </many-to-one>
+        <property name="eCodeOfConsUnit">
+            <column name="eCodeOfConsUnit">
+                <comment>施工建设单位编号</comment>
+            </column>
+        </property>
+        <many-to-one class="Emmp_CompanyInfo" name="controlUnit" foreign-key="null">
+            <column name="controlUnit">
+                <comment>监理单位</comment>
+            </column>
+        </many-to-one>
+        <property name="eCodeOfControlUnit">
+            <column name="eCodeOfControlUnit">
+                <comment>监理单位编号</comment>
+            </column>
+        </property>
+        <property name="escrowArea">
+            <column name="escrowArea">
+                <comment>托管面积</comment>
+            </column>
+        </property>
+        <property name="escrowStandard">
+            <column name="escrowStandard">
+                <comment>托管标准</comment>
+            </column>
+        </property>
+        <many-to-one class="Tgpj_EscrowStandardVerMng" name="escrowStandardVerMng" foreign-key="null">
+            <column name="escrowStandardVerMng">
+                <comment>托管标准对象</comment>
+            </column>
+        </many-to-one>
+        <property name="remark">
+            <column name="remark" length="4000">
+                <comment>备注</comment>
+            </column>
+        </property>
+        <property name="externalCode">
+            <column name="externalCode">
+                <comment>外来数据关联字段</comment>
+            </column>
+        </property>
+        <property name="externalId">
+            <column name="externalId">
+                <comment>外来数据关联主键</comment>
+            </column>
+        </property>
+        <property name="resourceNote">
+            <column name="resourceNote">
+                <comment>数据来源说明</comment>
+            </column>
+        </property>
+        <property name="escrowPattern">
+            <column name="escrowPattern">
+                <comment>托管模式 0-贷款、1-全额</comment>
+            </column>
+        </property>
+        <property name="escrowMode">
+            <column name="escrowMode">
+                <comment>托管方式 0-按幢、1-按户</comment>
+            </column>
+        </property>
+        <property name="isAdvanceSale">
+            <column name="isAdvanceSale">
+                <comment>是否预售楼幢 0-否 1-是</comment>
+            </column>
+        </property>
+        <property name="gjjTableId">
+            <column name="gjjTableId">
+                <comment>楼幢id（公积金）</comment>
+            </column>
+        </property>
+        <property name="gjjState">
+            <column name="gjjState">
+                <comment>审批状态</comment>
+            </column>
+        </property>
+        <property name="approveMonth">
+            <column name="approveMonth">
+                <comment>审批年月</comment>
+            </column>
+        </property>
+        <property name="payState">
+            <column name="payState">
+                <comment>支付状态</comment>
+            </column>
+        </property>
+
+    </class>
+</hibernate-mapping>

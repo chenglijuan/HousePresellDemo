@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-审批流-流程配置详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="sm_ApprovalProcess_CfgDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="sm_ApprovalProcess_CfgEdit">
+						<img src="../image/list_btn_ico_edit.png" width="18">
+						<span>修改</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">业务编码：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text"  disabled v-model="sm_ApprovalProcess_CfgModel.codeType" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">是否备案：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<select disabled v-model="sm_ApprovalProcess_CfgModel.isNeedBackup" class="form-control" disabled>
+										<option value="1">是</option>
+										<option value="0">否</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">流程编码：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="sm_ApprovalProcess_CfgModel.eCode" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">流程名称：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" disabled  v-model="sm_ApprovalProcess_CfgModel.theName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<span class="detail-text1">备注：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<textarea type="text" disabled v-model="sm_ApprovalProcess_CfgModel.remark" class="form-control"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+
+			<div class="detail-title">
+				<h1 class="inline">审批流程</h1>
+			</div>
+			<div class="cs-content">
+				<!--表格开始-->
+				<div class="cs-table examine-list">
+					<el-table :data="sm_ApprovalProcess_NodeList" border :span-method="objectSpanMethod">
+						<el-table-column prop="orderNumber" label="审批步骤" width="130" fixed></el-table-column>
+						<el-table-column prop="theName" label="步骤名称"></el-table-column>
+						<el-table-column prop="approvalModel" label="审批模式">
+							<template scope="scope">
+								<span v-if="scope.row.approvalModel == 0">抢占</span>
+								<span v-if="scope.row.approvalModel == 1">会签(完成阀值：{{scope.row.finishPercentage}}通过阀值：{{scope.row.passPercentage}})</span>
+							</template>
+						</el-table-column>
+						<el-table-column prop="theContent" label="条件"></el-table-column>
+						<el-table-column prop="nextStepName" label="下一步骤" width="130"></el-table-column>
+						<el-table-column prop="rejectModel" label="驳回模式">
+							<template scope="scope">
+								<span v-if="scope.row.rejectModel == 0">驳回到发起人</span>
+								<span v-if="scope.row.rejectModel == 1">驳回到上一环节</span>
+							</template>
+						</el-table-column>
+						<el-table-column prop="roleName" label="审批角色"></el-table-column>
+						<el-table-column prop="thetemplate" label="消息模版"></el-table-column>
+					</el-table>
+				</div>
+			<!--表格结束-->
+			</div>
+		</div>
+		<script src="../components/vue-components.js"></script>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/sm/Sm_ApprovalProcess_CfgDetail.js"></script>
+	</body>
+</html>	

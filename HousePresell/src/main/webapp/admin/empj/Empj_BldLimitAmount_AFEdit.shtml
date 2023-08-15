@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="UTF-8">
+    <title>housepresell管理后台-申请表-受限额度变更编辑</title>
+    <link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+</head>
+<body>
+<div class="content-wrap" id="empj_BldLimitAmount_AFEditDiv">
+    <div class="detail-title cs-mt-0">
+        <h1 class="inline">基本信息</h1>
+        <div class="inline title-btns">
+            <button class="btn btn-success" @click="update('1')">
+                <img src="../image/detail_btn_ico_save.png" width="18">
+                <span>保存</span>
+            </button>
+            <!-- <button class="btn btn-primary" @click="update('2')" v-if="showSubFlag">
+                <img src="../image/detail_btn_ico_submit.png" width="18">
+                <span>提交</span>
+            </button> -->
+            <!--<button class="btn btn-warning">-->
+            <!--<img src="../image/detail_btn_ico_record.png" width="18">-->
+            <!--<span>备案</span>-->
+            <!--</button>-->
+        </div>
+    </div>
+    <!--基本信息开始-->
+    <div class="cs-content detail-content">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">受限额度单号：</span>
+                    <div class="detail-info7">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled v-model="empj_BldLimitAmount_AFModel.eCode"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">项目名称：</span>
+                    <div class="detail-info7">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled v-model="empj_BldLimitAmount_AFModel.projectName"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">地上层数：</span>
+                    <div class="detail-info7">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled v-model="empj_BldLimitAmount_AFModel.upfloorNumber"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="detail-text1">当前楼幢备案均价（元）：</span>
+                    <div class="detail-info7">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled
+                                   v-model="empj_BldLimitAmount_AFModel.recordAveragePriceOfBuilding"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">施工编号：</span>
+                    <div class="detail-info7">
+                        <div class="detail-unEdit">
+                            <!--<vue-select defaultname="请选择楼幢" :thevalue="buildingId" :optionlist="buildingList"-->
+                                        <!--@callbackfun="changeBuildingListener"></vue-select>-->
+                            <input type="text" disabled v-model="empj_BldLimitAmount_AFModel.eCodeFromConstruction" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="form-group cs-mb-0">-->
+                    <!--<span class="detail-text1">楼幢编号：</span>-->
+                    <!--<div class="detail-info7">-->
+                        <!--<div class="detail-unEdit">-->
+                            <!--<input type="text" disabled v-model="empj_BldLimitAmount_AFModel.eCodeFromPresellSystem"-->
+                                   <!--class="form-control"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">建筑面积（m²）：</span>
+                    <div class="detail-info7">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled v-model="empj_BldLimitAmount_AFModel.buildingArea"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">托管标准：</span>
+                    <div class="detail-info7">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled v-model="trusteeshipContent"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">开发企业：</span>
+                    <div class="detail-info7">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled v-model="empj_BldLimitAmount_AFModel.developCompanyName"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">公安编号：</span>
+                    <div class="detail-info7">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled v-model="empj_BldLimitAmount_AFModel.eCodeFromPublicSecurity"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">托管面积（m²）：</span>
+                    <div class="detail-info7">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled v-model="empj_BldLimitAmount_AFModel.escrowArea"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">交付类型：</span>
+                    <div class="detail-info7">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled v-model="empj_BldLimitAmount_AFModel.deliveryTypeName"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <span class="detail-text1">备注：</span>
+                    <div class="detail-info7">
+                        <div class="detail-edit">
+                            <!--<input type="text" v-model="empj_BldLimitAmount_AFModelNew.remark" class="form-control"/>-->
+                            <textarea type="text" v-model="empj_BldLimitAmount_AFModel.remark" class="form-control"></textarea>
+
+                        </div>
+                        <!--<div class="change-info" v-if="empj_BldLimitAmount_AFModelNew.remark != null && empj_BldLimitAmount_AFModelNew.remark != empj_BldLimitAmount_AFModel.remark">-->
+                        <!--<img src="../image/detail_ico_warning.png" width="15"/>-->
+                        <!--<span class="text-danger vertical-m">变更前：{{empj_BldLimitAmount_AFModel.remark}}</span>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cs-border">
+        	<div class="row">
+	            <div class="col-md-4">
+	                <div class="form-group cs-mb-0">
+	                    <span class="detail-text1">初始受限额度（元）：</span>
+	                    <div class="detail-info7">
+	                        <div class="detail-unEdit">
+	                            <input disabled type="text" v-model="empj_BldLimitAmount_AFModel.orgLimitedAmount"
+	                                   class="form-control"/>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="form-group cs-mb-0">
+	                    <span class="detail-text1">节点受限额度（元）：</span>
+	                    <div class="detail-info7">
+	                        <div class="detail-unEdit">
+	                            <input disabled type="text" v-model="empj_BldLimitAmount_AFModel.nodeLimitedAmount"
+	                                   class="form-control"/>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="form-group cs-mb-0">
+	                    <span class="detail-text1">有效受限额度（元）：</span>
+	                    <div class="detail-info7">
+	                        <div class="detail-unEdit">
+	                            <input disabled type="text" v-model="empj_BldLimitAmount_AFModel.effectiveLimitedAmount"
+	                                   class="form-control"/>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="form-group cs-mb-0">
+	                    <span class="detail-text1">拟变更受限额度（元）：</span>
+	                    <div class="detail-info7">
+	                        <div class="detail-unEdit">
+	                            <input disabled type="text" v-model="empj_BldLimitAmount_AFModel.expectLimitedAmount"
+	                                   class="form-control"/>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <span class="detail-text1">操作日期：</span>
+	                    <div class="detail-info7">
+	                        <div class="detail-unEdit">
+	                            <input type="text" disabled v-model="empj_BldLimitAmount_AFModel.lastUpdateTimeStampString"
+	                                   class="form-control"/>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-md-4">
+	                <div class="form-group cs-mb-0">
+	                    <span class="detail-text1">当前形象进度：</span>
+	                    <div class="detail-info7">
+	                        <div class="detail-unEdit">
+	                            <input disabled type="text" v-model="empj_BldLimitAmount_AFModel.currentFigureProgress"
+	                                   class="form-control"/>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <span class="detail-text1">可计入保证金额（元）：</span>
+	                    <div class="detail-info7">
+	                        <div class="detail-unEdit">
+	                            <input disabled type="text" v-model="empj_BldLimitAmount_AFModel.totalGuaranteeAmount"
+	                                   class="form-control"/>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="form-group cs-mb-0">
+	                    <span class="detail-text1">拟变更形象进度：</span>
+	                    <div class="detail-info7">
+	                        <div class="detail-edit">
+	                            <!--<input disabled type="text" v-model="empj_BldLimitAmount_AFModel.expectFigureProgress"-->
+	                                   <!--class="form-control"/>-->
+	                            <vue-select defaultname="请选择拟变更形象进度" :thevalue="expectFigureProgressId" :optionlist="limitVerList" @callbackfun="changeVersionListener" @emptybackfun="noSelectVersion"></vue-select>
+	                            <!--<div class="change-info" v-if="empj_BldLimitAmount_AFModelNew.expectFigureProgressId != null && empj_BldLimitAmount_AFModelNew.expectFigureProgressId != empj_BldLimitAmount_AFModel.expectFigureProgressId">-->
+	                                <!--<img src="../image/detail_ico_warning.png" width="15"/>-->
+	                                <!--<span class="text-danger vertical-m">变更前：{{empj_BldLimitAmount_AFModel.expectFigureProgressId}}</span>-->
+	                            <!--</div>-->
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="form-group cs-mb-0">
+	                    <span class="detail-text1">拟变更有效受限额度（元）：</span>
+	                    <div class="detail-info7">
+	                        <div class="detail-unEdit">
+	                            <input disabled type="text" v-model="empj_BldLimitAmount_AFModel.expectEffectLimitedAmount"
+	                                   class="form-control"/>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <span class="detail-text1">审核人：</span>
+	                    <div class="detail-info7">
+	                        <div class="detail-unEdit">
+	                            <input type="text" disabled v-model="empj_BldLimitAmount_AFModel.userRecordName"
+	                                   class="form-control"/>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-md-4">
+	                <div class="form-group cs-mb-0">
+	                    <span class="detail-text1">当前受限比例（%）：</span>
+	                    <div class="detail-info7">
+	                        <div class="detail-unEdit">
+	                            <input disabled type="text" v-model="empj_BldLimitAmount_AFModel.currentLimitedRatio"
+	                                   class="form-control"/>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="form-group cs-mb-0">
+	                    <span class="detail-text1">现金受限额度（元）：</span>
+	                    <div class="detail-info7">
+	                        <div class="detail-unEdit">
+	                            <input disabled type="text" v-model="empj_BldLimitAmount_AFModel.cashLimitedAmount"
+	                                   class="form-control"/>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="form-group cs-mb-0">
+	                    <span class="detail-text1">拟变更受限比例（%）：</span>
+	                    <div class="detail-info7">
+	                        <div class="detail-unEdit">
+	                            <input disabled type="text" v-model="empj_BldLimitAmount_AFModel.expectLimitedRatio"
+	                                   class="form-control"/>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="form-group cs-mb-0">
+	                    <span class="detail-text1">操作人：</span>
+	                    <div class="detail-info7">
+	                        <div class="detail-unEdit">
+	                            <input type="text" disabled v-model="empj_BldLimitAmount_AFModel.userUpdateName"
+	                                   class="form-control"/>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <span class="detail-text1">审核日期：</span>
+	                    <div class="detail-info7">
+	                        <div class="detail-unEdit">
+	                            <input type="text" disabled v-model="empj_BldLimitAmount_AFModel.recordTimeStampString"
+	                                   class="form-control"/>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+        </div>
+
+        <div class="cs-border">
+            <!--工作时限办理 开始-->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <span class="detail-text1">受理时间：</span>
+                        <div class="detail-info7">
+                            <div class="detail-unEdit">
+                                <input type="text" disabled v-model="empj_BldLimitAmount_AFModel.acceptTimeString" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="detail-text1">受理说明：</span>
+                        <div class="detail-info7">
+                            <!--<div class="detail-unEdit">-->
+                            <div class="detail-unEdit">
+                                <input type="text" disabled v-model="empj_BldLimitAmount_AFModel.acceptExplain" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <span class="detail-text1">预约时间：</span>
+                        <div class="detail-info7">
+                            <div class="detail-unEdit">
+                                <input type="text" disabled v-model="empj_BldLimitAmount_AFModel.appointTimeString" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="detail-text1">预约说明：</span>
+                        <div class="detail-info7">
+                            <!--<div class="detail-unEdit">-->
+                            <div class="detail-unEdit">
+                                <input type="text" disabled v-model="empj_BldLimitAmount_AFModel.appointExplain" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <span class="detail-text1">现场勘查时间：</span>
+                        <div class="detail-info7">
+                            <div class="detail-unEdit">
+                                <input type="text" disabled v-model="empj_BldLimitAmount_AFModel.sceneInvestigationTimeString" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="detail-text1">现场勘查说明：</span>
+                        <div class="detail-info7">
+                            <!--<div class="detail-unEdit">-->
+                            <div class="detail-unEdit">
+                                <input type="text" disabled v-model="empj_BldLimitAmount_AFModel.sceneInvestigationExplain" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--工作时限办理 结束-->
+        </div>
+    </div>
+    <!--基本信息结束-->
+
+    <!--附件材料开始-->			
+	<!-- <my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData" :busitype="busiType"></my-uploadcomponent> -->
+	<!--附件材料结束-->
+
+
+    <!-- success modal 开始 -->
+    <div class="modal fade" id="successM" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-del">
+            <div class="modal-content">
+                <div class="modal-body csm-body">
+                    <img src="../image/popup_ico_succeed.png" class="pull-left"/>
+                    <div class="del-info">
+                        <div class="del-text1 font-bold">操作成功</div>
+                        <div class="del-text2">保存成功</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn foot-sure" data-dismiss="modal">
+                        确定
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- success modal 结束 -->
+
+    <!-- error modal 开始 -->
+    <div class="modal fade" id="errorM" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-del">
+            <div class="modal-content">
+                <div class="modal-body csm-body">
+                    <img src="../image/popup_ico_failure.png" class="pull-left"/>
+                    <div class="del-info">
+                        <div class="del-text1 font-bold">操作失败，请重试</div>
+                        <div class="del-text2">请选择要删除的机构成员</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn foot-sure">
+                        确定
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- error modal 结束 -->
+</div>
+<script src="../js/tabCommon.js"></script>
+<script src="../js/admin/empj/Empj_BldLimitAmount_AFEdit.js"></script>
+</body>
+</html>	

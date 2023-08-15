@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_03010101" id="approvalProcessCallBack_03010101"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_03010102" id="approvalProcessCallBack_03010102"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_03010201" id="approvalProcessCallBack_03010201"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_03010202" id="approvalProcessCallBack_03010202"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_03030102" id="approvalProcessCallBack_03030102"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_020101" id="approvalProcessCallBack_020101"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_020102" id="approvalProcessCallBack_020102"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_020103" id="approvalProcessCallBack_020103"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_020105" id="approvalProcessCallBack_020105"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_020106" id="approvalProcessCallBack_020106"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_020107" id="approvalProcessCallBack_020107"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_020108" id="approvalProcessCallBack_020108"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_020109" id="approvalProcessCallBack_020109"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_210104" id="approvalProcessCallBack_210104"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_210105" id="approvalProcessCallBack_210105"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_06010101" id="approvalProcessCallBack_06010101"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_06110201" id="approvalProcessCallBack_06110201"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_06110301" id="approvalProcessCallBack_06110301"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_06110304" id="approvalProcessCallBack_06110304"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_06120201" id="approvalProcessCallBack_06120201"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_06120202" id="approvalProcessCallBack_06120202"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_06120401" id="approvalProcessCallBack_06120401"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_06010103" id="approvalProcessCallBack_06010103"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_06110202" id="approvalProcessCallBack_06110202"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_03010301" id="approvalProcessCallBack_03010301"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_03010302" id="approvalProcessCallBack_03010302"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_06120301" id="approvalProcessCallBack_06120301"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_06120302" id="approvalProcessCallBack_06120302"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_06120303" id="approvalProcessCallBack_06120303"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_03030101" id="approvalProcessCallBack_03030101"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_06010102" id="approvalProcessCallBack_06010102"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_06120403" id="approvalProcessCallBack_06120403"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_061206" id="approvalProcessCallBack_061206"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_03030100" id="approvalProcessCallBack_03030100"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_06120501" id="approvalProcessCallBack_06120501"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_03030202" id="approvalProcessCallBack_03030202"/>
+	<bean class="zhishusz.housepresell.approvalprocess.ApprovalProcessCallBack_03030206" id="approvalProcessCallBack_03030206"/>
+	
+	<util:map id="approvalProcessCallBackMap">
+		<entry key="03010101" value-ref="approvalProcessCallBack_03010101" />
+		<entry key="03010102" value-ref="approvalProcessCallBack_03010102" />
+		<entry key="03010201" value-ref="approvalProcessCallBack_03010201" />
+		<entry key="03010202" value-ref="approvalProcessCallBack_03010202" />
+		<entry key="03030102" value-ref="approvalProcessCallBack_03030102" />
+		<entry key="020101" value-ref="approvalProcessCallBack_020101" />
+		<entry key="020102" value-ref="approvalProcessCallBack_020102" />
+		<entry key="020103" value-ref="approvalProcessCallBack_020103" />
+		<entry key="020105" value-ref="approvalProcessCallBack_020105" />
+		<entry key="020106" value-ref="approvalProcessCallBack_020106" />
+		<entry key="020107" value-ref="approvalProcessCallBack_020107" />
+		<entry key="020108" value-ref="approvalProcessCallBack_020108" />
+		<entry key="020109" value-ref="approvalProcessCallBack_020109" />
+		<entry key="210104" value-ref="approvalProcessCallBack_210104" />
+		<entry key="210105" value-ref="approvalProcessCallBack_210105" />
+		<entry key="06010101" value-ref="approvalProcessCallBack_06010101" />
+		<entry key="06110201" value-ref="approvalProcessCallBack_06110201" />
+		<entry key="06110301" value-ref="approvalProcessCallBack_06110301" />
+		<entry key="06110304" value-ref="approvalProcessCallBack_06110304" />
+		<entry key="06120201" value-ref="approvalProcessCallBack_06120201" />
+		<entry key="06120202" value-ref="approvalProcessCallBack_06120202" />
+		<entry key="06120401" value-ref="approvalProcessCallBack_06120401" />
+		<entry key="06010103" value-ref="approvalProcessCallBack_06010103"/>
+		<entry key="06110202" value-ref="approvalProcessCallBack_06110202"/>
+		<entry key="03010301" value-ref="approvalProcessCallBack_03010301" />
+		<entry key="03010302" value-ref="approvalProcessCallBack_03010302" />
+		<entry key="06120301" value-ref="approvalProcessCallBack_06120301"/>
+		<entry key="06120302" value-ref="approvalProcessCallBack_06120302"/>
+		<entry key="06120303" value-ref="approvalProcessCallBack_06120303"/>
+		<entry key="03030101" value-ref="approvalProcessCallBack_03030101"/>
+		<entry key="06010102" value-ref="approvalProcessCallBack_06010102"/>
+		<entry key="06120403" value-ref="approvalProcessCallBack_06120403"/>
+		<entry key="061206" value-ref="approvalProcessCallBack_061206"/>
+		<entry key="03030100" value-ref="approvalProcessCallBack_03030100"/>
+		<entry key="06120501" value-ref="approvalProcessCallBack_06120501"/>
+		<entry key="03030202" value-ref="approvalProcessCallBack_03030202"/>
+		<entry key="03030206" value-ref="approvalProcessCallBack_03030206"/>
+	</util:map>
+</beans>

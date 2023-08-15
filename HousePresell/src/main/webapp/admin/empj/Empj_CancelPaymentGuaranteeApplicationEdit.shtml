@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-新增支付保证申请</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+		<style>
+		</style>
+	</head>
+	<body>
+		<div class="content-wrap" id="Empj_CancelPaymentGuaranteeApplicationEditDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				
+				<div class="inline title-btns"  v-show="showButton == true">
+					<button class="btn btn-primary" @click="add()">
+						<img src="../image/detail_btn_ico_save.png" width="18">
+						<span>保存</span>
+					</button>
+					
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">支付保证撤销申请单号：</span>
+							<div class="detail-info6">
+								<div class="detail-unEdit">
+									<input type="text" v-model="empj_PaymentGuarantee.revokeNo" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">开发企业：</span>
+							<div class="detail-info6">
+								<div class="detail-unEdit">
+									<input type="text" v-model="empj_PaymentGuarantee.companyName" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">支付保证出具单位：</span>
+							<div class="detail-info6">
+								<div class="detail-unEdit">
+									<!-- <input type="text" v-model="empj_PaymentGuarantee.guaranteeCompany" class="form-control" disabled="disabled"/> -->
+									<select class="form-control" disabled="disabled" v-model="empj_PaymentGuarantee.guaranteeCompany">
+										<option value="">--请选择--</option>
+										<option value="1">银行</option>
+										<option value="2">保险公司</option>
+										<option value="3">担保公司</option>
+									</select>
+								</div>
+							</div>
+						</div> 
+						
+						<div class="form-group">
+							<span class="detail-text1">撤销项目建设待支付承保金额（元）：</span>
+							<div class="detail-info6">
+								<div class="detail-unEdit">
+									<input type="text" v-model="empj_PaymentGuarantee.actualAmount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作日期：</span>
+							<div class="detail-info6">
+								<div class="detail-unEdit">
+									<input type="text" v-model="empj_PaymentGuarantee.lastUpdateTimeStamp" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">申请日期：</span>
+							<div class="detail-info6">
+								<div class="detail-unEdit">
+									<input type="text" v-model="empj_PaymentGuarantee.applyDate" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">项目名称：</span>
+							<div class="detail-info6">
+								<div class="detail-unEdit">
+									<input type="text" v-model="empj_PaymentGuarantee.projectName" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">支付保证类型：</span>
+							<div class="detail-info6">
+								<div class="detail-unEdit">
+									<input type="text" v-show="empj_PaymentGuarantee.guaranteeType == 1" value="银行支付保证" class="form-control" disabled="disabled" />
+									<input type="text" v-show="empj_PaymentGuarantee.guaranteeType == 2" value="支付保险" class="form-control" disabled="disabled"/>
+									<input type="text" v-show="empj_PaymentGuarantee.guaranteeType == 3" value="支付担保" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">撤销已落实支付保证金额（元）：</span>
+							<div class="detail-info6">
+								<div class="detail-unEdit">
+									<input type="text" v-model="empj_PaymentGuarantee.guaranteedAmount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">审核人：</span>
+							<div class="detail-info6">
+								<div class="detail-unEdit">
+									<input type="text" v-model="empj_PaymentGuarantee.userRecord" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">支付保证申请单号：</span>
+							<div class="detail-info6">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="disabled" v-model="empj_PaymentGuarantee.eCode"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">支付保证单号：</span>
+							<div class="detail-info6">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="disabled" v-model="empj_PaymentGuarantee.guaranteeNo"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">撤销项目建设已实际支付金额（元）：</span>
+							<div class="detail-info6">
+								<div class="detail-unEdit">
+									<input type="text" v-model="empj_PaymentGuarantee.alreadyActualAmount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作人：</span>
+							<div class="detail-info6">
+								<div class="detail-unEdit">
+									<input type="text" v-model="empj_PaymentGuarantee.userUpdate" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">审核日期：</span>
+							<div class="detail-info6">
+								<div class="detail-unEdit">
+									<input type="text" v-model="empj_PaymentGuarantee.recordTimeStamp" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<span class="detail-text1">备注：</span>
+							<div class="detail-info6">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<textarea rows="3" class="form-control" placeholder="请输入备注" v-model="empj_PaymentGuarantee.remark"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--附件材料开始-->
+			<my-uploadcomponent :loaduploadlist="loadUploadList"  :showdelete ="showDelete"  ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+			<!--附件材料结束-->
+			<!-- error modal -->
+			<div class="modal fade" id="ed1Model" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">{{errMsg}}</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!-- success modal -->
+			<div class="modal fade" id="sd1Model" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作成功</div>
+								<div class="del-text2">保存成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		</div>
+		<script src="../components/vue-components.js"></script>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/empj/Empj_CancelPaymentGuaranteeApplicationEdit.js"></script>
+	</body>
+</html>	

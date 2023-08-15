@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="UTF-8">
+    <title>housepresell管理后台-申请表-项目进度巡查</title>
+    <link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+</head>
+<body>
+<div class="content-wrap">
+    <div class="cs-content" id="Empj_ProjProgInspectionListDiv">
+        <!--顶部搜索开始-->
+        <div class="content-top">
+            <div class="pull-left">
+                <div class="top-input">
+                    <div class="inline">
+                        <span>关键字：</span>
+                        <input type="text" class="form-control cs-input"  v-model="keyword" @keyup.enter="search"
+                               placeholder="">
+                    </div>
+                    <div class="inline">
+                        <span>项目：</span>
+                        <vue-listselect defaultname="请选择项目" :thevalue="projectId"
+                                        :optionlist="projectList"
+                                        @callbackfun="changeprojectListener"
+                                        @emptybackfun="changeProjectEmpty"></vue-listselect>
+                    </div>
+                    <button class="btn btn-search" @click="search">搜索</button>
+                    <button class="btn btn-reset" @click="resetSearch">重置</button>
+                </div>
+                <div class="top-btns">
+                    
+                    <!-- <button class="btn btn-primary" @click="mainEditHandle" :disabled="upDisabled" data-editNum="03030203_MOD_01">
+                        <img src="../image/list_btn_ico_edit.png"/>
+                        <span>修改</span>
+                    </button>
+                    <button class="btn btn-info" data-editNum="03030203_OST_01" @click="approvalDetail" :disabled="approvalDisabled">
+                        <img src="../image/list_btn_ico_see.png"/>
+                        <span>审批情况</span>
+                    </button>
+                    <button class="btn btn-danger" data-editNum="03030203_DEL_01" :disabled="delDisabled" @click="delBldLimitAmount">
+                       <img src="../image/list_btn_ico_del.png"/>
+                       <span>删除</span>
+                    </button> -->
+                    <!-- <button class="btn btn-success" @click="exportFun" >
+                        <img src="../image/list_btn_ico_add.png"/>
+                        <span>导出</span>
+                    </button> -->
+                   
+                </div>
+            </div>
+            <div class="pull-right">
+				<div class="top-excel">
+					<button class="btn btn-excel" @click="exportFun">
+						<img src="../image/export_ico_excel.png"/>
+						<span>导出</span>
+					</button>
+				</div>
+			</div>
+            <div class="clearfix"></div>
+        </div>
+        <!--顶部搜索结束-->
+        <!--表格开始-->
+        <div class="cs-table">
+            <div>
+                <el-table :data="empj_ProjProgInspectionList" stripe :default-sort="{prop: 'index'}"
+                          @selection-change="listItemSelectHandle" @sort-change='sortChange'>
+                    <el-table-column type="selection" width="50" fixed></el-table-column>
+                    <el-table-column align="center" type="index" :index="indexMethod" label="序号" width="60" fixed></el-table-column>
+                    <el-table-column prop="areaName" label="区域名称" min-width="200">
+                        <template scope="scope">
+                            <el-button type="text" size="small" @click="mainDetailHandle(scope.row.tableId)">{{scope.row.areaName}}</el-button>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="projectName" label="项目名称" min-width="200" >
+                        <template scope="scope">
+                            <el-button type="text" size="small" @click="mainDetailHandle(scope.row.tableId)">{{scope.row.projectName}}</el-button>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="buildCode" label="楼幢名称" min-width="150" align="center" ></el-table-column>
+                    <el-table-column prop="deliveryType" label="交付类型" min-width="150" align="center" >
+                    	<template scope="scope">
+                            <button v-if="scope.row.deliveryType == '1'" class="btn btn-state-warning">毛坯房</button>
+                            <button v-if="scope.row.deliveryType == '2'" class="btn btn-state-success">成品房</button>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="buildProgress" label="当前建设进度" min-width="150" align="center" >
+                    	<!-- <template scope="scope">
+                            <button v-if="scope.row.determine == '1'" class="btn btn-state-warning">正常</button>
+                            <button v-if="scope.row.determine == '2'" class="btn btn-state-success">延期</button>
+                            <button v-if="scope.row.determine == '3'" class="btn btn-state-success">滞后</button>
+                            <button v-if="scope.row.determine == '4'" class="btn btn-state-danger">停工</button>
+                        </template> -->
+                    </el-table-column>
+                    <el-table-column prop="nowNodeName" label="当前节点名称" min-width="150" align="center" ></el-table-column>
+                    
+                    <!-- <el-table-column prop="forecastCompleteDate" label="预测完成日期" min-width="150" align="center" ></el-table-column> -->
+                    <el-table-column prop="determine" label="进度判定" min-width="200"  align="center" > 
+		             	<template scope="scope">
+                            <button v-if="scope.row.determine == '1'" class="btn btn-state-warning">正常</button>
+                            <button v-if="scope.row.determine == '2'" class="btn btn-state-success">延期</button>
+                            <button v-if="scope.row.determine == '3'" class="btn btn-state-success">滞后</button>
+                            <button v-if="scope.row.determine == '4'" class="btn btn-state-danger">停工</button>
+                        </template>
+		             </el-table-column>
+                    
+                    <el-table-column prop="dataSources" label="数据来源" min-width="150" align="center" ></el-table-column>
+                    <el-table-column prop="updateDateTime" label="更新日期" min-width="150" align="center" ></el-table-column>
+                    
+                </el-table>
+                <vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount"
+                         :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"
+                         v-on:countperpagechange="changeCountPerPage">
+                </vue-nav>
+            </div>
+        </div>
+    </div>
+</div>
+ <script src="../js/tabCommon.js"></script>
+<!-- Pages JS -->
+<script src="../js/admin/empj/Empj_ProjProgInspectionList.js"></script>
+</body>
+</html>	

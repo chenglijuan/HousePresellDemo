@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-退房退款-贷款已结清详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tgpf_RefundInfoDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success"  @click="reFundInfoEditHandle"  v-if="showEditBtn == true">
+						<img src="../image/list_btn_ico_edit.png" width="18">
+						<span>修改</span>
+					</button>
+				</div>
+				<button class="btn btn-primary" @click="reFundInfoSubmitHandle"  v-if="showSubBtn == true">
+					<img src="../image/detail_btn_ico_submit.png" width="18">
+					<span>提交</span>
+				</button>
+				<div class="inline title-btns pull-right">
+					<button class="btn btn-success" @click="exportPdf">
+						<img src="../image/detail_btn_ico_save.png" width="18">
+						<span>打印</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">合同备案号：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.eCodeOfContractRecord" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">房屋坐落：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.positionOfBuilding" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">联系电话：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.contactPhoneOfBuyer" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">总贷款金额（元）：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.fundFromLoan" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">本次退款金额（元）：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.refundAmount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<!--<div class="form-group">
+							<span class="detail-text1">未到期权益金额（元）：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.unexpiredAmount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>-->
+					</div>
+					
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">三方协议号：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.eCodeOfTripleAgreement" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<span class="detail-text1">买受人名称：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.theNameOfBuyer" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">主借款人：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.theNameOfCreditor" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">留存权益总金额（元）：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.retainRightAmount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">项目名称：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.theNameOfProject" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">买受人证件号码：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.certificateNumberOfBuyer" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div> 
+						<div class="form-group">
+							<span class="detail-text1">合同金额（元）：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.fundOfTripleAgreement" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<!--<div class="form-group">
+							<span class="detail-text1">到期权益金额（元）：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.expiredAmount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>-->
+						
+						<div class="form-group">
+							<span class="detail-text1">退款申请编号：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.eCode" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			
+			<!--退款信息开始-->
+			<div class="detail-title">
+				<h1 class="inline">退款信息</h1>
+			</div>
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">收款人类型：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<select class="form-control"  v-model="tgpf_RefundInfoModel.receiverType" disabled="disabled">
+										<option value="1">买受人</option>
+										<option value="2">指定收款人</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">收款账号：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.receiverBankAccount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group"  v-if="indexVue.companyFlag  == true">
+							<span class="detail-text1">实际退款金额（元）：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.actualRefundAmount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">收款人名称：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.receiverName" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group"  v-if="indexVue.companyFlag  == true">
+							<span class="detail-text1">退款账号：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.refundBankAccount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group"  v-if="indexVue.companyFlag  == true">
+							<span class="detail-text1">退款日期：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.refundTimeStamp" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group" >
+							<span class="detail-text1">收款银行：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.receiverBankName" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group"  v-if="indexVue.companyFlag  == true">
+							<span class="detail-text1">退款银行名称：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_RefundInfoModel.refundBankName" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>	
+			<!--退款信息结束-->
+			<!--附件材料开始-->
+			<my-uploadcomponent :loaduploadlist="loadUploadList"  :showdelete ="showDelete"  ref="listenUploadData"></my-uploadcomponent>
+			<!--附件材料结束-->
+			
+			<!-- error modal -->
+			<div class="modal fade" id="edModel" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">{{errMsg}}</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<div class="modal fade" id="sdModelRefundInfoDetail" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作成功</div>
+								<div class="del-text2">保存成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+		</div>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tgpf/Tgpf_RefundInfoDetail.js"></script>
+	</body>
+</html>	

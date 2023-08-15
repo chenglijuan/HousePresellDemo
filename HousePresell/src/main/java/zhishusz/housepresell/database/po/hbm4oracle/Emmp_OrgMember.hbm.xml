@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Emmp_OrgMember" table="Emmp_OrgMember" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_OrgMember</param>
+			</generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Emmp_CompanyInfo" name="company" foreign-key="null">
+			<column name="company">
+				<comment>所属机构组织</comment>
+			</column>
+		</many-to-one>
+		<many-to-one class="Emmp_BankInfo" name="bank" foreign-key="null">
+			<column name="bank">
+				<comment>所属金融机构</comment>
+			</column>
+		</many-to-one>
+		<property name="eCodeOfDepartment">
+			<column name="eCodeOfDepartment">
+				<comment>所属部门编号</comment>
+			</column>
+		</property>
+		<property name="theNameOfDepartment">
+			<column name="theNameOfDepartment">
+				<comment>所属部门名称</comment>
+			</column>
+		</property>
+		<property name="theType">
+			<column name="theType">
+				<comment>类型</comment>
+			</column>
+		</property>
+		<property name="theName">
+			<column name="theName">
+				<comment>用户名</comment>
+			</column>
+		</property>
+		<property name="realName">
+			<column name="realName">
+				<comment>真实姓名</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_BaseParameter" name="parameter" foreign-key="null">
+			<column name="parameter">
+				<comment>基础公用字段 职务</comment>
+			</column>
+		</many-to-one>
+		<property name="positionName">
+			<column name="positionName">
+				<comment>职称</comment>
+			</column>
+		</property>
+		<property name="idType">
+			<column name="idType">
+				<comment>证件类型 S_IDType</comment>
+			</column>
+		</property>
+		<property name="idNumber">
+			<column name="idNumber">
+				<comment>证件号码</comment>
+			</column>
+		</property>
+		<property name="phoneNumber">
+			<column name="phoneNumber">
+				<comment>手机号码</comment>
+			</column>
+		</property>
+		<property name="email">
+			<column name="email">
+				<comment>邮箱</comment>
+			</column>
+		</property>
+		<property name="weixin">
+			<column name="weixin">
+				<comment>微信号</comment>
+			</column>
+		</property>
+		<property name="qq">
+			<column name="qq">
+				<comment>QQ</comment>
+			</column>
+		</property>
+		<property name="address">
+			<column name="address">
+				<comment>地址</comment>
+			</column>
+		</property>
+		<property name="heardImagePath">
+			<column name="heardImagePath">
+				<comment>头像路径</comment>
+			</column>
+		</property>
+		<property name="hasQC">
+			<column name="hasQC">
+				<comment>是否有资质证书</comment>
+			</column>
+		</property>
+		<many-to-one class="Emmp_QualificationInfo" name="qualificationInformation" foreign-key="null">
+			<column name="qualificationInformation">
+				<comment>证书信息</comment>
+			</column>
+		</many-to-one>
+		<property name="remark">
+			<column name="remark" length="4000">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<property name="logId">
+			<column name="logId">
+				<comment>关联日志Id</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

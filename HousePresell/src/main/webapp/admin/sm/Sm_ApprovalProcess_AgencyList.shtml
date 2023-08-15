@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-审批流-待办流程列表</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/admin/sm/Sm_ApprovalProcess_BacklogList.css"/>
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="sm_ApprovalProcess_AgencyListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input"  v-model="keyword" placeholder="请输入业务单号、申请机构、申请人、主题搜索">
+							</div>
+							<div class="inline">
+							    <span>业务类型：</span>
+								<vue-listselect defaultname="全部" :thevalue="busiId" :optionlist="sm_BaseParameterList" @callbackfun="changeBaseParameter" @emptybackfun="emptyBaseParameter"></vue-listselect>
+							</div>
+							<div class="inline">
+								<span>申请日期：</span>
+								<input type="text" value="" class="form-control cs-input-date" id="data0103020101" placeholder="起始日期 ~ 终止日期" />
+								<img src="../image/list_search_calendar.png" class="ico-date"/>
+							</div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="reset">重置</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="sm_ApprovalProcess_WorkflowList" stripe :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle" @sort-change="sortChange">
+							<el-table-column align="center" type="index" :index="indexMethod" label="序号" width="60"></el-table-column>
+							<el-table-column prop="eCode" label="业务单号" min-width="220" sortable='custom'>
+								<template scope="scope">
+									<el-button type="text" size="small" @click="approvalDetail(scope.row.busiType,scope.row.sourceId,scope.row.afId,scope.row.tableId)">{{scope.row.eCode}}</el-button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="theName" label="步骤名称" min-width="220"></el-table-column>
+							<el-table-column prop="theme" label="主题" min-width="420">
+								<template scope="scope">
+									<a class="el-button--text hover" @click="approvalDetail(scope.row.busiType,scope.row.sourceId,scope.row.afId,scope.row.tableId)">{{scope.row.theme}}</a>
+								</template>
+							</el-table-column>
+							<el-table-column prop="busiType" label="业务类型" min-width="200" sortable='custom'></el-table-column>
+							<el-table-column prop="theNameOfCompanyInfo" label="申请机构" width="360" sortable='custom'></el-table-column>
+							<el-table-column prop="beforePerson" label="上步处理人" width="120">
+								<template scope="scope">
+									<a v-if="scope.row.lastApprovalModel == 1" class="progress-rel">
+										<span class="text-info">会签记录</span>
+										<div class="progress-pos">
+											<div class="text-center progress-arrow">
+												<img src="../image/list_ex_arrow.png"/>
+											</div>
+											<div class="progress-cont" v-for="opt in scope.row.lastRecords">
+												<div class="pull-left">
+													<img src="../image/list_ex_point.png"/>
+												</div>
+												<div class="progress-info">
+													<span>处理人：{{opt.userOperate}}</span>
+													<img src="../image/list_ex_tag_agree.png" class="pull-right" v-if="opt.lastAction == 0"/>
+													<img src="../image/list_ex_tag_reject.png" class="pull-right" v-if="opt.lastAction == 1"/>
+													<div class="progress-time">{{opt.operateTimeStamp}}</div>
+												</div>
+											</div>
+											<div class="progress-cont progress-sum">
+												<div class="pull-left">
+													完成阀值：{{scope.row.lastFinishPercentage}}%
+												</div>
+												<div class="pull-right">
+													通过阀值：{{scope.row.lastPassPercentage}}%
+												</div>
+												<div class="clearfix"></div>
+											</div>
+										</div>
+									</a>
+									<div v-else>{{scope.row.beforePerson}}</div>
+								</template>
+							</el-table-column>
+							<el-table-column prop="applicant" label="申请人" width="180"></el-table-column>
+							<el-table-column align="center" prop="createTimeStamp" label="申请日期" width="120" sortable='custom'></el-table-column>
+							<!-- <el-table-column prop="beforePerson" label="上步处理人" width="120">
+								<template scope="scope">
+									<a v-if="scope.row.lastApprovalModel == 1" class="progress-rel">
+										<span class="text-info">会签记录</span>
+										<div class="progress-pos">
+											<div class="text-center progress-arrow">
+												<img src="../image/list_ex_arrow.png"/>
+											</div>
+											<div class="progress-cont" v-for="opt in scope.row.lastRecords">
+												<div class="pull-left">
+													<img src="../image/list_ex_point.png"/>
+												</div>
+												<div class="progress-info">
+													<span>处理人：{{opt.userOperate}}</span>
+													<img src="../image/list_ex_tag_agree.png" class="pull-right" v-if="opt.lastAction == 0"/>
+													<img src="../image/list_ex_tag_reject.png" class="pull-right" v-if="opt.lastAction == 1"/>
+													<div class="progress-time">{{opt.operateTimeStamp}}</div>
+												</div>
+											</div>
+											<div class="progress-cont progress-sum">
+												<div class="pull-left">
+													完成阀值：{{scope.row.lastFinishPercentage}}%
+												</div>
+												<div class="pull-right">
+													通过阀值：{{scope.row.lastPassPercentage}}%
+												</div>
+												<div class="clearfix"></div>
+											</div>
+										</div>
+									</a>
+									<div v-else>{{scope.row.beforePerson}}</div>
+								</template>
+							</el-table-column> -->
+							<el-table-column  align="center" prop="beforeDate" label="上步处理时间" width="180"></el-table-column>
+							<el-table-column prop="nowPerson" label="当前处理人" min-width="150">
+								<template scope="scope">
+							        <a v-if="scope.row.approvalModel == 1" class="progress-rel">
+							        	<span class="text-info">会签记录</span>
+							        	<div class="progress-pos">
+											<div class="text-center progress-arrow">
+												<img src="../image/list_ex_arrow.png"/>
+											</div>
+											<div class="progress-cont" v-for="opt in scope.row.approvalProcess_recordList">
+												<div class="pull-left">
+													<img src="../image/list_ex_point.png"/>
+												</div>
+												<div class="progress-info">
+													<span>处理人：{{opt.userOperate}}</span>
+													<img src="../image/list_ex_tag_agree.png" class="pull-right" v-if="opt.theAction == 0"/>
+													<img src="../image/list_ex_tag_reject.png" class="pull-right" v-if="opt.theAction == 1"/>
+													<div class="progress-time">{{opt.operateTimeStamp}}</div>
+												</div>
+											</div>
+						        			<div class="progress-cont progress-sum">
+						        				<div class="pull-left">
+								        			完成阀值：{{scope.row.finishPercentage}}%
+								        		</div>
+						        				<div class="pull-right">
+								        			通过阀值：{{scope.row.passPercentage}}%
+								        		</div>
+								        		<div class="clearfix"></div>
+						        			</div>
+							        	</div>
+							        </a>
+									<div v-else>{{scope.row.nowPerson}}</div>
+								</template>
+							</el-table-column>
+							<el-table-column align="center" prop="nowState" label="当前状态" width="100">
+								<template scope="scope">
+							        <button class="btn btn-state-warning">待办</button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Pages JS -->
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/sm/Sm_ApprovalProcess_AgencyList.js"></script>
+	</body>
+</html>	

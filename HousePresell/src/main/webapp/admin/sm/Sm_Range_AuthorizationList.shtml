@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-范围授权</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="sm_Range_AuthorizationListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input" v-model="keyword" @keyup.enter="search" placeholder="请输入区域/项目名称/楼幢搜索">
+							</div>
+							<div class="inline">
+								<span>机构名称：</span>
+								<vue-listselect defaultname="请选择机构名称" :thevalue="companyId" :optionlist="emmp_CompanyInfoList" @callbackfun="changeCompany" @emptybackfun="emptyCompany"></vue-listselect>
+							</div>
+							<div class="inline">
+								<span>机构类型：</span>
+								<vue-listselect defaultname="请选择机构类型" :thevalue="forCompanyTypeId" :optionlist="companyTypeList" @callbackfun="changeCompanyType" @emptybackfun="emptyCompanyType"></vue-listselect>
+							</div>
+							<!-- <div class="inline">
+								<span>启用状态：</span>
+								<select class="form-control cs-select">
+									<option value="0">启用</option>
+								</select>
+							</div> -->
+							<div class="inline">
+								<span>授权日期：</span>
+								<input type="text" value="" class="form-control cs-input-date" id="date01010501" placeholder="起始日期 ~ 终止日期" />
+								<img src="../image/list_search_calendar.png" class="ico-date"/>
+							</div>
+							<div class="inline">
+								<span>授权类别：</span>
+								<vue-listsearch defaultname="请选择授权类别" :thevalue="rangeAuthType" :optionlist="rangeAuthTypeList" @callbackfun="changeRangeAuthType" @emptybackfun="emptyRangeAuthType"></vue-listsearch>
+								<!-- <select v-model="rangeAuthType" class="form-control cs-select">
+									<option value="">请选择授权类别</option>
+									<option value="1">区域</option>
+									<option value="2">项目</option>
+									<option value="3">楼幢</option>
+								</select> -->
+							</div>
+							<button class="btn btn-search" @click="refresh">搜索</button>
+							<button class="btn btn-reset" @click="reset">重置</button>
+						</div>
+						<div class="top-btns">
+							<button class="btn btn-success" @click="sm_Permission_RangeAuthAdd" data-editNum="010105_ADD_01">
+								<img src="../image/list_btn_ico_add.png"/>
+								<span>新增</span>
+							</button>
+							<button class="btn btn-primary" @click="sm_Permission_RangeAuthEdit" :disabled="upDisabled" data-editNum="010105_MOD_01">
+								<img src="../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+							<button class="btn btn-info" @click="showLog" data-editNum="010105_LOG_01" :disabled="diabaleShowLog">
+								<img src="../image/list_btn_ico_see.png"/>
+								<span>日志</span>
+							</button>
+							<button class="btn btn-danger" @click="sm_Permission_RangeAuthDel" :disabled="deDisabled" data-editNum="010105_DEL_01">
+								<img src="../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+						</div>
+					</div>
+					<!-- <div class="pull-right text-right">
+						<div class="top-excel">
+							<button class="btn btn-excel" @click="rangeAuthExportExcel">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+					</div> -->
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="sm_Range_AuthorizationList" @sort-change="sortChange"  stripe :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle">
+							<el-table-column align="center" type="selection" width="50"></el-table-column>
+							<el-table-column align="center" type="index" :index="indexMethod" label="序号" width="60" fixed></el-table-column>
+							<el-table-column label="机构类型" min-width="200" sortable="custom" prop="companyType">
+								<template scope="scope">
+									<el-button v-if="scope.row.parameterName != null" type="text" size="small" @click="sm_Permission_RangeAuthDetail(scope.row.tableId)">{{scope.row.parameterName}}</el-button>
+									<el-button v-if="scope.row.parameterName == null" type="text" size="small"></el-button>
+								</template>
+							</el-table-column>
+							<el-table-column label="机构名称" width="360" sortable="custom" prop="companyName">
+								<template scope="scope">
+									<span>{{scope.row.emmp_CompanyInfo.theName}}</span>
+								</template>
+							</el-table-column>
+							<el-table-column label="授权类别" width="130">
+								<template scope="scope">
+									<span v-if="scope.row.rangeAuthType == 1">区域</span>
+									<span v-if="scope.row.rangeAuthType == 2">项目</span>
+									<span v-if="scope.row.rangeAuthType == 3">楼幢</span>
+								</template>
+							</el-table-column>
+							<el-table-column label="区域/项目名称/楼幢" width="600">
+								<template scope="scope">
+									<template v-for="(rangeInfo,index) in scope.row.rangeInfoList">
+										<span v-if="scope.row.rangeInfoList.length　== 1">
+											{{rangeInfo.theName}}
+										</span>
+										<span v-if="scope.row.rangeInfoList.length　!= 1 && index >= 0 && index < scope.row.rangeInfoList.length-1">
+											{{rangeInfo.theName}}、
+										</span>
+										<span v-if="scope.row.rangeInfoList.length　!= 1 && index == scope.row.rangeInfoList.length-1">
+											{{rangeInfo.theName}}
+										</span>
+									</template>
+								</template>
+							</el-table-column>
+							<el-table-column align="center" prop="authTimePeriod" label="授权日期" width="240"></el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/sm/Sm_Range_AuthorizationList.js"></script>
+	</body>
+</html>	

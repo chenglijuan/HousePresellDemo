@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+    <class name="zhishusz.housepresell.database.po.Tgxy_BankaccountTransferLog" table="Tgxy_BankaccountTransferLog" dynamic-update="true"
+           dynamic-insert="true">
+        <id name="tableId">
+            <generator class="sequence">
+                <param name="sequence">Seq_BuildingInfo</param>
+            </generator>
+        </id>
+        <property name="theState">
+            <column name="theState">
+                <comment>删除状态</comment>
+            </column>
+        </property>
+        <property name="userStart">
+            <column name="userStart">
+                <comment>创建人id</comment>
+            </column>
+        </property>
+        <property name="createTimeStamp">
+            <column name="createTimeStamp">
+                <comment>创建时间</comment>
+            </column>
+        </property>
+        <property name="transferTime">
+            <column name="transferTime">
+                <comment>转账日期</comment>
+            </column>
+        </property>
+        <property name="fromId">
+            <column name="fromId">
+                <comment>源id（转出银行）</comment>
+            </column>
+        </property>
+        <property name="fromAccount">
+            <column name="fromAccount">
+                <comment>转出银行账号</comment>
+            </column>
+        </property>
+        <property name="toId">
+            <column name="toId">
+                <comment>目标银行（转入银行）</comment>
+            </column>
+        </property>
+        <property name="toAccout">
+            <column name="toAccout">
+                <comment>转入银行账号</comment>
+            </column>
+        </property>
+        <property name="money">
+            <column name="money">
+                <comment>交易金额</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-合作协议版本管理详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tgxy_CoopAgreementVerMngDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns" v-if="showButton == true">
+					<button  class="btn btn-success" @click="CoopAgreementVerMngEdit">
+						<img src="../image/list_btn_ico_edit.png" width="18">
+						<span>修改</span>
+					</button>
+					<button class="btn btn-primary" @click="SubmitHandle" :disabled="subDissabled">
+						<img src="../image/list_btn_ico_edit.png" width="18">
+						<span>提交</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">协议版本名称：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tgxy_CoopAgreementVerMngModel.theName" class="form-control" />
+								</div>
+							</div>
+						</div>
+						<!--无字段-->
+						<!-- <div class="form-group">
+							<span class="detail-text1">是否启用：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<select class="form-control" disabled="disabled" v-model="tgxy_CoopAgreementVerMngModel.theState1">
+										<option value="0">是</option>
+										<option value="1">否</option>
+									</select>
+								</div>
+							</div>
+						</div> -->
+						<div class="form-group">
+							<span class="detail-text1">启用时间：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tgxy_CoopAgreementVerMngModel.enableTimeStamp" class="form-control"/>
+									<img src="../image/list_search_calendar.png" class="ico-date" />
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作时间：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementVerMngModel.createTimeStamp" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">版本号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tgxy_CoopAgreementVerMngModel.theVersion" class="form-control" />
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">停用时间：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tgxy_CoopAgreementVerMngModel.downTimeStamp" class="form-control" id="downTimeStamp"/>
+									<img src="../image/list_search_calendar.png" class="ico-date" />
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">审核人：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementVerMngModel.userRecord" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">合作协议类型：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<select class="form-control" disabled="disabled" v-model="tgxy_CoopAgreementVerMngModel.theType">
+										<option value="3">全额</option>
+										<option value="4">贷款</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作人：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementVerMngModel.operatorUser" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">审核时间：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementVerMngModel.recordTimeStamp" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--附件材料开始-->
+			<my-uploadcomponent :loaduploadlist="loadUploadList"  :showdelete ="showDelete"  ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+			<!--附件材料结束-->
+			<!-- error modal -->
+			<div class="modal fade" id="errorEscrowAdd" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">{{errtips}}</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!-- success modal -->
+			<div class="modal fade" id="successCoopAgreementVerMngDetail" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div><!-- /.modal结束 -->
+		</div>
+		</div>
+		<script src="../components/vue-components.js"></script>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tgxy/Tgxy_CoopAgreementVerMngDetail.js"></script>
+	</body>
+</html>	

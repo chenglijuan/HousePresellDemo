@@ -1,0 +1,29 @@
+.modal-log{
+	font-size: 15px;
+}
+.modal-log table{
+	table-layout: fixed;
+	border: 1px solid #ddd;
+}
+.modal-log .table>tbody>tr>td{
+	padding: 5px 8px;
+}
+.log-text1{
+	font-size: 14px;
+	font-weight: bold;
+}
+.log-bg1{
+	background: #ededed;
+}
+.log-bg2{
+	background: #feffeb;
+}
+.log-bg2 td{
+	border-left: 1px solid #ddd;
+}
+.log-bg3{
+	background: #fee5e5;
+}
+.log-time{
+	margin-left: 30px;
+}

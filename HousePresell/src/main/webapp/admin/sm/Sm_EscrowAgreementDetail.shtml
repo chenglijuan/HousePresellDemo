@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-托管合作协议-审批</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="sm_EscrowAgreementDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline">
+				    <button v-if="sourcePage != 2" class="btn btn-primary" data-toggle="modal" data-target="#examine" @click="showModal"  data-backdrop="static" data-keyboard=false>
+						<img src="../image/detail_btn_ico_record.png" width="18">
+						<span>审批</span>
+					</button>
+					
+					<!-- <button class="btn btn-primary" @click="editPic" v-if="isEdit == 0" data-editNum="06110201_OST_01" >
+						<img src="../image/list_btn_ico_edit.png" width="18"/>
+						<span>附件上传</span>
+					</button> -->
+					
+					<button class="btn btn-success" @click="savePic" v-if="isEdit == 1" data-editNum="06110201_OST_01">
+						<img src="../image/detail_btn_ico_save.png" width="18">
+						<span>保存</span>
+					</button>
+				</div>
+				<div class="pull-right text-right" @click="exportPdf" >
+					<button class="btn btn-success" >
+						<img src="../image/list_btn_ico_export.png" width="18"/>
+						<span>查看</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">协议编号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_EscrowAgreementModel.eCodeOfAgreement" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">托管机构：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_EscrowAgreementModel.escrowCompany" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<!--<div class="form-group">
+							<span class="detail-text1">施工编号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_EscrowAgreementModel.theNameOfDevelopCompany" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>-->
+						<div class="form-group">
+							<span class="detail-text1">签约申请日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_EscrowAgreementModel.contractApplicationDate" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">协议版本：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_EscrowAgreementModel.agreementVersion" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">所属区域：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="creatCityRegion.theName" class="form-control" disabled/>
+									<!--.theName-->
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">楼幢编号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_EscrowAgreementModel.buildingInfoCodeList" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">开发企业名称：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_EscrowAgreementModel.theNameOfDevelopCompany" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">项目名称：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_EscrowAgreementModel.theNameOfProject" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<!--<div class="form-group">
+							<span class="detail-text1">公安编号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_EscrowAgreementModel.theNameOfProject" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>-->
+						<div class="form-group">
+							<span class="detail-text1">协议状态：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">									
+									<select name="" class="form-control" v-model="tgxy_EscrowAgreementModel.agreementState" disabled>									
+										<option value="0" selected="selected">正常</option>
+										<option value="1">已终止</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<span class="detail-text1">其它约定事项：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_EscrowAgreementModel.OtherAgreedMatters" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">争议解决方式：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<select name=""  v-model="tgxy_EscrowAgreementModel.disputeResolution"  class="form-control" disabled>
+										<option value="1">向常州仲裁委员会申请仲裁</option>
+										<option value="2">向有管辖权的人民法院起诉</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">操作人:</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="creatUserUpdate.theName" class="form-control" disabled/> 
+									<!--.theName-->
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">备案人：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="creatUserRecord.theName" class="form-control" disabled/>
+									<!--.theName-->
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">操作时间:</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_EscrowAgreementModel.lastUpdateTimeStamp" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">协议备案时间：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_EscrowAgreementModel.recordTimeStamp" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--楼幢信息开始-->
+			<div class="detail-title">
+				<h1 class="inline">楼幢信息</h1>
+			</div>
+			<!--表格开始-->
+				<div class="cs-content">
+					<div class="cs-table">
+					
+						<el-table  :data="tgxy_EscrowAgreementDetailList" stripe :default-sort = "{prop: 'index'}">
+						
+							<!-- <el-table-column prop="index" :index="indexMethod" label="序号"  width="90" sortable fixed></el-table-column> -->
+							<el-table-column prop="eCodeFromConstruction" label="施工编号" width=""></el-table-column>
+							<el-table-column prop="deliveryTypeName" label="交付类型" width=""></el-table-column>
+							<el-table-column prop="escrowStandard" label="托管标准" width=""></el-table-column>
+							<!-- <el-table-column prop="recordAvgPriceOfBuilding" label="备案价格（元）" width=""></el-table-column> -->
+							<el-table-column prop="escrowArea" label="托管面积（㎡）" width=""></el-table-column>
+							<!-- <el-table-column prop="orgLimitedAmount" label="初始受限额度（元）" width=""></el-table-column> -->
+							<el-table-column prop="escrowStandardName" label="托管标准版本" width=""></el-table-column>
+							<!-- <el-table-column prop="bldLimitAmountName" label="受限额度版本" width=""></el-table-column> -->						
+							<el-table-column prop="bldLimitAmountName" label="受限额度版本" width="250">
+				                <template scope="scope">
+							        <el-button type="text" size="small" @click="bldLimitAmountDetail(scope.row.bldLimitAmountId)">{{scope.row.bldLimitAmountName}}</el-button>
+								</template>
+				            </el-table-column>
+				            <el-table-column align="center" prop="isAdvanceSale" label="是否预售" width="100" >
+								<template scope="scope">
+									<button  v-if="scope.row.isAdvanceSale == '否'" class="btn btn-state-warning">否</button>
+									<button  v-if="scope.row.isAdvanceSale == '是'" class="btn btn-state-success">是</button>
+								</template>
+							</el-table-column>
+				            <!-- <el-table-column prop="isAdvanceSale" label="是否预售" width=""></el-table-column> -->
+						</el-table>
+					</div>
+				</div>
+			<!--附件材料开始-->
+			<my-uploadcomponent :loaduploadlist="loadUploadList"  :showdelete ="showDelete"  ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+			<!--附件材料结束-->
+			
+			<!-- examine modal -->
+			<!-- <div class="modal fade" id="examine1" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog examine-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+							<h4 class="modal-title csm-title">
+								审批
+							</h4>
+						</div>
+						<div class="modal-body">
+							<div class="examine-body">
+								<ul class="examine-tab nav nav-tabs">
+									<li class="active"><a href="#examineHandle1" data-toggle="tab" @click="selectState = 1">审批处理</a></li>
+									<li><a href="#examinePro1" data-toggle="tab" @click="selectState = 2">审批流程</a></li>
+									<li><a href="#examineRecord1" data-toggle="tab" @click="selectState = 3">审批记录</a></li>
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane fade in active" id="examineHandle1">
+										<div class="row tab-first">
+											<div class="col-md-6">
+												<div class="form-group">
+													<span class="detail-text1">审批人员：</span>
+													<div class="detail-info1">
+														<div class="detail-unEdit">
+															<input type="text" disabled="disabled" class="form-control" v-model="sm_ApprovalProcess_Handle.userOperate">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<span class="detail-text1">审批时间：</span>
+													<div class="detail-info1">
+														<div class="detail-unEdit">
+															<input type="text" disabled="disabled" class="form-control" v-model="sm_ApprovalProcess_Handle.operateTimeStamp">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-12">
+												<div class="form-group">
+													<span class="detail-text1 cs-mt-0">审批结果：</span>
+													<div class="detail-info1">
+														<el-radio-group v-model="sm_ApprovalProcess_Handle.theAction">
+															<el-radio  :label="0">通过</el-radio>
+															<el-radio  :label="1">驳回</el-radio>
+														</el-radio-group>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-12">
+												<div class="form-group">
+													<span class="detail-text1 cs-mt-0">审批评语：</span>
+													<div class="detail-info1">
+														<el-input type="textarea" :autosize="{ minRows: 3}" placeholder="请输入审批评语" v-model="sm_ApprovalProcess_Handle.theContent"></el-input>
+														<div class="attachments2">
+															<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData"></my-uploadcomponent>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade tab-second" id="examinePro1">
+										<el-table :data="sm_ApprovalProcess_WorkflowList" border stripe>
+											<el-table-column type="index" width="80" label="审批步骤" fixed :index='indexMethod'></el-table-column>
+											<el-table-column prop='theName' label="步骤名称"></el-table-column>
+											<el-table-column prop='approvalModel' label="审批模式">
+												<template scope="scope">
+													<span v-if="scope.row.approvalModel == 0">抢占</span>
+													<span v-if="scope.row.approvalModel == 1">会签</span>
+												</template>
+											</el-table-column>
+											<el-table-column prop='operateTimeStamp' label="处理时间" width="150"></el-table-column>
+											<el-table-column prop='busiState' label="审批进度"></el-table-column>
+										</el-table>
+									</div>
+									<div class="tab-pane fade tab-third" id="examineRecord1">
+										<el-table :data="sm_ApprovalProcess_RecordList" border stripe>
+											<el-table-column type="index" width="50" label="序号" :index='indexMethod'></el-table-column>
+											<el-table-column prop='theName' label="步骤名称"></el-table-column>
+											<el-table-column prop='approvalModel' label="审批模式">
+												<template scope="scope">
+													<span v-if="scope.row.approvalModel == 0">抢占</span>
+													<span v-if="scope.row.approvalModel == 1">会签</span>
+												</template>
+											</el-table-column>
+											<el-table-column prop='userOperate' label="处理人"></el-table-column>
+											<el-table-column prop='operateTimeStamp' label="处理时间" width="150"></el-table-column>
+											<el-table-column prop='theAction' label="审批结果">
+												<template scope="scope">
+													<div v-if="scope.row.theAction == 0" class="text-success">同意</div>
+													<div v-if="scope.row.theAction == 1" class="text-danger">驳回</div>
+												</template>
+											</el-table-column>
+											<el-table-column prop='theContent' label="审批评语" width="280"></el-table-column>
+											<el-table-column prop='stepfile' label="附件" width="150">
+												<template scope="scope">
+													<div>
+														<a class="file-name" :title="scope.row.stepfile.theName">{{scope.row.stepfile.theName}}</a>
+														<span class="text-info hover vertical-m">下载</span>
+													</div>
+													<button class="btn btn-all">全部下载</button>
+												</template>
+											</el-table-column>
+										</el-table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer" v-if="selectState == 1">
+							<button type="button" class="btn foot-sure" @click="approvalHandle">
+								确定
+							</button>
+							<button type="button" class="btn foot-cancel" data-dismiss="modal">
+								取消
+							</button>
+						</div>
+					</div>/.modal-content
+				</div>/.modal
+			</div> -->
+			
+			<!-- error modal -->
+			<div class="modal fade" id="errorEscrowAdd1" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">{{errEscrowAdd}}</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" @click="errClose">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div><!-- error modal结束 -->			
+		</div>
+		<script src="../components/vue-components.js"></script>
+		
+		<script src="../js/admin/sm/Sm_EscrowAgreementDetail.js"></script>
+	</body>
+</html>	

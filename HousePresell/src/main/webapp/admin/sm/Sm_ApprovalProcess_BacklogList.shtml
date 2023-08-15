@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-待办事项</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/admin/sm/Sm_ApprovalProcess_BacklogList.css"/>
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="sm_ApprovalProcess_BacklogListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+								<span>关键字：</span>
+								<input type="text" style="width:280px" class="form-control cs-input"  v-model="keyword" placeholder="请输入业务单号、主题、内容进行搜索">
+							</div>
+							<div class="inline">
+							    <span>业务类型：</span>
+								<vue-listselect defaultname="全部" :thevalue="busiId" :optionlist="sm_BaseParameterList" @callbackfun="changeBaseParameter" @emptybackfun="emptyBaseParameter"></vue-listselect>
+							</div>
+							<div class="inline">
+								<span>读取状态：</span>
+								<select  class="form-control cs-select" v-model="isReader" @change="changeIsReader">
+									<option value="">全部</option>
+									<option value="0">未读</option>
+									<option value="1">已读</option>
+								</select>
+							</div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="reset">重置</button>
+						</div>
+						<div class="top-btns">
+							<button class="btn btn-success" @click="sm_ApprovalProcess_BacklogRead" :disabled="readDisabled">
+								<img src="../image/list_btn_ico_mail.png"/>
+								<span>已读</span>
+							</button>
+							<button class="btn btn-danger"@click="sm_ApprovalProcess_BacklogDel" :disabled="delDisabled">
+								<img src="../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+							<!--<button class="btn btn-info">-->
+								<!--<img src="../image/list_btn_ico_confirm.png"/>-->
+								<!--<span>确认办理</span>-->
+							<!--</button>-->
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="sm_ApprovalProcess_BacklogList" stripe :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle">
+							<el-table-column align="center" type="selection"  width="50"></el-table-column>
+							<el-table-column align="center" type="index" :index="indexMethod" label="序号" width="60"></el-table-column>
+							<el-table-column prop="businessNum" label="业务单号" width="220">
+								<template scope="scope">
+									<el-button v-if="scope.row.afId != null" type="text" size="small" @click="approvalDetail(scope.row.busiType,scope.row.sourceId,scope.row.afId,scope.row.currentWorkflowId,scope.row.tableId,scope.row.readState)">{{scope.row.businessNum}}</el-button>
+									<span v-else >{{scope.row.businessNum}}</span>
+								</template>
+							</el-table-column>
+							<el-table-column prop="theme" label="主题" min-width="150">
+								<template scope="scope">
+									<a v-if="scope.row.afId != null" class="el-button--text hover" @click="approvalDetail(scope.row.busiType,scope.row.sourceId,scope.row.afId,scope.row.currentWorkflowId,scope.row.tableId,scope.row.readState)">{{scope.row.theme}}</a>
+									<span v-else >{{scope.row.theme}}</span>
+								</template>
+							</el-table-column>
+							<el-table-column prop="theContent" label="内容" min-width="300"></el-table-column>
+							<el-table-column prop="busiType" label="业务类型" min-width="150"></el-table-column>
+							<el-table-column prop="applyAgency" label="申请机构" width="360"></el-table-column>
+							<el-table-column prop="applicant" label="申请人" width="120"></el-table-column>
+							<el-table-column prop="applyDate" label="申请日期" width="120"></el-table-column>
+							<el-table-column align="center" prop="readState" label="未读/已读" width="100">
+								<template scope="scope">
+									<button  v-if="scope.row.readState == 0" class="btn btn-state-warning text-center">未读</button>
+									<button  v-if="scope.row.readState == 1" class="btn btn-state-success text-center">已读</button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Pages JS -->
+		<script src="../js/admin/sm/Sm_ApprovalProcess_BacklogList.js"></script>
+	</body>
+</html>	

@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Sm_Operate_Log" table="Sm_Operate_Log" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_OperateLog</param>
+			</generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userOperate" foreign-key="null">
+			<column name="userOperate">
+				<comment>操作人员</comment>
+			</column>
+		</many-to-one>
+		<property name="remoteAddress">
+			<column name="remoteAddress">
+				<comment>访问来源IP</comment>
+			</column>
+		</property>
+		<property name="operate">
+			<column name="operate">
+				<comment>操作事项</comment>
+			</column>
+		</property>
+		<property name="inputForm" type="string">
+			<column name="inputForm">
+				<comment>输入参数</comment>
+			</column>
+		</property>
+		<property name="result">
+			<column name="result">
+				<comment>操作结果</comment>
+			</column>
+		</property>
+		<property name="info">
+			<column name="info">
+				<comment>操作结果提示信息</comment>
+			</column>
+		</property>
+		<property name="returnJson" type="string">
+			<column name="returnJson">
+				<comment>返回的Json数据</comment>
+			</column>
+		</property>
+		<property name="startTimeStamp">
+			<column name="startTimeStamp">
+				<comment>操作开始时间</comment>
+			</column>
+		</property>
+		<property name="endTimeStamp">
+			<column name="endTimeStamp">
+				<comment>操作结束时间</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

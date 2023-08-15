@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-申请清单</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="Tgpf_FundOverallPlan_AFListDiv">
+			<div class="cs-content">
+				<!--顶部标题开始-->
+				<div class="content-top">
+					<span>用款申请清单</span>
+				</div>
+				<!--顶部标题结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="tgpf_FundAppropriated_AFList" stripe :default-sort = "{prop: 'index'}">
+							<el-table-column align="center" type="index" :index="indexMethod" label="序号" width="60" fixed></el-table-column>
+							<el-table-column prop="eCode" label="用款申请单号" width="220">
+								<template scope="scope">
+									<el-button type="text" size="small" @click="tgpf_FundAppropriated_AFDetail(scope.row.tableId , scope.row.projectId)">{{scope.row.eCode}}</el-button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="applyDate" label="用款申请日期" min-width="160"></el-table-column>
+							<el-table-column prop="theNameOfProject" label="项目名称" min-width="220"></el-table-column>
+							<el-table-column prop="totalApplyAmount" label="申请总金额" min-width="160" sortable>
+								<template scope="scope">
+									<div class="text-right">{{scope.row.totalApplyAmount}}</div>
+								</template>
+							</el-table-column>
+							<el-table-column align="center"  prop="applyState" label="申请单状态" width="140">
+								<template scope="scope">
+									<button  v-if="scope.row.applyState == 1" class="btn btn-state-danger">申请中</button>
+									<button  v-if="scope.row.applyState == 2" class="btn btn-state-success">已受理</button>
+									<button  v-if="scope.row.applyState == 3" class="btn btn-state-warning">统筹中</button>
+									<button  v-if="scope.row.applyState == 4" class="btn btn-state-warning">已统筹</button>
+									<button  v-if="scope.row.applyState == 5" class="btn btn-state-warning">拨付中</button>
+									<button  v-if="scope.row.applyState == 6" class="btn btn-state-success">已拨付</button>
+									<button  v-if="scope.row.applyState == 9" class="btn btn-state-danger">已撤销</button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" :countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	
+		<!-- Pages JS -->
+		<script src="../js/admin/tgpf/Tgpf_FundOverallPlan_AFList.js"></script>
+	</body>
+</html>	

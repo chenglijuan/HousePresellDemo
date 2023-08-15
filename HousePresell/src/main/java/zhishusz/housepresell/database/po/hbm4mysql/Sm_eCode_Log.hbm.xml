@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Sm_eCode_Log" table="Sm_eCode_Log" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<property name="recordState">
+			<column name="recordState">
+				<comment>备案状态 S_RecordState</comment>
+			</column>
+		</property>
+		<property name="recordRejectReason">
+			<column name="recordRejectReason">
+				<comment>备案驳回原因</comment>
+			</column>
+		</property>
+		<property name="busiCode">
+			<column name="busiCode">
+				<comment>业务编码</comment>
+			</column>
+		</property>
+		<property name="theYear">
+			<column name="theYear">
+				<comment>年份</comment>
+			</column>
+		</property>
+		<property name="theMonth">
+			<column name="theMonth">
+				<comment>月份</comment>
+			</column>
+		</property>
+		<property name="theDay">
+			<column name="theDay">
+				<comment>日期</comment>
+			</column>
+		</property>
+		<property name="ticketCount">
+			<column name="ticketCount">
+				<comment>业务数量</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

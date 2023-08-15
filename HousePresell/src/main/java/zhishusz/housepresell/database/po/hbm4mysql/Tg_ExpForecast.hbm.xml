@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tg_ExpForecast" table="Tg_ExpForecast" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<property name="theDay">
+			<column name="theDay">
+				<comment>日期(工作日)</comment>
+			</column>
+		</property>
+		<property name="theWeek">
+			<column name="theWeek">
+				<comment>星期一到星期日</comment>
+			</column>
+		</property>
+		<property name="payTrendForecast">
+			<column name="payTrendForecast">
+				<comment>支出资金趋势预测（元）</comment>
+			</column>
+		</property>
+		<property name="applyAmount">
+			<column name="applyAmount">
+				<comment>已申请资金拨付（元）</comment>
+			</column>
+		</property>
+		<property name="payableFund">
+			<column name="payableFund">
+				<comment>可拨付金额（元）</comment>
+			</column>
+		</property>
+		<property name="nodeChangePayForecast">
+			<column name="nodeChangePayForecast">
+				<comment>节点变更拨付预测（元）</comment>
+			</column>
+		</property>
+		<property name="handlingFixedDeposit">
+			<column name="handlingFixedDeposit">
+				<comment>正在办理中的定期存款（元）</comment>
+			</column>
+		</property>
+		<property name="payForecast1">
+			<column name="payForecast1">
+				<comment>支出预测1（元）</comment>
+			</column>
+		</property>
+		<property name="payForecast2">
+			<column name="payForecast2">
+				<comment>支出预测2（元）</comment>
+			</column>
+		</property>
+		<property name="payForecast3">
+			<column name="payForecast3">
+				<comment>支出预测3（元）</comment>
+			</column>
+		</property>
+		<property name="payTotal">
+			<column name="payTotal">
+				<comment>支出合计（元）</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Sm_AttachmentCfg" table="Sm_AttachmentCfg" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_AttachmentCfg</param>
+			</generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<property name="busiType">
+			<column name="busiType">
+				<comment>业务类型</comment>
+			</column>
+		</property>
+		<property name="theName">
+			<column name="theName">
+				<comment>附件类型名称</comment>
+			</column>
+		</property>
+		<property name="acceptFileType">
+			<column name="acceptFileType">
+				<comment>可接受文件类型</comment>
+			</column>
+		</property>
+		<property name="acceptFileCount">
+			<column name="acceptFileCount">
+				<comment>可接受文件数量</comment>
+			</column>
+		</property>
+		<property name="maxFileSize">
+			<column name="maxFileSize">
+				<comment>单个文件大小限制（最大）</comment>
+			</column>
+		</property>
+		<property name="minFileSize">
+			<column name="minFileSize">
+				<comment>单个文件大小限制（最小）</comment>
+			</column>
+		</property>
+		<property name="remark">
+			<column name="remark" length="4000">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<property name="isImage">
+			<column name="isImage">
+				<comment>是否是图片</comment>
+			</column>
+		</property>
+		<property name="isNeeded">
+			<column name="isNeeded">
+				<comment>是否必须</comment>
+			</column>
+		</property>
+		<property name="listType">
+			<column name="listType">
+				<comment>附件列表类型</comment>
+			</column>
+		</property>
+		<property name="basetheName">
+			<column name="basetheName">
+				<comment>业务编码名称</comment>
+			</column>
+		</property>
+		<property name="isCfgSignature">
+			<column name="isCfgSignature">
+				<comment>文件是否需要签章 0：否 1：是</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

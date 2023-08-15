@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tg_DepositHouseholdsDtl_View" table="Tg_DepositHouseholdsDtl_View"
+		dynamic-update="true" dynamic-insert="true">
+
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_Tg_DepositHouseholdsDtl_View</param>
+			</generator>
+		</id>
+
+		<property name="eCodeOfContractRecord">
+			<column name="eCodeOfContractRecord">
+				<comment>合同编号</comment>
+			</column>
+		</property>
+
+		<property name="position">
+			<column name="position">
+				<comment>坐落</comment>
+			</column>
+		</property>
+		<property name="buyerName">
+			<column name="buyerName">
+				<comment>买受人名称</comment>
+			</column>
+		</property>
+		<property name="eCodeOfcertificate">
+			<column name="eCodeOfcertificate">
+				<comment>买受人证件号</comment>
+			</column>
+		</property>
+
+		<property name="contactPhone">
+			<column name="contactPhone">
+				<comment>买受人电话</comment>
+			</column>
+		</property>
+
+		<property name="payWay">
+			<column name="payWay">
+				<comment>付款方式</comment>
+			</column>
+		</property>
+
+		<property name="contractCteateState">
+			<column name="contractCteateState">
+				<comment>买卖合同签订与备案状态</comment>
+			</column>
+		</property>
+
+		<property name="contractCreateTime">
+			<column name="contractCreateTime">
+				<comment>买卖合同签订时间</comment>
+			</column>
+		</property>
+		<property name="contractRecordTime">
+			<column name="contractRecordTime">
+				<comment>买卖合同备案时间</comment>
+			</column>
+		</property>
+		<property name="tripleAgreementRecordState">
+			<column name="tripleAgreementRecordState">
+				<comment>三方协议备案状态</comment>
+			</column>
+		</property>
+		<property name="tripleAgreementRecordTime">
+			<column name="tripleAgreementRecordTime">
+				<comment>三方协议备案时间</comment>
+			</column>
+		</property>
+
+		<property name="totalAmountOfHouse">
+			<column name="totalAmountOfHouse">
+				<comment>入账金额</comment>
+			</column>
+		</property>
+
+		<property name="theAmountOfRetainedEquity">
+			<column name="theAmountOfRetainedEquity">
+				<comment>留存权益</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_ProjectInfo" name="projectInfo" foreign-key="null">
+			<column name="projectInfo">
+				<comment>关联项目</comment>
+			</column>
+		</many-to-one>
+		<many-to-one class="Empj_BuildingInfo" name="buildingInfo" foreign-key="null">
+			<column name="buildingInfo">
+				<comment>关联楼幢</comment>
+			</column>
+		</many-to-one>
+
+	</class>
+</hibernate-mapping>

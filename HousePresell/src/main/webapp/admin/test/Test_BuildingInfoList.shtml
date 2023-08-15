@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-楼幢-基础信息</title>
+		<!-- Vendor CSS-->
+		<link rel="stylesheet" href="../../assets/bootstrap-3.3.7/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="../../assets/bootstrap-tab-master/css/font-awesome.css">
+		<link rel="stylesheet" href="../../assets/bootstrap-tab-master/css/bootstrap-tab.css">
+		<!-- Page CSS-->
+		<link rel="stylesheet" type="text/css" href="../../css/main.css"/>
+		<link rel="stylesheet" type="text/css" href="../../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="empj_BuildingInfoListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input" v-model="keyword"  placeholder="请输入施工编号">
+							</div>
+							<div class="inline">
+		                        <span>开发企业：</span>
+		                        <vue-listselect defaultname="请选择开发企业" :thevalue="companyId"
+		                                        :optionlist="companyList"
+		                                        @callbackfun="changeCompanyListener"
+		                                        @emptybackfun="changeCompanyEmpty"></vue-listselect>
+		                    </div>
+		                    <div class="inline">
+		                        <span>项目：</span>
+		                        <vue-listselect defaultname="请选择项目" :thevalue="projectId"
+		                                        :optionlist="projectList"
+		                                        @callbackfun="changeprojectListener"
+		                                        @emptybackfun="changeProjectEmpty"></vue-listselect>
+		                    </div>
+							<div class="inline">
+							    <span>托管状态：</span>
+							    <select  class="form-control cs-select" v-model="escrowState">
+							    	<option value="">请选择托管状态</option>
+							    	<option value="未托管">未托管</option>
+							    	<option value="已托管">已托管</option>
+							    	<option value="申请托管终止">申请托管终止</option>
+							    	<option value="托管终止">托管终止</option>
+							    </select>
+							</div>
+							<div class="inline">
+							    <span>审批状态：</span>
+							    <select  class="form-control cs-select" v-model="approvalStateSearch">
+							    	<option value="">请选择审批状态</option>
+							    	<option value="待提交">待提交</option>
+							    	<option value="审核中">审核中</option>
+							    	<option value="已完结">已完结</option>
+							    </select>
+							</div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="reset">重置</button>
+						</div>
+						<div class="top-btns">
+							<button class="btn btn-success" @click="empj_BuildingInfoAddPageOpen" data-editNum="030102_ADD_01">
+								<img src="../../image/list_btn_ico_add.png"/>
+								<span>新增</span>
+							</button>
+							<button class="btn btn-success" @click="openDialog" data-editNum="030102_IMP_01">
+								<img src="../../image/list_btn_ico_import.png"/>
+								<span>导入</span>
+							</button>
+							<button class="btn btn-primary" @click="empj_BuildingInfoEditPageOpen" v-if="selectItem.length == 1 && approvalState != '审核中'" data-editNum="030102_MOD_01">
+								<img src="../../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+							<button class="btn btn-primary" disabled="disabled" v-if="selectItem.length != 1 || approvalState == '审核中'" data-editNum="030102_MOD_01">
+								<img src="../../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+							<button class="btn btn-info" @click="showLog" data-editNum="030102_LOG_01":disabled="diabaleShowLog">
+								<img src="../../image/list_btn_ico_see.png"/>
+								<span>日志</span>
+							</button>
+							<button class="btn btn-danger" @click="empj_BuildingInfoDelete" v-if="selectItem.length > 0" data-editNum="030102_DEL_01">
+								<img src="../../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+							<button class="btn btn-danger" disabled="disabled" v-if="selectItem.length <= 0" data-editNum="030102_DEL_01">
+								<img src="../../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="empj_BuildingInfoList" stripe :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle" @sort-change='sortChange'>
+							<el-table-column type="selection" width="50" fixed align="center"></el-table-column>
+							<el-table-column type="index" :index="indexMethod" label="序号"  width="60" fixed align="center"></el-table-column>
+							<el-table-column prop="theNameOfProject" label="项目名称" width="200" sortable='custom'></el-table-column>
+							<el-table-column prop="eCodeFromConstruction" label="施工编号" width="200" sortable='custom'>
+								<template scope="scope">
+									<el-button type="text" size="small" @click="empj_BuildingInfoDetailPageOpen(scope.row.tableId)">{{scope.row.eCodeFromConstruction}}</el-button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="eCodeFromPublicSecurity" label="公安编号" width="200"></el-table-column>
+							<el-table-column prop="position" label="楼幢坐落" width="315"></el-table-column>
+							<el-table-column prop="developCompany.theName" label="开发企业名称" width="360" sortable='custom'>
+								<template scope="scope">{{scope.row.developCompanyName}}</template>
+							</el-table-column>
+							<el-table-column prop="buildingArea" label="建筑面积（㎡）" width="140" align="right"></el-table-column>
+							<el-table-column prop="escrowArea" label="托管面积" width="140" align="right"></el-table-column>
+							<el-table-column prop="theNameFromPresellSystem" label="预售项目名称" width="200"></el-table-column>
+							<el-table-column label="业务状态" width="100" align="center">
+								<template scope="scope">
+							        <button  v-if="scope.row.busiState == '未备案'" class="btn btn-state-danger">未备案</button>
+							    	<button  v-if="scope.row.busiState == '已备案'" class="btn btn-state-warning">已备案</button>
+								</template>
+							</el-table-column>
+							<el-table-column label="审批状态" width="100" align="center">
+								<template scope="scope">
+							        <button  v-if="scope.row.approvalState == '待提交'" class="btn btn-state-danger">待提交</button>
+							    	<button  v-if="scope.row.approvalState == '审核中'" class="btn btn-state-warning">审核中</button>
+							    	<button  v-if="scope.row.approvalState == '已完结'" class="btn btn-state-success">已完结</button>
+								</template>
+							</el-table-column>
+							<el-table-column label="托管状态" width="100" align="center">
+								<template scope="scope">
+							        <button  v-if="scope.row.escrowState == '未托管'" class="btn btn-state-danger">未托管</button>
+							    	<button  v-if="scope.row.escrowState == '已托管'" class="btn btn-state-success">已托管</button>
+							    	<button  v-if="scope.row.escrowState == '申请托管终止'" class="btn btn-state-warning">申请托管终止</button>
+							    	<button  v-if="scope.row.escrowState == '托管终止'" class="btn btn-state-danger">托管终止</button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+				
+				<!-- Import modal -->
+				<div class="modal fade" id="Import-modal1" tabindex="-1" role="dialog" aria-hidden="true">
+					<div class="modal-dialog Import-dialog" style="width:75%">
+					    <div class="modal-content" id="loadingBox" style="display:none;text-align:center;position:relative">
+					        <img alt="" src="../../image/loading.jpg" style="position:absolute;margin:auto;top:0;right:0;bottom:0;left:0">
+					    </div>
+						<div class="modal-content" id="buildBox">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									&times;
+								</button>
+								<h4 class="modal-title csm-title">
+									楼幢信息导入
+								</h4>
+							</div>
+							<div class="modal-body Import-body">
+								<div class="inline">
+									<select class="form-control" v-model="localProject">
+										<option value="">请选择本地项目</option>
+										<option v-for="item in projectListByLocal" :value="item.tableId">{{item.theName}}</option>
+									</select>
+								</div>
+								<div class="inline">
+									<select class="form-control" v-model="saleProject">
+										<option value="">请选择预售项目</option>
+										<option v-for="item in projectList" :value="item.pROJECTID">{{item.pROJECTNAME}}</option>
+									</select>
+								</div>
+								<div class="inline">
+								    <input type="text" class="form-control" v-model="eCodeFromConstruction" placeholder="请输入施工编号" value=""/>
+								</div>
+								<div class="inline">
+									<input type="button" value="搜索" class="btn btn-primary" v-if="isSearch1" @click="search1">
+									<input type="button" value="搜索" class="btn btn-primary" v-if="!isSearch1" @click="search1" disabled="disabled">
+								</div>
+								<div class="unImport-table">
+									<div class="unImport-t">未导入列表（{{ noImportNum }}）</div>
+									<el-table :data="unImportList" stripe  @selection-change="handleSelectionChange1" @select-all="allSelect">
+										<el-table-column type="selection" width="37" v-model="selectItem" fixed></el-table-column>
+										<!-- <el-table-column prop="externalId" label="关联主键" min-width=""></el-table-column> -->
+										<!-- <el-table-column prop="remark" label="备注" min-width=""></el-table-column> -->
+										<!-- <el-table-column prop="eCodeOfProjectFromPresellSystem" label="项目编号" min-width=""></el-table-column> -->
+										<el-table-column prop="theNameFromPresellSystem" label="项目名称" min-width=""></el-table-column>
+										<!-- <el-table-column prop="eCodeFromPresellSystem" label="楼幢编号" min-width=""></el-table-column> -->
+										<el-table-column prop="eCodeFromConstruction" label="施工编号" min-width=""></el-table-column>
+										<el-table-column prop="eCodeFromPublicSecurity" label="公安编号" min-width=""></el-table-column>
+										<el-table-column prop="unitNumber" label="单元数" min-width=""></el-table-column>
+										<el-table-column prop="buildingArea" label="建筑面积（㎡）" min-width=""></el-table-column>
+										<el-table-column prop="position" label="楼幢坐落" min-width=""></el-table-column>
+										<el-table-column prop="upfloorNumber" label="地上楼层数" min-width=""></el-table-column>
+										<el-table-column prop="downfloorNumber" label="地下楼层数" min-width=""></el-table-column>
+										<el-table-column prop="endDate" label="竣工日期" min-width=""></el-table-column>
+									</el-table>
+								</div>
+								<div class="Import-table">
+									<div class="import-t">
+										<span>已选择（{{ importNum }}）</span>
+										<span class="text-danger hover pull-right" @click="allEmptyHandle">全部清空</span>
+									</div>
+									<el-table :data="ImportList" stripe>
+										<el-table-column width="37" fixed>
+											<template scope="scope">
+												<div class="hover"><img src="../../image/detail_file_del.png" @click="deleteHandle(scope.$index,scope.row)"/></div>
+											</template>
+										</el-table-column>
+										<!-- <el-table-column prop="eCodeOfProjectFromPresellSystem" label="项目编号" min-width=""></el-table-column> -->
+										<el-table-column prop="theNameFromPresellSystem" label="项目名称" min-width=""></el-table-column>
+										<!-- <el-table-column prop="eCodeFromPresellSystem" label="楼幢编号" min-width=""></el-table-column> -->
+										<el-table-column prop="eCodeFromConstruction" label="施工编号" min-width=""></el-table-column>
+										<el-table-column prop="eCodeFromPublicSecurity" label="公安编号" min-width=""></el-table-column>
+										<el-table-column prop="unitNumber" label="单元数" min-width=""></el-table-column>
+										<el-table-column prop="buildingArea" label="建筑面积（㎡）" min-width=""></el-table-column>
+										<el-table-column prop="position" label="楼幢坐落" min-width=""></el-table-column>
+										<el-table-column prop="upfloorNumber" label="地上楼层数" min-width=""></el-table-column>
+										<el-table-column prop="downfloorNumber" label="地下楼层数" min-width=""></el-table-column>
+										<el-table-column prop="endDate" label="竣工日期" min-width=""></el-table-column>
+									</el-table>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<!-- <div class="subtotal-text">已选择20/50</div> -->
+								<button type="button" class="btn foot-sure" v-if="isSave" @click="save">
+									保存
+								</button>
+								<button type="button" class="btn foot-cancel" data-dismiss="modal">
+									取消
+								</button>
+							</div>
+						</div><!-- /.modal-content -->
+					</div><!-- /.modal -->
+				</div>
+			</div>
+		</div>
+		<script src="../../assets/jquery/jquery.min.js" type="text/javascript"></script>
+		<!-- Pages JS -->
+		<script src="../../assets/vue/vue.min.js" type="text/javascript"></script>
+		<script src="../../assets/element/js/element.js" type="text/javascript"></script>
+		<script src="../../assets/bootstrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="../../assets/bootstrap-tab-master/js/bootstrap-tab.js" type="text/javascript"></script>
+		<script src="../../assets/laydate/laydate.js"></script>
+
+		<!-- Noty Js -->
+		<script src="../../assets/noty/jquery.noty.js"></script>
+		<script src="../../assets/noty/layouts/top.js"></script>
+		<script src="../../assets/noty/layouts/center.js"></script>
+		<script src="../../assets/noty/themes/default.js"></script>
+
+		<!-- Pushlet Js -->
+		<script src="../../assets/pushlet/ajax-pushlet-client.js"></script>
+
+		<script src="../../js/ServerInterface.js"></script>
+		<script src="../../assets/moment/moment.js"></script>
+		<script src="../../js/admin/test/Test_BaseJs.js"></script>
+		<script src="../../js/viewer.min.js"></script>
+
+		<script src="../../components/vue-componentsTest.js"></script>
+
+		<script src="../../js/tabCommon.js"></script>
+		<script src="../../js/admin/test/Test_BuildingInfoList.js"></script>
+	</body>
+</html>	

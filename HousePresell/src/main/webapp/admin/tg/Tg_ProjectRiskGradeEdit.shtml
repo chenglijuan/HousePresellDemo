@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-项目风险日志-修改</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tg_ProjectRiskGradeEditDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="update()">
+						<img src="../image/detail_btn_ico_save.png" width="18">
+						<span>保存</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">项目：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+								    <input disabled @change="handleChange" type="text" v-model="projectId" class="form-control" placeholder=""/>
+									<!-- <select class="form-control" v-model="projectId">
+								     	<option value="">--全部--</option>
+								     	<template v-for="company in projectList" >
+											<option :value="company.tableId">{{company.theName}}</option>
+										</template>
+								   	</select> -->
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">项目风险评级：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+								    <!-- <input disabled type="text" v-model="gradeId" class="form-control" placeholder=""/> -->
+									<select class="form-control" v-model="gradeId">
+									    <option value="0">高</option>
+									    <option value="1">中</option>
+									    <option value="2">低</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作日期：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <input disabled type="text" v-model="userDate" class="form-control" placeholder=""/>
+									<!-- <select class="form-control" v-model="gradeId">
+										<option value="">--全部--</option>
+										<template v-for="option in gradeList">
+											<option :value="option.tableId">{{option.theName}}</option>
+										</template>
+									</select> -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">区域：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+								    <input disabled disabled type="text" v-model="areaId" class="form-control" placeholder=""/>
+									<!-- <select class="form-control" v-model="areaId">
+										<option value="">--全部--</option>
+										<template v-for="option in tg_AreaList">
+											<option :value="option.tableId">{{option.theName}}</option>
+										</template>
+									</select> -->
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">风险评级日期：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<input type="text" id="date2102030203" v-model="asa" class="form-control" placeholder="">
+									<img src="../image/list_search_calendar.png" class="ico-date"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">开发企业：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+								    <input disabled type="text" v-model="buisId" class="form-control" placeholder=""/>
+									<!-- <select class="form-control" v-model="buisId">
+										<option value="">--全部--</option>
+										<template v-for="option in buisList">
+											<option :value="option.tableId">{{option.theName}}</option>
+										</template>
+									</select> -->
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作人：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <input disabled type="text" v-model="user" class="form-control" placeholder=""/>
+									<!-- <select class="form-control" v-model="buisId">
+										<option value="">--全部--</option>
+										<template v-for="option in buisList">
+											<option :value="option.tableId">{{option.theName}}</option>
+										</template>
+									</select> -->
+								</div>
+							</div>
+						</div>
+					</div><br>
+					<div class="col-md-12">
+						<div class="form-group">
+							<span class="detail-text1">项目风险提示：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<textarea type="text" v-model="riskLog" class="form-control" placeholder=""></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--附件材料开始-->
+			<my-uploadcomponent :loaduploadlist="loadUploadList"  :showdelete = "showDelete"  ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+			<!--附件材料结束-->		            
+		</div>
+		
+		<script src="../components/vue-components.js"></script>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tg/Tg_ProjectRiskGradeEdit.js"></script>
+	</body>
+</html>	

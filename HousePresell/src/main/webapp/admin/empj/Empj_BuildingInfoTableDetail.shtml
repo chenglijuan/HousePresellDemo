@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-楼盘表详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/admin/empj/Empj_BuildingInfoTableDetail.css"/>
+		<style>
+		   .el-tabs{
+		      border: 1px solid #d6d6d6;
+		      box-shadow : none;
+		      border-radius:4px;
+		      width:auto!important;
+		   }
+		   .el-tabs__item{
+		      font-size:16px;
+		   }
+		   .el-tabs__content {
+		        width:auto!important;
+		    }
+		</style>
+	</head>
+	<body>
+		<div class="content-wrap" id="empj_BuildingInfoTableDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<div class="inline title-btns">
+					<button class="btn btn-info"  data-toggle="modal" data-target="#business-handling">
+						<img src="../image/building_btn_ico_bag.png">
+						<span>业务办理</span>
+					</button>
+				</div>
+			</div>
+			
+			 <el-tabs type="border-card">
+			  <el-tab-pane label="基本信息">
+			     <template>
+			         <div class="row">
+			            <div class="col-md-4">
+			              <div class="form-group ">
+							<span class="detail-text1">项目名称：</span>
+							<div class="detail-info8">
+								<div class="detail-unEdit">
+									<input disabled="" type="text"  class="form-control" v-model="empj_BuildingInfo.empj_ProjectInfoName"/>
+								</div>
+							</div>
+						   </div>
+						   <div class="form-group ">
+								<span class="detail-text1">预售项目名称：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text"  class="form-control" v-model="empj_BuildingInfo.theNameFromPresellSystem"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">托管标准：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.escrowStandard"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">交付类型：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.parameterName"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">所属区域：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.cityRegionName"/>
+									</div>
+								</div>
+							</div>
+						 </div>
+						<div class="col-md-4">
+			               <div class="form-group ">
+								<span class="detail-text1">开发企业：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.developCompanyName"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">预售证号：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.eCodeFromPresellCert"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">建筑面积（㎡）：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.buildingArea"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">地上层数：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.upfloorNumber"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">项目地址：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.empj_ProjectInfoAddress"/>
+									</div>
+								</div>
+							</div>
+						 </div>
+						 <div class="col-md-4">
+				              <div class="form-group ">
+								<span class="detail-text1">施工编号：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.eCodeFromConstruction"/>
+									</div>
+								</div>
+							  </div>
+							  <div class="form-group ">
+								<span class="detail-text1">公安编号：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.eCodeFromPublicSecurity"/>
+									</div>
+								</div>
+							 </div>
+							<div class="form-group ">
+								<span class="detail-text1">托管面积（㎡）：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.escrowArea"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">地下层数：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.downfloorNumber"/>
+									</div>
+								</div>	
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">土地抵押状态：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<div class="form-control">
+											<button v-if="empj_BuildingInfo.landMortgageState == 1" class="btn btn-state-success cs-pt-0 cs-pb-0">有</button>
+											<!-- <button v-if="empj_BuildingInfo.landMortgageState == 0" class="btn btn-state-success cs-pt-0 cs-pb-0">无</button> -->
+										</div>
+									</div>
+								</div>
+							</div>
+						 </div>
+			         </div>
+			     </template> 
+			  </el-tab-pane>
+			  <el-tab-pane label="楼幢托管信息">
+			     <template>
+			        <div class="row">
+			            <div class="col-md-4">
+				            <div class="form-group ">
+								<span class="detail-text1">物价备案均价（元）：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.recordAvgPriceOfBuilding"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">当前形象进度：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text"  class="form-control" v-model="tgpj_BuildingAccount.currentFigureProgress"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">是否支付保证：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.isSupportPGS"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">支付保证累计金额（元）：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="tgpj_BuildingAccount.totalAmountGuaranteed"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">节点受限额度（元）：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="tgpj_BuildingAccount.nodeLimitedAmount"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">总入账金额（元）：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="tgpj_BuildingAccount.totalAccountAmount"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">当前托管余额（元）：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="tgpj_BuildingAccount.currentEscrowFund"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">退款申请未拨付金额（元）：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="tgpj_BuildingAccount.applyRefundPayoutAmount"/>
+									</div>
+								</div>
+							</div>
+			            </div>
+			            <div class="col-md-4">
+			               <div class="form-group ">
+								<span class="detail-text1">托管标准：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.escrowStandard"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">当前受限比列（%）：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="tgpj_BuildingAccount.currentLimitedRatio"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">支付保证上限比列（%）：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.paymentLines"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">已实际支付金额（元）：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.buildAmountPaid" />
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">现金受限额度（元）：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="tgpj_BuildingAccount.cashLimitedAmount"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">溢出金额（元）：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="tgpj_BuildingAccount.spilloverAmount"/>
+									</div>
+								</div>
+							</div>
+							
+							<div class="form-group ">
+								<span class="detail-text1">已申请未拨付金额（元）：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text"  class="form-control" v-model="tgpj_BuildingAccount.appliedNoPayoutAmount"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">已退款金额（元）：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="tgpj_BuildingAccount.refundAmount"/>
+									</div>
+								</div>
+							</div>
+			            </div>
+			            <div class="col-md-4">
+			                <div class="form-group ">
+								<span class="detail-text1">初始受限额度（元）：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="tgpj_BuildingAccount.orgLimitedAmount"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">托管状态：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<!-- <div class="form-control">
+											<button class="btn btn-state-danger cs-pt-0 cs-pb-0" v-if="empj_BuildingInfo.escrowState == 0">未托管</button>
+											<button class="btn btn-state-success cs-pt-0 cs-pb-0" v-if="empj_BuildingInfo.escrowState == 1">已托管</button>
+											<button class="btn btn-state-warning cs-pt-0 cs-pb-0" v-if="empj_BuildingInfo.escrowState == 2">申请托管终止</button>
+											<button class="btn btn-state-danger cs-pt-0 cs-pb-0" v-if="empj_BuildingInfo.escrowState == 3">托管终止</button>
+										</div> -->
+										<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.escrowState"/>
+										
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">支付保证封顶额度（元）：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text"  class="form-control" v-model="tgpj_BuildingAccount.paymentProportion"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">待支付承包金额（元）：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text"  class="form-control" v-model="empj_BuildingInfo.buildAmountPay" />
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">有效受限额度（元）：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text"  class="form-control" v-model="tgpj_BuildingAccount.effectiveLimitedAmount"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">可拨付金额（元）：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text"  class="form-control" v-model="tgpj_BuildingAccount.allocableAmount"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group ">
+								<span class="detail-text1">已拨付金额（元）：</span>
+								<div class="detail-info8">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="tgpj_BuildingAccount.payoutAmount"/>
+									</div>
+								</div>
+							</div>
+							
+			            </div>
+			        </div>
+			     </template>
+			  </el-tab-pane>
+			  <el-tab-pane label="户托管信息">
+			     <template>
+			        <div class="cs-table">
+					<div>
+						<el-table :data="Tg_DepositHouseholdsDtl_View" stripe :default-sort = "{prop: 'index'}">
+							<el-table-column type="index" :index="indexMethod" label="序号" width="60" fixed></el-table-column>
+							
+							<el-table-column prop="eCodeOfContractRecord" label="合同编号" width="240"></el-table-column>
+							<el-table-column prop="position" label="坐落" width="540"></el-table-column>
+							<el-table-column prop="buyerName" label="买受人姓名" width="280"></el-table-column>
+							<el-table-column prop="eCodeOfcertificate" label="买受人证件号" width="370"></el-table-column>
+							<el-table-column prop="contactPhone" label="买受人电话" width="370"></el-table-column>
+							<el-table-column prop="payWay" label="付款方式" width="140">
+							    <template scope="scope">
+									<button  v-if="scope.row.payWay == '1'" class="btn btn-state-warning">一次性付款</button>
+							        <button  v-if="scope.row.payWay == '2'" class="btn btn-state-warning">分期付款</button>
+							        <button  v-if="scope.row.payWay == '3'" class="btn btn-state-warning">贷款方式付款</button>
+							        <button  v-if="scope.row.payWay == '4'" class="btn btn-state-warning">其他方式</button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="contractCteateState" label="买卖合同签订与备案状态" width="100">
+								 <template scope="scope">
+									<button  v-if="scope.row.contractCteateState == 1" class="btn btn-state-warning">已草签</button>
+							        <button  v-if="scope.row.contractCteateState == 2" class="btn btn-state-warning">已签订</button>
+							        <button  v-if="scope.row.contractCteateState == 3" class="btn btn-state-warning">待备案</button>
+							        <button  v-if="scope.row.contractCteateState == 4" class="btn btn-state-warning">已备案</button>
+							        <button  v-if="scope.row.contractCteateState == 5" class="btn btn-state-warning">已注销</button>
+							        <button  v-if="scope.row.contractCteateState == 6" class="btn btn-state-warning">已修改</button>
+							        <button  v-if="scope.row.contractCteateState == 99" class="btn btn-state-warning">未签订</button>
+								 </template>
+							</el-table-column>
+							<el-table-column prop="contractCreateTime" label="买卖合同签订时间" width="120"></el-table-column>
+							<el-table-column prop="contractRecordTime" label="买卖合同备案时间" width="120"></el-table-column>
+							<el-table-column prop="tripleAgreementRecordState" label="三方协议备案状态" width="100">
+								<template scope="scope">
+									<button  v-if="scope.row.tripleAgreementRecordState == 0" class="btn btn-state-warning">未备案</button>
+							        <button  v-if="scope.row.tripleAgreementRecordState == 1" class="btn btn-state-warning">已备案</button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="tripleAgreementRecordTime" label="三方协议备案时间" width="120"></el-table-column>
+							<el-table-column prop="totalAmountOfHouse" label="入账金额（元）" width="140"></el-table-column>
+							<el-table-column prop="theAmountOfRetainedEquity" label="留存权益（元）" width="140"></el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			     </template>
+			  </el-tab-pane>
+			</el-tabs>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content" style="margin-top:20px">
+				<!-- <div class="row">
+					<div class="col-md-4">
+						
+						<div class="form-group ">
+							<span class="detail-text1">预售楼幢编号：</span>
+							<div class="detail-info8">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.eCodeFromPresellSystem"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group ">
+							<span class="detail-text1">支付保证上限比例：</span>
+							<div class="detail-info8">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.paymentLines"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group ">
+							<span class="detail-text1">楼幢备案均价：</span>
+							<div class="detail-info8">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.recordAvgPriceOfBuilding"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作日期：</span>
+							<div class="detail-info8">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.lastUpdateTimeStamp"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group ">
+							<span class="detail-text1">已落实金额：</span>
+							<div class="detail-info8">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.totalAmountGuaranteed"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">备案人：</span>
+							<div class="detail-info8">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.userRecordName"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						
+						<div class="form-group ">
+							<span class="detail-text1">预售项目编号：</span>
+							<div class="detail-info8">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.eCodeOfProjectFromPresellSystem"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group ">
+							<span class="detail-text1">操作人：</span>
+							<div class="detail-info8">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.userUpdateName"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">备案日期：</span>
+							<div class="detail-info8">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfo.recordTimeStamp"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> -->
+				<!--基本信息结束-->
+				
+				<div class="form-group building-btn" style="position:relative">
+					<button v-bind:class="{'building-active': empj_BuildingInfo.tableId == clickBuildingId}" @click="getBuildingDetail(empj_BuildingInfo.tableId)" class="btn btn-default" v-for="empj_BuildingInfo in empj_BuildingInfoList">{{empj_BuildingInfo.eCodeFromConstruction}}</button>
+					 <div style="position:absolute;z-index: 9;right: 0px;display: inline-block;cursor: pointer" onclick="showBuildFullScreen()"><img src="../image/full-screen.png" width="34" height="34"/></div>
+				</div>
+				<div  class="form-group building-tip">
+					<div class="inline">
+						<span class="building-bg bg0"></span>
+						<span class="vertical-m">已搭建</span>
+					</div>
+					<div class="inline">
+						<span class="building-bg bg1"></span>
+						<span class="vertical-m">已批准预售</span>
+					</div>
+					<div class="inline">
+						<span class="building-bg bg2"></span>
+						<span class="vertical-m">合同已签订</span>
+					</div>
+					<div class="inline">
+						<span class="building-bg bg3"></span>
+						<span class="vertical-m">合同已备案</span>
+					</div>
+					<div class="inline">
+						<span class="building-bg bg4"></span>
+						<span class="vertical-m">已办产权</span>
+					</div>
+					<div class="inline">
+						<img src="../image/building_ico_sealed.png"/>
+						<span class="vertical-m">查封</span>
+					</div>
+					<div class="inline">
+						<img src="../image/building_ico_limit.png"/>
+						<span class="vertical-m">限制</span>
+					</div>
+					<div class="inline">
+						<img src="../image/building_ico_dispose.png"/>
+						<span class="vertical-m">处置</span>
+					</div>
+				</div>
+				<div class="building-list">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th><div class="building-text2 text-center">楼层</div></th>
+								<th :colspan="erfloorHouseCount" class="text-center">户号</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="empj_BuildingTableTemplate in empj_BuildingTableTemplateList">
+								<td class="font-bold text-center">{{empj_BuildingTableTemplate.floor}}</td>
+								<td @click.right="openRightModel(empj_HouseInfo.tableId, $event)" v-for="empj_HouseInfo in empj_BuildingTableTemplate.empj_HouseInfoList" :colspan="empj_HouseInfo.colSpan" :rowspan="empj_HouseInfo.rowSpan" :class="{ bg0:empj_HouseInfo.busiState == '1', bg1:empj_HouseInfo.busiState == '2', bg2:empj_HouseInfo.busiState == '3', bg3:empj_HouseInfo.busiState == '4', bg4:empj_HouseInfo.busiState == '5',}">
+									<div class="house-links" :id="'div_'+empj_HouseInfo.tableId">
+										<div class="house-shadow">
+											<a href="##" @click="linkToTripleAgreementForUnitAdd(empj_HouseInfo.tableId)" data-editNum="0302_OST_09">贷款三方托管协议签署</a>
+											<a href="##" @click="linkToRefundInfo(empj_HouseInfo.tableId)" data-editNum="0302_OST_10">退房退款（贷款已结清）</a>
+											<a href="##" @click="linkTo_RefundInfoUncleared(empj_HouseInfo.tableId)" data-editNum="0302_OST_11">退房退款（贷款未结清）</a>
+										</div>
+									</div>
+									<div class="building-info" @click="openHouseModal(empj_HouseInfo.tableId)">
+								        <div class="building-text1">
+								        	<span class="font-bold unit-color">{{empj_HouseInfo.unitName}}{{empj_HouseInfo.roomId}}</span>
+								        	<div class="pull-right">
+									        	<img v-if="empj_HouseInfo.isSequestration == '1'" src="../image/building_ico_sealed.png"/>
+									        	<img v-if="empj_HouseInfo.isLimit == '1'" src="../image/building_ico_limit.png"/>
+									        	<img v-if="empj_HouseInfo.isManagement == '1'" src="../image/building_ico_dispose.png"/>
+								        	</div>
+								        	<div class="clearfix"></div>
+								        </div>
+								        <div v-if="empj_HouseInfo.theStateOfTripleAgreement == '0'" class="unit-color">三方协议状态：未打印</div>
+								        <div v-if="empj_HouseInfo.theStateOfTripleAgreement == '1'" class="unit-color">三方协议状态：已打印未上传</div>
+								        <div v-if="empj_HouseInfo.theStateOfTripleAgreement == '2'" class="unit-color">三方协议状态：已上传</div>
+								        <div v-if="empj_HouseInfo.theStateOfTripleAgreement == '3'" class="unit-select">三方协议状态：已备案</div>
+								        <div v-if="empj_HouseInfo.theStateOfTripleAgreement == '4'" class="unit-color">三方协议状态：备案退回</div>
+								        <div v-if="empj_HouseInfo.theStateOfTripleAgreement == '未签署'" class="unit-color">三方协议状态：未签署</div>
+								        <div v-if="empj_HouseInfo.capitalState == '已到账'" class="unit-select">托管资金状态：已到账</div>
+								        <div v-if="empj_HouseInfo.capitalState == '未到账'" class="unit-color">托管资金状态：未到账</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="table table-bordered building-car" v-if="empj_GarageTableTemplateList != null && empj_GarageTableTemplateList.length != 0">
+						<thead>
+							<tr>
+								<th><div class="building-text2 text-center">地下</div></th>
+								<th :colspan="erfloorGarageCount" class="text-center">车库</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="empj_GarageTableTemplate in empj_GarageTableTemplateList">
+								<td class="font-bold text-center">{{empj_GarageTableTemplate.floor}}</td>
+								<td v-for="empj_Garage in empj_GarageTableTemplate.empj_HouseInfoList" :colspan="empj_Garage.mergedNums" :rowspan="empj_Garage.overFloors" :class="{ bg0:empj_Garage.busiState == '1', bg1:empj_Garage.busiState == '2', bg2:empj_Garage.busiState == '3', bg3:empj_Garage.busiState == '4', bg4:empj_Garage.busiState == '5',}">
+									<div class="building-info">
+								        <div class="building-text1">
+								        	<span class="font-bold">{{empj_Garage.unitName}}{{empj_Garage.roomId}}</span>
+								        	<div class="pull-right">
+									        	<img v-if="empj_Garage.isSequestration == '1'" src="../image/building_ico_sealed.png"/>
+									        	<img v-if="empj_Garage.isLimit == '1'" src="../image/building_ico_limit.png"/>
+									        	<img v-if="empj_Garage.isManagement == '1'" src="../image/building_ico_dispose.png"/>
+								        	</div>
+								        	<div class="clearfix"></div>
+								        </div>
+								        <div v-if="empj_Garage.actualArea != null">车库面积：{{empj_Garage.actualArea}}㎡</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- house-info modal -->
+				<div class="modal fade" id="house-info" tabindex="-1" role="dialog" aria-hidden="true">
+					<div class="modal-dialog building-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" @click="closeHouseInfo" aria-hidden="true"><!-- data-dismiss="modal" -->
+									&times;
+								</button>
+								<h4 class="modal-title csm-title">
+									{{houseConstructioneCode}}{{houseUniteCode}}{{houseRoomId}}
+								</h4>
+							</div>
+							<div class="modal-body csm-body">
+								<div class="info-title">户基本信息</div>
+								<!-- <el-table :data="houseDetailInfoList" border>
+									<el-table-column prop="position" label="户施工坐落" min-width="320"></el-table-column>
+									<el-table-column prop="roomId" label="房间号" width="100"></el-table-column>
+									<el-table-column prop="actualArea" label="建筑面积（㎡）" width="140"></el-table-column>
+									<el-table-column prop="shareConsArea" label="分摊面积（㎡）" width="140"></el-table-column>
+									<el-table-column prop="innerconsArea" label="套内面积（㎡）" width="140"></el-table-column>
+									<el-table-column prop="unitInfo.theName" label="单元号" width="90"></el-table-column>
+									<el-table-column prop="floor" label="所在楼层" width="120"></el-table-column>
+									<el-table-column prop="purpose" label="房屋用途" width="120"></el-table-column>
+									<el-table-column prop="busiState" label="房屋状态" width="120">
+										<template scope="scope">
+									        <div v-if="scope.row.busiState == 1" class="text-success">已搭建</div>
+									        <div v-if="scope.row.busiState == 2" class="text-success">已批准预售</div>
+									        <div v-if="scope.row.busiState == 3" class="text-success">合同已签订</div>
+									        <div v-if="scope.row.busiState == 4" class="text-success">合同已备案</div>
+									        <div v-if="scope.row.busiState == 5" class="text-success">已办产权</div>
+										</template>
+									</el-table-column>
+									<el-table-column prop="recordPrice" label="户物价备案价格" width="150"></el-table-column>
+								</el-table> -->
+							   <div class="cs-content detail-content" style="margin-top: 20px;">
+								<div class="row">
+								    <div class="col-md-4">
+							              <div class="form-group ">
+												<span class="detail-text1">户施工坐落：</span>
+												<div class="detail-info1">
+													<div class="detail-unEdit">
+														<input disabled="" type="text"  class="form-control" v-model="empj_HouseInfo.position"/>	
+													</div>
+												</div>
+										   </div>
+										    <div class="form-group ">
+												<span class="detail-text1">建筑面积（㎡）：</span>
+												<div class="detail-info1">
+													<div class="detail-unEdit">
+														<input disabled="" type="text"  class="form-control" v-model="empj_HouseInfo.actualArea"/>	
+													</div>
+												</div>
+										   </div>
+										   <div class="form-group ">
+												<span class="detail-text1">所在楼层：</span>
+												<div class="detail-info1">
+													<div class="detail-unEdit">
+														<input disabled="" type="text"  class="form-control" v-model="empj_HouseInfo.floor"/>	
+													</div>
+												</div>
+										   </div>
+										   <div class="form-group ">
+												<span class="detail-text1">户物价备案价格：</span>
+												<div class="detail-info1">
+													<div class="detail-unEdit">
+														<input disabled="" type="text"  class="form-control" v-model="empj_HouseInfo.recordPrice"/>	
+													</div>
+												</div>
+										   </div>
+									 </div>
+									 <div class="col-md-4">
+							              <div class="form-group ">
+												<span class="detail-text1">房间号：</span>
+												<div class="detail-info1">
+													<div class="detail-unEdit">
+														<input disabled="" type="text"  class="form-control" v-model="empj_HouseInfo.roomId"/>	
+													</div>
+												</div>
+										   </div>
+										    <div class="form-group ">
+												<span class="detail-text1">分摊面积（㎡）：</span>
+												<div class="detail-info1">
+													<div class="detail-unEdit">
+														<input disabled="" type="text"  class="form-control" v-model="empj_HouseInfo.shareConsArea"/>	
+													</div>
+												</div>
+										   </div>
+										   <div class="form-group ">
+												<span class="detail-text1">房屋用途：</span>
+												<div class="detail-info1">
+													<div class="detail-unEdit">
+														<input disabled="" v-if="empj_HouseInfo.purpose == 1" type="text"  class="form-control" value="住宅"/>	
+														<input disabled="" v-if="empj_HouseInfo.purpose == 3" type="text"  class="form-control" value="商业"/>	
+														<input disabled="" v-if="empj_HouseInfo.purpose == 4" type="text"  class="form-control" value="办公"/>	
+														<input disabled="" v-if="empj_HouseInfo.purpose == 5" type="text"  class="form-control" value="车库"/>	
+														<input disabled="" v-if="empj_HouseInfo.purpose == 9" type="text"  class="form-control" value="其他"/>	
+														<!-- <input disabled="" type="text"  class="form-control" v-model="empj_HouseInfo.purpose"/>	 -->
+													</div>
+												</div>
+										   </div>
+									 </div>
+									 <div class="col-md-4">
+							              <div class="form-group ">
+												<span class="detail-text1">单元号：</span>
+												<div class="detail-info1">
+													<div class="detail-unEdit">
+														<input disabled="" type="text"  class="form-control" v-model="empj_HouseInfo.unitInfo.theName"/>	
+													</div>
+												</div>
+										   </div>
+										    <div class="form-group ">
+												<span class="detail-text1">套内面积（㎡）：</span>
+												<div class="detail-info1">
+													<div class="detail-unEdit">
+														<input disabled="" type="text"  class="form-control" v-model="empj_HouseInfo.innerconsArea"/>	
+													</div>
+												</div>
+										   </div>
+										   <div class="form-group ">
+												<span class="detail-text1">房屋状态：</span>
+												<div class="detail-info1">
+													<div class="detail-unEdit">
+													    <input disabled="" v-if="empj_HouseInfo.busiState == 1" type="text"  class="form-control" value="已搭建"/>	
+													    <input disabled="" v-if="empj_HouseInfo.busiState == 2" type="text"  class="form-control" value="已批准预售"/>	
+													    <input disabled="" v-if="empj_HouseInfo.busiState == 3" type="text"  class="form-control" value="合同已签订"/>	
+													    <input disabled="" v-if="empj_HouseInfo.busiState == 4" type="text"  class="form-control" value="合同已备案"/>	
+													    <input disabled="" v-if="empj_HouseInfo.busiState == 5" type="text"  class="form-control" value="已办产权"/>	
+														<!-- <div v-if="empj_HouseInfo.busiState == 1" class="text-success">已搭建</div>
+												        <div v-if="empj_HouseInfo.busiState == 2" class="text-success">已批准预售</div>
+												        <div v-if="empj_HouseInfo.busiState == 3" class="text-success">合同已签订</div>
+												        <div v-if="empj_HouseInfo.busiState == 4" class="text-success">合同已备案</div>
+												        <div v-if="empj_HouseInfo.busiState == 5" class="text-success">已办产权</div>	 -->
+													</div>
+												</div>
+										   </div>
+									 </div>
+								</div>
+								</div>
+								<div class="info-title">户合同信息</div>
+								<el-table :data="houseDetailInfoList" border>
+									<el-table-column prop="eCodeOfContractRecord" label="合同备案号" width="220"></el-table-column>
+									<el-table-column label="合同状态" width="120" align="center">
+										<template scope="scope">
+									        <div v-if="scope.row.contractBusiState == '0'" class="text-success">未备案</div>
+									        <div v-if="scope.row.contractBusiState == '1'" class="text-success">已备案</div>
+										</template>
+									</el-table-column>
+									<el-table-column prop="contractSumPrice" label="合同总价（元）" width="140"></el-table-column>
+									<el-table-column prop="contractSignDate" label="合同签订日期" width="120"></el-table-column>
+									<el-table-column label="付款信息">
+									    <el-table-column label="付款方式" width="140">
+									         <template scope="scope">
+										        <div v-if="scope.row.paymentMethod == '1'">一次性付款</div>
+										        <div v-if="scope.row.paymentMethod == '2'">分期付款</div>
+										        <div v-if="scope.row.paymentMethod == '3'">贷款方式付款</div>
+										        <div v-if="scope.row.paymentMethod == '4'">其他方式</div>
+										      </template>
+									    </el-table-column>
+									    <el-table-column label="首付款" width="140">
+									         <template scope="scope">
+									             <div>{{scope.row.firstPaymentAmount}}</div>
+									         </template>
+									    </el-table-column>
+									    <el-table-column label="贷款金额" width="140">
+									        <template scope="scope">
+										        <div>{{scope.row.loanAmount}}</div>
+											</template>
+									    </el-table-column>
+									</el-table-column>
+									<el-table-column prop="payDate" label="交付日期" width="120"></el-table-column>
+									<el-table-column prop="tgxy_BuyerInfoList" label="买受人信息">
+									    <el-table-column label="姓名" width="120">
+									      <template scope="scope">
+									         <template v-for="tgxy_BuyerInfo in scope.row.tgxy_BuyerInfoList">
+												<div>{{tgxy_BuyerInfo.buyerName}}</div>
+										     </template>
+										    </template>
+									    </el-table-column>
+									    <el-table-column label="身份证" width="220">
+									      <template scope="scope">
+									         <template v-for="tgxy_BuyerInfo in scope.row.tgxy_BuyerInfoList">
+												<div>{{tgxy_BuyerInfo.eCodeOfcertificate}}</div>
+										     </template>
+										   </template>
+									    </el-table-column>
+									    <el-table-column label="联系电话" width="160">
+									     <template scope="scope">
+									         <template v-for="tgxy_BuyerInfo in scope.row.tgxy_BuyerInfoList">
+												<div>{{tgxy_BuyerInfo.contactPhone}}</div>
+										     </template>
+										  </template>
+									    </el-table-column>
+										<!-- <template scope="scope">
+											<temlate v-for="tgxy_BuyerInfo in scope.row.tgxy_BuyerInfoList">
+												<div>姓名：{{tgxy_BuyerInfo.buyerName}}</div>
+										        <div>身份证：{{tgxy_BuyerInfo.eCodeOfcertificate}}</div>
+										        <div>联系电话：{{tgxy_BuyerInfo.contactPhone}}</div>
+											</temlate>
+										</template> -->
+									</el-table-column>
+								</el-table>
+								<div class="info-title">户三方协议信息</div>
+								<el-table :data="houseDetailInfoList" border>
+									<el-table-column prop="eCodeOfTripleAgreement" label="三方协议号" width="220"></el-table-column>
+									<el-table-column prop="tripleAgreementTimeStamp" label="协议日期" width="120"></el-table-column>
+									<el-table-column prop="eCodeOfTAContractRecord" label="合同备案号" width="220"></el-table-column>
+									<el-table-column label="三方协议状态" align="center">
+										<template scope="scope">
+									        <div v-if="scope.row.theStateOfTripleAgreement == 0" class="text-success">未打印</div>
+									        <div v-if="scope.row.theStateOfTripleAgreement == 1" class="text-success">已打印未上传</div>
+									        <div v-if="scope.row.theStateOfTripleAgreement == 2" class="text-success">已上传</div>
+									        <div v-if="scope.row.theStateOfTripleAgreement == 3" class="text-success">已备案</div>
+									        <div v-if="scope.row.theStateOfTripleAgreement == 4" class="text-success">备案退回</div>
+										</template>
+									</el-table-column>
+									<el-table-column prop="theStateOfTripleAgreementFiling" label="三方协议归档状态" align="center">
+										<template scope="scope">
+									        <div v-if="scope.row.theStateOfTripleAgreementFiling == 0" class="text-success">未备案</div>
+									        <div v-if="scope.row.theStateOfTripleAgreementFiling == 1" class="text-success">待归档</div>
+									        <div v-if="scope.row.theStateOfTripleAgreementFiling == 2" class="text-success">已归档</div>
+										</template>
+									</el-table-column>
+									<el-table-column prop="theStateOfTripleAgreementEffect" label="三方协议效力状态" align="center">
+										<template scope="scope">
+									        <div v-if="scope.row.theStateOfTripleAgreementEffect == 0" class="text-success">未生效</div>
+									        <div v-if="scope.row.theStateOfTripleAgreementEffect == 1" class="text-success">生效</div>
+									        <div v-if="scope.row.theStateOfTripleAgreementEffect == 2" class="text-success">退房退款待处理</div>
+									        <div v-if="scope.row.theStateOfTripleAgreementEffect == 3" class="text-success">失效</div>
+										</template>
+									</el-table-column>
+									<el-table-column prop="settlementStateOfTripleAgreement" label="三方协议结算状态" align="center">
+										<template scope="scope">
+									        <div v-if="scope.row.settlementStateOfTripleAgreement == 0" class="text-success">未结算</div>
+									        <div v-if="scope.row.settlementStateOfTripleAgreement == 1" class="text-success">已结算</div>
+										</template>
+									</el-table-column>
+								</el-table>
+								<div class="info-title">户入账明细</div>
+								<el-table :data="houseLoanAmountList" border>
+									<el-table-column prop="eCodeOfTripleagreement" label="三方协议号" width="220"></el-table-column>
+									<el-table-column prop="billTimeStamp" label="记账日期" width="120"></el-table-column>
+									<el-table-column prop="companyName" label="开发企业" width="300"></el-table-column>
+									<el-table-column prop="projectName" label="项目名称" width="180"></el-table-column>
+									<el-table-column prop="eCodeFroMconstruction" label="施工编号" width="100"></el-table-column>
+									<el-table-column prop="loanAmount" label="按揭金额" width="140"></el-table-column>
+									<el-table-column prop="loanAmountIn" label="入账金额" width="140"></el-table-column>
+									<el-table-column prop="reconciliationTSFromOB" label="入账日期" width="120"></el-table-column>
+									<el-table-column prop="loanBank" label="贷款银行" width="120"></el-table-column>
+									<el-table-column prop="theNameOfCreditor" label="主借款人姓名" width="100"></el-table-column>
+									<el-table-column prop="fundProperty" label="资金性质" width="140">
+										 <!-- <option value=0>自有资金</option>
+								        <option value=1>商业贷款</option>
+								        <option value=2>公积金贷款</option>
+								        <option value=3>公转商贷款</option>
+								        <option value=4>公积金首付款</option> -->
+								        <template scope="scope">
+									        <div v-if="scope.row.fundProperty == 0" class="text-success">自有资金</div>
+									        <div v-if="scope.row.fundProperty == 1" class="text-success">商业贷款</div>
+									        <div v-if="scope.row.fundProperty == 2" class="text-success">公积金贷款</div>
+									        <div v-if="scope.row.fundProperty == 3" class="text-success">公转商贷款</div>
+									        <div v-if="scope.row.fundProperty == 4" class="text-success">公积金首付款</div>
+										</template>
+									</el-table-column>
+								</el-table>
+							<!-- 	<div class="info-title">协议资金入账明细</div>
+								<el-table :data="houseDetailInfoList" border>
+									<el-table-column prop="eCodeOfTripleAgreement" label="三方协议号" width="150"></el-table-column>
+									<el-table-column prop="tripleAgreementTimeStamp" label="入账日期" width="110"></el-table-column>
+									<el-table-column prop="eCodeOfTAContractRecord" label="入账金额" width="150"></el-table-column>
+									<el-table-column label="资金性质">
+										<template scope="scope">
+									        <div v-if="scope.row.theStateOfTripleAgreement == 0" class="text-success">未打印</div>
+									        <div v-if="scope.row.theStateOfTripleAgreement == 1" class="text-success">已打印未上传</div>
+									        <div v-if="scope.row.theStateOfTripleAgreement == 2" class="text-success">已上传</div>
+									        <div v-if="scope.row.theStateOfTripleAgreement == 3" class="text-success">已备案</div>
+									        <div v-if="scope.row.theStateOfTripleAgreement == 4" class="text-success">备案退回</div>
+										</template>
+									</el-table-column>
+									<el-table-column prop="theStateOfTripleAgreementFiling" label="托管银行">
+										<template scope="scope">
+									        <div v-if="scope.row.theStateOfTripleAgreementFiling == 0" class="text-success">未备案</div>
+									        <div v-if="scope.row.theStateOfTripleAgreementFiling == 1" class="text-success">待归档</div>
+									        <div v-if="scope.row.theStateOfTripleAgreementFiling == 2" class="text-success">已归档</div>
+										</template>
+									</el-table-column>
+									<el-table-column prop="theStateOfTripleAgreementEffect" label="托管账号">
+										<template scope="scope">
+									        <div v-if="scope.row.theStateOfTripleAgreementEffect == 0" class="text-success">未生效</div>
+									        <div v-if="scope.row.theStateOfTripleAgreementEffect == 1" class="text-success">生效</div>
+									        <div v-if="scope.row.theStateOfTripleAgreementEffect == 2" class="text-success">退房退款待处理</div>
+									        <div v-if="scope.row.theStateOfTripleAgreementEffect == 3" class="text-success">失效</div>
+										</template>
+									</el-table-column>
+									<el-table-column prop="settlementStateOfTripleAgreement" label="往来银行">
+										<template scope="scope">
+									        <div v-if="scope.row.settlementStateOfTripleAgreement == 0" class="text-success">未结算</div>
+									        <div v-if="scope.row.settlementStateOfTripleAgreement == 1" class="text-success">已结算</div>
+										</template>
+									</el-table-column>
+									<el-table-column prop="settlementStateOfTripleAgreement" label="往来账户">
+										<template scope="scope">
+									        <div v-if="scope.row.settlementStateOfTripleAgreement == 0" class="text-success">未结算</div>
+									        <div v-if="scope.row.settlementStateOfTripleAgreement == 1" class="text-success">已结算</div>
+										</template>
+									</el-table-column>
+									<el-table-column prop="settlementStateOfTripleAgreement" label="主借人">
+										
+									</el-table-column>
+									<el-table-column prop="settlementStateOfTripleAgreement" label="银行流水号">
+										
+									</el-table-column>
+									<el-table-column prop="settlementStateOfTripleAgreement" label="对账状态">
+										<template scope="scope">
+									        <div v-if="scope.row.settlementStateOfTripleAgreement == 0" class="text-success">未结算</div>
+									        <div v-if="scope.row.settlementStateOfTripleAgreement == 1" class="text-success">已结算</div>
+										</template>
+									</el-table-column>
+									<el-table-column prop="settlementStateOfTripleAgreement" label="结算状态">
+										<template scope="scope">
+									        <div v-if="scope.row.settlementStateOfTripleAgreement == 0" class="text-success">未结算</div>
+									        <div v-if="scope.row.settlementStateOfTripleAgreement == 1" class="text-success">已结算</div>
+										</template>
+									</el-table-column>
+								</el-table> -->
+							</div>
+						</div><!-- /.modal-content -->
+					</div><!-- /.modal -->
+				</div>
+				<!--business-handling modal-->
+				<div class="modal fade" id="business-handling" tabindex="-1" role="dialog" aria-hidden="true">
+					<div class="modal-dialog business-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									&times;
+								</button>
+								<h4 class="modal-title csm-title">
+									{{eCodeFromConstruction}}
+								</h4>
+							</div>
+							<div class="modal-body csm-body">
+								<div class="business-text1">请选择需要办理的业务</div>
+								<a class="business-module" @click="moveToBuildingDetail" data-editNum="0302_OST_01">
+									<img src="../image/building_ico_dialog1.png"/>
+									<div class="business-text2">楼幢信息详情</div>
+								</a>
+								<a class="business-module" @click="moveToBuildingAvgPriceDetail" data-editNum="0302_OST_02">
+									<img src="../image/building_ico_dialog2.png"/>
+									<div class="business-text2">备案价格</div>
+								</a>
+								<a class="business-module" @click="moveToBankAccountDetail" data-editNum="0302_OST_03">
+									<img src="../image/building_ico_dialog3.png"/>
+									<div class="business-text2">监管账号</div>
+								</a>
+								<a class="business-module" @click="moveToEscrowAgreementAdd" data-editNum="0302_OST_04">
+									<img src="../image/building_ico_dialog5.png"/>
+									<div class="business-text2">贷款托管合作协议签署</div>
+								</a>
+								<a class="business-module" data-editNum="0302_OST_05">
+									<img src="../image/building_ico_dialog6.png"  @click="moveToEmpj_BldLimitAmount_AFDetail"/>
+									<div class="business-text2">受限额度变更</div>
+								</a>
+								<a class="business-module" @click="moveToBldEscrowCompletedDetail" data-editNum="0302_OST_06">
+									<img src="../image/building_ico_dialog7.png"/>
+									<div class="business-text2">托管终止</div>
+								</a>
+								<a class="business-module" @click="moveToPjDevProgressForcastList" data-editNum="0302_OST_07">
+									<img src="../image/building_ico_dialog8.png"/>
+									<div class="business-text2">进度巡查预测</div>
+								</a>
+								<a class="business-module" @click="moveToFunAppropriated" data-editNum="0302_OST_08">
+									<img src="../image/building_ico_dialog9.png"/>
+									<div class="business-text2">用款申请</div>
+								</a>
+							</div>
+						</div><!-- /.modal-content -->
+					</div><!-- /.modal -->
+				</div>
+				<!-- menu modal -->
+				<div class="modal fade" id="buildingTableModal" tabindex="-1" role="dialog" aria-hidden="true" data-flag="0">
+					<div class="row"><!--modal-dialog-->
+						<div class="modal-content col-md-12">
+							<div class="modal-body">
+							    
+								<div class="col-md-12">
+								    <div class="form-group building-btn" style="position:relative">
+										<button v-bind:class="{'building-active': empj_BuildingInfo.tableId == clickBuildingId}" @click="getBuildingDetail(empj_BuildingInfo.tableId)" class="btn btn-default" v-for="empj_BuildingInfo in empj_BuildingInfoList">{{empj_BuildingInfo.eCodeFromConstruction}}</button>
+										<div style="position:absolute;top:0px;z-index: 9;right: 0px;display: inline-block;cursor: pointer" onclick="showBuildReduceScreen()"><img src="../image/reduce-screen.png" width="34" height="34"/></div>
+									</div>
+									<div  class="form-group building-tip">
+										<div class="inline">
+											<span class="building-bg bg0"></span>
+											<span class="vertical-m">已搭建</span>
+										</div>
+										<div class="inline">
+											<span class="building-bg bg1"></span>
+											<span class="vertical-m">已批准预售</span>
+										</div>
+										<div class="inline">
+											<span class="building-bg bg2"></span>
+											<span class="vertical-m">合同已签订</span>
+										</div>
+										<div class="inline">
+											<span class="building-bg bg3"></span>
+											<span class="vertical-m">合同已备案</span>
+										</div>
+										<div class="inline">
+											<span class="building-bg bg4"></span>
+											<span class="vertical-m">已办产权</span>
+										</div>
+										<div class="inline">
+											<img src="../image/building_ico_sealed.png"/>
+											<span class="vertical-m">查封</span>
+										</div>
+										<div class="inline">
+											<img src="../image/building_ico_limit.png"/>
+											<span class="vertical-m">限制</span>
+										</div>
+										<div class="inline">
+											<img src="../image/building_ico_dispose.png"/>
+											<span class="vertical-m">处置</span>
+										</div>
+									</div>
+								    <div class="building-list">
+										<table class="table table-bordered">
+											<thead>
+												<tr>
+													<th><div class="building-text2 text-center">楼层</div></th>
+													<th :colspan="erfloorHouseCount" class="text-center">户号</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr v-for="empj_BuildingTableTemplate in empj_BuildingTableTemplateList">
+													<td class="font-bold text-center">{{empj_BuildingTableTemplate.floor}}</td>
+													<td @click.right="openRightModel(empj_HouseInfo.tableId, $event)" v-for="empj_HouseInfo in empj_BuildingTableTemplate.empj_HouseInfoList" :colspan="empj_HouseInfo.colSpan" :rowspan="empj_HouseInfo.rowSpan" :class="{ bg0:empj_HouseInfo.busiState == '1', bg1:empj_HouseInfo.busiState == '2', bg2:empj_HouseInfo.busiState == '3', bg3:empj_HouseInfo.busiState == '4', bg4:empj_HouseInfo.busiState == '5',}">
+														<div class="house-links" :id="'div_'+empj_HouseInfo.tableId">
+															<div class="house-shadow">
+																<a href="##" @click="linkToTripleAgreementForUnitAdd(empj_HouseInfo.tableId)" data-editNum="0302_OST_09">贷款三方托管协议签署</a>
+																<a href="##" @click="linkToRefundInfo(empj_HouseInfo.tableId)" data-editNum="0302_OST_10">退房退款（贷款已结清）</a>
+																<a href="##" @click="linkTo_RefundInfoUncleared(empj_HouseInfo.tableId)" data-editNum="0302_OST_11">退房退款（贷款未结清）</a>
+															</div>
+														</div>
+														<div class="building-info" @click="openHouseModal(empj_HouseInfo.tableId)">
+													        <div class="building-text1">
+													        	<span class="font-bold unit-color">{{empj_HouseInfo.unitName}}{{empj_HouseInfo.roomId}}</span>
+													        	<div class="pull-right">
+														        	<img v-if="empj_HouseInfo.isSequestration == '1'" src="../image/building_ico_sealed.png"/>
+														        	<img v-if="empj_HouseInfo.isLimit == '1'" src="../image/building_ico_limit.png"/>
+														        	<img v-if="empj_HouseInfo.isManagement == '1'" src="../image/building_ico_dispose.png"/>
+													        	</div>
+													        	<div class="clearfix"></div>
+													        </div>
+													        <div v-if="empj_HouseInfo.theStateOfTripleAgreement == '0'" class="unit-color">三方协议状态：未打印</div>
+													        <div v-if="empj_HouseInfo.theStateOfTripleAgreement == '1'" class="unit-color">三方协议状态：已打印未上传</div>
+													        <div v-if="empj_HouseInfo.theStateOfTripleAgreement == '2'" class="unit-color">三方协议状态：已上传</div>
+													        <div v-if="empj_HouseInfo.theStateOfTripleAgreement == '3'" class="unit-select">三方协议状态：已备案</div>
+													        <div v-if="empj_HouseInfo.theStateOfTripleAgreement == '4'" class="unit-color">三方协议状态：备案退回</div>
+													        <div v-if="empj_HouseInfo.theStateOfTripleAgreement == '未签署'" class="unit-color">三方协议状态：未签署</div>
+													        <div v-if="empj_HouseInfo.capitalState == '已到账'" class="unit-select">托管资金状态：已到账</div>
+													        <div v-if="empj_HouseInfo.capitalState == '未到账'" class="unit-color">托管资金状态：未到账</div>
+														</div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+										<table class="table table-bordered building-car" v-if="empj_GarageTableTemplateList != null && empj_GarageTableTemplateList.length != 0">
+											<thead>
+												<tr>
+													<th><div class="building-text2 text-center">地下</div></th>
+													<th :colspan="erfloorGarageCount" class="text-center">车库</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr v-for="empj_GarageTableTemplate in empj_GarageTableTemplateList">
+													<td class="font-bold text-center">{{empj_GarageTableTemplate.floor}}</td>
+													<td v-for="empj_Garage in empj_GarageTableTemplate.empj_HouseInfoList" :colspan="empj_Garage.mergedNums" :rowspan="empj_Garage.overFloors" :class="{ bg0:empj_Garage.busiState == '1', bg1:empj_Garage.busiState == '2', bg2:empj_Garage.busiState == '3', bg3:empj_Garage.busiState == '4', bg4:empj_Garage.busiState == '5',}">
+														<div class="building-info">
+													        <div class="building-text1">
+													        	<span class="font-bold">{{empj_Garage.unitName}}{{empj_Garage.roomId}}</span>
+													        	<div class="pull-right">
+														        	<img v-if="empj_Garage.isSequestration == '1'" src="../image/building_ico_sealed.png"/>
+														        	<img v-if="empj_Garage.isLimit == '1'" src="../image/building_ico_limit.png"/>
+														        	<img v-if="empj_Garage.isManagement == '1'" src="../image/building_ico_dispose.png"/>
+													        	</div>
+													        	<div class="clearfix"></div>
+													        </div>
+													        <div v-if="empj_Garage.actualArea != null">车库面积：{{empj_Garage.actualArea}}㎡</div>
+														</div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div><!-- /.modal-content -->
+					</div><!-- /.modal -->
+				</div>
+			</div>
+		</div>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/empj/Empj_BuildingInfoTableDetail.js"></script>
+		<script>
+		    function showBuildFullScreen(){
+		    	 var docElm = document.documentElement;  
+		    	 console.log(docElm)
+		         //W3C   
+		         if (docElm.requestFullscreen) {  
+		             docElm.requestFullscreen();  
+		         }  
+		             //FireFox   
+		         else if (docElm.mozRequestFullScreen) {  
+		             docElm.mozRequestFullScreen();  
+		         }  
+		             //Chrome等   
+		         else if (docElm.webkitRequestFullScreen) {  
+		             docElm.webkitRequestFullScreen();  
+		         }  
+		             //IE11   
+		         else if (docElm.msRequestFullscreen) {  
+		        	 docElm.msRequestFullscreen();  
+		         } 
+		         $("#buildingTableModal").modal();
+		         $("#buildingTableModal").attr("data-flag",1);
+		    }
+		    function showBuildReduceScreen(){
+		    	//W3C
+		        if (document.exitFullscreen) {
+		          document.exitFullscreen();
+		        }
+		        //FireFox
+		        else if (document.mozCancelFullScreen) {
+		          document.mozCancelFullScreen();
+		        }
+		        //Chrome等
+		        else if (document.webkitCancelFullScreen) {
+		          document.webkitCancelFullScreen();
+		        }
+		        //IE11
+		        else if (document.msExitFullscreen) {
+		          document.msExitFullscreen();
+		        }
+		    	$("#buildingTableModal").modal('hide');	
+		    	$("#buildingTableModal").attr("data-flag",0);
+		    }
+		</script>
+	</body>
+</html>	

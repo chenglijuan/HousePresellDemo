@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+    <class name="zhishusz.housepresell.util.gjj.GJJ_LoanInforMation" table="GJJ_LoanInforMation" dynamic-update="true"
+           dynamic-insert="true">
+        <id name="tableId">
+            <generator class="sequence">
+                <param name="sequence">Seq_BuildingInfo</param>
+            </generator>
+        </id>
+        <property name="loanApplicationEcide">
+            <column name="loanApplicationEcide">
+                <comment>贷款申请编号</comment>
+            </column>
+        </property>
+        <property name="buyerName">
+            <column name="buyerName">
+                <comment>借款人姓名</comment>
+            </column>
+        </property>
+
+        <property name="buyerCardType">
+            <column name="buyerCardType">
+                <comment>借款人证件类型</comment>
+            </column>
+        </property>
+        <property name="buyerCardNum">
+            <column name="buyerCardNum">
+                <comment>借款人证件号码</comment>
+            </column>
+        </property>
+        <property name="buyerAddress">
+            <column name="buyerAddress">
+                <comment>购房地址</comment>
+            </column>
+        </property>
+        <property name="ecodeofcontractrecord">
+            <column name="ecodeofcontractrecord">
+                <comment>商品房备案合同编号</comment>
+            </column>
+        </property>
+        <property name="theComposeStete">
+            <column name="theComposeStete">
+                <comment>是否组合贷款</comment>
+            </column>
+        </property>
+        <property name="loanBank">
+            <column name="loanBank">
+                <comment>贷款银行</comment>
+            </column>
+        </property>
+        <property name="loanMoney">
+            <column name="loanMoney">
+                <comment>借款金额</comment>
+            </column>
+        </property>
+        <property name="theState">
+            <column name="theState">
+                <comment>状态</comment>
+            </column>
+        </property>
+
+    </class>
+</hibernate-mapping>

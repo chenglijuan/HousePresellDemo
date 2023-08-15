@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po.extra">
+	<class name="Qs_NodeChangeForeCast_View" table="Qs_NodeChangeForeCast_View" dynamic-update="true" dynamic-insert="true">
+		<id name="TABLEID">
+			<generator class="sequence">
+				<param name="sequence">Seq_ForeCastView</param>
+			</generator>
+		</id>
+
+		<property name="FORECASTCOMPLETEDATE">
+			<column name="FORECASTCOMPLETEDATE">
+				<comment>预测完成日期</comment>
+			</column>
+		</property>
+		<property name="COMMPANYNAME">
+			<column name="COMMPANYNAME">
+				<comment>开发企业</comment>
+			</column>
+		</property>
+		<property name="COMMPANYID">
+			<column name="COMMPANYID">
+				<comment>企业ID</comment>
+			</column>
+		</property>
+		<property name="PROJECTNAME">
+			<column name="PROJECTNAME">
+				<comment>项目</comment>
+			</column>
+		</property>
+		<property name="PROJECTID">
+			<column name="PROJECTID">
+				<comment>项目ID</comment>
+			</column>
+		</property>
+		<property name="BUILDCODE">
+			<column name="BUILDCODE">
+				<comment>施工楼幢</comment>
+			</column>
+		</property>
+		<property name="CURRENTESCROWFUND">
+			<column name="CURRENTESCROWFUND">
+				<comment>托管余额</comment>
+			</column>
+		</property>
+		<property name="ORGLIMITEDAMOUNT">
+			<column name="ORGLIMITEDAMOUNT">
+				<comment>初始受限额度</comment>
+			</column>
+		</property>
+		<property name="CASHLIMITEDAMOUNT">
+			<column name="CASHLIMITEDAMOUNT">
+				<comment>现金受限额度</comment>
+			</column>
+		</property>
+		<property name="CURRENTFIGUREPROGRESS">
+			<column name="CURRENTFIGUREPROGRESS">
+				<comment>当前形象进度</comment>
+			</column>
+		</property>
+		<property name="CURRENTLIMITEDRATIO">
+			<column name="CURRENTLIMITEDRATIO">
+				<comment>当前受限比例</comment>
+			</column>
+		</property>
+		<property name="NODELIMITEDAMOUNT">
+			<column name="NODELIMITEDAMOUNT">
+				<comment>当前节点受限额度</comment>
+			</column>
+		</property>
+		<property name="EFFECTIVELIMITEDAMOUNT">
+			<column name="EFFECTIVELIMITEDAMOUNT">
+				<comment>当前有效受限额度</comment>
+			</column>
+		</property>
+		
+		<property name="FORECASTNODENAME">
+			<column name="FORECASTNODENAME">
+				<comment>预测形象进度</comment>
+			</column>
+		</property>
+		<property name="LIMITEDAMOUNT">
+			<column name="LIMITEDAMOUNT">
+				<comment>预测受限比例</comment>
+			</column>
+		</property>
+		<property name="NODELIMITAMOUNT">
+			<column name="NODELIMITAMOUNT">
+				<comment>预测节点受限金额</comment>
+			</column>
+		</property>
+		<property name="EFFLIMITAMOUNT">
+			<column name="EFFLIMITAMOUNT">
+				<comment>预测有效受限额度</comment>
+			</column>
+		</property>
+		<property name="APPAMOUNT">
+			<column name="APPAMOUNT">
+				<comment>需拨付金额</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

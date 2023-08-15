@@ -1,0 +1,72 @@
+package zhishusz.housepresell.controller;
+
+import zhishusz.housepresell.controller.form.Sm_BusiState_LogForm;
+import zhishusz.housepresell.database.po.Sm_BusiState_Log;
+import zhishusz.housepresell.database.po.state.S_NormalFlag;
+import zhishusz.housepresell.service.Sm_BusiState_LogDetailService;
+import zhishusz.housepresell.util.MyBackInfo;
+import zhishusz.housepresell.util.MyProperties;
+import zhishusz.housepresell.util.rebuild.Sm_BusiState_LogRebuild;
+import com.google.gson.Gson;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Properties;
+import com.google.gson.Gson;
+
+import javax.servlet.http.HttpServletRequest;
+
+/*
+ * Controller详情：日志-业务状态
+ * Company：ZhiShuSZ
+ * */
+@Controller
+public class Sm_BusiState_LogDetailController extends BaseController
+{
+	@Autowired
+	private Sm_BusiState_LogDetailService service;
+	@Autowired
+	private Sm_BusiState_LogRebuild rebuild;
+	@Autowired
+	private Gson gson;
+	
+	@RequestMapping(value="/Sm_BusiState_LogDetail",produces="text/html;charset=UTF-8",method={RequestMethod.GET,RequestMethod.POST})
+	@ResponseBody
+	public String execute(@ModelAttribute Sm_BusiState_LogForm model, HttpServletRequest request)
+	{
+		model.init(request);
+		
+		Properties properties = null;
+		switch(model.getInterfaceVersion())
+		{
+			case 19000101:
+			{
+				properties = service.execute(model);
+				break;
+			}
+			default :
+			{
+				properties = new MyProperties();
+				properties.put(S_NormalFlag.result, S_NormalFlag.fail);
+				properties.put(S_NormalFlag.info, S_NormalFlag.info_ErrorInterfaceVersion);
+				break;
+			}
+		}
+		
+		if(MyBackInfo.isSuccess(properties))
+		{
+			properties.put("sm_BusiState_Log", rebuild.execute((Sm_BusiState_Log)(properties.get("sm_BusiState_Log"))));
+		}
+		
+//		String jsonStr = new JsonUtil().propertiesToJson(properties);
+		
+//		super.writeOperateHistory("Sm_BusiState_LogDetail", model, properties, jsonStr);
+		
+		return gson.toJson(properties);
+	}
+}

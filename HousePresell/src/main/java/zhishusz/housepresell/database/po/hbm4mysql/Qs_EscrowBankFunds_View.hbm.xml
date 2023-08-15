@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po.extra">
+	<class name="Qs_EscrowBankFunds_View" table="Qs_EscrowBankFunds_View"
+		dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="theNameOfBank">
+			<column name="theNameOfBank">
+				<comment>存款银行</comment>
+			</column>
+		</property>
+		<property name="theNameOfDepositBank">
+			<column name="theNameOfDepositBank">
+				<comment>开户行名称</comment>
+			</column>
+		</property>
+		<property name="theAccount">
+			<column name="theAccount">
+				<comment>托管账号</comment>
+			</column>
+		</property>
+		<property name="theName">
+			<column name="theName">
+				<comment>托管账户名称</comment>
+			</column>
+		</property>
+		<property name="income">
+			<column name="income">
+				<comment>托管收入</comment>
+			</column>
+		</property>
+		<property name="payout">
+			<column name="payout">
+				<comment>托管支出</comment>
+			</column>
+		</property>
+		<property name="certOfDeposit">
+			<column name="certOfDeposit">
+				<comment>大额存单</comment>
+			</column>
+		</property>
+		<property name="structuredDeposit">
+			<column name="structuredDeposit">
+				<comment>结构性存款</comment>
+			</column>
+		</property>
+		<property name="breakEvenFinancial">
+			<column name="breakEvenFinancial">
+				<comment>保本理财</comment>
+			</column>
+		</property>
+		<property name="currentBalance">
+			<column name="currentBalance">
+				<comment>活期余额</comment>
+			</column>
+		</property>
+		<property name="largeRatio">
+			<column name="largeRatio">
+				<comment>大额占比</comment>
+			</column>
+		</property>
+		<property name="largeAndCurrentRatio">
+			<column name="largeAndCurrentRatio">
+				<comment>大额+活期占比</comment>
+			</column>
+		</property>
+		<property name="financialRatio">
+			<column name="financialRatio">
+				<comment>理财占比</comment>
+			</column>
+		</property>
+		<property name="totalFundsRatio">
+			<column name="totalFundsRatio">
+				<comment>总资金沉淀占比</comment>
+			</column>
+		</property>
+		<property name="inProgress">
+			<column name="inProgress">
+				<comment>正在办理中（资金性质）</comment>
+			</column>
+		</property>
+		<property name="timeStamp">
+			<column name="timeStamp">
+				<comment>日期</comment>
+			</column>
+		</property>
+		<property name="inProgressAccount">
+			<column name="inProgressAccount">
+				<comment>正在办理中金额</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

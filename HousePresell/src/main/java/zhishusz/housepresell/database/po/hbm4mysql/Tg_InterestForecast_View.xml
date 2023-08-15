@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tg_InterestForecast_View" table="Tg_InterestForecast_View" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_Tg_InterestForecast_View</param>
+			</generator>
+		</id>
+
+		<property name="depositProperty">
+			<column name="depositProperty">
+				<comment>存款性质 S_DepositPropertyType</comment>
+			</column>
+		</property>
+		<property name="bankName">
+			<column name="bankName">
+				<comment>银行名称</comment>
+			</column>
+		</property>
+		<property name="registerTime">
+			<column name="registerTime">
+				<comment>登记时间</comment>
+			</column>
+		</property>
+		<property name="startDate">
+			<column name="startDate">
+				<comment>存入时间</comment>
+			</column>
+		</property>
+		<property name="stopDate">
+			<column name="stopDate">
+				<comment>到期时间</comment>
+			</column>
+		</property>
+		<property name="principalAmount">
+			<column name="principalAmount">
+				<comment>存款金额</comment>
+			</column>
+		</property>
+		<property name="storagePeriod">
+			<column name="storagePeriod">
+				<comment>存款期限   期限+时间单位（年，月，日）</comment>
+			</column>
+		</property>
+		<property name="annualRate">
+			<column name="annualRate">
+				<comment>利率</comment>
+			</column>
+		</property>
+		<property name="floatAnnualRate">
+			<column name="floatAnnualRate">
+				<comment>浮动区间</comment>
+			</column>
+		</property>
+		<property name="interest">
+			<column name="interest">
+				<comment>利息</comment>
+			</column>
+		</property>
+		<property name="openAccountCertificate">
+			<column name="openAccountCertificate">
+				<comment>开户证实书</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

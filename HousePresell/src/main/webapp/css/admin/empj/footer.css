@@ -1,0 +1,7 @@
+
+.el-table__footer-wrapper tbody td, .el-table__header-wrapper tbody td {
+  text-align:right;
+}
+.el-table__footer tbody td .cell{
+    text-align: right;
+}

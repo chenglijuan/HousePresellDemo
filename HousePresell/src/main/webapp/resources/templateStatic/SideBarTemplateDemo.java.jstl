@@ -1,0 +1,30 @@
+<!--
+	静态化模板Demo文件。
+	请保留该文件，勿删！！！
+-->
+<#assign data=dataJsonStr?eval />
+<ul>
+	<!-- 递归  宏定义 -->
+    <#macro bpTree children>
+       <#if children?? && children?size gt 0>
+       <#list children as child>
+       <#if child.childrenUIList?? && child.childrenUIList?size gt 0>
+       <li class="treeview">
+          <a href="javascript:void(0)">
+            <i class="${(child.iconPath=='')?string('fa fa-share',child.iconPath)}" aria-hidden="true"></i>
+            <span>${child.theName}</span>
+            <i class="fa fa-angle-left pull-right" aria-hidden="true"></i>
+          </a>
+          <ul class="treeview-menu">
+            <@bpTree children=child.childrenUIList />
+          </ul>
+       </li>
+       <#else>
+            <li><a href="javascript:void(0)" onclick="loadContent('${child.theResource}')"><i class="${(child.iconPath=='')?string('fa fa-circle-o',child.iconPath)}" aria-hidden="true"></i>${child.theName}</a></li>   
+       </#if>
+       </#list>
+    </#if>
+    </#macro>
+    <!-- 调用宏 生成递归树 -->
+    <@bpTree children=data.treeMenu />
+</ul>

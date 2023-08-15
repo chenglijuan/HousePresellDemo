@@ -1,0 +1,10 @@
+.ztree li a.curSelectedNode{
+	background: transparent;
+}
+.ztree li a:hover{
+	text-decoration: none;
+	cursor: default;
+}
+.ztree li span.button.chk{
+	cursor: pointer;
+}

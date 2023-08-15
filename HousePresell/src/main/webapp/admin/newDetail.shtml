@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta charset="UTF-8">
+<title>常州市商品房预售资金托管系统-新闻详情页</title>
+<!-- Vendor CSS-->
+<link rel="stylesheet"
+	href="../assets/bootstrap-3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="../assets/bootstrap-tab-master/css/font-awesome.css">
+<link rel="stylesheet"
+	href="../assets/bootstrap-tab-master/css/bootstrap-tab.css">
+
+<!-- <object id="CInfControlLogin" classid="clsid:FF5A75DB-B1E2-46D3-856A-2FC65BA51A92" class="secretDog"></object>
+<OBJECT class="secretDog" ID="TZKeyOcxLogin" CLASSID="CLSID:C28F551F-2616-4FB0-BCC3-ED208B6FC58F" ></OBJECT> -->
+</style>
+
+<style type="text/css">
+    .wrap {
+        background:#EDF2F6;
+        height:100%;
+    }
+    .contentBox {
+        background:#fff;
+        margin:0px;
+        margin-left:15%;/* 计算 */
+        margin-right:15%;/* 计算 */
+        margin-top:.2%;/* 计算 */
+        border-radius:.5rem;
+        padding:20px;
+        box-shadow:5px 5px 15px #e3f3f9;
+        text-align:center;
+        font-size:16px;
+        border:1px solid #dedede;
+    }
+    .title div img {
+        margin-right:20px
+    }
+    .title div {
+        overflow: hidden;
+	    text-overflow: ellipsis;
+	    white-space: nowrap;
+	    font-size:16px;
+	    padding:10px;
+	    border-bottom:1px dashed #dedede;
+	    cursor:pointer;
+    }
+    .title div:hover{
+        background:#EDF2F6;
+    }
+    .cont2 {
+        margin-left:.5%;
+        margin-right:3%;
+    }
+    .cont {
+        margin-top:10px;
+        margin-bottom:20px;
+    }
+    .cont span {
+        cursor:pointer;
+    }
+    .fontBig {
+        font-size:20px!important;
+    }
+    .fontSmall {
+        font-size:14px!important;
+    }
+    .content {
+        text-align:left;
+    }
+</style>
+</head>
+<body style="background:#EDF2F6;">
+	<div class="container-fluid wrap" id="newDetailBox">
+	    <div id="contentBox1" class="contentBox">
+	        <header>
+	            <div style="padding-bottom:10px;border-bottom:1px dashed #dedede"><h2 style="font-size:margin-bottom:15px;margin-top:10px">{{ sm_PolicyRecord.policyTitle }}</h2></div>
+	        </header>
+	        <section>
+	            <div class="cont">
+	                <span style="margin-right:15px;">发布日期：<span style="font-weight:bold">{{ sm_PolicyRecord.policyDate }}</span></span>
+	                <span style="margin-right:15px">浏览次数：<span style="font-weight:bold">{{ sm_PolicyRecord.browseTimes }}</span></span>
+	                <span>字号：【 <span @click="changeFontHandle(0)" style="margin-right:5px;padding:3px 4px;border-radius:.5rem;background:#FF920B;color:#EAF5FF">大</span><span @click="changeFontHandle(1)" style="margin-right:5px;padding:3px 4px;border-radius:.5rem;background:#0085CA;color:#EAF5FF">中</span><span @click="changeFontHandle(2)" style="padding:3px 4px;border-radius:.5rem;background:#95BC49;color:#EAF5FF">小</span> 】</span>
+	            </div>
+	            
+	            <div style="margin-top:20%;color:#0084C9;display:none">
+	                <h2 class="nothing"></h2>
+	            </div>
+	             <div class="content" id="content" style="display:none"></div>
+	        </section>
+	    </div>
+	</div>
+	<script src="../assets/vue/vue.min.js" type="text/javascript"></script>
+	<script src="../assets/jquery/jquery.min.js" type="text/javascript"></script>
+	<script src="../assets/bootstrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="../js/BaseJs.js" type="text/javascript"></script>
+	<script src="../js/ServerInterface.js" type="text/javascript"></script>
+	<script src="../js/admin/newDetail.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		loadHeight();
+	    function loadHeight() {
+		    var wrapBox = document.getElementById("contentBox1");
+		    var ev = document.documentElement || document.body;
+		    var clientHeight = ev.clientHeight;
+		    wrapBox.style.minHeight = clientHeight - 10 + "px";
+	    }
+		window.onresize = function() {
+			loadHeight();
+		}
+	</script>
+</body>
+</html>

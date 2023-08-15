@@ -1,0 +1,27 @@
+.chart-rel{
+	position: relative;
+}
+.chart-pos{
+	position: absolute;
+	top: 0px;
+	left: 15px;
+	z-index: 1;
+}
+.chart-pos h1{
+	font-size: 20px;
+	font-weight: bold;
+	margin-right: 30px;
+}
+.content-top{
+	border-bottom: none;
+}
+.td-sum,.td-over{
+	font-weight: bold;
+	text-decoration: underline;
+}
+.td-sum{
+	color: #4a66c2;
+}
+.td-over{
+	color: #f64e4e;
+}

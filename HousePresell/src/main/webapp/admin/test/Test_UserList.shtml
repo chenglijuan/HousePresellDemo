@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-系统用户+机构用户</title>
+		<!-- Vendor CSS-->
+		<link rel="stylesheet" href="../../assets/bootstrap-3.3.7/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="../../assets/bootstrap-tab-master/css/font-awesome.css">
+		<link rel="stylesheet" href="../../assets/bootstrap-tab-master/css/bootstrap-tab.css">
+		<!-- Page CSS-->
+		<link rel="stylesheet" type="text/css" href="../../css/main.css"/>
+		<link rel="stylesheet" type="text/css" href="../../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/detail.css"/>
+
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="sm_UserListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input"   v-model="keyword"    placeholder="请输入关键字搜索">
+							</div>
+							<div class="inline">
+							    <span>所属机构：</span>
+							    <input type="text" class="form-control cs-input-company"   v-model="emmp_CompanyInfoName" disabled="disabled">
+							</div>
+							<div class="inline">
+							    <span>是否加密：</span>
+							    <select name="" class="form-control cs-select" v-model="isEncrypt" @change="onChangeEncrypt">
+							    	<option value="">全部</option>
+							    	<option value="1">是</option>
+							    	<option value="0">否</option>
+							    </select>
+							</div>
+							<div class="inline">
+							    <span>是否启用：</span>
+							    <select name="" class="form-control cs-select" v-model="busiState" @change="onChangeUsing">
+							    	<option value="">全部</option>
+							    	<option value="1">启用</option>
+							    	<option value="0">停用</option>
+							    </select>
+							</div>
+							<div class="inline">
+							    <span>锁定状态：</span>
+							    <select name="" class="form-control cs-select" v-model="applyState" @change="onChangeLock">
+							    	<option value="">全部</option>
+							    	<option value="1">锁定</option>
+							    	<option value="2">正常</option>
+							    </select>
+							</div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset"  @click="reset">重置</button>
+						</div>
+						<div class="top-btns">
+							<button class="btn btn-success"  @click="sm_UserAdd">
+								<img src="../../image/list_btn_ico_add.png"/>
+								<span>新增</span>
+							</button>
+							<button class="btn btn-primary" @click="sm_UserEdit" :disabled="upDisabled">
+								<img src="../../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+							<!-- <button class="btn btn-info">
+								<img src="../image/list_btn_ico_see.png"/>
+								<span>日志</span>
+							</button> -->
+							<button class="btn btn-danger" @click="sm_UserDel" :disabled="deDisabled">
+								<img src="../../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+						</div>
+					</div>
+					<!-- <div class="pull-right text-right">
+						<div class="top-excel">
+							<button class="btn btn-excel" @click="userExportExcel">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+					</div> -->
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="sm_UserList" stripe :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle" @sort-change='sortChange'>
+							<el-table-column type="selection" width="55" v-model="selectItem" fixed></el-table-column>
+							<el-table-column type="index" :index="indexMethod" label="序号" width="80" fixed></el-table-column>
+						<!-- 	<el-table-column label="用户编码" width="150">
+								<template scope="scope">
+									<el-button type="text" size="small" @click="sm_UserDetail(scope.row.tableId)">{{scope.row.eCode}}</el-button>
+								</template>
+							</el-table-column> -->
+							<el-table-column prop="theName" label="用户名称" width="150" sortable='custom'>
+							    <template scope="scope">
+									<div class="el-button--text hover" @click="sm_UserDetail(scope.row.tableId)">{{scope.row.theName}}</div>
+								</template>
+							</el-table-column>
+							<el-table-column prop="theNameOfCompany" label="所属机构" width="220" sortable='custom'></el-table-column>
+							<el-table-column prop="idType" label="证件类型" width="120">
+								<template scope="scope">
+									<span v-if='scope.row.idType=="1"'>居民身份证</span>
+									<span v-if='scope.row.idType=="2"'>护照</span>
+									<span v-if='scope.row.idType=="3"'>军官证</span>
+									<span v-if='scope.row.idType=="4"'>港澳台居民通行证</span>
+									<span v-if='scope.row.idType=="5"'>户口簿</span>
+									<span v-if='scope.row.idType=="6"'>其他证件</span>
+								</template>
+							</el-table-column>
+							<el-table-column prop="idNumber" label="证件号码" width="220"></el-table-column>
+							<el-table-column label="是否加密" width="150">
+								<template scope="scope">
+									<div v-if="scope.row.isEncrypt == 0" class="text-danger">否</div>
+									<div v-if="scope.row.isEncrypt == 1" class="text-success">是</div>
+								</template>
+							</el-table-column>
+							<el-table-column label="是否启用">
+								<template scope="scope">
+									<div v-if="scope.row.busiState == '1'" class="text-success">启用</div>
+									<div v-if="scope.row.busiState == '0'" class="text-danger">停用</div>
+								</template>
+							</el-table-column>
+							<el-table-column label="锁定状态" width="120">
+								<template scope="scope">
+							        <button  v-if="scope.row.applyState == 1" class="btn btn-state-danger">锁定</button>
+							    	<button  v-if="scope.row.applyState == 2" class="btn btn-state-success">正常</button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="../../assets/jquery/jquery.min.js" type="text/javascript"></script>
+		<!-- Pages JS -->
+		<script src="../../assets/vue/vue.min.js" type="text/javascript"></script>
+		<script src="../../assets/element/js/element.js" type="text/javascript"></script>
+		<script src="../../assets/bootstrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="../../assets/bootstrap-tab-master/js/bootstrap-tab.js" type="text/javascript"></script>
+		<script src="../../assets/laydate/laydate.js"></script>
+
+		<!-- Noty Js -->
+		<script src="../../assets/noty/jquery.noty.js"></script>
+		<script src="../../assets/noty/layouts/top.js"></script>
+		<script src="../../assets/noty/layouts/center.js"></script>
+		<script src="../../assets/noty/themes/default.js"></script>
+
+		<!-- Pushlet Js -->
+		<script src="../../assets/pushlet/ajax-pushlet-client.js"></script>
+
+		<script src="../../js/ServerInterface.js"></script>
+		<script src="../../assets/moment/moment.js"></script>
+		<script src="../../js/admin/test/Test_BaseJs.js"></script>
+		<script src="../../js/viewer.min.js"></script>
+
+		<script src="../../components/vue-componentsTest.js"></script>
+
+		<script src="../../js/admin/test/Test_UserList.js"></script>
+
+	</body>
+</html>	

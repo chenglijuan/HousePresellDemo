@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-机构信息编辑</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body >
+		<div class="content-wrap" id="emmp_CompanyInfoEditDiv"> 
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="update('1')">
+						<img src="../image/detail_btn_ico_save.png" width="18">
+						<span>保存</span>
+					</button>
+					<button class="btn btn-primary" @click="update('2')"  v-if="flag">
+						<img src="../image/detail_btn_ico_submit.png" width="18">
+						<span>提交</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">机构编号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="emmp_CompanyInfoModel.eCode" class="form-control" disabled=""/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">机构类型：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="emmp_CompanyInfoModel.parameterName" class="form-control" disabled=""/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">机构名称：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<input type="text" class="form-control" v-model="emmp_CompanyInfoModel.theName"/>
+								</div>
+								<div class="change-info" v-if="oldObj != null && emmp_CompanyInfoModel.theName != oldObj.theName">
+									<img src="../image/detail_ico_warning.png" width="15"/>
+									<span class="text-danger vertical-m" >变更前：{{oldObj.theName}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">地址：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<input type="text" v-model="emmp_CompanyInfoModel.address" value="" class="form-control">
+								</div>
+								<div class="change-info" v-if="oldObj != null && emmp_CompanyInfoModel.address != oldObj.address">
+									<img src="../image/detail_ico_warning.png" width="15"/>
+									<span class="text-danger vertical-m" >变更前：{{oldObj.address}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">统一社会信用代码：</span>
+							<div class="detail-info2">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<input type="text" v-model="emmp_CompanyInfoModel.unifiedSocialCreditCode" value="" class="form-control" >
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">成立日期：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" id="date0201010201" class="form-control" placeholder="请选择成立日期" value=""/>
+									<img src="../image/list_search_calendar.png" class="ico-date"/>
+								</div>
+								<div class="change-info" v-if="oldObj != null && emmp_CompanyInfoModel.registeredDateStr != oldObj.registeredDateStr">
+									<img src="../image/detail_ico_warning.png" width="15"/>
+									<span class="text-danger vertical-m" >变更前：{{oldObj.registeredDateStr}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">资质等级：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<select name="" class="form-control" v-model="emmp_CompanyInfoModel.qualificationGrade" >
+										<option value="">请选择资质等级</option>
+										<option value="1">01-壹级</option>
+										<option value="2">02-贰级</option>
+										<option value="3">03-叁级</option>
+										<option value="4">04-肆级</option>
+										<option value="5">05-暂壹级</option>
+										<option value="6">06-暂贰级</option>
+										<option value="7">07-暂叁级</option>
+										<option value="99">99-其他</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">法定代表人：</span>
+							<div class="detail-info2">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<input type="text" v-model="emmp_CompanyInfoModel.legalPerson" value="" class="form-control"/>
+								</div>
+								<div class="change-info" v-if="oldObj != null && emmp_CompanyInfoModel.legalPerson != oldObj.legalPerson">
+									<img src="../image/detail_ico_warning.png" width="15"/>
+									<span class="text-danger vertical-m" >变更前：{{oldObj.legalPerson}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">项目负责人：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="emmp_CompanyInfoModel.projectLeader" value="" class="form-control"/>
+								</div>
+								<div class="change-info" v-if="oldObj != null && emmp_CompanyInfoModel.projectLeader != oldObj.projectLeader">
+									<img src="../image/detail_ico_warning.png" width="15"/>
+									<span class="text-danger vertical-m" >变更前：{{oldObj.projectLeader}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">归属集团：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="emmp_CompanyInfoModel.companyGroup" value="" class="form-control" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">所属区域：</span>
+							<div class="detail-info2">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<vue-select defaultname="请选择所属区域" :thevalue="cityRegionId" :optionlist="sm_CityRegionInfoList" @callbackfun="cityRegionChange"></vue-select>
+									<div class="change-info" v-if="oldObj != null && emmp_CompanyInfoModel.cityRegionId != oldObj.cityRegionId">
+										<img src="../image/detail_ico_warning.png" width="15"/>
+										<span class="text-danger vertical-m" >变更前：{{oldObj.cityRegionName}}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">街道：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<vue-select defaultname="请选择所属街道" :thevalue="streetId" :optionlist="sm_StreetInfoList" @callbackfun="streetInfoChange"></vue-select>
+									<div class="change-info" v-if="oldObj != null && emmp_CompanyInfoModel.streetId != oldObj.streetId">
+										<img src="../image/detail_ico_warning.png" width="15"/>
+										<span class="text-danger vertical-m" >变更前：{{oldObj.streetName}}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">联系方式：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="emmp_CompanyInfoModel.contactPhone" class="form-control"/>
+								</div>
+								<div class="change-info" v-if="oldObj != null && emmp_CompanyInfoModel.contactPhone != oldObj.contactPhone">
+									<img src="../image/detail_ico_warning.png" width="15"/>
+									<span class="text-danger vertical-m" >变更前：{{oldObj.contactPhone}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">是否启用：</span>
+							<div class="detail-info2">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+								    <vue-select defaultname="请选择是否启用" :thevalue="emmp_CompanyInfoModel.isUsedState" :optionlist="isUsedStateList"  @callbackfun="getIsUsedState" @emptybackfun = "emptyIsUsedState"></vue-select>
+								    
+									<!-- <select name="" class="form-control" v-model="emmp_CompanyInfoModel.isUsedState">
+										<option value="1">是</option>
+										<option value="0">否</option>
+									</select> -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">操作人：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="emmp_CompanyInfoModel.userUpdateName" value="" class="form-control" disabled=""/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">操作日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="emmp_CompanyInfoModel.lastUpdateTimeStamp" value="" class="form-control" disabled=""/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--机构成员信息开始-->
+			<div class="detail-title">
+				<h1 class="inline">机构成员列表</h1>
+			</div>
+			<div class="cs-content">
+				<div class="content-top">
+					<div class="detai-btns">
+						<button class="btn btn-success" data-toggle="modal" data-target="#addPerson">
+							<img src="../image/list_btn_ico_add.png">
+							<span>新增</span>
+						</button>
+						<button class="btn btn-danger" @click="orgMemberDeleteHandle" v-if="selectItem.length > 0">
+							<img src="../image/list_btn_ico_del.png">
+							<span>删除</span>
+						</button>
+						<button class="btn btn-danger" disabled="disabled" v-if="selectItem.length == 0">
+							<img src="../image/list_btn_ico_del.png"/>
+							<span>删除</span>
+						</button>
+					</div>
+				</div>
+				<!--表格开始-->
+				<div class="cs-table">
+					<div id="table2">
+						<el-table :data="orgMemberList" @selection-change="handleSelectionChange">
+							<el-table-column type="selection" width="50" v-model="selectItem" fixed></el-table-column>
+							<el-table-column type="index" label="序号" width="60" fixed></el-table-column>
+							<el-table-column label="姓名" min-width="120">
+								<template scope="scope">
+									<span>{{scope.row.theName}}</span>
+									<img src="../image/detail_tag_del.png" v-if="scope.row.changeState == 'del'"/>
+									<img src="../image/detail_tag_add.png" v-if="scope.row.changeState == 'add'"/>
+								</template>
+							</el-table-column>
+							<el-table-column label="证件类型" min-width="120">
+								<template scope="scope">
+									<span v-if="scope.row.idType=='00'">居民身份证</span>
+									<span v-if="scope.row.idType=='01'">护照</span>
+									<span v-if="scope.row.idType=='02'">港澳台居民身份证</span>
+									<span v-if="scope.row.idType=='04'">旅行证据</span>
+									<span v-if="scope.row.idType=='05'">其他</span>
+								</template>
+							</el-table-column>
+							<el-table-column prop="idNumber" label="证件号码" min-width="220"></el-table-column>
+							<el-table-column prop="theNameOfDepartment" label="所属部门" min-width="160"></el-table-column>
+							<el-table-column prop="parameterName" label="职务" min-width="120"></el-table-column>
+							<el-table-column prop="positionName" label="职称" min-width="120"></el-table-column>
+							<el-table-column prop="phoneNumber" label="手机号" min-width="160"></el-table-column>
+							<el-table-column prop="email" label="邮箱" min-width="180"></el-table-column>
+							<el-table-column prop="qq" label="QQ" min-width="160"></el-table-column>
+							<el-table-column prop="weixin" label="微信" min-width="160"></el-table-column>
+						</el-table>
+					</div>
+				</div>
+			</div>
+			<!--联系人信息结束-->
+			<!-- addPerson modal -->
+			<div class="modal fade" id="addPerson" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+							<h4 class="modal-title csm-title">
+								新增机构成员
+							</h4>
+						</div>
+						<div class="modal-body csm-body" id="addOrgMemberDiv">
+							<div class="form-group">
+								<span class="detail-text1"><strong class="red-icon">*</strong>姓名：</span>
+								<div class="detail-info1">
+									<div class="detail-edit">
+										<input type="text" data-errorInfoId="addTheNameInfoId" data-reg="IsNull" 
+											data-error="" data-empty="请输入联系人姓名" @blur="errorCheck($event.target)" @change="errorCheck($event.target)"
+											value="" class="form-control" placeholder="请输入联系人姓名" v-model="addTheName">
+									</div>
+									<div id="addTheNameInfoId" class="red-text">输入有误，请重新填写</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">证件类型：</span>
+								<div class="detail-info1">
+									<div class="detail-edit">
+										<select class="form-control" data-errorInfoId="addIdTypeInfoId" data-reg=""
+											data-error="" data-empty="请选择证件类型" @blur="errorCheck($event.target)" @change="errorCheck($event.target)"
+											v-model="addIdType">
+											<option value="">请选择证件类型</option>
+											<option value="00">居民身份证</option>
+											<option value="01">护照</option>
+											<option value="02">港澳台居民身份证</option>
+											<option value="04">旅行证据</option>
+											<option value="05">其他</option>
+										</select>
+									</div>
+									<div id="addIdTypeInfoId" class="red-text">输入有误，请重新填写</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">证件号码：</span>
+								<div class="detail-info1">
+									<div class="detail-edit">
+									    <input type="text" data-errorInfoId="addIdNumberInfoId" data-reg="IsNull&&passwordID"
+											   data-error="证件号码格式错误" data-empty="请输入证件号码" @blur="passErrorCheck($event.target,addIdType)" @change="passErrorCheck($event.target,addIdType)"
+											   value="" class="form-control" placeholder="请输入证件号码" v-model="addIdNumber">
+									</div>
+									<div id="addIdNumberInfoId" class="red-text">输入有误，请重新填写</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1"><strong class="red-icon">*</strong>所属部门：</span>
+								<div class="detail-info1">
+									<div class="detail-edit">
+										<select class="form-control" data-errorInfoId="addTheNameOfDepartmentInfoId" data-reg="IsNull"
+												data-error="" data-empty="请选择所属部门" @blur="errorCheck($event.target)" @change="errorCheck($event.target)"
+												v-model="addTheNameOfDepartment">
+											<option value="">请选择所属部门</option>
+											<option value="前期人员">前期人员</option>
+											<option value="财务人员">财务人员</option>
+											<option value="销管人员">销管人员</option>
+											<option value="工地人员">工地人员</option>
+										</select>
+									</div>
+									<div id="addTheNameOfDepartmentInfoId" class="red-text">输入有误，请重新填写</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">职务：</span>
+								<div class="detail-info1">
+									<div class="detail-edit">
+										<select class="form-control" data-errorInfoId="addParameterNameInfoId" data-reg=""
+											data-error="" data-empty="请选择职务" @blur="errorCheck($event.target)" @change="errorCheck($event.target)"
+											v-model="addParameterNameId">
+											<option value="">请选择职务</option>
+											<option v-for="parameter in parameterNameList" :value="parameter.tableId">{{parameter.theValue}}</option>
+										</select>
+									</div>
+									<div id="addParameterNameInfoId" class="red-text">输入有误，请重新填写</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">职称：</span>
+								<div class="detail-info1">
+									<div class="detail-edit">
+										<input type="text" data-errorInfoId="addPositionNameInfoId" data-reg=""
+											data-error="" data-empty="请输入职称" @blur="errorCheck($event.target)" @change="errorCheck($event.target)"
+											value="" class="form-control" placeholder="请输入职称" v-model="addPositionName">
+									</div>
+									<div id="addPositionNameInfoId" class="red-text">输入有误，请重新填写</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1"><strong class="red-icon">*</strong>手机号：</span>
+								<div class="detail-info1">
+									<div class="detail-edit">
+										<input type="text" data-errorInfoId="addPhoneNumberInfoId" data-reg="IsNull&&phoneNumberCheck" 
+											data-error="手机号格式错误" data-empty="请输入手机号" @blur="errorCheck($event.target)" @change="errorCheck($event.target)"
+											value="" class="form-control" placeholder="请输入手机号" v-model="addPhoneNumber">
+									</div>
+									<div id="addPhoneNumberInfoId" class="red-text">输入有误，请重新填写</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">邮箱：</span>
+								<div class="detail-info1">
+									<div class="detail-edit">
+										<input type="text" data-errorInfoId="addEmailInfoId" data-reg="emailCheck"
+											   data-error="邮箱格式错误" data-empty="请输入邮箱" @blur="errorCheck($event.target)" @change="errorCheck($event.target)"
+											   value="" class="form-control" placeholder="请输入邮箱" v-model="addEmail">
+									</div>
+									<div id="addEmailInfoId" class="red-text">输入有误，请重新填写</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">QQ：</span>
+								<div class="detail-info1">
+									<div class="detail-edit">
+										<input type="text" value="" class="form-control" placeholder="请输入qq号" v-model="addQq">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">微信：</span>
+								<div class="detail-info1">
+									<div class="detail-edit">
+										<input type="text" value="" class="form-control" placeholder="请输入微信号" v-model="addWeixin">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" @click="addOrgMember('addOrgMemberDiv')"> 
+								确定
+							</button>
+							<button type="button" class="btn foot-cancel" data-dismiss="modal" @click="refresh">
+								取消
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			<!-- del modal -->
+			<div class="modal fade" id="deleteOrgMember" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_warning.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1">确认要删除这条信息吗？</div>
+								<div class="del-text2">删除后不可恢复</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" @click="orgMemberDeleteMakeSure">
+								确定
+							</button>
+							<button type="button" class="btn foot-cancel" data-dismiss="modal">
+								取消
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!--附件材料开始-->
+			<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+			<!--附件材料结束-->
+
+			<!-- success modal -->
+			<div class="modal fade" id="successM" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作成功</div>
+								<div class="del-text2">保存成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+
+			<!-- error modal -->
+			<div class="modal fade" id="errorM" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">请选择要删除的机构成员</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		</div>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/emmp/Emmp_CompanyInfoEdit.js"></script>
+	</body>
+</html>	

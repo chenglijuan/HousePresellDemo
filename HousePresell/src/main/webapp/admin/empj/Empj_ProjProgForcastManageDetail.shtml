@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-申请表-工程进度巡查推送管理详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+		<style>
+		    .model-width{
+		       width:80%
+		    }
+		    .csm-body .detail-title{
+		       display:none;
+		    }
+		</style>
+	</head>
+	<body>
+		<div class="content-wrap" id="empj_ProjProgForcastManageDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns" v-if="editFile">
+					<button class="btn btn-success" @click="submitAction()"  v-if="editFile">
+						<img src="../image/detail_btn_ico_submit.png" width="18">
+						<span>重新提交</span>
+					</button>
+				</div>
+				<div class="inline title-btns" v-if="editFile">
+					<button class="btn btn-primary" @click="editFileActive()" >
+						<img src="../image/list_btn_ico_edit.png" />
+						<span>修改资料</span>
+					</button>
+				</div>
+				<div class="inline title-btns" v-if="saveFile">
+					<button class="btn btn-primary" @click="saveAction()" >
+						<img src="../image/list_btn_ico_edit.png" />
+						<span>保存</span>
+					</button>
+				</div>
+				<div class="pull-right text-right" @click="vdeioInfo">
+					<button class="btn btn-success">
+						<img src="../image/list_btn_ico_export.png" width="18"/>
+						<span>视频信息</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+					
+						<div class="form-group">
+							<span class="detail-text1">巡查单号：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled  v-model="empj_ProjProgForcastManageModel.afCode" @click="drumpDetail(empj_ProjProgForcastManageModel.afId)" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">楼幢编号：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled  v-model="empj_ProjProgForcastManageModel.buildCode" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">网站审核批语：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_ProjProgForcastManageModel.webHandelInfo" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">单据状态：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_ProjProgForcastManageModel.approvalState" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					
+					</div>
+					<div class="col-md-4">
+					    <div class="form-group">
+							<span class="detail-text1">区域名称：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled  v-model="empj_ProjProgForcastManageModel.areaName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">网站推送状态：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled  v-model="empj_ProjProgForcastManageModel.webPushState" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">巡查时间：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled  class="form-control"  v-model="empj_ProjProgForcastManageModel.forcastTime"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作人：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled  class="form-control"  v-model="empj_ProjProgForcastManageModel.updateName"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">项目名称：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled  v-model="empj_ProjProgForcastManageModel.projectName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">网站审核状态：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled  v-model="empj_ProjProgForcastManageModel.webHandelState" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">提交时间：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled  v-model="empj_ProjProgForcastManageModel.submitDate" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作时间：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled  v-model="empj_ProjProgForcastManageModel.updateTime" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					</div>
+				</div>
+			<!--基本信息结束-->
+		
+			<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData" :busitype="busiType" ></my-uploadcomponent>
+			
+		</div>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/empj/Empj_ProjProgForcastManageDetail.js"></script>
+	</body>
+</html>	

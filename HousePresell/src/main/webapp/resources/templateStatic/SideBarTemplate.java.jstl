@@ -1,0 +1,53 @@
+<!--
+	作者：tony.yang
+	时间：2018-08-09
+	
+	静态化模板作者：percy.hu
+	模板创建时间：2018-10-09
+	
+	描述：用户权限菜单
+-->
+<#assign data=dataJsonStr?eval />
+<!-- 去除首页默认加载显示
+<ul class="nav-ul">
+	<li class="nav-padding nav-borderB" onclick="enterNewTab('000000', '首页', 'home.shtml')">
+		<a href="#" class="nav-home">
+			<span class="nav-text">首页</span>
+		</a>
+	</li>
+</ul>
+-->
+<ul class="nav-ul" data-switchmenu data-isonlyoneopen="false">
+	<!-- 递归  宏定义 -->
+    <#macro bpTree children>
+		<#if children?? && children?size gt 0>
+			<#list children as child>
+				<#if child.childrenUIList?? && child.childrenUIList?size gt 0>
+					<#if child.parentLevelNumber?? && child.parentLevelNumber == "0">
+	<li class="nav-padding nav-borderB">
+					<#else>
+	<li>
+					</#if>
+		<div class="nav-parent hover">
+			<img src="../image/side_arrow.png" class="icon"/>
+			<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+			<span class="nav-text">${child.theName}</span>
+		</div>
+		<ul class="nav-children">
+			<@bpTree children=child.childrenUIList />
+		</ul>
+	</li>
+    			<#else>
+    <li onclick="enterNewTab('${child.busiCode}', '${child.theName}', '${child.theResource}')">
+		<a>
+    	<img src='../image/side_ico_jggl.png' class="menu-icon"/>
+		${child.theName}
+		</a>
+	</li>
+				</#if>
+			</#list>
+    	</#if>
+    </#macro>
+    <!-- 调用宏 生成递归树 -->
+    <@bpTree children=data.treeMenu />
+</ul>

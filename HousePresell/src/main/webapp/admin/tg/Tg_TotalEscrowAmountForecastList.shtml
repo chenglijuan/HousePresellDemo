@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-收入预测</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="tg_TotalEscrowAmountForecastListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+								<span>预测时间：</span>
+								<input type="text" class="form-control cs-input-date" id="totalEscrowAmountForecastDateSelect" placeholder=" 起始日期  -  结束日期 " />
+								<img src="../../image/list_search_calendar.png" class="ico-date"/>
+							</div>
+							<button class="btn btn-search">搜索</button>
+							<button class="btn btn-reset">重置</button>
+						</div>
+						<div class="inline title-btns">
+							<button class="btn btn-success" @click="saveHandle">
+								<img src="../../image/detail_btn_ico_save.png" width="18">
+								<span>保存</span>
+							</button>
+						</div>
+					</div>
+					<div class="pull-right text-right">
+						<div class="top-excel">
+							<button class="btn btn-excel">
+								<img src="../../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="tg_TotalEscrowAmountForecastList" border :default-sort = "{prop: 'theDay'}">
+							<el-table-column prop="theDayStr" label="日期" min-width="110"></el-table-column>
+							<el-table-column prop="theWeekStr" label="星期" min-width="80"></el-table-column>
+							<el-table-column prop="lastAmount" label="上日活期结余（元）" min-width="160"></el-table-column>
+							<el-table-column prop="incomeTotal" label="收入合计（元）" min-width="160"></el-table-column>
+							<el-table-column prop="payTotal" label="支出合计（元）" min-width="160"></el-table-column>
+							<el-table-column prop="currentAmount" label="本日活期结余（元）" min-width="160"></el-table-column>
+							<el-table-column prop="escrowAmountReferenceValue" label="托管余额参考值（元）" min-width="160"></el-table-column>
+							<el-table-column prop="escrowAmount" label="扣减参考值后的托管余额（元）" min-width="160"></el-table-column>
+							<el-table-column prop="referenceValue1" label="可存入参考值1（元）" min-width="160"></el-table-column>
+							<el-table-column prop="referenceValue2" label="可存入参考值2（元）" min-width="160"></el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<script src="../components/vue-components.js"></script>
+	
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/tg/Tg_TotalEscrowAmountForecastList.js"></script>
+
+	</body>
+</html>	

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-未处理预警</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css" />
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="Emmp_WarningListDiv">
+				<!--顶部搜索开始-->
+				<div class="top-btns todo_btn" style="padding-left:15px">
+					<!-- 未处理预警 -->
+					<div>
+						<div class="top-input">
+							<div class="inline">
+								<span>触发日期：</span>
+								<input type="text" id="todoListDate" class="form-control cs-input" placeholder="请选择触发日期" value=""/>
+								<img src="../image/list_search_calendar.png" class="ico-date"/>
+							</div>
+							<div class="inline">
+							    <span>预警业务类型</span>
+							    <vue-listselect defaultname="请选择预警业务类型" :thevalue="otherBusiCode"
+												:optionlist="otherBusiCodeList"
+												@callbackfun="changeReconciliationState"
+												@emptybackfun="changeReconciliationStateEmpty"></vue-listselect>
+							    
+							   <!--  <select class="form-control cs-select"  v-modal="otherBusiCode"  @change="getBusiCode">
+							        <option value="">全部</option>
+							        <option value="220101">企业预警</option>
+							        <option value="220102">项目预警</option>
+							        <option value="220103">楼幢预警</option>
+							        <option value="220104">户信息预警</option>
+							        <option value="220106">楼幢备案价格预警</option>
+							        <option value="220107">监管账号预警</option>
+							        <option value="220105">合同信息预警</option>
+							        <option value="220108">合同状态预警</option>
+							         <option value="220109">预售证预警</option>
+							        <option v-for="item in warnType" :value="item.id">{{ item.name }}</option>
+							    </select> -->
+							</div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="resetInfo">重置</button>
+						</div>
+						<button class="btn btn-success" @click="handleReadWarn" v-if="selNum2 > 0">
+							<img src="../image/list_btn_ico_add.png"/>
+							<span>已读</span>
+						</button>
+						<button class="btn btn-success" disabled v-if="selNum2 == 0">
+							<img src="../image/list_btn_ico_add.png"/>
+							<span>已读</span>
+						</button>
+						<button class="btn btn-danger" @click="handleDelete2" v-if="selNum2 > 0">
+							<img src="../image/list_btn_ico_del.png"/>
+							<span>删除</span>
+						</button>
+						<button class="btn btn-danger" disabled v-if="selNum2 == 0">
+							<img src="../image/list_btn_ico_del.png"/>
+							<span>删除</span>
+						</button>
+						<button class="btn btn-primary" @click="handleConduct">
+							<img src="../image/list_btn_ico_edit.png"/>
+							<span>确认办理</span>
+						</button>
+					</div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="tgxy_WarnList" stripe :default-sort="{prop: 'index'}" @selection-change="handleWarnSelectionChange">
+							<el-table-column type="selection" width="48" fixed></el-table-column>
+							<el-table-column type="index" :index="indexMethod" label="序号" width="90" sortable fixed></el-table-column>
+							<el-table-column prop="eCode" label="预警编号" width="" fixed>
+							    <template scope="scope">              
+							        <span v-if="scope.row.isReader==0" style="color:blue">{{ scope.row.eCode }}</span>              
+							        <span v-else style="color: black">{{ scope.row.eCode }}</span>        
+							    </template>
+							</el-table-column>
+							<el-table-column prop="sendTimeStamp" label="触发日期" width=""></el-table-column>
+							<!-- <el-table-column prop="theState" label="预警业务类型" width=""></el-table-column> -->
+							<el-table-column prop="theTitle" label="主题" width=""></el-table-column>
+							<el-table-column prop="theContent" label="内容" width="">
+							    <template scope="scope">              
+							        <span v-if="scope.row.isReader==0" style="color:blue">{{ scope.row.theContent }}</span>              
+							        <span v-else style="color: black">{{ scope.row.theContent }}</span>        
+							    </template>
+							</el-table-column>
+							<el-table-column prop="busiState" label="消息状态" width="">
+							    <template scope="scope">
+							        <button  v-if="scope.row.busiState== '0'" class="btn btn-state-warning">未确认</button>
+							    	<button  v-if="scope.row.busiState == '1'" class="btn btn-state-success">已确认</button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+		</div>
+
+		
+		<script src="../components/vue-components.js"></script>
+		<!-- <script src="../assets/exportExcel/FileSaver.js"></script> -->
+		<!-- <script src="../assets/exportExcel/xlsx.js"></script> -->
+
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/emmp/Emmp_WarningList.js"></script>
+	</body>
+
+</html>

@@ -1,0 +1,37 @@
+{"list":[
+	{
+		"busiCode":"01",
+		"theName":"系统管理",
+		"levelNumber":"1",
+		"parentLevelNumber":"0",
+		"theIndex":"2",
+		"theResource":"",
+		"theType":"虚拟菜单",
+		"isDefault":"2",
+		"remark":"",
+		"parentUI":{},
+		"childrenUIList":[
+			{
+				"busiCode":"0101",
+				"theName":"权限管理",
+				"levelNumber":"1_1",
+				"parentLevelNumber":"1",
+				"theIndex":"1",
+				"theResource":"",
+				"theType":"虚拟菜单",
+				"isDefault":"2",
+				"remark":"",
+				"parentUI":{"theName":"系统管理"},
+				"childrenUIList":[
+					{"busiCode":"010101","theName":"用户管理","levelNumber":"1_1_1","parentLevelNumber":"1_1","theIndex":"1","theResource":"sm/Sm_UserList.shtml","theType":"实体菜单","isDefault":"2","remark":"","parentUI":{"theName":"权限管理"},"childrenUIList":[]},
+					{"busiCode":"010102","theName":"角色管理","levelNumber":"1_1_2","parentLevelNumber":"1_1","theIndex":"2","theResource":"sm/Sm_Permission_RoleList.shtml","theType":"实体菜单","isDefault":"2","remark":"","parentUI":{"theName":"权限管理"},"childrenUIList":[]},
+					{"busiCode":"010103","theName":"角色授权","levelNumber":"1_1_3","parentLevelNumber":"1_1","theIndex":"3","theResource":"sm/Sm_Permission_RoleUIList.shtml","theType":"实体菜单","isDefault":"2","remark":"","parentUI":{"theName":"权限管理"},"childrenUIList":[]},
+					{"busiCode":"010104","theName":"菜单管理","levelNumber":"1_1_4","parentLevelNumber":"1_1","theIndex":"4","theResource":"sm/Sm_Management_Menu.shtml","theType":"实体菜单","isDefault":"2","remark":"","parentUI":{"theName":"权限管理"},"childrenUIList":[]},
+					{"busiCode":"010105","theName":"范围授权","levelNumber":"1_1_5","parentLevelNumber":"1_1","theIndex":"5","theResource":"sm/Sm_Range_AuthorizationList.shtml","theType":"实体菜单","isDefault":"2","remark":"","parentUI":{"theName":"权限管理"},"childrenUIList":[]},
+					{"busiCode":"010106","theName":"系统用户范围授权","levelNumber":"1_1_6","parentLevelNumber":"1_1","theIndex":"6","theResource":"sm/Sm_Range_AuthorizationForZTList.shtml","theType":"实体菜单","isDefault":"2","remark":"","parentUI":{"theName":"权限管理"},"childrenUIList":[]}
+				]
+			}
+		]
+	}
+		
+]}

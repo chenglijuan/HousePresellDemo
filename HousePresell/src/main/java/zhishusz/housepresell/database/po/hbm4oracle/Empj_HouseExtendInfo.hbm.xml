@@ -1,0 +1,191 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Empj_HouseExtendInfo" table="Empj_HouseExtendInfo" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_HouseExtendInfo</param>
+			</generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		
+		<many-to-one class="Empj_HouseInfo" name="houseInfo" foreign-key="null">
+			<column name="houseInfo">
+				<comment>关联户室</comment>
+			</column>
+		</many-to-one>
+		
+		
+		
+		
+		<property name="eCodeOfHouseInfo">
+			<column name="eCodeOfHouseInfo">
+				<comment>户室编号</comment>
+			</column>
+		</property>
+		<property name="setDate">
+			<column name="setDate">
+				<comment>操作时间</comment>
+			</column>
+		</property>
+		<property name="setUser">
+			<column name="setUser">
+				<comment>设定人</comment>
+			</column>
+		</property>
+		<property name="setReason">
+			<column name="setReason">
+				<comment>设定原因</comment>
+			</column>
+		</property>
+		<property name="operateType">
+			<column name="operateType">
+				<comment>操作类型(字典668：1.限制2.解除限制3.房屋处置,4.解除处置，5.续封，6.查封,7.解除查封)</comment>
+			</column>
+		</property>
+		<property name="aimedGuid">
+			<column name="aimedGuid">
+				<comment>针对guid(针对哪个限制业务)</comment>
+			</column>
+		</property>
+		<property name="is_relieve">
+			<column name="is_relieve">
+				<comment>是否解除(0有效，1限制解除；默认0)</comment>
+			</column>
+		</property>
+		<property name="limitType">
+			<column name="limitType">
+				<comment>限制类型（673）</comment>
+			</column>
+		</property>
+		<property name="projectGuid">
+			<column name="projectGuid">
+				<comment>项目guid</comment>
+			</column>
+		</property>
+		<property name="startDate">
+			<column name="startDate">
+				<comment>限制开始日期</comment>
+			</column>
+		</property>
+		<property name="endDate">
+			<column name="endDate">
+				<comment>限制结束日期</comment>
+			</column>
+		</property>
+		<property name="removeLimitType">
+			<column name="removeLimitType">
+				<comment>解除限制类型</comment>
+			</column>
+		</property>
+		<property name="serialNumber">
+			<column name="serialNumber">
+				<comment>流水号(受理编号)</comment>
+			</column>
+		</property>
+		<property name="court">
+			<column name="court">
+				<comment>法院</comment>
+			</column>
+		</property>
+		<property name="ah">
+			<column name="ah">
+				<comment>案号</comment>
+			</column>
+		</property>
+		<property name="jbr">
+			<column name="jbr">
+				<comment>经办人</comment>
+			</column>
+		</property>
+		<property name="lxdh">
+			<column name="lxdh">
+				<comment>联系电话</comment>
+			</column>
+		</property>
+		<property name="projectName">
+			<column name="projectName">
+				<comment>项目名称</comment>
+			</column>
+		</property>
+		<property name="acceptDate">
+			<column name="acceptDate">
+				<comment>受理(送达)日期</comment>
+			</column>
+		</property>
+		<property name="lastlimitGuid">
+			<column name="lastlimitGuid">
+				<comment>上次查封guid</comment>
+			</column>
+		</property>
+		<property name="certificateNumber">
+			<column name="certificateNumber">
+				<comment>预(销)售证号</comment>
+			</column>
+		</property>
+		<property name="saleRange">
+			<column name="saleRange">
+				<comment>预(销)售范围</comment>
+			</column>
+		</property>
+		<property name="rowGuid">
+			<column name="rowGuid">
+				<comment>房屋限制表主键guid</comment>
+			</column>
+		</property>
+		<property name="resourceNote">
+			<column name="resourceNote">
+				<comment>数据来源说明</comment>
+			</column>
+		</property>
+		
+
+	</class>
+</hibernate-mapping>

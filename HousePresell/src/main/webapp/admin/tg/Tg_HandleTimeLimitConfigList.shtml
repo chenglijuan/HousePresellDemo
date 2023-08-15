@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-办理时限配置表</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tg_HandleTimeLimitConfigListDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">业务办理时限配置</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="update()">
+						<img src="../image/detail_btn_ico_save.png" width="18">
+						<span>保存</span>
+					</button>
+				</div>
+			</div>
+			<div class="cs-content">
+				<!--表格开始-->
+				<div class="cs-table">
+					<el-table :data="tg_HandleTimeLimitConfigList" border :default-sort = "{prop: 'index'}">
+						<el-table-column type="index" label="序号" width="60" fixed align="center"></el-table-column>
+						<el-table-column prop="theType" label="业务类型" align="center" width="260"></el-table-column>
+						<el-table-column prop="completionStandard" label="办理完结标准" align="center" width="260"></el-table-column>
+						<el-table-column prop="limitDayNumber" label="办理时限天数（工作日）" align="center" width="260">
+							<template scope="scope">
+								<div class="detail-edit">
+									<input type="text" name=""  v-model="scope.row.limitDayNumber" class="form-control"/>
+								</div>
+							</template>
+						</el-table-column>
+						<el-table-column label="对口角色" min-width="200">
+							<template scope="scope">
+								<select v-model="scope.row.roleId" class="form-control">
+									<option value="">请选择角色</option>
+									<option v-for="role in sm_Permission_RoleList" :value="role.tableId">{{role.theName}}</option>
+								</select>
+							</template>
+						</el-table-column>
+						<el-table-column prop="lastCfgUser" label="最新配置人" align="left" min-width="120"></el-table-column>
+						<el-table-column prop="lastCfgTime" label="最新配置日期" align="center" width="180"></el-table-column>
+					</el-table>
+					<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"></vue-nav>
+				</div>
+			</div>
+		</div>
+		
+		
+		<script src="../components/vue-components.js"></script>
+	
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/tg/Tg_HandleTimeLimitConfigList.js"></script>
+	</body>
+</html>	

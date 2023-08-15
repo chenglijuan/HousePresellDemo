@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Comm_BankUploadDtlModel" table="Comm_BankUploadDtlModel" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_BankUploadDtl</param>
+			</generator>
+		</id>
+		
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<property name="dataUpdateTime">
+			<column name="dataUpdateTime">
+				<comment>接收时间</comment>
+			</column>
+		</property>
+		<property name="tradeTime">
+			<column name="tradeTime">
+				<comment>交易时间</comment>
+			</column>
+		</property>
+		<property name="oppaccountNo">
+			<column name="oppaccountNo">
+				<comment>对方账号</comment>
+			</column>
+		</property>
+		<property name="digest">
+			<column name="digest">
+				<comment>摘要</comment>
+			</column>
+		</property>
+		<property name="accountNo">
+			<column name="accountNo">
+				<comment>本方账号</comment>
+			</column>
+		</property>
+		<property name="purpose">
+			<column name="purpose">
+				<comment>用途</comment>
+			</column>
+		</property>
+		<property name="oppOpenBankName">
+			<column name="oppOpenBankName">
+				<comment>对方开户行</comment>
+			</column>
+		</property>
+		<property name="id">
+			<column name="id">
+				<comment>明细id</comment>
+			</column>
+		</property>
+		<property name="amount">
+			<column name="amount">
+				<comment>金额</comment>
+			</column>
+		</property>
+		<property name="balance">
+			<column name="balance">
+				<comment>账户余额</comment>
+			</column>
+		</property>
+		<property name="time">
+			<column name="time">
+				<comment>推送时间戳</comment>
+			</column>
+		</property>
+		
+		<property name="accountName">
+			<column name="accountName">
+				<comment>本方户名</comment>
+			</column>
+		</property>
+		<property name="serialNO">
+			<column name="serialNO">
+				<comment>交易流水号</comment>
+			</column>
+		</property>
+		
+		<property name="oppaccountName">
+			<column name="oppaccountName">
+				<comment>对方户名</comment>
+			</column>
+		</property>
+		<property name="tradeType">
+			<column name="tradeType">
+				<comment>收支方向</comment>
+			</column>
+		</property>
+		
+	</class>
+</hibernate-mapping>

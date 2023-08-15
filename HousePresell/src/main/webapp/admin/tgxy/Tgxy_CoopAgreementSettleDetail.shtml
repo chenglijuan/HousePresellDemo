@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-三方协议结算-主表详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tgxy_CoopAgreementSettleDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="update()">
+						<img src="../image/detail_btn_ico_save.png" width="18">
+						<span>保存</span>
+					</button>
+					 <button class="btn btn-primary">
+						<img src="../image/detail_btn_ico_submit.png" width="18">
+						<span>提交</span>
+					</button> 
+					<!--<button class="btn btn-warning">
+						<img src="../image/detail_btn_ico_record.png" width="18">
+						<span>备案</span>
+					</button>-->
+				</div>
+				<div class="pull-right text-right">
+					<button class="btn btn-success">
+						<img src="../image/detail_btn_ico_save.png" width="18"/>
+						<span>打印</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">结算确认单号：</span>
+							<div class="detail-info5">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementSettleModel.eCode" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">结算开始日期：</span>
+							<div class="detail-info5">
+								<div class="detail-unEdit">
+									<input type="text" id="tgxy_CoopAgreementSettleStartTime" v-model="tgxy_CoopAgreementSettleModel.startSettlementDate" class="form-control" lay-key="1"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">结算状态：</span>
+							<div class="detail-info5">
+								<div class="detail-unEdit">
+									<input type="text"  v-model="tgxy_CoopAgreementSettleModel.settlementState" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">代理公司：</span>
+							<div class="detail-info5">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementSettleModel.endSettlementDate" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">结算截至日期：</span>
+							<div class="detail-info5">
+								<div class="detail-unEdit">
+									<input type="text" id="tgxy_CoopAgreementSettleEndTime" v-model="tgxy_CoopAgreementSettleModel.endSettlementDate" class="form-control" lay-key="2"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作人：</span>
+							<div class="detail-info5">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementSettleModel.endSettlementDate" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">申请结算日期：</span>
+							<div class="detail-info5">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementSettleModel.applySettlementDate" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">三方协议申请结算份数：</span>
+							<div class="detail-info5">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementSettleModel.protocolNumbers" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作日期：</span>
+							<div class="detail-info5">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementSettleModel.endSettlementDate" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">状态 S_TheState 初始为Normal：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementSettleModel.theState" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">业务状态：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementSettleModel.busiState" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">创建时间：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementSettleModel.createTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">最后修改日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementSettleModel.lastUpdateTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">备案日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementSettleModel.recordTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">结算确认单号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementSettleModel.eCode" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">签署日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementSettleModel.signTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">申请结算日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementSettleModel.applySettlementDate" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">结算开始日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementSettleModel.startSettlementDate" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">结算截至日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementSettleModel.endSettlementDate" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">三方协议申请结算份数：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementSettleModel.protocolNumbers" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">结算状态：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_CoopAgreementSettleModel.settlementState" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>-->
+
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--附件材料开始-->
+			<div class="detail-title">
+				<h1 class="inline">附件材料</h1>
+			</div>
+			<div class="cs-content">
+				<div class="content-top">
+					<div class="detai-btns">
+						<button class="btn btn-success">
+							<img src="../image/list_btn_ico_add.png">
+							<span>新增</span>
+						</button>
+					</div>
+				</div>
+				<div class="detail-content">
+					<div class="form-group">
+						<div class="detail-text2">
+							<span class="text-danger">*</span>
+							<span>结算确认表：</span>
+						</div>
+						<div class="row attachments-wrap">
+							<div class="col-md-2">
+								<div class="attachments1">
+									<img src="../image/test.jpg" width="100%"/>
+									<img src="../image/detail_pic_del.png" class="ico-close"/>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="attachments1">
+									<img src="../image/test2.jpg" width="100%"/>
+									<img src="../image/detail_pic_del.png" class="ico-close"/>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="attachments1">
+									<img src="../image/detail_pic_add.png" class="ico-up"/>
+									<input type="file" value="" class="ico-input" />
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="detail-explain">jpg、png格式的图片，单张不超过2M</div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+			</div>
+			<!--附件材料结束-->
+			<!--三方协议子表开始-->
+			<div class="detail-title">
+				<h1 class="inline">三方协议子表</h1>
+			</div>
+			<div class="cs-content">
+				<div class="content-top">
+					<button class="btn btn-success">
+						<img src="../image/list_btn_ico_add.png"/>
+						<span>新增</span>
+					</button>
+					<button class="btn btn-danger">
+						<img src="../image/list_btn_ico_del.png"/>
+						<span>删除</span>
+					</button>
+				</div>
+				<div class="detail-content">
+					<el-table :data="Tgxy_CoopAgreementSettleDtlDetailList" stripe :default-sort = "{prop: 'index'}">
+						<el-table-column type="selection"  width="55" fixed></el-table-column>
+						<el-table-column type="index" :index="indexMethod" label="序号" width="80" fixed></el-table-column>
+						<el-table-column prop="eCode" label="三方协议号" width="315"></el-table-column>
+						<el-table-column prop="agreementDate" label="协议日期" width="315"></el-table-column>
+						<el-table-column prop="seller" label="出卖人" width="315"></el-table-column>
+						<el-table-column prop="buyer" label="买受人" width="315"></el-table-column>
+						<el-table-column prop="theNameOfProject" label="项目名称" width="315"></el-table-column>
+						<el-table-column prop="eCodeFromConstruction" label="施工编号" width="315"></el-table-column>
+						<el-table-column prop="unitInfoName" label="单元" width="315"></el-table-column>
+						<el-table-column prop="houseInfoName" label="户室" width="315"></el-table-column>
+						<el-table-column prop="recordTimeStamp" label="备案日期" width="315"></el-table-column>
+						<!--<el-table-column prop="reconciliationState" label="上传状态" width="120">
+							
+						<template scope="scope">
+					        <button  v-if="scope.row.reconciliationState == 1" class="btn btn-state-warning">申请中</button>
+					    	<button  v-if="scope.row.reconciliationState == 2" class="btn btn-state-success">已备案</button>
+						</template>
+						</el-table-column>-->
+					</el-table>
+					<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"></vue-nav>
+				</div>
+				
+			</div>
+			<!--三方协议子表结束-->
+			<!-- error modal -->
+			<div class="modal fade" id="errorEscrowAdd" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">{{errtips}}</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!-- success modal -->
+			<div class="modal fade" id="successEscrowAdd" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作成功</div>
+								<div class="del-text2">保存成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div><!-- /.modal结束 -->
+		</div>
+		
+		<script src="../components/vue-components.js"></script>
+		
+		<script src="../js/admin/tgxy/Tgxy_CoopAgreementSettleDetail.js"></script>
+	</body>
+</html>	

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Sm_Permission_RoleCompanyType" table="Sm_Permission_RoleCompanyType" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_Permission_Role" name="sm_Permission_Role" foreign-key="null">
+			<column name="sm_Permission_Role">
+				<comment>角色</comment>
+			</column>
+		</many-to-one>
+		<property name="forCompanyType">
+			<column name="forCompanyType">
+				<comment>适用机构类型</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

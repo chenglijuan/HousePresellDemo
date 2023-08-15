@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-特殊资金拨付</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tgpf_SpecialFundAppropriatedListDiv">
+			<div class="cs-content">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input"  v-model="keyword"   @keyup.enter="search" placeholder="请输入关键字搜索">
+							</div>
+<!--							<div class="inline">-->
+<!--							    <span>用款申请日期：</span>-->
+<!--							    <input type="text" id="specialFundAppropriatedListDate" class="form-control cs-input" v-model="applyDate" placeholder="请选择用款申请日期"/>-->
+<!--								<img src="../image/list_search_calendar.png" class="ico-date"/>-->
+<!--							</div>-->
+
+							<div class="inline">
+								<span>拨付日期：</span>
+								<!-- <input type="text" name="" id="EscrowBankFunds_listDate" class="form-control cs-input" v-model="timeStamp"/>
+                                <img src="../image/list_search_calendar.png" class="ico-date"/> -->
+								<input type="text" name="" id="specialFundAppropriatedListDate" class="form-control cs-input-date" placeholder="开始日期     ~    结束日期"/>
+								<img src="../image/list_search_calendar.png" class="ico-date"/>
+							</div>
+
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="reset">重置</button>
+
+						</div>
+
+						<div class="top-btns">
+							<button class="btn btn-success" @click="specialFundAppropriatedAddHandle" data-editNum="061206_ADD_01">
+								<img src="../image/list_btn_ico_add.png"/>
+								<span>新增</span>
+							</button>
+							<button class="btn btn-primary" @click="specialFundAppropriatedEditHandle" :disabled="editDisabled" data-editNum="061206_MOD_01">
+								<img src="../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+							<button class="btn btn-danger"  @click="showDelModal" :disabled="delDisabled" data-editNum="061206_DEL_01">
+								<img src="../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+
+<!--							<button class="btn btn-danger"  @click="showBatModal" :disabled="batDisabled" data-editNum="061206_DEL_01">-->
+<!--								<img src="../image/list_btn_ico_del.png"/>-->
+<!--								<span>批量下载</span>-->
+<!--							</button>-->
+							<a style="margin:0px 10px" href="javascript:void(0)" @click="showBatModal">
+								<button class="btn btn-success">
+								<img src="../image/detail_btn_ico_download.png" width="18"><span>批量下载</span></button></a>
+
+						</div>
+					</div>
+
+					<div class="pull-right">
+						<div class="top-excel">
+							<button class="btn btn-excel" @click="exportForm">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+					</div>
+
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="tgpf_SpacialFundAppropriatedList" stripe :default-sort = "{prop: 'index'}"  @selection-change="listItemSelectHandle">
+							<el-table-column type="selection"  width="50" fixed align="center"></el-table-column>
+							<el-table-column type="index" :index="indexMethod" label="序号" width="60" fixed align="center"></el-table-column>
+							<el-table-column prop="eCode" label="用款申请单号" min-width="220">
+								<template scope="scope">
+									<el-button type="text" size="small" @click="tgpf_FundAppropriatedDetail(scope.row.tableId)">{{scope.row.eCode}}</el-button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="applyDate" label="用款申请日期" min-width="120"></el-table-column>
+							<el-table-column prop="theNameOfDevelopCompany" label="开发企业名称" min-width="360"></el-table-column>
+							<el-table-column prop="theNameOfProject" label="项目名称" min-width="200"></el-table-column>
+							<el-table-column prop="eCodeFromConstruction" label="施工编号" min-width="150"></el-table-column>
+							<el-table-column prop="theNameOfBankAccount" label="收款方名称" min-width="340"></el-table-column>
+							<el-table-column prop="totalApplyAmount" label="申请金额（元）" min-width="200"></el-table-column>
+							<el-table-column prop="afPayoutDate" label="拨付日期" min-width="120"></el-table-column>
+							<!-- <el-table-column prop="theNameOfProject" label="托管标准（元/㎡）" min-width="200"></el-table-column>
+							<el-table-column prop="theNameOfProject" label="初始受限额度（元）" min-width="200"></el-table-column>
+							<el-table-column prop="theNameOfProject" label="当前形象进度" min-width="200"></el-table-column>
+							<el-table-column prop="theNameOfProject" label="当前受限比例（%）" min-width="200"></el-table-column>
+							<el-table-column prop="theNameOfProject" label="节点受限额度（元）" min-width="200"></el-table-column>
+							<el-table-column prop="theNameOfProject" label="现金受限额度（元）" min-width="200"></el-table-column>
+							<el-table-column prop="theNameOfProject" label="有效受限额度（元）" min-width="200"></el-table-column>
+							<el-table-column prop="theNameOfProject" label="总入账金额（元）" min-width="200"></el-table-column>
+							<el-table-column prop="theNameOfProject" label="已申请拨付金额（元）" min-width="200"></el-table-column>
+							<el-table-column prop="theNameOfProject" label="退房退款金额（元）" min-width="200"></el-table-column>
+							<el-table-column prop="theNameOfProject" label="当前托管余额（元）" min-width="200"></el-table-column>
+							<el-table-column prop="theNameOfProject" label="当前可拨付金额（元）" min-width="200"></el-table-column>
+							<el-table-column prop="theNameOfProject" label="预售资金监管账号" min-width="200"></el-table-column>
+							<el-table-column prop="theNameOfProject" label="预售资金监管银行" min-width="200"></el-table-column>
+							<el-table-column prop="theNameOfProject" label="监管账户开户行" min-width="200"></el-table-column>
+							<el-table-column prop="theNameOfProject" label="本次划款申请金额（元）" min-width="200"></el-table-column>
+							<el-table-column prop="theNameOfProject" label="特殊说明" min-width="200"></el-table-column> -->
+							<el-table-column prop="approvalState" label="审批状态" width="100" align="center">
+								<template scope="scope">
+									<button  v-if="scope.row.approvalState == '已完结'" class="btn btn-state-success">已完结</button>
+							        <button  v-if="scope.row.approvalState == '待提交'" class="btn btn-state-warning">待提交</button>
+							    	<button  v-if="scope.row.approvalState == '审核中'" class="btn btn-state-warning">审核中</button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="applyState" label="拨付状态" min-width="100" align="center">
+								<template scope="scope">
+							        <button  v-if="scope.row.applyState == 1" class="btn btn-state-warning">未拨付</button>
+							    	<button  v-if="scope.row.applyState == 2" class="btn btn-state-success">已拨付</button>
+								</template>
+							</el-table-column>
+								<el-table-column prop="busiState" label="申请单状态" min-width="120" align="center">
+								<template scope="scope">
+							        <button  v-if="scope.row.busiState == 1" class="btn btn-state-warning">已保存</button>
+							    	<button  v-if="scope.row.busiState == 2" class="btn btn-state-success">已提交</button>
+							    	<button  v-if="scope.row.busiState == 3" class="btn btn-state-warning">已确认</button>
+							    	<button  v-if="scope.row.busiState == 4" class="btn btn-state-success">已统筹</button>
+							    	<button  v-if="scope.row.busiState == 5" class="btn btn-state-warning">已退回</button>
+							    	<button  v-if="scope.row.busiState == 6" class="btn btn-state-success">已审批</button>
+							    	<button  v-if="scope.row.busiState == 7" class="btn btn-state-success">已驳回统筹</button>
+								</template>
+							</el-table-column>
+							<!-- <el-table-column prop="appropriatedType" label="特殊拨付类型" min-width="200">
+								<template scope="scope">
+							        <button  v-if="scope.row.applyState == 1" class="btn btn-state-warning">定向支付</button>
+							    	<button  v-if="scope.row.applyState == 2" class="btn btn-state-success">特殊拨付</button>
+							    	<button  v-if="scope.row.applyState == 2" class="btn btn-state-danger">其他支付</button>
+								</template>
+							</el-table-column> -->
+							
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+
+			<!-- bat modal -->
+			<div class="modal fade" id="batchDownloadList" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_warning.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1">确认要下载文件吗？</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure"  @click="tgpf_SpecialFundBat">
+								确定
+							</button>
+							<button type="button" class="btn foot-cancel" data-dismiss="modal">
+								取消
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+
+			<!-- del modal -->
+			<div class="modal fade" id="deleteSpecialFundoList" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_warning.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1">确认要删除这条信息吗？</div>
+								<div class="del-text2">删除后不可恢复</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure"  @click="tgpf_SpecialFundDel">
+								确定
+							</button>
+							<button type="button" class="btn foot-cancel" data-dismiss="modal">
+								取消
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		</div>
+
+<!--		 waiting modal-->
+		<div class="modal fade xszModel" id="deleteSpecialFundoLoad" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-del">
+				<div class="modal-content">
+					<div class="modal-body csm-body">
+						<div class="loading">
+							<span></span>
+						</div>
+						<div id="signWarningText"style="text-align: center;color: #B6232A;font-weight: bold;font-size: 18px;margin-top: 30px;">
+							正在下载中，请等待...
+						</div>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal -->
+		</div>
+
+
+		<script src="../components/vue-components.js"></script>
+	
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tgpf/Tgpf_SpecialFundAppropriatedList.js"></script>
+	</body>
+</html>	

@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-合作机构首页</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css" />
+		<!-- Page CSS -->
+		<link rel="stylesheet" type="text/css" href="../css/admin/sm/Sm_Management_Menu.css" />
+		<!-- zTree CSS -->
+		<link rel="stylesheet" type="text/css" href="../assets/zTree/css/zTreeStyle/zTreeStyle.css" />
+		<link rel="stylesheet" type="text/css" href="../css/admin/empj/Empj_BuildingInfoTable.css" />
+		<style>
+			.wrap {
+				padding: 5px;
+				/* border: 1px #ccc solid; */
+				margin: 0px 0px 0px 0px;
+				position:relative;
+			}
+			
+			.roll-wrap {
+				height: 24px;
+				overflow: hidden;
+				float:left;
+			}
+			.roll-wrap>ul {
+				margin-left:5px;
+			}
+		    #tuoguanBox>tr:first-child {
+		        border-top:1px solid #dedede!important;
+		    }
+			.transform {
+				transform:scale(-1,1);
+			}
+			.upLeftBox span {
+				float: left;
+				display: block;
+				box-sizing: border-box;
+				margin: 1% 1%;
+				height: 4.5vw;
+				border-radius: .5rem;
+				padding: 1% 1%;
+				min-height:78px;
+			}
+			.upLeftBox1,.upLeftBox {
+				padding-left: 1em;
+			}
+			.upLeftBox1 span {
+				float: left;
+				display: block;
+				box-sizing: border-box;
+				margin: 2.5% 1%;
+				height: 6.7vw;
+				border-radius: .5rem;
+				padding: 2.7% 1%;
+				min-height:78px;
+			}
+			.unequ {
+				position: relative;
+				width: 22.5%;
+			}
+			.unequ span {
+				display: block;
+			}
+			.unequ span img {
+				position: absolute;
+				right: 10px;
+				width: 30px;
+			}
+			.inner {
+				color: white;
+			}
+			.inner h3 {
+				font-size: 26px;
+				font-weight: bold;
+				margin: 0 0 10px 0;
+				white-space: nowrap;
+				padding: 0;
+			}
+			.inner p {
+				font-size: 15px;
+			}
+			.inner p i {
+				font-size: 12px;
+			}
+			.box {
+				margin: 0px 0px 25px 0px;
+				width: 100%;
+				height: 28px;
+				border-bottom: 1px solid #ddd;
+				padding: 5px;
+				overflow: hidden;
+			}
+			.box ul{
+				margin-left: 130px;
+			}
+			.box ul li {
+				line-height: 25px;
+				color: #BF3B37;
+			}
+			/* #chartCoop>div {
+			    height:100%!important;
+			}
+			#chartCoop1>div {
+			    height:100%!important;
+			} */
+			
+			/* #chartCoop1>div>canvas {
+				width: 280px!important;
+			} */
+			
+			.BMap_mask {
+				height: 66vh!important;
+			}
+			
+			/* #chartCoop1>div:first-child {
+				width: 305px!important;
+			} */
+			
+			.echartBox {
+				display: flex;
+				position: relative;
+				width: 100%;
+				margin-top: 5px;
+			}
+			
+			.echartBox>.chartContent {
+				margin-right: 1px;
+				position: absolute;
+				display: flex;
+				width: 100%;
+				height: 180px;
+			}
+			.chartContent div {
+				padding: 15px 0px 0px 0px;
+				z-index: 100;
+			}
+			.chartContent img {
+				width: 310px;
+				z-index: 10;
+				cursor: pointer;
+			}
+			
+			.menu-footer {
+				display: flex;
+				width: 100%;
+				margin-top: 16px;
+				box-sizing: border-box;
+			}
+			
+			.menu-footer1 {
+				display: flex;
+				width: 100%;
+				margin-bottom: 30px;
+				font-size:16px;
+				font-weight:bold;
+			}
+			
+			.menu-footer>.btn {
+				padding: 2% 3%;
+				width: calc(100% / 3);
+				background-color: #4582C0;
+				color: white;
+				margin-right: 1px;
+				border-top-left-radius: .2rem;
+				border-top-right-radius: .2rem;
+				border-bottom-left-radius: 0rem;
+				border-bottom-right-radius: 0rem;
+			}
+			
+			.menu-footer1>.btn {
+				padding: 2% 1.9%;
+				width: calc(100% / 3);
+				background-color: #fff;
+				color: #000;
+				border-top-left-radius: 0rem;
+				border-top-right-radius: 0rem;
+				border-bottom-left-radius: .2rem;
+				border-bottom-right-radius: .2rem;
+				border: 1px solid #EDEDED;
+				font-weight:bold;
+				font-size:16px;
+			}
+			
+			.btn-quick-navigation {
+				display: inline-block;
+				padding: 4px 12px;
+				margin-bottom: 0;
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 1.42857143;
+				text-align: center;
+				white-space: nowrap;
+				vertical-align: middle;
+				-ms-touch-action: manipulation;
+				touch-action: manipulation;
+				cursor: pointer;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+				background-image: none;
+				border: 1px solid transparent;
+				border-radius: 4px;
+			}
+			
+			.home-top {
+				width: 100%;
+				margin-bottom: 20px;
+				/*height: 227px;*/
+			}
+			
+			.home-top-left {
+				width: 62%;
+				background-color: #fff;
+				display: inline-block;
+				border: 1px solid #d6d6d6;
+				border-radius: 4px;
+				padding: 0px 15px;
+			}
+			
+			.home-top-right {
+				width: 37.7%;
+				background-color: #fff;
+				display: inline-block;
+				border: 1px solid #d6d6d6;
+				border-radius: 4px;
+				padding: 0px 15px;
+			}
+			
+			.home-top-title {
+				border-bottom: 3px solid #cf000d;
+				color: #cf000d;
+				line-height: 46px;
+				font-weight: bold;
+			}
+			
+			.home-top-content {
+				height: 48px;
+				line-height: 48px;
+				border-bottom: 1px solid #d6d6d6;
+			}
+			
+			.fast-entrance {
+				padding-top: 32px;
+				overflow: hidden;
+				width: 100%;
+			}
+			
+			.fast-entrance li {
+				width: 14%;
+				height: 144px;
+				text-align: center;
+				float: left;
+				margin-right: 2.5%;
+				cursor: pointer;
+			}
+			
+			.fast-entrance-name {
+				padding-top: 20px;
+				/* white-space:nowrap; */
+			}
+			
+			.wait-color {
+				background-color: #ff5454;
+			}
+			
+			.notice-color {
+				background-color: #0aa7ec;
+			}
+			
+			.warning-color {
+				background-color: #fbbb3d;
+			}
+			
+			.notice-num {
+				position: absolute;
+				border-radius: 16px;
+				min-width: 26px;
+				font-size: 14px;
+				color: white;
+				line-height: 16px;
+				text-align: center;
+				top: -10px;
+				left: 30px;
+				border: 1px solid white;
+				padding: 2px 5px;
+			}
+			
+			.page-left {
+				cursor: pointer;
+			}
+			
+			.home-top-page {
+				padding-right: 15px;
+				font-size: 14px;
+			}
+			
+			.page-right {
+				cursor: pointer;
+				padding-right: 15px;
+			}
+			
+			.home-more {
+				cursor: pointer;
+			}
+			
+			.home-notice {
+				padding: 10px 0px;
+				line-height: 30px;
+				border-bottom: 1px solid #d6d6d6;
+			}
+			
+			.icon-content {
+				overflow: hidden;
+				padding: 26px 0px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.icon-content li {
+				float: left;
+				width: 34%;
+				display: flex;
+			}
+			
+			.icon-parent {
+				position: relative;
+				cursor: pointer;
+				display: inline-block;
+				margin-left: 10px;
+			}
+			
+			.icon-name {
+				font-weight: bold;
+				display: inline-block;
+				margin-left: 10px;
+				margin-top: 10px;
+				font-size: .98rem;
+			}
+			
+			.modal-header .close {
+				height: 40px;
+				line-height: 40px;
+				font-size: 24px;
+			}
+			
+			.info-window {
+				line-height: 30px;
+				width: 360px;
+			}
+			
+			.info-window-title {
+				color: #CE0A14;
+			}
+			
+			.ztree>.level0 {
+				border: none;
+			}
+			
+			.home-notice-box {
+				width: 100%;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			.fullBox {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: #ffffff;
+				z-index: 9999999;
+				cursor:pointer;
+			}
+			.fullNot {
+				position: absolute;
+				top: 10px;
+				right: 10px;
+				cursor:pointer;
+			}
+			.tabImg {
+				width: 22px;
+				margin-right: 5px;
+			}
+			#tuoguanBox img {
+				width: 12px;
+				margin-left: 9px;
+			}
+			/*#tuoguanBox>tr:hover {
+				opacity: .7;
+				font-size: 16.5px;
+			}*/
+			.el-input__inner {
+				margin-top: -20px;
+				margin-bottom: 10px;
+			}
+			.el-select__caret {
+				margin-top: -10px;
+			} 
+			.key-search .form-control {
+			    border:1px solid #60B5E9;
+			    display:inline-block;
+			    width:88%;
+			    margin-right:10px;
+			}
+			path{
+			   display:none
+			}
+			.istyle {
+				
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="content-wrap" id="homeCoopDiv">
+			<div class="areaSearch" style="margin-top: -5px;">
+				<span>
+				    <img @mouseover="areaMouseOver" style="width:30px;cursor:pointer;margin-bottom:5px;margin-top: 0px;margin-right: 5px;" src="../image/area.png"/><span class="areaSelect" style="display: none;"></span>
+				    <vue-listselect :thevalue="areaId" :optionlist="areaNameList" @callbackfun="getAreaId" @emptybackfun = "emptyAreaId"></vue-listselect></span>
+			</div>
+			<div class="fullBox" style="display: none;">
+				<div id="chartCoop" style="width:100%;height:100%;"></div>
+				<div id="chartCoop1" style="width:100%;height:100%;"></div>
+				<div class="fullNot" @click="scallFull"><img src="../image/reduce-screen.png"/></div>
+			</div>
+			<div class="home-top">
+				<div class="pull-left home-top-left" style="min-width: 813px;height:8.5vw;min-height: 179px;">
+					<!-- <div class="row upLeftBox">
+						<span class="unequ" style="width: 47%;background:linear-gradient(135deg, #07a7e3 0%, #F0F0F0 100%)">
+						    <span class="inner" style="">
+						    	<h3>{{ buildAccountModel.totalAccountAmountC }}</h3>
+						    	<p>总入账金额<i>(万元)</i></p>
+						    </span>
+						    <span class="icon"><img src="../image/cash1.png" style="opacity:.5;width: 62px;margin-top:-10px;margin-right: 10px;"/></span>
+						</span>
+						<span class="unequ" style="background:linear-gradient(135deg, #00a65a 0%, #E5E5E5 100%)">
+							<span class="inner">
+						    	<h3>{{ buildAccountModel.projectC }}</h3>
+						    	<p>托管项目<i>(个)</i></p>
+						    </span>
+						    <span class="icon"><img src="../image/cash2.png" style="opacity: .7;"/></span>
+						</span>
+						<span class="unequ" style="background:linear-gradient(135deg, #f39c12 0%, #FFEFD5 100%)">
+							<span class="inner">
+						    	<h3>{{ buildAccountModel.escrowAreaC }}</h3>
+						    	<p>托管面积<i>(万.平方米)</i></p>
+						    </span>
+						    <span class="icon"><img src="../image/cash3.png" style="opacity: .8;"/></span>
+						</span>
+					</div> -->
+					<div class="row upLeftBox1">
+						<span class="unequ" style="background:linear-gradient(135deg, #dd4b39 0%, #FFF 100%)">
+							<span class="inner">
+						    	<h3>{{ buildAccountModel.escorwC }} <i class="istyle">(份)</i></h3>
+						    	<p>合作协议签约量</p>
+						    </span>
+						    <!-- <span class="icon"><img src="../image/cash4.png" style="opacity: .8;"/></span> -->
+						    <span class="icon"><img src="../image/hzxy.png" style="opacity: .8;"/></span>
+						</span>
+						<span class="unequ" style="background:linear-gradient(135deg, #9A32CD 0%, #FFF 100%)">
+							<span class="inner">
+						    	<h3>{{ buildAccountModel.tripleAgreementC }} <i>(份)</i></h3>
+						    	<p>三方协议签约量</p>
+						    </span>
+						    <!-- <span class="icon"><img src="../image/cash5.png" style="opacity: .6;"/></span> -->
+						    <span class="icon"><img src="../image/sfxy.png" style="opacity: .6;"/></span>
+						</span>
+						<span class="unequ" style="background:linear-gradient(135deg, #666699 0%, #fff 100%)">
+							<span class="inner">
+						    	<h3>{{ buildAccountModel.projectC }} <i>(个)</i></h3>
+						    	<p>托管项目</p>
+						    </span>
+						    <!-- <span class="icon"><img src="../image/cash6.png" style="opacity: .8;"/></span> -->
+						    <span class="icon"><img src="../image/tgxm.png" style="opacity: .8;"/></span>
+						</span>
+						<span class="unequ" style="background:linear-gradient(135deg, #8B5F65 0%, #fff 100%)">
+							<span class="inner">
+						    	<h3>{{ buildAccountModel.escrowAreaC }} <i>(万.平方米)</i></h3>
+						    	<p>托管面积</p>
+						    </span>
+						    <!-- <span class="icon"><img src="../image/cash7.png" style="opacity: .6;"/></span> -->
+						    <span class="icon"><img src="../image/tgmj.png" style="opacity: .6;"/></span>
+						</span>
+					</div>
+					
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			<div class="pull-right home-top-right" style="position:absolute;height:8.5vw;margin-top: -20px;margin-left: 5px;width: 37%;min-height: 179px;">
+				<div class="echartBox">
+					<div class="chartContent">
+						<div style="width:50%" @click="enterNewTab('0010', '托管项目风险监测明细表', 'tg/Tg_ProjectRisksDetailedList.shtml')"><img src="../image/tgxmfxjcmxb.png" style="width: 100%;height:140px"  /></div>
+						<div style="width:50%;margin-left: 20px;" ><img src="../image/tgxmxxmxb.png" style="width: 100%;height:140px;" @click="enterNewTab('0009', '托管项目信息明细表 ', 'qs/qs_FloorAccountReport.shtml')" /></div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="clearfix"></div>
+		<!-- </div> -->
+		<!-- <div class="pull-left home-top-left" style="overflow:hidden;min-width:812.5px;height:63.5vh;padding: 10px;margin-left: 20px;width: 60.5%;margin-top: -10px;">
+			
+		</div> -->
+		<div class="clearfix"></div>
+		<div class="" style="position:relative;width: 61.8%;min-width:812.5px;margin-left: 0px;float:left;margin-top:10px;height:63.5vh;overflow:hidden;">
+			<div style="position:absolute;top:10px;z-index: 9;right: 10px;display: inline-block;cursor: pointer" ><img src="../image/full-screen.png" onclick="showFullScreen()" /></div>
+			<div id="map"></div>
+		</div>
+		<div class="pull-right home-top-right" id="rightBox"  style="position:absolute;height:63.5vh;margin-top: 10px;margin-left: 8px;width: 37%;">
+			<div class="" style="padding:13px 0px">
+			 <div  id="rightBoxTop">
+				    <!-- <div @click="openRiskDetail" style="margin-left:79%;cursor:pointer"><span>更多风险信息</span></div>
+					<div class="wrap">
+					    <div style="float:left">
+						    <img src="../image/gonggao1.png"  style="margin-top: -5px;margin-right: 10px;width: 20px;" /><span style="padding-bottom: 5px;">高风险项目：</span>
+					    </div>
+						<div class="roll-wrap" id="roll-wrap">
+							<ul id="scrollContent"></ul>
+						</div>
+					    <div class="clearfix"></div>
+					</div> -->
+				
+					<div style="margin-top:0px;margin-bottom:10px" class="key-search">
+						<input type="text" class="form-control" v-model="keyword" @keyup.enter="loadAreaData" placeholder="请输入项目搜索"><button @click="loadAreaData" style="margin-bottom:2.5px" class="btn btn-primary">搜索</button>
+					</div>
+				
+				    <table style="margin-bottom:5px">
+				        <thead style="background: #ffffff;border-left:1px solid white!important;border-right:1px solid white!important;border-bottom:1px solid white!important">
+							<th style="width:100px;border:none;"><img class="tabImg" src="../image/index.png" />序号</th>
+							<th style="width:150px;border:none;"><img class="tabImg" src="../image/cander.png" />托管日期</th>
+							<th style="width:150px;border:none;"><img class="tabImg" src="../image/project.png" />项目名称</th>
+							<th style="border:none;"><img class="tabImg" src="../image/build.png" />托管楼幢</th>
+							<th style="border:none;"></th>
+						</thead>
+				    </table>
+			    </div>
+				<div class="tabBox" id="tabBox" style="position:relative;height:45.9vh!important;overflow:auto">
+					<table class="table" style="position:absolute;border-left: 1px solid gainsboro;border-right: 1px solid gainsboro;">
+						<tbody id="tuoguanBox">
+							<!-- <tr>
+								<td style="border:none;border-left:1px solide gainsboro!important;cursor:pointer;border-bottom: 1px solid gainsboro!important;"><img src="../image/1.png"/></td>
+								<td style="cursor:pointer;border:none;border-bottom: 1px solid gainsboro!important;">2019-12-33</td>
+								<td style="border:none;border-right:1px solide #dedede;cursor:pointer;border-bottom: 1px solid gainsboro!important;">项目1</td>
+								<td style="border:none;border-right:1px solide #dedede;cursor:pointer;border-bottom: 1px solid gainsboro!important;"><img style="width: 20px;" src="../image/area.png"/></td>
+							</tr> -->
+						</tbody>
+					</table>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<!-- <div class="cs-content" id="container" style="min-height: 600px;"></div> -->
+		<!-- menu modal -->
+		<div class="modal fade" id="menuModel" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="row">
+				<!--modal-dialog-->
+				<div class="modal-content col-md-6 col-md-offset-3" style="padding-left: 0px;padding-right: 0px;">
+					<div class="modal-header" style="height: 40px;line-height: 40px;">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" style="line-height: 40px;">快捷导航设置</h4>
+					</div>
+					<div class="clearfix"></div>
+					<div class="modal-body" style="max-height: 500px;overflow-y: scroll;">
+						<!--<ul>
+							<li>
+								<div>
+									<span style="display: inline-block;width: 6px;height: 6px;border-radius: 50%;background-color: #CC010C;"></span>
+								</div>
+							</li>
+						</ul>-->
+						<div class="col-md-12 menu-left">
+							<div class="zTreeDemoBackground left">
+								<ul id="treeDemo" class="ztree"></ul>
+							</div>
+							<div id="rMenu">
+								<ul class="menu-add">
+									<li id="m_add" @click="addNextMenu();">新建下级菜单</li>
+									<li id="m_del" @click="delNowMenu();">删除</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn foot-sure" @click="subFastEntrance">
+							确定
+						</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal -->
+		</div>
+
+		<!-- menu modal -->
+		<div class="modal fade" id="mapModel" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="row">
+				<!--modal-dialog-->
+				<div class="modal-content col-md-12">
+					<div class="modal-body">
+						<div style="position:absolute;top:30px;z-index: 9;right: 30px;display: inline-block;cursor: pointer" onclick="showReduceScreen()"><img src="../image/reduce-screen.png" /></div>
+						<div class="col-md-12" id="bigMap"></div>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal -->
+		</div>
+
+		</div>
+		<script src="../components/vue-components.js"></script>
+		<!-- zTree Js -->
+		<script type="text/javascript" src="../assets/zTree/js/jquery.ztree.core.js"></script>
+		<script type="text/javascript" src="../assets/zTree/js/jquery.ztree.excheck.js"></script>
+		<script type="text/javascript" src="../assets/zTree/js/jquery.ztree.exedit.js"></script>
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../assets/map/InfoBox_min.js" type="text/javascript"></script>
+		<script src="../js/admin/homeCooperativeAgency.js"></script>
+		<script type="text/javascript" src="https://api.map.baidu.com/library/AreaRestriction/1.2/src/AreaRestriction_min.js"></script>
+
+		<script>
+			var height = document.body.clientHeight;
+			$("#map").css("height", (height - 56 - 22 - 270) + "px");
+			$("#tabBox").css("height",($("#rightBox").height()-$("#rightBoxTop").height()-30)+"px");
+			function loadProjectInfoOverlay(id) {
+				var mp = new BMap.Map(id, { enableMapClick: false });
+				/* var point = new BMap.Point(mapTableVue.mapCenter.x, mapTableVue.mapCenter.y); */
+				mp.centerAndZoom(new BMap.Point(mapTableVue.initialLongitude,mapTableVue.initialLatitude), 14);
+				var point = new BMap.Point(mapTableVue.mapCenter.x, mapTableVue.mapCenter.y);
+				var cityName = '江苏省';
+				/* mp.centerAndZoom(point, 14); */
+				mp.centerAndZoom(new BMap.Point(mapTableVue.initialLongitude,mapTableVue.initialLatitude), 14);
+				mp.addControl(new BMap.OverviewMapControl()); //添加缩略地图控件
+				mp.enableScrollWheelZoom();
+				mp.addControl(new BMap.NavigationControl({ type: BMAP_NAVIGATION_CONTROL_LARGE, anchor: BMAP_ANCHOR_TOP_LEFT, offset: new BMap.Size(40, 250) }));
+				var bdary = new BMap.Boundary();
+				bdary.get(cityName, function(rs) { //获取行政区域       
+					//网上查了下，东西经南北纬的范围
+					var EN_JW = "180, 90;"; //东北角
+					var NW_JW = "-180,  90;"; //西北角
+					var WS_JW = "-180, -90;"; //西南角
+					var SE_JW = "180, -90;"; //东南角
+					//4.添加环形遮罩层
+					var ply1 = new BMap.Polygon(rs.boundaries[3] + SE_JW + SE_JW + WS_JW + NW_JW + EN_JW + SE_JW, { strokeColor: "none", fillColor: "rgb(246,246,246)", fillOpacity: 1, strokeOpacity: 0.5 }); //建立多边形覆盖物
+
+					mp.addOverlay(ply1);
+					//5. 给目标行政区划添加边框，其实就是给目标行政区划添加一个没有填充物的遮罩层
+					var ply = new BMap.Polygon(rs.boundaries[3], { strokeWeight: 2, strokeColor: "#00f", fillColor: "" });
+					mp.addOverlay(ply);
+				});
+				//首页操作---------------------创建覆盖层
+
+				//mp.clearOverlays();
+
+				function ComplexCustomOverlay(point, text, mouseoverText, tableId) {
+					this._point = point;
+					this._text = text;
+					this._overText = mouseoverText;
+					this._tableId = tableId;
+				}
+				ComplexCustomOverlay.prototype = new BMap.Overlay();
+				ComplexCustomOverlay.prototype.initialize = function(map) {
+					this._map = map;
+					var div = this._div = document.createElement("div");
+					div.style.position = "absolute";
+					div.style.zIndex = BMap.Overlay.getZIndex(this._point.lat);
+					div.style.backgroundColor = "#F54336";
+					//div.style.border = "1px solid #F54336";
+					div.style.color = "white";
+					div.style.height = "30px";
+					div.style.padding = "0px 10px";
+					div.style.lineHeight = "26px";
+					div.style.borderRadius = "4px";
+					div.style.whiteSpace = "nowrap";
+					div.style.MozUserSelect = "none";
+					div.style.fontSize = "12px"
+					var span = this._span = document.createElement("span");
+					div.appendChild(span);
+					span.innerHTML = this._text;
+					//span.appendChild(document.createTextNode(this._text));     
+
+					//   span.setAttribute("tableId",this._tableId);
+					var that = this;
+					var arrow = this._arrow = document.createElement("div");
+					arrow.style.background = "url(../image/home_map_graph_red.png) no-repeat";
+					arrow.style.position = "absolute";
+					arrow.style.width = "11px";
+					arrow.style.height = "10px";
+					arrow.style.top = "30px";
+					arrow.style.left = "45%";
+					arrow.style.overflow = "hidden";
+					div.appendChild(arrow);
+
+					div.onmouseover = function(e) {
+						var projectName = $(this).children()[0].firstElementChild.innerHTML;
+						var dataId = $(this).children()[0].firstElementChild.getAttribute("data-id");
+						var model = {
+							interfaceVersion: mapTableVue.interfaceVersion,
+							tableId: dataId
+						}
+						new ServerInterface("../Sm_HomePageProjectDetail").execute(model, function(jsonObj) {
+							if(jsonObj.result != "success") {
+								noty({ "text": jsonObj.info, "type": "error", "timeout": 2000 });
+							} else {
+								var empj_ProjectInfo = jsonObj.empj_ProjectInfo;
+								var sContent = '<div class="info-window"><h4 style="font-weight:bold">' + empj_ProjectInfo.theName + '</h4>' +
+									'<p><span class="info-window-title">项目编号：</span><span>' + empj_ProjectInfo.eCode + '</span></p>' +
+									'<p><span class="info-window-title">地址：</span><span>' + empj_ProjectInfo.address + '</span></p>' +
+									'<p><span class="info-window-title">托管面积：</span><span>' + addThousands(empj_ProjectInfo.totalArea) + '㎡</span></p>' +
+									'<p><button class="btn btn-primary pull-right" onclick="openDetail(' + empj_ProjectInfo.tableId + ')">查看"项目楼盘表"</button></p>' +
+									'</div>';
+								//将所有信息窗口全部关闭
+								var opendInfoBoxArr = document.getElementsByClassName('infoBox');
+								if(opendInfoBoxArr.length > 0) {
+									for(var i = 0; i < opendInfoBoxArr.length; i++) {
+										opendInfoBoxArr[i].style.display = "none";
+									}
+								}
+								var infoWindow = new BMap.InfoWindow(sContent); // 创建信息窗口对象 
+								mapTableVue.mapData.forEach(function(item) {
+									if(item.tableId == empj_ProjectInfo.tableId) {
+										if(item.longitude != "" && item.latitude != "" && item.longitude != undefined && item.latitude != undefined) {
+											mp.openInfoWindow(infoWindow, new BMap.Point(item.longitude, item.latitude)); //开启信息窗口
+										} else {
+											// 创建地址解析器实例
+											var myGeo = new BMap.Geocoder();
+											// 将地址解析结果显示在地图上,并调整地图视野
+											myGeo.getPoint(empj_ProjectInfo.address, function(point) {
+												if(point) {
+													mp.openInfoWindow(infoWindow, point); //开启信息窗口
+												} else {
+													//						alert("您选择地址没有解析到结果!");
+												}
+											}, mapTableVue.mapCenter.z);
+										}
+									}
+								})
+								//查看项目楼盘表
+								
+								//查看项目楼盘表
+								function openDetail(tableId) 
+								{
+									enterNewTab(tableId, "项目详情", 'empj/Empj_ProjectInfoDetail.shtml');
+								}
+								
+								/* function openDetail(tableId) {
+									var theTableId = 'Empj_BuildingInfoTableDetail_' + tableId + "_" + 0;
+									$("#tabContainer").data("tabs").addTab({ id: theTableId, text: '楼盘表', closeable: true, url: 'empj/Empj_BuildingInfoTableDetail.shtml' });
+								} */
+							}
+						});
+					};
+					/* div.onmouseout = function(){
+			    	  mp.closeInfoWindow()
+			      } */
+					mp.getPanes().labelPane.appendChild(div);
+					return div;
+				}
+				ComplexCustomOverlay.prototype.draw = function() {
+					var map = this._map;
+					var pixel = map.pointToOverlayPixel(this._point);
+					this._div.style.left = pixel.x - parseInt(this._arrow.style.left) + "px";
+					this._div.style.top = pixel.y - 30 + "px";
+				}
+				if(mapTableVue.mapData.length == 0) {
+					var marker = new BMap.Marker(new BMap.Point(mapTableVue.mapCenter.x, mapTableVue.mapCenter.y)); // 创建标注
+					mp.addOverlay(marker);
+					/*  var myCompOverlay = new ComplexCustomOverlay(new BMap.Point(mapTableVue.mapCenter.x, mapTableVue.mapCenter.y), mapTableVue.mapCenter.z); 
+				        mp.addOverlay(myCompOverlay); */
+					return;
+				}
+
+				//根据获取的项目列表新增项目名称覆盖物和项目信息窗口
+				for(var i = 0; i < mapTableVue.mapData.length; i++) {
+					var longitude = mapTableVue.mapData[i].longitude;
+					var latitude = mapTableVue.mapData[i].latitude;
+					var tableId = mapTableVue.mapData[i].tableId;
+					var theName = mapTableVue.mapData[i].theName;
+					//var data = tableId +","+ longitude +","+ latitude;
+					//项目覆盖物
+					var txt = "<div style=\"fontSize:14px\" data-id=\"" + tableId + "\">" + theName + "</div>";
+					var myCompOverlay;
+					if(longitude != "" && latitude != "" && longitude != undefined && latitude != undefined) {
+						myCompOverlay = new ComplexCustomOverlay(new BMap.Point(longitude, latitude), txt);
+					} else {
+
+						// 创建地址解析器实例
+						var myGeo = new BMap.Geocoder();
+						// 将地址解析结果显示在地图上,并调整地图视野
+						myGeo.getPoint(mapTableVue.mapData[i].address, function(point) {
+							if(point) {
+								myCompOverlay = new ComplexCustomOverlay(point, txt);
+							} else {
+								myCompOverlay = new ComplexCustomOverlay(new BMap.Point(mapTableVue.mapCenter.x, mapTableVue.mapCenter.y), mapTableVue.mapCenter.z);
+							}
+						}, mapTableVue.mapCenter.z);
+					}
+					mp.addOverlay(myCompOverlay);
+				};
+
+			}
+			//关闭自定义信息窗口
+			function closeInfoBox(tableId) {
+				for(var i = 0; i < mapTableVue.infoBoxMap.arr.length; i++) {
+					var key = mapTableVue.infoBoxMap.arr[i].key;
+					if(key == tableId) {
+						var closeInfoBox = mapTableVue.infoBoxMap.arr[i].value;
+						closeInfoBox.close();
+					}
+				}
+			}
+
+			//查看项目楼盘表
+			/* function openDetail(tableId) {
+				$("#mapModel").modal('hide');
+				enterNewTab(tableId, "楼盘表", "empj/Empj_BuildingInfoTableDetail.shtml");
+				//$("#tabContainer").data("tabs").addTab({ id: tableId, text: '楼盘表', closeable: true, url: 'empj/Empj_BuildingInfoTableDetail.shtml' });
+			}
+ 			*/
+			 function openDetail(tableId) 
+			{
+				enterNewTab(tableId, "项目详情", 'empj/Empj_ProjectInfoDetail.shtml');
+			}			
+ 
+			function showFullScreen() {
+				var docElm = document.documentElement;
+				//W3C   
+				if(docElm.requestFullscreen) {
+					docElm.requestFullscreen();
+				}
+				//FireFox   
+				else if(docElm.mozRequestFullScreen) {
+					docElm.mozRequestFullScreen();
+				}
+				//Chrome等   
+				else if(docElm.webkitRequestFullScreen) {
+					docElm.webkitRequestFullScreen();
+				}
+				//IE11   
+				else if(docElm.msRequestFullscreen) {
+					docElm.msRequestFullscreen();
+				}
+				$("#mapModel").modal({
+					backdrop: 'static'
+				})
+				var height = window.screen.availHeight + "px";
+				$("#bigMap").css("height", height);
+				loadProjectInfoOverlay("bigMap");
+			}
+
+			function showReduceScreen() {
+				//W3C
+				if(document.exitFullscreen) {
+					document.exitFullscreen();
+				}
+				//FireFox
+				else if(document.mozCancelFullScreen) {
+					document.mozCancelFullScreen();
+				}
+				//Chrome等
+				else if(document.webkitCancelFullScreen) {
+					document.webkitCancelFullScreen();
+				}
+				//IE11
+				else if(document.msExitFullscreen) {
+					document.msExitFullscreen();
+				}
+				$("#mapModel").modal('hide');
+			}
+		</script>
+		<script>
+			function scrollTxt() {
+				var controls = {},
+					values = {},
+					t1 = 3000,
+					/*播放动画的时间*/
+					t2 = 5000,
+					/*播放时间间隔*/
+					si;
+				controls.rollWrap = $("#roll-wrap");
+				controls.rollWrapUl = controls.rollWrap.children();
+				controls.rollWrapLIs = controls.rollWrapUl.children();
+				values.liNums = controls.rollWrapLIs.length;
+				values.liHeight = controls.rollWrapLIs.eq(0).height();
+				values.ulHeight = controls.rollWrap.height();
+				this.init = function() {
+					autoPlay();
+					pausePlay();
+				}
+				/*滚动*/
+				function play() {
+					controls.rollWrapUl.animate({ "margin-top": "-" + values.liHeight }, t1, function() {
+						$(this).css("margin-top", "0").children().eq(0).appendTo($(this));
+					});
+				}
+				/*自动滚动*/
+				function autoPlay() {
+					/*如果所有li标签的高度和大于.roll-wrap的高度则滚动*/
+					if(values.liHeight * values.liNums > values.ulHeight) {
+						si = setInterval(function() {
+							play();
+						}, t2);
+					}
+				}
+				/*鼠标经过ul时暂停滚动*/
+				function pausePlay() {
+					controls.rollWrapUl.on({
+						"mouseenter": function() {
+							clearInterval(si);
+						},
+						"mouseleave": function() {
+							autoPlay();
+						}
+					});
+				}
+			}
+			new scrollTxt().init();
+			var ti = setInterval(function() {
+				if($("#scrollContent").html() != "") {
+					new scrollTxt().init();
+					clearInterval(ti);
+				}
+			},1000);
+		</script>
+		<script>
+			$(function() {
+				
+				function openProject(tableId) {
+					enterNewTab(tableId, "项目详情", "empj/Empj_BuildingInfoTableDetail.shtml")
+				}
+				
+				$(".unequ").hover(function(){
+					$(this).css("opacity",".6");
+					$(this).find(".icon img").css("transform","scale(1,-1)");
+				},function(){
+					$(this).css("opacity","1");
+					$(this).find(".icon img").css("transform","none");
+				});
+				
+				
+				$(window).resize(function() {
+					echarts.init(document.getElementById('chartCoop')).resize();
+					echarts.init(document.getElementById('chartCoop1')).resize();
+				});
+				
+				$(".el-scrollbar__view li:eq(0)").remove();
+			})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,25 @@
+.detail-compare>div>div {
+	border:1px solid #dcdcdc;
+	margin-top:-1px;
+	margin-right: -1px;
+	margin-left: -1px;
+	padding:10px;
+}
+.detail-compare>div>div:first-child {
+	background: #E5F1FF;
+}
+.detail-compare>div>div:nth-child(3) {
+	background: #F9E5E5;
+}
+.detail-compare>div:nth-child(1)>div:nth-child(2) {
+	background: #E5F1FF;
+}
+.detail-compare>div:nth-child(1)>div:nth-child(4) {
+	background: #F9E5E5;
+}
+.detail-compare .clearSpace {
+	padding:4px;
+}
+.clearSpace>input {
+	background: #f1f1f1;
+}

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-备案均价变更审批</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body >
+		<div class="content-wrap" id="sm_ApprovalProcess_AvgPriceDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button  v-if="isNeedBackup == true" class="btn btn-warning" data-toggle="modal" data-target="#examine" @click="showModal" data-backdrop="static" data-keyboard=false>
+						<img src="../image/list_btn_ico_examine.png" width="18">
+						<span>审批记录</span>
+					</button>
+					<button  v-if="isNeedBackup && sourcePage == 1" class="btn btn-warning" @click="approvalHandle">
+						<img src="../image/detail_btn_ico_record.png" width="18">
+						<span>备案</span>
+					</button>
+					<button v-if="!isNeedBackup" class="btn btn-warning" data-toggle="modal" data-target="#examine" @click="showModal" data-backdrop="static" data-keyboard=false>
+						<img src="../image/list_btn_ico_examine.png" width="18">
+						<span>审批</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">申请单号：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tgpj_BuildingAvgPrice.eCode" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">施工编号：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="tgpj_BuildingAvgPrice.eCodeFromConstruction" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">楼幢住宅备案均价：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="tgpj_BuildingAvgPriceNew.recordAveragePrice" class="form-control"/>
+								</div>
+							</div>
+							<div class="change-info" v-if="tgpj_BuildingAvgPriceNew != null && tgpj_BuildingAvgPrice.recordAveragePrice != tgpj_BuildingAvgPriceNew.recordAveragePrice">
+								<img src="../image/detail_ico_warning.png" width="15"/>
+								<span class="text-danger vertical-m">变更前：{{tgpj_BuildingAvgPrice.recordAveragePrice}}</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作人：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text"
+										   disabled
+										   v-model="tgpj_BuildingAvgPrice.userUpdateName"
+										   class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">系统备案日期：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text"
+										   disabled
+										   v-model="tgpj_BuildingAvgPrice.recordTimeStamp"
+										   class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">开发企业：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="tgpj_BuildingAvgPrice.companyName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">公安编号：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="tgpj_BuildingAvgPrice.eCodeFromPublicSecurity" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">物价备案日期：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="tgpj_BuildingAvgPrice.averagePriceRecordDateString" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作日期：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="tgpj_BuildingAvgPrice.lastUpdateTimeStampString" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">项目名称：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="tgpj_BuildingAvgPrice.projectName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">坐落：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="tgpj_BuildingAvgPrice.position" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group" v-if="isShowPresell">
+							<span class="detail-text1">预售系统备案均价：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="tgpj_BuildingAvgPrice.recordAveragePriceFromPresellSystem" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">备案人：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="tgpj_BuildingAvgPrice.userRecordName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+				    <div class="col-md-12">
+						<div class="form-group">
+							<span class="detail-text1">备注：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<textarea type="text" disabled v-model="tgpj_BuildingAvgPriceNew.remark" class="form-control"></textarea>
+								</div>
+							</div>
+							<div class="change-info" v-if="tgpj_BuildingAvgPriceNew != null && tgpj_BuildingAvgPrice.remark != tgpj_BuildingAvgPriceNew.remark">
+								<img src="../image/detail_ico_warning.png" width="15"/>
+								<span class="text-danger vertical-m">变更前：{{tgpj_BuildingAvgPrice.remark}}</span>
+							</div>
+						</div>
+				    </div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--附件材料开始-->
+			<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+			<!--附件材料结束-->
+		</div>
+		<!--<script src="../components/vue-components.js"></script>-->
+		
+		<script src="../js/admin/sm/Sm_ApprovalProcess_AvgPriceDetail.js"></script>
+	</body>
+</html>	

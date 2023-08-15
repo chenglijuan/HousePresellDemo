@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-项目-工程进度预测-主表详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="empj_PjDevProgressForcastDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<!-- <div class="inline title-btns">
+					<button class="btn btn-primary" @click="empj_PjDevProgressForcastEdit"
+							:disabled="busiState == '已维护'">
+						<img src="../image/list_btn_ico_edit.png"/>
+						<span>修改</span>
+					</button>
+				</div> -->
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">工程进度预测单号：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="eCode" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">施工编号：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="eCodeFromConstruction" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">地上层数：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="upfloorNumber" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">当前进度节点：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="currentBuildProgress" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">开发企业：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="developCompanyName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<!--<div class="form-group">-->
+							<!--<span class="detail-text1">楼幢编号：</span>-->
+							<!--<div class="detail-info1">-->
+								<!--<div class="detail-unEdit">-->
+									<!--<input type="text" disabled v-model="eCodeOfBuilding" class="form-control"/>-->
+								<!--</div>-->
+							<!--</div>-->
+						<!--</div>-->
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">楼幢坐落：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="position" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">巡查人：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="patrolPerson" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">项目名称：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="projectName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">公安编号：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="eCodeFromPublicSecurity" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">巡查日期：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="patrolTimestamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<span class="detail-text1">备注：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<textarea rows="3" type="text" disabled v-model="remark" class="form-control"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--进度详情开始-->
+			<div class="detail-title">
+				<h1 class="inline">进度详情</h1>
+			</div>
+			<div class="cs-content">
+				<!--表格开始-->
+				<div class="cs-table examine-list">
+					<el-table :data="empj_PjDevProgressForcastDtlList" stripe :default-sort = "{prop: 'theName'}">
+						<el-table-column type="index" :index="indexMethod" label="序号" width="60" align="center"
+										 fixed></el-table-column>
+						<el-table-column prop="stageName" label="预测进度节点" min-width="160"></el-table-column>
+						<el-table-column prop="ogPredictedFinishDatetime" label="预测完成日期（原）"
+										 min-width="120" align="center"></el-table-column>
+						<el-table-column prop="predictedFinishDatetime" label="预测完成日期（新）" min-width="120" align="center"></el-table-column>
+						<el-table-column prop="progressJudgement" label="进度判定" min-width="100" align="center">
+							<template scope="scope">
+								<button  v-if="scope.row.progressJudgement == 1" class="btn btn-state-danger">滞后</button>
+								<button  v-if="scope.row.progressJudgement == 0" class="btn btn-state-success">正常</button>
+							</template>
+						</el-table-column>
+						<el-table-column prop="causeDescriptionForDelay" label="进度滞后原因" min-width="200"></el-table-column>
+						<el-table-column prop="userName" label="操作人" min-width="120"></el-table-column>
+						<el-table-column prop="operationDateTime" label="操作时间" min-width="180" align="center"></el-table-column>
+					</el-table>
+				</div>
+				<!-- 表格结束 -->
+			</div>
+			<!--进度详情结束-->
+		</div>
+
+		<script src="../components/vue-components.js"></script>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/empj/Empj_PjDevProgressForcastDetail.js"></script>
+	</body>
+</html>	

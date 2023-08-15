@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-风控例行抽查-基础信息详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tg_RiskCheckMonthSumDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">抽查信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="saveRiskCheck" v-if="theState == 2">
+						<img src="../image/detail_btn_ico_save.png" width="18">
+						<span>保存</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">抽查月份：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckMonthSum.spotTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">业务：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckMonthSum.sumCheckCount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">整改推送：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckMonthSum.pushCount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">抽查日期：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckMonthSum.createTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">合格：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckMonthSum.qualifiedCount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">整改反馈：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckMonthSum.feedbackCount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">抽查状态：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckMonthSum.rectificationState" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">不合格：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckMonthSum.unqualifiedCount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">完成整改：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckMonthSum.handleCount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!-- 抽查业务开始 -->
+			<div class="detail-title">
+				<h1 class="inline">抽查业务</h1>
+			</div>
+			<div class="cs-content">
+				<div class="cs-table">
+					<div id="table2">
+						<el-table :data="tg_RiskCheckBusiCodeSumList" stripe :default-sort = "{prop: 'theName'}">
+							<el-table-column type="index" :index="indexMethod" label="序号" width="60" fixed align="center"></el-table-column>
+							<el-table-column prop="bigBusiName" label="业务大类" min-width="150"></el-table-column>
+							<el-table-column prop="smallBusiName" label="业务小类" min-width="150">
+								<template scope="scope">
+									<el-button :disabled="scope.row.theState != 0" type="text" size="small" @click="rishCheckBusiCodeSumDetailPageOpen(scope.row)">{{scope.row.smallBusiName}}</el-button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="sumCheckCount" label="业务" width="140" align="right"></el-table-column>
+							<el-table-column prop="qualifiedCount" label="合格" width="140" align="right"></el-table-column>
+							<el-table-column prop="unqualifiedCount" label="不合格" width="140" align="right"></el-table-column>
+							<el-table-column prop="pushCount" label="整改推送" width="140" align="right"></el-table-column>
+							<el-table-column prop="feedbackCount" label="整改反馈" width="140" align="right"></el-table-column>
+							<el-table-column prop="handleCount" label="完成整改" width="140" align="right"></el-table-column>
+							<el-table-column prop="entryState" label="录入状态"width="100" align="center"></el-table-column>
+						</el-table>
+					</div>
+				</div>
+			</div>
+			<!-- 抽查业务结束 -->
+		</div>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tg/Tg_RiskCheckMonthSumDetail.js"></script>
+	</body>
+</html>	

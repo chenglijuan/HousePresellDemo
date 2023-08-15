@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-资金统筹</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css" />
+	</head>
+
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="tgpf_FundOverallPlanListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+								<span>关键字：</span>
+								<input type="text" class="form-control cs-input" v-model="keyword"  placeholder="请输入统筹单号搜索">
+							</div>
+							<div class="inline">
+								<span>统筹日期：</span>
+								<input type="text" id="date0612030201" class="form-control cs-input" placeholder="请选择统筹日期">
+								<img src="../image/list_search_calendar.png" class="ico-date"/>
+							</div>
+							<div class="inline">
+								<span>统筹状态：</span>
+								<vue-listselect defaultname="请选择统筹状态" :thevalue="busiState"
+												:optionlist="busiStateList"
+												@callbackfun="busiStateChange"
+												@emptybackfun="changeBusiStateEmpty"></vue-listselect>
+								<!-- <select  class="form-control cs-select" v-model="busiState" @change="busiStateChange">
+									<option value="" selected>全部</option>
+									<option value="统筹中">统筹中</option>
+									<option value="已统筹">已统筹</option>
+								</select> -->
+							</div>
+							<div class="inline">
+								<span>审批状态：</span>
+								<vue-listselect defaultname="请选择审批状态" :thevalue="approvalState"
+												:optionlist="approvalStateList"
+												@callbackfun="approvalChange"
+												@emptybackfun="changeApprovalStateEmpty"></vue-listselect>
+								<!-- <select  class="form-control cs-select" v-model="approvalState" @change="approvalChange">
+									<option value="" selected>全部</option>
+									<option value="待提交">待提交</option>
+									<option value="审核中">审核中</option>
+									<option value="已完结">已完结</option>
+								</select> -->
+							</div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="reset">重置</button>
+						</div>
+						<div class="top-btns">
+							<button class="btn btn-success" @click="tgpf_FundOverallPlanAdd" data-editNum="06120302_ADD_01">
+								<img src="../image/list_btn_ico_add.png"/>
+								<span>新增</span>
+							</button>
+							<button class="btn btn-primary" @click="tgpf_FundOverallPlanEdit" :disabled="upDisabled" data-editNum="06120302_MOD_01">
+								<img src="../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+							<button class="btn btn-danger" @click="tgpf_FundOverallPlanDel" :disabled="deDisabled" data-editNum="06120302_DEL_01">
+								<img src="../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+							<button class="btn btn-info" @click="tgpf_FundAppropriated_AFDetail" :disabled="planDisabled" data-editNum="06120302_OST_01">
+								<img src="../image/list_btn_ico_plan.png"/>
+								<span>用款计划</span>
+							</button>
+							<button class="btn btn-info" @click="tgpf_FundOverallPlan_AFList" :disabled="planDisabled" data-editNum="06120302_OST_02">
+								<img src="../image/list_btn_ico_plan.png"/>
+								<span>申请清单</span>
+							</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="tgpf_FundOverallPlanList" stripe :default-sort="{prop: 'index'}" @selection-change="listItemSelectHandle" @sort-change="sortChange">
+							<el-table-column align="center" type="selection" width="50" v-model="selectItem" fixed></el-table-column>
+							<el-table-column align="center" type="index" :index="indexMethod" label="序号" width="60" fixed></el-table-column>
+							<el-table-column prop="eCode" label="统筹单号" min-width="220">
+								<template scope="scope">
+									<el-button type="text" size="small" @click="tgpf_FundOverallPlanListDetail(scope.row.tableId)">{{scope.row.eCode}}</el-button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="fundOverallPlanDate" label="统筹日期" min-width="160" sortable='custom'></el-table-column>
+							<el-table-column prop="coordinatingPeo" label="统筹人员" min-width="160"></el-table-column>
+							<el-table-column align="center" prop="busiState" label="统筹状态" width="160" sortable='custom'>
+								<template scope="scope">
+									<button v-if="scope.row.busiState == '统筹中'" class="btn btn-state-warning" >统筹中</button>
+									<button v-if="scope.row.busiState == '已统筹'" class="btn btn-state-success" >已统筹</button>
+								</template>
+							</el-table-column>
+							<el-table-column align="center" prop="busiState" label="统筹类型" width="160" sortable='custom'>
+								<template scope="scope">
+									<button v-if="scope.row.applyType == '0'" class="btn btn-state-warning" >一般拨付统筹</button>
+									<button v-if="scope.row.applyType == '1'" class="btn btn-state-success" >支付保函统筹</button>
+								</template>
+							</el-table-column>
+							<el-table-column align="center" prop="approvalState" label="审批状态" width="160">
+								<template scope="scope">
+									<button v-if="scope.row.approvalState == '待提交'" class="btn btn-state-danger" >待提交</button>
+									<button v-if="scope.row.approvalState == '审核中'" class="btn btn-state-warning">审核中</button>
+									<button v-if="scope.row.approvalState == '已完结'" class="btn btn-state-success">已完结</button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Pages JS -->
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tgpf/Tgpf_FundOverallPlanList.js"></script>
+	</body>
+
+</html>

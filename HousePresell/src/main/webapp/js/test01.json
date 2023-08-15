@@ -1,0 +1,12 @@
+[
+	{tableId:"01",theName:"开发单位1"},
+	{tableId:"02",theName:"物业公司1"},
+	{tableId:"03",theName:"经纪机构1"},
+	{tableId:"04",theName:"估价机构1"},
+	{tableId:"05",theName:"业委会1"},
+	{tableId:"06",theName:"维修单位1"},
+	{tableId:"07",theName:"监理公司1"},
+	{tableId:"08",theName:"鉴定机构1"},
+	{tableId:"09",theName:"审价单位1"},
+	{tableId:"10",theName:"招投标单位1"}
+]

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-银行放款项目入账情况表</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<style>
+			.el-upload-list__item .is-success{
+				display: none;
+			}
+			.el-input__inner {
+		        height:28px;
+		        line-height:28px;
+		    }
+		    .el-input__icon {
+		        line-height: 25px;
+		    }
+		</style>
+	</head>
+	<body>
+		<div class="content-wrap" id="bankLendingReportsDiv">
+			<div class="cs-content">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left content-top-left">
+						<div class="top-input" style="display:flex">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" name="" class="form-control cs-input" v-model="keyword" placeholder="请输入关键字搜索"/>
+							</div>
+							<div class="inline">
+							    <span>入账日期：</span>
+							    <input type="text" name="" id="bankLendingSearchStart" class="form-control cs-input-date" placeholder="开始日期     ~    结束日期" v-model="dateRange"/>
+							    <img src="../image/list_search_calendar.png" class="ico-date"/> 
+							</div>
+							<div class="inline">
+							    <span style="float:left">开发企业：</span>
+							   <!--  <vue-select style="float:left" defaultname="请选择开发企业" :thevalue="companyId" :optionlist="qs_companyNameList" @callbackfun="getCompanyId"></vue-select> -->
+							   <vue-listselect defaultname="请选择开发企业" :thevalue="companyId" :optionlist="qs_companyNameList" @callbackfun="getCompanyId" @emptybackfun="emptyCompanyId"></vue-listselect>
+								<span style="clear:both"></span>
+							   	<!-- <select class="form-control cs-select" v-model="companyId" @change="changeCompanyHandle">
+							     	<option value="">--请选择--</option>
+									<option v-for="company in qs_companyNameList" :value="company.tableId">{{company.theName}}</option>
+							   	</select> -->
+							</div>
+							<div class="inline">
+							    <span style="float:left">项目名称：</span>
+							    <!-- <vue-select style="float:left" defaultname="请选择项目名称" :thevalue="projectId" :optionlist="qs_projectNameList" @callbackfun="getProjectId"></vue-select> -->
+							     <vue-listselect defaultname="请选择项目名称" :thevalue="projectId" :optionlist="qs_projectNameList" @callbackfun="getProjectId" @emptybackfun="emptyProjectId"></vue-listselect>
+								<span style="clear:both"></span>
+							</div>
+							<div class="inline">
+							    <span style="float:left">托管账户：</span>
+							   <vue-listselect defaultname="请选择托管账户" :thevalue="escrowAcountId" :optionlist="escrowAcountList" @callbackfun="getEscrowAcountId" @emptybackfun="emptyEscrowAcountId"></vue-listselect>
+								<span style="clear:both"></span>
+							</div>
+							<button class="btn btn-search" style="height:28px" @click="search">搜索</button>
+						    <button class="btn btn-reset" style="height:28px" @click="resetSearch">重置</button>
+						</div>
+						<div class="inline">
+							    <span>合计入账（万元）：</span>
+							    <input type="text" name="" class="form-control cs-input" v-model="totalAmount"  disabled/>
+						</div>
+					</div>
+					<div class="pull-right">
+						<div class="top-excel">
+							<button class="btn btn-excel" @click="exportForm" data-editNum="230113_EXP_01">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="bankLendingReportsList" stripe :default-sort = "{prop: 'index'}" border :span-method="objectSpanMethod">
+						    <template v-for="col in companyList">
+				                <el-table-column
+				                        v-if="col.prop === 'index' || col.prop === 'selection'"
+				                        align="center"
+				                        :type="col.prop"
+				                        :label="col.label"
+				                        width="80"
+				                        fixed
+				                >
+				                </el-table-column>
+				                <el-table-column
+			                        v-else
+			                        :align="col.align"
+			                        :header-align = "col.headerAlign"
+			                        :type="col.prop"
+			                        :label="col.label"
+			                        :prop="col.prop" 
+			                        :width="col.width"
+			                        >  
+				                </el-table-column>
+				            </template>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+			<!-- error modal -->
+			<div class="modal fade" id="edModel" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">{{errMsg}}</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		</div>
+		<!-- success modal -->
+			<div class="modal fade" id="sdModel" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		<script src="../components/vue-components.js"></script>
+	
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/qs/qs_BankLendingReports.js"></script>
+	</body>
+</html>	

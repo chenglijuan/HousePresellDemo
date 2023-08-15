@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-审批流-流程配置编辑</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/admin/sm/Sm_ApprovalProcess_CfgAdd.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="sm_ApprovalProcess_CfgEditDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success"  @click="updateSm_ApprovalProcess_Cfg">
+						<img src="../image/detail_btn_ico_save.png" width="18">
+						<span>保存</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">业务编码：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text"  disabled v-model="sm_ApprovalProcess_CfgModel.codeType" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">是否备案：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+								    <vue-select defaultname="请选择是否备案" :thevalue="sm_ApprovalProcess_CfgModel.isNeedBackup" :optionlist="isNeedBackupList"  @callbackfun="isNeedBackupChange" @emptybackfun = "emptyIsNeedBackup"></vue-select>
+									<!-- <select v-model="sm_ApprovalProcess_CfgModel.isNeedBackup" class="form-control">
+										<option value="1">是</option>
+										<option value="0">否</option>
+									</select> -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">流程编码：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<input type="text" v-model="sm_ApprovalProcess_CfgModel.eCode" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">流程名称：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<input type="text" v-model="sm_ApprovalProcess_CfgModel.theName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<span class="detail-text1">备注：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<textarea type="text" v-model="sm_ApprovalProcess_CfgModel.remark" class="form-control"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<div class="detail-title">
+				<h1 class="inline">审批流程</h1>
+			</div>
+			<div class="cs-content">
+				<div class="content-top">
+					<div class="detai-btns">
+						<button class="btn btn-success" data-toggle="modal" data-target="#examine-add" @click="showModal">
+							<img src="../image/list_btn_ico_add.png">
+							<span>新增</span>
+						</button>
+						<button class="btn btn-primary" data-toggle="modal" data-target="#examine-add" :disabled="upDisabled" @click="getNodeDetail">
+							<img src="../image/list_btn_ico_edit.png"/>
+							<span>修改</span>
+						</button>
+						<button class="btn btn-danger" :disabled="deDisabled" @click="sm_ApprovalProcess_NodeDel">
+							<img src="../image/list_btn_ico_del.png">
+							<span>删除</span>
+						</button>
+					</div>
+				</div>
+				<!--表格开始-->
+				<div class="cs-table examine-list">
+					<el-table :data="sm_ApprovalProcess_NodeList" border :span-method="objectSpanMethod" @selection-change="listItemSelectHandle">
+						<el-table-column type="selection" width="55" fixed></el-table-column>
+						<el-table-column prop="orderNumber" label="审批步骤" width="130" fixed></el-table-column>
+						<el-table-column prop="theName" label="步骤名称"></el-table-column>
+						<el-table-column prop="approvalModel" label="审批模式">
+							<template scope="scope">
+								<span v-if="scope.row.approvalModel == 0">抢占</span>
+								<span v-if="scope.row.approvalModel == 1">会签(完成阀值：{{scope.row.finishPercentage}}通过阀值：{{scope.row.passPercentage}})</span>
+							</template>
+						</el-table-column>
+						<el-table-column prop="theContent" label="条件"></el-table-column>
+						<el-table-column prop="nextStepName" label="下一步骤" width="130"></el-table-column>
+						<el-table-column prop="rejectModel" label="驳回模式">
+							<template scope="scope">
+								<span v-if="scope.row.rejectModel == 0">驳回到发起人</span>
+								<span v-if="scope.row.rejectModel == 1">驳回到上一环节</span>
+							</template>
+						</el-table-column>
+						<el-table-column prop="roleName" label="审批角色"></el-table-column>
+						<el-table-column prop="thetemplate" label="消息模版"></el-table-column>
+					</el-table>
+				</div>
+				<!-- examine-add modal -->
+				<div class="modal fade" id="examine-add" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+					<div class="modal-dialog examine-add-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									&times;
+								</button>
+								<h4 class="modal-title csm-title">
+									新增审批流程
+								</h4>
+							</div>
+							<div class="modal-body">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<span class="detail-text1">审批步骤：</span>
+											<div class="detail-info1">
+												<div class="detail-unEdit">
+													<input type="text"  disabled v-model="sm_ApprovalProcess_NodeModel.orderNumber" class="form-control"/>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<span class="detail-text1">步骤名称：</span>
+											<div class="detail-info1">
+												<div class="detail-edit">
+													<input type="text"  v-model="sm_ApprovalProcess_NodeModel.theName" class="form-control"/>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<span class="detail-text1">节点编号：</span>
+											<div class="detail-info1">
+												<div class="detail-edit">
+													<input type="text"  v-model="sm_ApprovalProcess_NodeModel.eCode" class="form-control"/>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<span class="detail-text1 cs-mt-0">审批模式：</span>
+											<div class="detail-info1">
+												<template>
+													<el-radio v-model="approvalModel" :label="0">抢占</el-radio>
+													<el-radio v-model="approvalModel" :label="1">会签</el-radio>
+												</template>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<span class="detail-text1">会签完成阀值：</span>
+											<div class="detail-info1">
+												<div class="detail-edit">
+													<select  class="form-control" v-model="sm_ApprovalProcess_NodeModel.finishPercentage" :disabled="disabled">
+														<option value="10">10%</option>
+														<option value="20">20%</option>
+														<option value="30">30%</option>
+														<option value="40">40%</option>
+														<option value="50">50%</option>
+														<option value="60">60%</option>
+														<option value="70">70%</option>
+														<option value="80">80%</option>
+														<option value="90">90%</option>
+														<option value="100">100%</option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<span class="detail-text1">会签通过阀值：</span>
+											<div class="detail-info1">
+												<div class="detail-edit">
+													<select  v-model="sm_ApprovalProcess_NodeModel.passPercentage" :disabled="disabled" class="form-control">
+														<option value="10">10%</option>
+														<option value="20">20%</option>
+														<option value="30">30%</option>
+														<option value="40">40%</option>
+														<option value="50">50%</option>
+														<option value="60">60%</option>
+														<option value="70">70%</option>
+														<option value="80">80%</option>
+														<option value="90">90%</option>
+														<option value="100">100%</option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<span class="detail-text1">审批条件：</span>
+											<div class="detail-info1">
+												<div class="condition-table">
+													<table class="table table-bordered">
+														<thead>
+														<tr>
+															<th>条件</th>
+															<th>下一步骤</th>
+															<th>操作</th>
+														</tr>
+														</thead>
+														<tbody>
+														<tr v-for="(condition ,index) in sm_ApprovalProcess_ConditionList" :key="index">
+															<td>
+																<div class="detail-edit">
+																	<input type="text" name=""  v-model="sm_ApprovalProcess_ConditionList[index].theContent" class="form-control"/>
+																</div>
+															</td>
+															<td>
+																<div class="detail-edit">
+																	<!--<vue-select defaultname="请选择下一步骤" :thevalue="" :optionlist="sm_Permission_RoleList"  @callbackfun="roleChange" ></vue-select>-->
+																	<select class="form-control" v-model="sm_ApprovalProcess_ConditionList[index].nextStep">'
+																		<option value="" selected disabled>请选择下一步骤</option>'
+																		<option  v-for="opt in sm_ApprovalProcess_ModalNodeList" :value="opt.tableId">{{opt.theName}}</option>'
+																	</select>
+																</div>
+															</td>
+															<td>
+																<div class="text-danger hover text-center" @click="deleteRow(index)">删除</div>
+															</td>
+														</tr>
+														</tbody>
+													</table>
+												</div>
+												<div class="hover" @click="addRow">
+													<img src="../image/ex_ico_add.png"/>
+													<span class="font-bold vertical-m">添加分支条件</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<span class="detail-text1">驳回模式：</span>
+											<div class="detail-info1">
+												<div class="detail-edit">
+													<select  v-model="sm_ApprovalProcess_NodeModel.rejectModel" class="form-control" >
+														<option value="-1">请选择驳回模式</option>
+														<option value="0">驳回到发起人</option>
+														<option value="1">驳回到上一环节</option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<span class="detail-text1">审批角色：</span>
+											<div class="detail-info1">
+												<div class="detail-edit">
+													<vue-select defaultname="请选择角色" :thevalue="roleId" :optionlist="sm_Permission_RoleList"  @callbackfun="roleChange" ></vue-select>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<span class="detail-text1 cs-mt-0">消息推送模版：</span>
+											<div class="detail-info1">
+												<el-checkbox-group v-model="checked">
+													<div v-for="opt in sm_MessageTemplate_CfgList">
+														<el-checkbox  :label="opt.tableId">
+															<label  @click="sm_MessageTemplate_CfgDetail(opt.tableId)" :title="opt.theName">{{opt.theName}}</label>
+														</el-checkbox>
+													</div>
+												</el-checkbox-group>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn foot-sure" @click="updateSm_ApprovalProcess_Node">
+									确定
+								</button>
+								<button type="button" class="btn foot-cancel" data-dismiss="modal">
+									取消
+								</button>
+							</div>
+						</div><!-- /.modal-content -->
+					</div><!-- /.modal -->
+				</div>
+			</div>
+		</div>
+		<script src="../components/vue-components.js"></script>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/sm/Sm_ApprovalProcess_CfgEdit.js"></script>
+	</body>
+</html>	

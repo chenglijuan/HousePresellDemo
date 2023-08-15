@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-日志-业务状态详情</title>
+		<!-- zTree CSS -->
+		<link rel="stylesheet" type="text/css" href="../assets/zTree/css/zTreeStyle/zTreeStyle.css"/>
+		<!--<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>-->
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/admin/sm/Sm_BusiState_LogDetail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="sm_BusiState_LogDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-lg-4" v-for="differ in differList">
+						<div class="form-group cs-mb-0">
+							<div class="detail-text1">
+								<span>{{differ.fieldRemarkName}}：</span>
+							</div>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input class="form-control basic-ellipsis" v-model="differ.objBValue" :title="differ.objBValue" disabled />
+								</div>
+								<div class="change-info" v-if="!differ.isSame">
+									<img src="../image/detail_ico_warning.png" width="15"/>
+									<a class="text-danger vertical-m basic-ellipsis" :title="differ.objBValue">变更前：{{differ.objAValue}}</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--备注信息 变更后 开始-->
+				<div class="row" v-if="hasRemark">
+					<div class="col-md-12">
+						<div class="form-group">
+							<span class="detail-text1">备注：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<textarea rows="3" type="text" v-model="remarkNew" class="form-control" disabled></textarea>
+								</div>
+								<div class="change-info" v-if="remarkNew != remarkOld">
+									<img src="../image/detail_ico_warning.png" width="15"/>
+									<a class="text-danger vertical-m">变更前：{{remarkOld}}</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--备注信息 变更后 结束-->
+
+				<!--&lt;!&ndash;备注信息 变更前 开始&ndash;&gt;-->
+				<!--<div class="row" v-if="hasRemark" style="margin-bottom: 25px;">-->
+					<!--<div class="col-md-12">-->
+						<!--<div class="form-group">-->
+							<!--<span class="detail-text1"></span>-->
+							<!--<div class="detail-info1">-->
+								<!--<div class="detail-unEdit">-->
+									<!--<textarea rows="3" type="text" v-model="remarkOld" class="form-control" disabled></textarea>-->
+								<!--</div>-->
+								<!--<div class="change-info">-->
+									<!--<img src="../image/detail_ico_warning.png" width="15"/>-->
+									<!--<a class="text-danger vertical-m basic-ellipsis">变更前</a>-->
+								<!--</div>-->
+							<!--</div>-->
+						<!--</div>-->
+					<!--</div>-->
+				<!--</div>-->
+				<!--&lt;!&ndash;备注信息 变更前 结束&ndash;&gt;-->
+
+				<!--简介信息 变更后 开始-->
+				<div class="row" v-if="hasIntro">
+					<div class="col-md-12">
+						<div class="form-group">
+							<span class="detail-text1">简介：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<textarea rows="3" type="text" v-model="introNew" class="form-control" disabled></textarea>
+								</div>
+								<div class="change-info" v-if="introNew != introOld">
+									<img src="../image/detail_ico_warning.png" width="15"/>
+									<a class="text-danger vertical-m">变更前：{{introOld}}</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--简介信息 变更后 结束-->
+
+				<!--&lt;!&ndash;简介信息 变更前 开始&ndash;&gt;-->
+				<!--<div class="row" v-if="hasIntro">-->
+					<!--<div class="col-md-12">-->
+						<!--<div class="form-group">-->
+							<!--<span class="detail-text1"></span>-->
+							<!--<div class="detail-info1">-->
+								<!--<div class="detail-unEdit">-->
+									<!--<textarea rows="3" type="text" v-model="introOld" class="form-control" disabled></textarea>-->
+								<!--</div>-->
+								<!--<div class="change-info">-->
+									<!--<img src="../image/detail_ico_warning.png" width="15"/>-->
+									<!--<a class="text-danger vertical-m basic-ellipsis">变更前</a>-->
+								<!--</div>-->
+							<!--</div>-->
+						<!--</div>-->
+					<!--</div>-->
+				<!--</div>-->
+				<!--&lt;!&ndash;简介信息 变更前 结束&ndash;&gt;-->
+			</div>
+			<!--基本信息结束-->
+
+			<!--机构成员表格 变更后 开始-->
+			<div v-if="hasOrgMemberList">
+				<div class="detail-title">
+					<div v-if="isNeedShowOldOrgMemberList">
+						<h1 class="inline">机构成员列表（变更后）</h1>
+					</div>
+					<div v-if="!isNeedShowOldOrgMemberList">
+						<h1 class="inline">机构成员列表</h1>
+					</div>
+				</div>
+				<div class="cs-content">
+					<!--表格开始-->
+					<div class="cs-table">
+						<div id="table2">
+							<el-table :data="orgMemberListNew" stripe :default-sort = "{prop: 'theName'}">
+								<el-table-column type="index" label="序号" width="80" fixed></el-table-column>
+								<el-table-column prop="theName" label="姓名" min-width="120">
+								</el-table-column>
+								<el-table-column label="证件类型" min-width="120">
+									<template scope="scope">
+										<span v-if="scope.row.idType=='00'">居民身份证</span>
+										<span v-if="scope.row.idType=='01'">护照</span>
+										<span v-if="scope.row.idType=='02'">港澳台居民身份证</span>
+										<span v-if="scope.row.idType=='04'">旅行证据</span>
+										<span v-if="scope.row.idType=='05'">其他</span>
+									</template>
+								</el-table-column>
+								<el-table-column prop="idNumber" label="证件号码" min-width="180"></el-table-column>
+								<el-table-column prop="theNameOfDepartment" label="所属部门" min-width="120"></el-table-column>
+								<el-table-column prop="parameterName" label="职务" min-width="120"></el-table-column>
+								<el-table-column prop="positionName" label="职称" min-width="120"></el-table-column>
+								<el-table-column prop="phoneNumber" label="手机号" min-width="140"></el-table-column>
+								<el-table-column prop="email" label="邮箱" min-width="180"></el-table-column>
+								<el-table-column prop="qq" label="QQ" min-width="120"></el-table-column>
+								<el-table-column prop="weixin" label="微信" min-width="120"></el-table-column>
+							</el-table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--机构成员表格 变更后 结束-->
+
+			<!--机构成员表格 变更前 开始-->
+			<div v-if="hasOrgMemberList && isNeedShowOldOrgMemberList">
+				<div class="detail-title">
+					<h1 class="inline">机构成员列表（变更前）</h1>
+				</div>
+				<div class="cs-content">
+					<!--表格开始-->
+					<div class="cs-table">
+						<div id="table3">
+							<el-table :data="orgMemberListOld" stripe :default-sort = "{prop: 'theName'}">
+								<el-table-column type="index" label="序号" width="80" fixed></el-table-column>
+								<el-table-column prop="theName" label="姓名" min-width="120">
+								</el-table-column>
+								<el-table-column label="证件类型" min-width="120">
+									<template scope="scope">
+										<span v-if="scope.row.idType=='00'">居民身份证</span>
+										<span v-if="scope.row.idType=='01'">护照</span>
+										<span v-if="scope.row.idType=='02'">港澳台居民身份证</span>
+										<span v-if="scope.row.idType=='04'">旅行证据</span>
+										<span v-if="scope.row.idType=='05'">其他</span>
+									</template>
+								</el-table-column>
+								<el-table-column prop="idNumber" label="证件号码" min-width="180"></el-table-column>
+								<el-table-column prop="theNameOfDepartment" label="所属部门" min-width="120"></el-table-column>
+								<el-table-column prop="parameterName" label="职务" min-width="120"></el-table-column>
+								<el-table-column prop="positionName" label="职称" min-width="120"></el-table-column>
+								<el-table-column prop="phoneNumber" label="手机号" min-width="140"></el-table-column>
+								<el-table-column prop="email" label="邮箱" min-width="180"></el-table-column>
+								<el-table-column prop="qq" label="QQ" min-width="120"></el-table-column>
+								<el-table-column prop="weixin" label="微信" min-width="120"></el-table-column>
+							</el-table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--机构成员表格 变更前 结束-->
+
+			<!--进度详情 变更后 开始-->
+			<div v-if="hasDevProcessList">
+				<div class="detail-title">
+					<h1 class="inline">进度详情（变更后）</h1>
+				</div>
+				<div class="cs-content">
+					<!--表格开始-->
+					<div class="cs-table examine-list">
+						<el-table :data="forcastDtlListNew" stripe :default-sort = "{prop: 'theName'}">
+							<!--<el-table-column type="index" :index="indexMethod" label="序号"  width="min-width" fixed></el-table-column>-->
+							<el-table-column prop="stageName" label="预测进度节点" width="min-width"></el-table-column>
+							<el-table-column prop="ogPredictedFinishDatetime" label="预测完成日期（原）" width="min-width"></el-table-column>
+							<el-table-column prop="predictedFinishDatetime" label="预测完成日期（新）" width="min-width"></el-table-column>
+							<el-table-column prop="progressJudgement" label="进度判定" width="min-width">
+								<template scope="scope">
+									<button  v-if="scope.row.progressJudgement == 1" class="btn btn-state-danger">滞后</button>
+									<button  v-if="scope.row.progressJudgement == 0" class="btn btn-state-success">正常</button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="causeDescriptionForDelay" label="进度滞后原因" width="min-width"></el-table-column>
+							<el-table-column prop="userName" label="操作人" width="min-width"></el-table-column>
+							<el-table-column prop="operationDateTime" label="操作日期" width="min-width"></el-table-column>
+						</el-table>
+					</div>
+					<!-- 表格结束 -->
+				</div>
+			</div>
+			<!--进度详情 变更后 结束-->
+
+			<!--进度详情 变更前 开始-->
+			<div v-if="hasDevProcessList">
+				<div class="detail-title">
+					<h1 class="inline">进度详情（变更前）</h1>
+				</div>
+				<div class="cs-content">
+					<!--表格开始-->
+					<div class="cs-table examine-list">
+						<el-table :data="forcastDtlListOld" stripe :default-sort = "{prop: 'theName'}">
+							<!--<el-table-column type="index" :index="indexMethod" label="序号"  width="min-width" fixed></el-table-column>-->
+							<el-table-column prop="stageName" label="预测进度节点" width="min-width"></el-table-column>
+							<el-table-column prop="ogPredictedFinishDatetime" label="预测完成日期（原）" width="min-width"></el-table-column>
+							<el-table-column prop="predictedFinishDatetime" label="预测完成日期（新）" width="min-width"></el-table-column>
+							<el-table-column prop="progressJudgement" label="进度判定" width="min-width">
+								<template scope="scope">
+									<button  v-if="scope.row.progressJudgement == 1" class="btn btn-state-danger">滞后</button>
+									<button  v-if="scope.row.progressJudgement == 0" class="btn btn-state-success">正常</button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="causeDescriptionForDelay" label="进度滞后原因" width="min-width"></el-table-column>
+							<el-table-column prop="userName" label="操作人" width="min-width"></el-table-column>
+							<el-table-column prop="operationDateTime" label="操作日期" width="min-width"></el-table-column>
+						</el-table>
+					</div>
+					<!-- 表格结束 -->
+				</div>
+			</div>
+			<!--进度详情 变更前 结束-->
+
+			<!--授权项目 变更后 开始-->
+			<div v-show="hasRangePermission">
+				<div class="detail-title">
+					<h1 class="inline">范围授权（变更后）</h1>
+				</div>
+				<div class="cs-content">
+					<div class="zTreeDemoBackground">
+						<ul id="treeDemo_RangeAuthNew" class="ztree"></ul>
+					</div>
+				</div>
+			</div>
+			<!--授权项目 变更前 结束-->
+
+			<!--授权项目 变更前 开始-->
+			<div v-show="hasRangePermission">
+				<div class="detail-title">
+					<h1 class="inline">范围授权（变更前）</h1>
+				</div>
+				<div class="cs-content">
+					<div class="zTreeDemoBackground">
+						<ul id="treeDemo_RangeAuthOld" class="ztree"></ul>
+					</div>
+				</div>
+			</div>
+			<!--授权项目 变更前 结束-->
+
+		</div>
+		<script src="../components/vue-components.js"></script>
+		<!-- zTree Js -->
+		<script type="text/javascript" src="../assets/zTree/js/jquery.ztree.core.js"></script>
+		<script type="text/javascript" src="../assets/zTree/js/jquery.ztree.excheck.js"></script>
+		<script type="text/javascript" src="../assets/zTree/js/jquery.ztree.exedit.js"></script>
+		
+		<script src="../js/admin/sm/Sm_BusiState_LogDetail.js"></script>
+	</body>
+</html>	

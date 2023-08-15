@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po.extra">
+	<class name="Qs_ProjectEscrowAmount_View" table="Qs_ProjectEscrowAmount_View"
+		dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="serialNumber">
+			<column name="serialNumber">
+				<comment>流水号</comment>
+			</column>
+		</property>
+		<property name="recordDate">
+			<column name="recordDate">
+				<comment>入账日期</comment>
+			</column>
+		</property>
+		<property name="theNameOfCompany">
+			<column name="theNameOfCompany">
+				<comment>开发企业</comment>
+			</column>
+		</property>
+		<property name="theNameOfProject">
+			<column name="theNameOfProject">
+				<comment>项目名称</comment>
+			</column>
+		</property>
+		<property name="eCodeFromConstruction">
+			<column name="eCodeFromConstruction">
+				<comment>楼幢（施工楼幢）</comment>
+			</column>
+		</property>
+		<property name="loansCountHouse">
+			<column name="loansCountHouse">
+				<comment>放款户数</comment>
+			</column>
+		</property>
+		<property name="income">
+			<column name="income">
+				<comment>托管收入</comment>
+			</column>
+		</property>
+		<property name="payout">
+			<column name="payout">
+				<comment>托管支出</comment>
+			</column>
+		</property>
+		<property name="currentFund">
+			<column name="currentFund">
+				<comment>余额</comment>
+			</column>
+		</property>
+		<property name="spilloverAmount">
+			<column name="spilloverAmount">
+				<comment>溢出金额</comment>
+			</column>
+		</property>
+		<property name="remarkNote">
+			<column name="remarkNote">
+				<comment>备注</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

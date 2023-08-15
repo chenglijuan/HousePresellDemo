@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tg_RetainedRightsView" table="Tg_RetainedRightsView" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_Tg_Retained_rights_view</param>
+			</generator>
+		</id> 
+		
+		<property name="arrivalTimeStamp">
+			<column name="arrivalTimeStamp">
+				<comment>到账日期</comment> 
+			</column>
+		</property>
+		
+		<property name="enterTimeStamp">
+			<column name="enterTimeStamp">
+				<comment>入账日期</comment> 
+			</column>
+		</property>
+		
+		<property name="projectName">
+			<column name="projectName">
+				<comment>项目名称</comment>
+			</column>
+		</property>
+		
+		<property name="ecodeFromConstruction">
+			<column name="ecodeFromConstruction">
+				<comment>楼幢施工编号</comment>
+			</column>
+		</property>
+		
+		<property name="ecodeOfBuildingUnit">
+			<column name="ecodeOfBuildingUnit">
+				<comment>单元信息</comment>
+			</column>
+		</property>
+		
+		<property name="ecodeFromRoom">
+			<column name="ecodeFromRoom">
+				<comment>房间号</comment>
+			</column>
+		</property>
+		
+		<property name="buyer">
+			<column name="buyer">
+				<comment>买受人名称</comment>
+			</column>
+		</property>
+		
+		<property name="depositAmountFromloan">
+			<column name="depositAmountFromloan">
+				<comment>按揭入账金额</comment>
+			</column>
+		</property>
+		
+		<property name="cumulativeAmountPaid">
+			<column name="cumulativeAmountPaid">
+				<comment>累计支付金额</comment>
+			</column>
+		</property>
+		
+		<property name="theAmount">
+			<column name="theAmount">
+				<comment>留存权益总金额</comment>
+			</column>
+		</property>
+		
+		<property name="amountOfInterestNotdue">
+			<column name="amountOfInterestNotdue">
+				<comment>未到期权益金额</comment>
+			</column>
+		</property>
+		
+		<property name="amountOfInterestdue">
+			<column name="amountOfInterestdue">
+				<comment>到期权益金额</comment>
+			</column>
+		</property>
+		
+		<property name="amountOfThisPayment">
+			<column name="amountOfThisPayment">
+				<comment>本次支付金额</comment>
+			</column>
+		</property>
+	
+		<property name="fromDate">
+			<column name="fromDate">
+				<comment>拨付日期</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

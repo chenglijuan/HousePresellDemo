@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Sm_ApprovalProcess_Node" table="Sm_ApprovalProcess_Node" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>结点编号</comment>
+			</column>
+		</property>
+		<property name="temporaryState">
+			<column name="temporaryState">
+				<comment>暂存态 S_TheState</comment>
+			</column>
+		</property>
+		<property name="theName">
+			<column name="theName">
+				<comment>名称</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_Permission_Role" name="role" foreign-key="null">
+			<column name="roleId">
+				<comment>角色</comment>
+			</column>
+		</many-to-one>
+		<many-to-one class="Sm_ApprovalProcess_Cfg" name="configuration" foreign-key="null">
+			<column name="approvalProcess_Cfg_Id">
+				<comment>流程配置</comment>
+			</column>
+		</many-to-one>
+		<property name="nodeType">
+			<column name="nodeType">
+				<comment>结点类型</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_ApprovalProcess_Node" name="lastNode" foreign-key="null">
+			<column name="lastNode">
+				<comment>上一个结点</comment>
+			</column>
+		</many-to-one>
+		<many-to-one class="Sm_ApprovalProcess_Node" name="nextNode" foreign-key="null">
+			<column name="nextNode">
+				<comment>下一个结点</comment>
+			</column>
+		</many-to-one>
+		<property name="approvalModel">
+			<column name="approvalModel">
+				<comment>审批模式</comment>
+			</column>
+		</property>
+		<property name="finishPercentage">
+			<column name="finishPercentage">
+				<comment>会签完成阀值</comment>
+			</column>
+		</property>
+		<property name="passPercentage">
+			<column name="passPercentage">
+				<comment>会签通过阀值</comment>
+			</column>
+		</property>
+		<property name="rejectModel">
+			<column name="rejectModel">
+				<comment>驳回模式</comment>
+			</column>
+		</property>
+		<list name="approvalProcess_conditionList" cascade="all" inverse="false" lazy="true">
+			<key column="approvalProcess_node_Id"/>
+			<list-index column="theIndex"/>
+			<one-to-many class="Sm_ApprovalProcess_Condition"/>
+		</list>
+		<list name="sm_messageTemplate_cfgList" cascade="all" table="Rel_Node_MessageTemplate">
+			<key column="sm_ApprovalProcess_Node"/>
+			<list-index column="theIndex"/>
+			<many-to-many class="Sm_MessageTemplate_Cfg" column="sm_MessageTemplate_Cfg"/>
+		</list>
+	</class>
+</hibernate-mapping>

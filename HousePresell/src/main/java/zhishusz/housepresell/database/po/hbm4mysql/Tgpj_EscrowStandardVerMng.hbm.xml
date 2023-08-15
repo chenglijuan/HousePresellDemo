@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tgpj_EscrowStandardVerMng" table="Tgpj_EscrowStandardVerMng" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="approvalState">
+			<column name="approvalState">
+				<comment>流程状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>最后修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<property name="theName">
+			<column name="theName">
+				<comment>版本名称</comment>
+			</column>
+		</property>
+		<property name="theVersion">
+			<column name="theVersion">
+				<comment>版本号</comment>
+			</column>
+		</property>
+		<property name="hasEnable">
+			<column name="hasEnable">
+				<comment>是否启用</comment>
+			</column>
+		</property>
+		<property name="theType">
+			<column name="theType">
+				<comment>托管标准类型 (枚举选择:0-标准金额1-标准比例)</comment>
+			</column>
+		</property>
+		<property name="theContent">
+			<column name="theContent">
+				<comment>托管标准</comment>
+			</column>
+		</property>
+		<property name="amount">
+			<column name="amount">
+				<comment>金额</comment>
+			</column>
+		</property>
+		<property name="percentage">
+			<column name="percentage">
+				<comment>比例</comment>
+			</column>
+		</property>
+		<property name="extendParameter1">
+			<column name="extendParameter1">
+				<comment>备选参数1</comment>
+			</column>
+		</property>
+		<property name="extendParameter2">
+			<column name="extendParameter2">
+				<comment>备选参数2</comment>
+			</column>
+		</property>
+		<property name="beginExpirationDate">
+			<column name="beginExpirationDate">
+				<comment>启用日期</comment>
+			</column>
+		</property>
+		<property name="endExpirationDate">
+			<column name="endExpirationDate">
+				<comment>停用日期</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

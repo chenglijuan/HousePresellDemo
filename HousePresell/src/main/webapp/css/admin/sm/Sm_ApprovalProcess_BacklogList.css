@@ -1,0 +1,48 @@
+.el-table{
+	overflow: visible;
+}
+.el-table__body-wrapper{
+	overflow: inherit;
+}
+.progress-cont{
+	margin-top: 7px;
+}
+.progress-info{
+	padding-left: 20px;
+}
+.progress-time{
+	color: #999;
+	font-size: 13px;
+}
+.progress-rel:hover{
+	cursor: pointer;
+}
+.progress-pos{
+	position: absolute;
+    top: 45px;
+    left: 50%;
+    width: 250px;
+    padding: 0px 10px 10px 10px;
+    transform: translateX(-60%);
+    white-space: nowrap;
+    border: 1px solid #a2c1ea;
+    background: #fff;
+    box-shadow: 0 0 5px 1px rgba(162,193,234,0.4);
+    z-index: 5;
+   	display: none;
+}
+.progress-rel:hover .progress-pos{
+	display: block;
+}
+.progress-arrow{
+	margin-top: -18px;
+}
+.progress-sum{
+	background: #ecf3fb;
+	margin-left: -10px;
+    margin-right: -10px;
+    margin-bottom: -10px;
+    padding: 10px;
+    font-weight: bold;
+    color: #000;
+}

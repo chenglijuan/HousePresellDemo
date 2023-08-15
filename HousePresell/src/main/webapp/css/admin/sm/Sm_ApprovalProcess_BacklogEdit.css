@@ -1,0 +1,76 @@
+.change-info-wrap{
+	border: 1px solid #ffb2b2;
+	background: #fdf2f3;
+	padding: 10px;
+    border-radius: 10px;
+}
+.change-info{
+	font-size: 14px;
+	margin-top: 5px;
+}
+.examine-tab.nav.nav-tabs{
+	margin-top: 0;
+	width: 100%;
+}
+.attachments2{
+	margin-top: 10px;
+}
+.detail-info1 .el-select{
+	width: 100%;
+}
+.examine-body{
+	border: 1px solid #99baea;
+	border-radius: 4px;
+}
+@media (min-width: 1000px){
+	.examine-dialog{
+		width: 1000px;
+	}
+}
+.examine-body .tab-content{
+	min-height: 490px;
+}
+.examine-body .tab-first{
+	padding: 15px 20px 10px 20px;
+}
+.examine-body .tab-second .el-table th,.examine-body .tab-third .el-table th{
+	background: #feffeb;
+	font-weight: normal;
+}
+.examine-body .tab-second .el-table th,.el-table td,.examine-body .tab-third .el-table th,.el-table td{
+	padding: 5px 0;
+}
+.examine-body .examine-tab{
+	background: #ebf5ff;
+	border-bottom: 1px solid #a2c1ea;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+.examine-tab.nav.nav-tabs .active a{
+	background: #fff;
+	color: #182e5d;
+}
+.examine-tab.nav.nav-tabs li a{
+	border: 1px solid #a2c1ea;
+	margin: 10px 0px 0 10px;
+}
+.examine-tab.nav>li>a{
+	padding: 5px 15px;
+}
+.btn-all,.btn-all:hover,.btn-all:focus,.btn-all:active{
+	background: transparent;
+	color: #0e7aff;
+	border: 1px solid #0e7aff;
+	margin: 5px 0;
+}
+.file-name{
+	width: 95px;
+    max-width: 95px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+    color: #000;
+    cursor: pointer;
+}

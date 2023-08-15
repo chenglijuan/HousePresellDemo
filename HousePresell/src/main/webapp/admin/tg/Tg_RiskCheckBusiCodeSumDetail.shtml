@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-录入抽查结果</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tg_RiskCheckBusiCodeSumDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">抽查信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="updateRiskCheckResult">
+						<img src="../image/detail_btn_ico_save.png" width="18">
+						<span>保存</span>
+					</button>
+					<button class="btn btn-success" @click="sendRiskCheckResult">
+						<img src="../image/detail_btn_ico_send.png" width="18">
+						<span>推送</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">业务大类：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckBusiCodeSum.bigBusiName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">业务：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckBusiCodeSum.sumCheckCount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">整改推送：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckBusiCodeSum.pushCount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">推送角色：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckBusiCodeSum.roleName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">业务小类：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckBusiCodeSum.smallBusiName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">合格：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckBusiCodeSum.qualifiedCount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">整改反馈：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckBusiCodeSum.feedbackCount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">录入状态：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckBusiCodeSum.entryState" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">不合格：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckBusiCodeSum.unqualifiedCount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">完成整改：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckBusiCodeSum.handleCount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!-- 抽查业务开始 -->
+			<div class="detail-title">
+				<h1 class="inline">抽查业务</h1>
+			</div>
+			<div class="cs-content">
+				<div class="cs-table">
+					<div id="table2">
+						<el-table :data="tg_RiskRoutineCheckInfoList" stripe :default-sort = "{prop: 'theName'}">
+							<el-table-column type="index" :index="indexMethod" label="序号" width="60" fixed align="center"></el-table-column>
+							<!-- <el-table-column prop="eCodeOfBill" label="单据号" min-width="150"></el-table-column> -->
+							<el-table-column label="单据号" width="220">
+								<template scope="scope">
+									<el-button type="text" size="small" @click="riskcheck(scope.row.relatedTableId,scope.row.smallBusiType)">{{scope.row.eCodeOfBill}}</el-button>
+								</template>
+							</el-table-column>
+							
+							<el-table-column label="核查结果" min-width="120">
+								<template scope="scope">
+									<!-- <select v-model="scope.row.checkResult" class="form-control" v-if="scope.row.isDoPush == '1'" disabled>
+										<option value="1">合格</option>
+										<option value="0">不合格</option>
+									</select> -->
+									<el-select v-model="scope.row.checkResult" placeholder="请选择" v-if="scope.row.isDoPush == '1'" disabled class="block">
+									    <el-option label="合格" value="1"></el-option>
+									    <el-option label="不合格" value="0"></el-option>
+								    </el-select>
+								    <el-select v-model="scope.row.checkResult" placeholder="请选择" v-if="scope.row.isDoPush == '0'" class="block">
+									    <el-option label="合格" value="1"></el-option>
+									    <el-option label="不合格" value="0"></el-option>
+								    </el-select>
+								    
+									<!-- <select v-model="scope.row.checkResult" class="form-control" v-if="scope.row.isDoPush == '0'">
+										<option value="1">合格</option>
+										<option value="0">不合格</option>
+									</select> -->
+								</template>
+							</el-table-column>
+							<el-table-column label="不合格原因" min-width="120">
+								<template scope="scope">
+									<input v-if="scope.row.checkResult == 0 && scope.row.isDoPush == '0'" placeholder="请输入内容" v-model="scope.row.unqualifiedReasons" class="form-control"/>
+									<input v-if="scope.row.checkResult == 1 && scope.row.isDoPush == '0'" placeholder="无需填写" class="form-control" disabled/>
+									<input v-if="scope.row.checkResult == 0 && scope.row.isDoPush == '1'" v-model="scope.row.unqualifiedReasons" class="form-control" disabled/>
+									<input v-if="scope.row.checkResult == 1 && scope.row.isDoPush == '1'" placeholder="请输入内容" v-model="scope.row.unqualifiedReasons" class="form-control" disabled/>
+									<input v-if="scope.row.checkResult == null" placeholder="请选择核查结果" v-model="scope.row.unqualifiedReasons" class="form-control" disabled/>
+								</template>
+							</el-table-column>
+							<el-table-column label="是否推送" min-width="120">
+								<template scope="scope">
+									<!-- <select v-if="scope.row.checkResult == 0 && scope.row.isDoPush == '0'" v-model="scope.row.isChoosePush" class="form-control" >
+										<option value="1">是</option>
+										<option value="0">否</option>
+									</select> -->
+									<el-select v-model="scope.row.isChoosePush" placeholder="请选择"  v-if="scope.row.checkResult == 0 && scope.row.isDoPush == '0'" class="block">
+									    <el-option label="是" value="1"></el-option>
+									    <el-option label="否" value="0"></el-option>
+								    </el-select>
+									<input v-if="scope.row.checkResult == 0 && scope.row.isDoPush == 1" value="是" class="form-control" disabled/>
+									<input v-if="scope.row.checkResult == 1 && scope.row.isDoPush == 0" value="否" class="form-control" disabled/>
+									<input v-if="scope.row.checkResult == 1 && scope.row.isDoPush == 1" value="否" class="form-control" disabled/>
+								</template>
+							</el-table-column>
+						</el-table>
+					</div>
+				</div>
+			</div>
+			<!-- 抽查业务结束 -->
+		</div>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tg/Tg_RiskCheckBusiCodeSumDetail.js"></script>
+	</body>
+</html>	

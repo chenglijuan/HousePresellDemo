@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-业务对账-日终结算详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+		<style scoped="scoped">
+			.header{
+				background-color: white;!important
+				text-align:center;!important
+			}
+			.reconciliations{
+				background-color: #FAE5E6;!important
+				text-align:center;!important
+			}
+		</style>
+		<style>
+			.myCell .el-checkbox__input {
+		        display: none
+		    }
+		    .noIndex .cell{
+		    display: none
+		    }
+		</style>
+	</head>
+	<body>
+		<div class="content-wrap" id="tgpf_DayEndBalancingDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">银行名称：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_DayEndBalancingModel.bankName" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">记账日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_DayEndBalancingModel.billTimeStamp" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">托管账户：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_DayEndBalancingModel.theAccount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">开户行名称：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_DayEndBalancingModel.theName" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			
+			<!--数据对账列表开始-->
+			<div class="detail-title">
+				<h1 class="inline">数据对账列表</h1>
+				
+				
+			</div>
+			<div class="cs-content">
+<!-- 				<div class="content-top">
+				    <div class="inline">
+						<button class="btn btn-success" @click="manualReconciliation" :disabled="manualDisabled">
+							<img src="../image/detail_btn_ico_submit.png" width="18">
+							<span>人工对账</span>
+						</button>
+						<button class="btn btn-danger" @click="showDelModel" :disabled="delDisabled">
+							<img src="../image/list_btn_ico_del.png" width="18">
+							<span>删除</span>
+						</button>
+						<button v-if="showFlag" class="btn btn-primary" @click="confirmAccount">
+							<img src="../image/detail_btn_ico_submit.png" width="18">
+							<span>对账完成确认</span>
+						</button>
+					</div>
+				</div> -->
+				<div class="detail-content"><!--//:summary-method="getSummaries"-->
+					<el-table 
+						:data="Tgpf_DayEndBalancingDetail" 
+						stripe 
+						border
+						:default-sort = "{prop: 'index'}" 
+						:header-cell-style="tableHeader" 
+						@selection-change="checkCheckBox" 
+						:span-method = "arraySpanMethod"
+						:cell-style = "tableCell"
+						:cell-class-name="cellcb"
+						id="mytable"
+						ref="tableRef"
+						:row-class-name="tableRowClassName"
+						:height="tableHeight"
+						>
+						<el-table-column>
+							<!--<el-table-column width="60" fixed type="selection" align="center"></el-table-column>-->
+							<el-table-column width="60" fixed type="selection" align="center" v-if="showChecKBox"></el-table-column>
+						</el-table-column>	
+						
+						<el-table-column prop="enterTimeStamp" label="托管业务数据">
+							<el-table-column type="index"  label="序号"  width="90" sortable fixed></el-table-column><!-- type="index" -->
+							<el-table-column prop="tripleAgreementNum" label="三方协议编号" width="180"></el-table-column>
+							<el-table-column prop="billTimeStamp" label="上传日期" width="120"></el-table-column>
+							<el-table-column prop="theNameOfCreditor" label="缴款人姓名" width="120"></el-table-column>
+							<el-table-column prop=bankAccountForLoan label="缴款账号" width="200"></el-table-column>
+							<el-table-column prop="loanAmountFromBank" label="缴款金额（元）" width="140"></el-table-column>
+							<el-table-column prop="remark" label="摘要" width="200"></el-table-column>
+						</el-table-column>
+						<el-table-column prop="reconciliationStateFromBusiness" width="180" label="对账结果" align="center">
+							<template scope="scope">
+								<span v-if="scope.row.reconciliationStateFromBusiness == '1'" style="font-size: 20px;">&radic;</span>
+								<span v-else-if="scope.row.reconciliationStateFromBusiness == '0'" style="font-size: 20px;">&times;</span>
+								<span v-else="scope.row.reconciliationStateFromBusiness == ''"></span>
+							</template>
+						</el-table-column>	
+						<el-table-column prop="enterTimeStamp" label="银行对账数据">
+							<el-table-column prop="tripleAgreementNum" label="三方协议编号" width="180"></el-table-column>
+							<el-table-column prop="billTimeStampBank" label="上传日期" width="120"></el-table-column>
+							<el-table-column prop="theNameOfCreditorBank" label="缴款人姓名" width="120"></el-table-column>
+							<el-table-column prop="bankAccountForLoanBank" label="缴款账号" width="200"></el-table-column>
+							<el-table-column prop="bankAmount" label="缴款金额（元）" width="140"></el-table-column>
+							<el-table-column prop="remarkBank" label="摘要" width="200"></el-table-column>
+						</el-table-column>
+						<!--<template slot="append">
+							<el-table-column label="小计"></el-table-column>	
+						</template>-->
+						
+					</el-table>
+					<!--<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :sidepagecount="4"></vue-nav>-->
+
+					<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+				</div>
+				
+			</div>	
+			<!--数据对账列表结束-->
+			<!-- del modal -->
+			<div class="modal fade" id="deleteDayEndBalancingDetail" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_warning.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1">确认要删除这条信息吗？</div>
+								<div class="del-text2">删除后不可恢复</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure"  @click="delAccount">
+								确定
+							</button>
+							<button type="button" class="btn foot-cancel" data-dismiss="modal">
+								取消
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			<!-- error modal -->
+			<div class="modal fade" id="edModelDayEndBalancingDetail" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">{{errMsg}}</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!-- waiting modal -->
+			<div class="modal fade" id="sdModelDayEndBalancingDetail" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+		</div>
+		
+		<script src="../components/vue-components.js"></script>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tgpf/Tgpf_DayEndBalancingDetail.js"></script>
+	</body>
+</html>	

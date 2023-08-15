@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-协定存款统计表</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<div class="content-wrap">
+			<div class="cs-content" id="Tg_DepositFloatListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input"  v-model="keyword" @keyup.enter="search" placeholder="请输入关键字搜索">
+							</div>
+							<div class="inline">
+							    <span>银行名称：</span>
+							    <vue-listselect defaultname="请选择银行名称" :thevalue="theNameOfBank" :optionlist="bankNames" @callbackfun="getTheNameOfBankId" @emptybackfun="emptyTheNameofBankId"></vue-listselect>
+							</div>
+							<div class="inline">
+							    <span>签订日期：</span>
+							    <input id="date23012001" type="text" class="form-control cs-input-date"  v-model="signDateRange" @keyup.enter="search" placeholder="开始日期  ~ 结束日期">
+							    <img src="../image/list_search_calendar.png" class="ico-date">
+							</div>
+							<div class="inline">
+							    <span>到期日期：</span>
+							    <input id="date23012002" type="text" class="form-control cs-input-date" v-model="endExpirationDateRange" @keyup.enter="search" placeholder="开始日期  ~ 结束日期">
+							    <img src="../image/list_search_calendar.png" class="ico-date">
+							</div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="handleReset">重置</button>
+						</div>
+					</div>
+					<div class="pull-right text-right">
+						<div class="top-excel">
+							<button class="btn btn-excel" @click="exportExcelHandle">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+						<!--<div class="top-batch">
+							<button class="btn btn-pass">
+								<img src="../image/list_check_yes.png"/>
+								<span>审批通过</span>
+							</button>
+							<button class="btn btn-fail">
+								<img src="../image/list_check_no.png"/>
+								<span>审批退回</span>
+							</button>
+						</div>-->
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="Tg_DepositFloatList" stripe :default-sort = "{prop: 'index'}">
+							<el-table-column type="selection"  width="55" fixed></el-table-column>
+							<el-table-column type="index" :index="indexMethod" label="序号" width="80" fixed></el-table-column>
+							<el-table-column prop="bankName" label="银行名称" width="315"></el-table-column>
+							<el-table-column prop="depositRate" label="协定存款利率（%）" width="200"></el-table-column>
+							<el-table-column prop="orgAmount" label="起始金额（万元）" width="200"></el-table-column>
+							<el-table-column prop="signDate" label="签订日期" width="140"></el-table-column>
+							<el-table-column prop="timeLimit" label="期限" width="315"></el-table-column>
+							<el-table-column prop="endExpirationDate" label="到期日期" width="140"></el-table-column>
+							<el-table-column prop="remark" label="备注" width="315"></el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<script src="../components/vue-components.js"></script>
+		
+		<script src="../js/admin/tg/Tg_DepositFloatList.js"></script>
+	</body>
+</html>	

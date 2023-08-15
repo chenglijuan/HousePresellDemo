@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Emmp_BankInfo" table="Emmp_BankInfo" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号(银行代码)</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<property name="bankCode">
+			<column name="bankCode">
+				<comment>银行代码</comment>
+			</column>
+		</property>
+		<property name="bankNo">
+			<column name="bankNo">
+				<comment>银行代号</comment>
+			</column>
+		</property>
+		<property name="theName">
+			<column name="theName">
+				<comment>名称</comment>
+			</column>
+		</property>
+		<property name="shortName">
+			<column name="shortName">
+				<comment>简称</comment>
+			</column>
+		</property>
+		<property name="leader">
+			<column name="leader">
+				<comment>负责人</comment>
+			</column>
+		</property>
+		<property name="address">
+			<column name="address">
+				<comment>所在地址</comment>
+			</column>
+		</property>
+		<property name="capitalCollectionModel">
+			<column name="capitalCollectionModel">
+				<comment>资金归集模式</comment>
+			</column>
+		</property>
+		<property name="theType">
+			<column name="theType">
+				<comment>类型 S_CompanyType</comment>
+			</column>
+		</property>
+		<property name="postalAddress">
+			<column name="postalAddress">
+				<comment>通讯地址</comment>
+			</column>
+		</property>
+		<property name="postalPort">
+			<column name="postalPort">
+				<comment>通讯端口</comment>
+			</column>
+		</property>
+		<property name="contactPerson">
+			<column name="contactPerson">
+				<comment>联系人</comment>
+			</column>
+		</property>
+		<property name="contactPhone">
+			<column name="contactPhone">
+				<comment>联系电话</comment>
+			</column>
+		</property>
+		<property name="ftpDirAddress">
+			<column name="ftpDirAddress">
+				<comment>FTP目录地址</comment>
+			</column>
+		</property>
+		<property name="ftpAddress">
+			<column name="ftpAddress">
+				<comment>FTP地址</comment>
+			</column>
+		</property>
+		<property name="ftpPort">
+			<column name="ftpPort">
+				<comment>FTP端口</comment>
+			</column>
+		</property>
+		<property name="ftpUserName">
+			<column name="ftpUserName">
+				<comment>FTP用户名</comment>
+			</column>
+		</property>
+		<property name="ftpPwd">
+			<column name="ftpPwd">
+				<comment>FTP密码</comment>
+			</column>
+		</property>
+		<property name="financialInstitution">
+			<column name="financialInstitution">
+				<comment>金融机构</comment>
+			</column>
+		</property>
+		<property name="theTypeOfPOS">
+			<column name="theTypeOfPOS">
+				<comment>POS机型号</comment>
+			</column>
+		</property>
+		<property name="eCodeOfSubject">
+			<column name="eCodeOfSubject">
+				<comment>科目代码</comment>
+			</column>
+		</property>
+		<property name="eCodeOfProvidentFundCenter">
+			<column name="eCodeOfProvidentFundCenter">
+				<comment>公积金中心代码</comment>
+			</column>
+		</property>
+		<property name="remark">
+			<column name="remark" length="4000">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<property name="isUsing">
+			<column name="isUsing">
+				<comment>是否启用</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

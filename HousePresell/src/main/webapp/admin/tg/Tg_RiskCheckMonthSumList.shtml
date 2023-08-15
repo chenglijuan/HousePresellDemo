@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-风控例行抽查表</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tg_RiskCheckMonthSumListDiv">
+			<div class="cs-content">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>抽查月份：</span>
+							    <input type="text" class="form-control cs-input-date" id="date2102010201" placeholder="请选择当前月份"/>
+							</div>
+							<div class="inline">
+							    <span>抽查日期：</span>
+							    <input type="text" class="form-control cs-input-date" id="date2102010202" placeholder="起始时间 - 终止时间"/>
+							   	<img src="../image/list_search_calendar.png" class="ico-date"/>
+							</div>
+							<div class="inline">
+							    <span>抽查状态：</span>
+							    <!-- <select class="form-control cs-select" v-model="rectificationState">
+							    	<option value="">请选择抽查状态</option>
+							    	<option value="已完成">已完成</option>
+							    	<option value="进行中">进行中</option>
+							    </select> -->
+							     <vue-listselect defaultname="请选择抽查状态" :thevalue="rectificationState"
+												:optionlist="rectificationStateList"
+												@callbackfun="changeRectificationState"
+												@emptybackfun="rectificationStateEmpty"></vue-listselect>
+							</div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="reset">重置</button>
+						</div>
+						<div class="top-btns">
+							<button class="btn btn-success" @click="addRiskRoutineCheck" data-editNum="21020102_ADD_01">
+								<img src="../image/list_btn_ico_add.png"/>
+								<span>新增</span>
+							</button>
+							<button class="btn btn-primary" @click="toConfig"  data-editNum="21020102_OST_01">
+								<img src="../image/home_ico_setting.png"/>
+								<span>抽查比例配置</span>
+							</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="tg_RiskCheckMonthSumList" stripe :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle">
+							<!-- <el-table-column type="selection"  width="55" fixed></el-table-column> -->
+							<el-table-column type="index" :index="indexMethod" label="序号" width="60" fixed align="center"></el-table-column>
+							<el-table-column label="风控例行抽查单号" min-width="220">
+								<template scope="scope">
+									<el-button type="text" size="small" @click="rishCheckMonthSumDetailPageOpen(scope.row.spotTimeStamp)">{{scope.row.checkNumber}}</el-button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="spotTimeStamp" label="抽查月份" width="120" align="center"></el-table-column>
+							<el-table-column prop="sumCheckCount" label="业务" width="140" align="right"></el-table-column>
+							<el-table-column prop="qualifiedCount" label="合格" width="140" align="right"></el-table-column>
+							<el-table-column prop="unqualifiedCount" label="不合格" width="140" align="right"></el-table-column>
+							<el-table-column prop="pushCount" label="推送整改" width="140" align="right"></el-table-column>
+							<el-table-column prop="feedbackCount" label="整改反馈" width="140" align="right"></el-table-column>
+							<el-table-column prop="handleCount" label="完成整改" width="140" align="right"></el-table-column>
+							<el-table-column prop="createTimeStamp" label="创建日期" width="120" align="center"></el-table-column>
+							<el-table-column prop="rectificationState" label="抽查状态" width="100"  align="center"></el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<div class="modal fade" id="addRishCheckInfo" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+			<div class="modal-dialog modal-del">
+				<div class="modal-content">
+					<div class="modal-body csm-body">
+						<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+						<div class="del-info">
+							<div class="del-text1 font-bold">开始新增</div>
+							<div class="del-text2">正在抽查过程中，请稍后</div>
+						</div>
+					</div>
+					<!-- <div class="modal-footer">
+						<button type="button" class="btn foot-sure" data-dismiss="modal">确定</button>
+					</div> -->
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal -->
+		</div>
+	
+		<!-- Pages JS -->
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tg/Tg_RiskCheckMonthSumList.js"></script>
+	</body>
+</html>	

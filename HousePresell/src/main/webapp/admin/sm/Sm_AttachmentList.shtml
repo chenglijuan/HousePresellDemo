@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-附件</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="sm_AttachmentListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input"  v-model="keyword" @keyup.enter="search" placeholder="请输入关键字搜索">
+							</div>
+							<div class="inline">
+							    <span>审批状态：</span>
+							    <select  class="form-control cs-select">
+							    	<option value="">申请中</option>
+							    	<option value="">已备案</option>
+							    </select>
+							</div>
+							<button class="btn btn-search">搜索</button>
+							<button class="btn btn-reset">重置</button>
+						</div>
+						<div class="top-btns">
+							<button class="btn btn-success">
+								<img src="../image/list_btn_ico_add.png"/>
+								<span>新增</span>
+							</button>
+							<button class="btn btn-success">
+								<img src="../image/list_btn_ico_import.png"/>
+								<span>导入</span>
+							</button>
+							<button class="btn btn-primary">
+								<img src="../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+							<button class="btn btn-info">
+								<img src="../image/list_btn_ico_see.png"/>
+								<span>日志</span>
+							</button>
+							<button class="btn btn-danger">
+								<img src="../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+						</div>
+					</div>
+					<div class="pull-right text-right">
+						<div class="top-excel">
+							<button class="btn btn-excel">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+						<div class="top-batch">
+							<button class="btn btn-pass">
+								<img src="../image/list_check_yes.png"/>
+								<span>审批通过</span>
+							</button>
+							<button class="btn btn-fail">
+								<img src="../image/list_check_no.png"/>
+								<span>审批退回</span>
+							</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="sm_AttachmentList" stripe :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle">
+							<el-table-column type="selection"  width="55" fixed></el-table-column>
+							<el-table-column type="index" :index="indexMethod" label="序号" width="80" fixed></el-table-column>
+							
+							<el-table-column prop="theState" label="状态 S_TheState 初始为Normal" width="315"></el-table-column>
+							<el-table-column prop="userStartName" label="创建人" width="315"></el-table-column>
+							<el-table-column prop="createTimeStamp" label="创建时间" width="315"></el-table-column>
+							<el-table-column prop="sourceType" label="资源类型" width="315"></el-table-column>
+							<el-table-column prop="sourceId" label="资源Id" width="315"></el-table-column>
+							<el-table-column prop="fileType" label="文件类型" width="315"></el-table-column>
+							<el-table-column prop="totalPage" label="文件总页数" width="315"></el-table-column>
+							<el-table-column prop="theLink" label="链接" width="315"></el-table-column>
+							<el-table-column prop="theSize" label="资源大小，单位：KB" width="315"></el-table-column>
+							<el-table-column prop="remark" label="备注" width="315"></el-table-column>
+							<el-table-column prop="md5Info" label="文件MD5信息" width="315"></el-table-column>
+							
+							<el-table-column prop="applyState" label="状态" width="120">
+								<template scope="scope">
+							        <button  v-if="scope.row.applyState == 1" class="btn btn-state-warning">申请中</button>
+							    	<button  v-if="scope.row.applyState == 2" class="btn btn-state-success">已备案</button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script src="../components/vue-components.js"></script>
+	
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/Sm_AttachmentList.js"></script>
+	</body>
+</html>	

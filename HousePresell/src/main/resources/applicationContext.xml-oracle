@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-3.1.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+	<!-- 配置自动扫描的包 -->
+	<context:component-scan base-package="zishusz.housepresell" />
+
+	<!-- Spring注解方式配置调度任务 -->
+
+	<task:executor id="executor" pool-size="5"/>
+	<task:scheduler id="scheduler" pool-size="10"/>
+	<task:annotation-driven executor="executor" scheduler="scheduler"/>
+	
+	<!--rabbitmq配置-->
+	<bean id="mQConnectionUtil" class="zishusz.housepresell.util.MQConnectionUtil">
+		<property name="host" value="localhost"/>
+		<property name="port" value="5672"/>
+		<property name="virtalHost" value="dechertHousePresell"/>
+		<property name="userName" value="dechert"/>
+		<property name="password" value="123456"/>
+	</bean>
+
+	<bean id="ossClientProperty" class="com.xiaominfo.oss.sdk.OSSClientProperty">
+		<property name="remote" value="http://192.168.1.50:18000"/>
+		<property name="project" value="bananaUpload"/>
+		<property name="appid" value="oss002e5c"/>
+		<property name="appsecret" value="egg0s9u3"/>
+	</bean>
+
+	<bean id="ossClient" class="com.xiaominfo.oss.sdk.OSSClient">
+		<constructor-arg ref="ossClientProperty"/>
+		<constructor-arg name="mode" value="BASE64"/>
+	</bean>
+
+	<!-- 配置主数据源 -->
+	<bean id="MyDataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<!-- 基本属性 url、user、password -->
+
+		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:housepresell" />
+		<property name="username" value="root" />
+		<property name="password" value="123456" />
+
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize" value="2" />
+		<property name="minIdle" value="2" />
+		<property name="maxActive" value="10" />
+
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="60000" />
+
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+
+		<property name="validationQuery" value="SELECT 'x'" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements" value="true" />
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="100" />
+
+		<!-- 配置监控统计拦截的filters,防SQL注入wall -->
+		<property name="filters" value="stat" />
+		<!-- 设置慢查询标准 单位：毫秒 -->
+		<property name="connectionProperties" value="druid.stat.slowSqlMillis=5000" />
+	</bean>
+
+	<!-- 把数据源注入给Session工厂 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="MyDataSource" />
+		</property>
+		<!-- Hibernate参数 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<!-- 使自定义序列生效，如果想用HIBERNATE_SEQUENCE可把该参数注释 -->
+				<prop key="hibernate.id.new_generator_mappings">false</prop>
+				<!-- 该值为oracle的连接用户，设置该值后，表结构有调整会自动同步 -->
+				<prop key="hibernate.default_schema">zachary</prop>
+			</props>
+		</property>
+		<!-- Hibenate映射文件 -->
+		<property name="mappingResources">
+			<list>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Emmp_BankBranch.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Emmp_BankInfo.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Emmp_ComAccount.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Emmp_CompanyInfo.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Emmp_Department.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Emmp_OrgMember.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Emmp_QualificationInfo.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Empj_BldEscrowCompleted_Dtl.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Empj_BldEscrowCompleted.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Empj_BldLimitAmount_AF.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Empj_BuildingExtendInfo.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Empj_BuildingInfo_AF.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Empj_BuildingInfo.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Empj_BuildingAccountSupervised.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Empj_HouseInfo.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Empj_PjDevProgressForcast.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Empj_PjDevProgressForcastDtl.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Empj_PresellDocumentInfo.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Empj_ProjectInfo_AF.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Empj_ProjectInfo.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Empj_UnitInfo.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_ApprovalProcess_AF.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_ApprovalProcess_Cfg.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_ApprovalProcess_Node.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_ApprovalProcess_Condition.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_MessageTemplate_Cfg.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_ApprovalProcess_Record.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_ApprovalProcess_Workflow.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_Attachment.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_AttachmentCfg.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_BaseParameter.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_BusinessCode.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_BusiState_Log.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_CityRegionInfo.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_eCode_Log.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_FastNavigate.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_Operate_Log.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_Permission_Range.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_Permission_RangeAuthorization.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_Permission_Role.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_Permission_RoleCompanyType.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_Permission_RoleData.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_Permission_RoleUser.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_Permission_UIResource.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_StreetInfo.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_User.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_CommonMessage.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Sm_CommonMessageDtl.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_DepositManagement.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_DepositHouseHoldsDtl_View.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_ExpForecast.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_HandleTimeLimitConfig.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_IncomeForecast.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_OtherRiskInfo.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_PjRiskAssessment.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_PjRiskLetter.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_PjRiskRating.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_RiskLogInfo.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_RiskRoutineCheckInfo.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_RiskRoutineCheckRatioConfig.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_TotalEscrowAmountForecast.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_JournalCount_View.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_LoanAmountStatement_View.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_LoanProjectCountM_View.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_Build_View.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_BuildCount_View.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_BuildPayout_View.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_Holiday.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_HouseLoanAmount_View.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_BankLoanInSituation_View.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tg_BankLoanOutSituation_View.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_AccVoucher.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_BalanceOfAccount.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_BankUploadDataDetail.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_BuildingRemainRightLog.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_CyberBankStatement.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_CyberBankStatementDtl.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_DayEndBalancing.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_DepositDetail.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_FundAccountInfo.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_FundAppropriated_AF.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_FundAppropriated_AFDtl.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_FundAppropriated.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_FundOverallPlanRecord.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_FundOverallPlanDetail.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_FundOverallPlan.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_FundProjectInfo.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_OverallPlanAccout.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_RefundInfo.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_RemainRight_Bak.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_RemainRight.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_RetainedRightsView.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_SerialNumber.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpf_SocketMsg.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpj_BankAccountSupervised.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpj_BldLimitAmountVer_AF.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpj_BldLimitAmountVer_AFDtl.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpj_BuildingAccount.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpj_BuildingAccountLog.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpj_BuildingAvgPrice.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgpj_EscrowStandardVerMng.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgxy_BankAccountEscrowed.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgxy_BuyerInfo.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgxy_ContractInfo.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgxy_CoopAgreement.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgxy_CoopAgreementSettle.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgxy_CoopAgreementSettleDtl.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgxy_CoopAgreementVerMng.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgxy_CoopMemo.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgxy_DepositAgreement.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgxy_EscrowAgreement.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgxy_TripleAgreement.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgxy_TripleAgreementReview_View.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Tgxy_TripleAgreementVerMng.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Qs_EscrowBankFunds_View.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Qs_BuildingAccount_View.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Qs_RecordAmount_View.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Qs_BigAmountCompare_View.hbm.xml</value>
+				<value>zhishusz/housepresell/database/po/hbm4oracle/Qs_ProjectEscrowAmount_View.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- 本地Ehcache缓存设置 -->
+	<!-- cacheManager工厂类，指定ehcache.xml的位置 -->
+	<bean id="ehCacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:ehcache.xml" />
+	</bean>
+	<!-- 声明cacheManager -->
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+		<property name="cacheManager" ref="ehCacheManagerFactory"></property>
+	</bean>
+	<!-- 启用缓存注解功能，这个是必须的，否则注解不会生效，另外，该注解一定要声明在spring主配置文件中才会生效 -->
+	<cache:annotation-driven cache-manager="cacheManager" />
+
+	<!-- 自定义Bean -->
+	<bean id="gson" class="com.google.gson.Gson" />
+	
+	<bean id="AdminFilter" class="zishusz.housepresell.filter.AdminFilter"/>
+	
+	<!-- 把自定义后台推送Servlet交给spring管理 -->
+	<bean id="MyPushletServlet" class="zishusz.housepresell.servlet.MyPushletServlet"/>
+	<bean id="FileUploadServlet" class="zishusz.housepresell.servlet.FileUploadServlet"/>
+	
+	<!-- 审批流回调的配置文件 -->
+	<import resource="ApprovalProcess.xml" />
+</beans>

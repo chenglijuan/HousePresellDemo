@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-角色授权添加</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		
+		<!-- zTree CSS -->
+		<link rel="stylesheet" type="text/css" href="../assets/zTree/css/zTreeStyle/zTreeStyle.css"/>
+		
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/admin/sm/Sm_Management_Menu.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="sm_Permission_RoleUIAddDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">角色信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="addRoleUI()">
+						<img src="../image/detail_btn_ico_save.png" width="18">
+						<span>保存</span>
+					</button>
+				</div>
+			</div>
+			<!--角色信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">角色名称：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" :value="sm_Permission_Role.theName" disabled="disabled" class="form-control" />
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">状态：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<select class="form-control" v-model="sm_Permission_Role.busiType">
+										<option value="0">启用</option>
+										<option value="1">停用</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">角色编码：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" disabled="disabled" class="form-control" :value="sm_Permission_Role.eCode" />
+								</div>
+							</div>
+						</div>
+						<div class="form-group" v-if="sm_Permission_Role.busiType == 0">
+							<span class="detail-text1">启用日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="disabled" id="enableDate_RoleUIAdd" v-model="sm_Permission_Role.enableDate" :value="sm_Permission_Role.enableDate"/>
+									<!-- <img src="../image/list_search_calendar.png" class="ico-date"/> -->
+								</div>
+							</div>
+						</div>
+						<div class="form-group" v-if="sm_Permission_Role.busiType == 1">
+							<span class="detail-text1">停用日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="disabled" id="downDate_RoleUIAdd" v-model="sm_Permission_Role.downDate" :value="sm_Permission_Role.downDate"/>
+									<!-- <img src="../image/list_search_calendar.png" class="ico-date"/> -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--角色信息结束-->
+			<!--菜单权限开始-->
+			<div class="detail-title">
+				<h1 class="inline">菜单权限</h1>
+			</div>
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4 menu-left">
+						<div class="menu-border">
+							<h1 class="menu-title">菜单项</h1>
+							<div class="zTreeDemoBackground left">
+								<ul id="treeDemo_RoleUIAdd" class="ztree"></ul>
+							</div>
+						</div>
+					</div>
+					<div id="addOrUpdateMenuDiv_RoleUIAdd" class="col-md-8" style="display: none">
+						<div class="menu-border">
+							<h1 class="menu-title">功能授权</h1>
+							<div class="menu-info">
+								<div class="form-group">
+									<span class="detail-text1">菜单类型：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<select id="theTypeSelect" v-model="theType" disabled="disabled" @change="theTypeChange" class="form-control">
+												<option value="1">实体菜单</option>
+												<option value="2">虚拟菜单</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<span class="detail-text1">菜单名称：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<input type="text" disabled="disabled" :value="theName" class="form-control" />
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<span class="detail-text1">业务编码：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<input type="text" disabled="disabled" :value="eCode" class="form-control" />
+										</div>
+									</div>
+								</div>
+								<div class="form-group" v-if="parentUI != null && parentUI.tableId > 0">
+									<span class="detail-text1">上级菜单：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<input type="text" disabled="disabled" :data-parentUIId="parentUI.tableId" :value="parentUI.theName" class="form-control" />
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<span class="detail-text1">排序编号：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<input type="text" disabled="disabled" :value="theIndex" class="form-control" />
+										</div>
+									</div>
+								</div>
+								<div class="form-group" v-if="theType == 1">
+									<span class="detail-text1">资源URL：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<select v-model="resourceUIId" disabled="disabled" @change="resourceUIChange($event)" class="form-control">
+												<option value="">请选择资源URL</option>
+												<option v-for="resourceUI in resourceUIList" :value="resourceUI.tableId" :data-childrenbtn="resourceUI.childrenBtnList">{{resourceUI.theResource}}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<span class="detail-text1">图标：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											这里放图片
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<span class="detail-text1">备注：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<textarea class="form-control" disabled="disabled" :value="remark" rows="1" placeholder=""></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="form-group" v-if="theType == 1 && childrenBtnList != null && childrenBtnList.length > 0">
+									<span class="detail-text1">功能按钮：</span>
+									<div class="detail-info1">
+										<div class="detail-edit">
+											<el-checkbox-group v-model="btnCheckArr">
+										      	<el-checkbox v-for="childrenBtn in childrenBtnList" :label="childrenBtn.tableId">{{childrenBtn.theName}}</el-checkbox>
+										    </el-checkbox-group>
+											<!-- <span v-for="childrenBtn in childrenBtnList">{{childrenBtn.theName}} </span> -->	
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-8" id="noChooseMenuDiv_RoleUIAdd">
+						<div class="menu-border">
+							<h1 class="menu-title">菜单项</h1>
+							<div class="menu-empty">
+								<img src="../image/menu_pic_click.png"/>
+								<div>请选择菜单</div>
+							</div>
+						</div>
+					</div>
+				</div>				
+			</div>
+			<!--菜单权限结束-->
+		</div>
+		<script src="../components/vue-components.js"></script>
+		
+		<!-- zTree Js -->
+		<script type="text/javascript" src="../assets/zTree/js/jquery.ztree.core.js"></script>
+		<script type="text/javascript" src="../assets/zTree/js/jquery.ztree.excheck.js"></script>
+		<script type="text/javascript" src="../assets/zTree/js/jquery.ztree.exedit.js"></script>
+		
+		<!-- Pages JS -->
+		<script src="../js/BaseJs.js"></script>
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/sm/Sm_Permission_RoleUIAdd.js"></script>
+	</body>
+</html>	

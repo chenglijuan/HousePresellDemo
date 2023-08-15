@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tg_DepositFloat_View" table="Tg_DepositFloat_View" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+		<property name="bankName">
+			<column name="bankName">
+				<comment>银行名称</comment>
+			</column>
+		</property>
+		<property name="depositRate">
+			<column name="depositRate">
+				<comment>协定存款利率</comment>
+			</column>
+		</property>
+		<property name="orgAmount">
+			<column name="orgAmount">
+				<comment>起始金额（万元）</comment>
+			</column>
+		</property>
+		<property name="signDate">
+			<column name="signDate">
+				<comment>签订日期</comment>
+			</column>
+		</property>
+		<property name="timeLimit">
+			<column name="timeLimit">
+				<comment>期限</comment>
+			</column>
+		</property>
+		<property name="endExpirationDate">
+			<column name="endExpirationDate">
+				<comment>到期日期</comment>
+			</column>
+		</property>
+		<property name="remark">
+			<column name="remark">
+				<comment>备注</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

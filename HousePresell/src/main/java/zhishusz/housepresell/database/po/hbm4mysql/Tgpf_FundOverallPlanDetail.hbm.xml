@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tgpf_FundOverallPlanDetail" table="Tgpf_FundOverallPlanDetail" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态(统筹状态)</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Tgpf_FundAppropriated_AF" name="mainTable" foreign-key="null">
+			<column name="mainTable">
+				<comment>用款主表</comment>
+			</column>
+		</many-to-one>
+		<property name="theNameOfProject">
+			<column name="theNameOfProject">
+				<comment>项目名称</comment>
+			</column>
+		</property>
+		<property name="theNameOfBankBranch">
+			<column name="theNameOfBankBranch">
+				<comment>开户行名称</comment>
+			</column>
+		</property>
+		<many-to-one class="Tgpj_BankAccountSupervised" name="bankAccountSupervised" foreign-key="null">
+			<column name="bankAccountSupervised">
+				<comment>关联监管账号</comment>
+			</column>
+		</many-to-one>
+		<property name="theNameOfAccount">
+			<column name="theNameOfAccount">
+				<comment>监管账户名称</comment>
+			</column>
+		</property>
+		<property name="supervisedBankAccount">
+			<column name="supervisedBankAccount">
+				<comment>监管账号</comment>
+			</column>
+		</property>
+		<property name="appliedAmount">
+			<column name="appliedAmount">
+				<comment>本次划款申请金额（元）</comment>
+			</column>
+		</property>
+		<many-to-one class="Tgpf_FundOverallPlan" name="fundOverallPlan" foreign-key="null">
+			<column name="tgpf_FundOverallPlan_Id">
+				<comment>资金统筹</comment>
+			</column>
+		</many-to-one>
+	</class>
+</hibernate-mapping>

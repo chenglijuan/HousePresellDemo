@@ -1,0 +1,370 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Empj_ProjectInfo" table="Empj_ProjectInfo" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_ProjectInfo</param>
+			</generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="approvalState">
+			<column name="approvalState">
+				<comment>流程状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Emmp_CompanyInfo" name="developCompany" foreign-key="null">
+			<column name="developCompany">
+				<comment>关联开发企业</comment>
+			</column>
+		</many-to-one>
+		<property name="eCodeOfDevelopCompany">
+			<column name="eCodeOfDevelopCompany">
+				<comment>开发企业编号</comment>
+			</column>
+		</property>
+		<property name="theType">
+			<column name="theType">
+				<comment>项目类型</comment>
+			</column>
+		</property>
+		<property name="zoneCode">
+			<column name="zoneCode">
+				<comment>行政区代码</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_CityRegionInfo" name="cityRegion" foreign-key="null">
+			<column name="cityRegion">
+				<comment>所属区域</comment>
+			</column>
+		</many-to-one>
+		<many-to-one class="Sm_StreetInfo" name="street" foreign-key="null">
+			<column name="street">
+				<comment>所属街道</comment>
+			</column>
+		</many-to-one>
+		<property name="address">
+			<column name="address">
+				<comment>详细地址</comment>
+			</column>
+		</property>
+		<property name="doorNumber">
+			<column name="doorNumber">
+				<comment>门牌号</comment>
+			</column>
+		</property>
+		<property name="doorNumberAnnex">
+			<column name="doorNumberAnnex">
+				<comment>附门牌号</comment>
+			</column>
+		</property>
+		<property name="introduction">
+			<column name="introduction">
+				<comment>简介</comment>
+			</column>
+		</property>
+		<property name="longitude">
+			<column name="longitude">
+				<comment>经度</comment>
+			</column>
+		</property>
+		<property name="latitude">
+			<column name="latitude">
+				<comment>纬度</comment>
+			</column>
+		</property>
+		<property name="propertyType">
+			<column name="propertyType">
+				<comment>物业类型 S_PropertyType</comment>
+			</column>
+		</property>
+		<property name="theName">
+			<column name="theName">
+				<comment>项目名称</comment>
+			</column>
+		</property>
+		<property name="legalName">
+			<column name="legalName">
+				<comment>项目法定名称</comment>
+			</column>
+		</property>
+		<property name="buildYear">
+			<column name="buildYear">
+				<comment>建造年份</comment>
+			</column>
+		</property>
+		<property name="isPartition">
+			<column name="isPartition">
+				<comment>是否分区</comment>
+			</column>
+		</property>
+		<property name="theProperty">
+			<column name="theProperty">
+				<comment>项目性质</comment>
+			</column>
+		</property>
+		<property name="contactPerson">
+			<column name="contactPerson">
+				<comment>项目联系人</comment>
+			</column>
+		</property>
+		<property name="contactPhone">
+			<column name="contactPhone">
+				<comment>项目联系人电话</comment>
+			</column>
+		</property>
+		<property name="projectLeader">
+			<column name="projectLeader">
+				<comment>项目负责人</comment>
+			</column>
+		</property>
+		<property name="leaderPhone">
+			<column name="leaderPhone">
+				<comment>项目负责人电话</comment>
+			</column>
+		</property>
+		<property name="landArea">
+			<column name="landArea">
+				<comment>项目总占地面积（㎡）</comment>
+			</column>
+		</property>
+		<property name="obtainMethod">
+			<column name="obtainMethod">
+				<comment>项目用地取得方式</comment>
+			</column>
+		</property>
+		<property name="investment">
+			<column name="investment">
+				<comment>计划总投资（万元）</comment>
+			</column>
+		</property>
+		<property name="landInvest">
+			<column name="landInvest">
+				<comment>土地投资金额</comment>
+			</column>
+		</property>
+		<property name="coverArea">
+			<column name="coverArea">
+				<comment>计划总建筑面积（㎡）</comment>
+			</column>
+		</property>
+		<property name="houseArea">
+			<column name="houseArea">
+				<comment>计划住宅总面积（㎡）</comment>
+			</column>
+		</property>
+		<property name="siteArea">
+			<column name="siteArea">
+				<comment>立项面积（㎡）</comment>
+			</column>
+		</property>
+		<property name="planArea">
+			<column name="planArea">
+				<comment>规划面积（㎡）</comment>
+			</column>
+		</property>
+		<property name="agArea">
+			<column name="agArea">
+				<comment>非住宅地上面积（㎡）</comment>
+			</column>
+		</property>
+		<property name="ugArea">
+			<column name="ugArea">
+				<comment>非住宅地下面积（㎡）</comment>
+			</column>
+		</property>
+		<property name="greenRatio">
+			<column name="greenRatio">
+				<comment>绿化率</comment>
+			</column>
+		</property>
+		<property name="capacity">
+			<column name="capacity">
+				<comment>容积率</comment>
+			</column>
+		</property>
+		<property name="parkRatio">
+			<column name="parkRatio">
+				<comment>车位配比率</comment>
+			</column>
+		</property>
+		<property name="unitCount">
+			<column name="unitCount">
+				<comment>住宅总套数</comment>
+			</column>
+		</property>
+		<property name="buildingCount">
+			<column name="buildingCount">
+				<comment>总幢数</comment>
+			</column>
+		</property>
+		<property name="payDate">
+			<column name="payDate">
+				<comment>交付日期</comment>
+			</column>
+		</property>
+		<property name="planStartDate">
+			<column name="planStartDate">
+				<comment>计划开工日期yyyyMMdd</comment>
+			</column>
+		</property>
+		<property name="planEndDate">
+			<column name="planEndDate">
+				<comment>计划竣工日期yyyyMMdd</comment>
+			</column>
+		</property>
+		<property name="developDate">
+			<column name="developDate">
+				<comment>开发日期yyyyMMdd</comment>
+			</column>
+		</property>
+		<many-to-one class="Emmp_CompanyInfo" name="designCompany" foreign-key="null">
+			<column name="designCompany">
+				<comment>设计单位</comment>
+			</column>
+		</many-to-one>
+		<property name="eCodeOfDesignCompany">
+			<column name="eCodeOfDesignCompany">
+				<comment>设计单位编号</comment>
+			</column>
+		</property>
+		<property name="remark">
+			<column name="remark" length="4000">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<property name="developProgress">
+			<column name="developProgress">
+				<comment>项目开发进度</comment>
+			</column>
+		</property>
+		<property name="eastAddress">
+			<column name="eastAddress">
+				<comment>四界-东界-地址</comment>
+			</column>
+		</property>
+		<property name="eastLongitude">
+			<column name="eastLongitude">
+				<comment>四界-东界-经度</comment>
+			</column>
+		</property>
+		<property name="eastLatitude">
+			<column name="eastLatitude">
+				<comment>四界-东界-纬度</comment>
+			</column>
+		</property>
+		<property name="westAddress">
+			<column name="westAddress">
+				<comment>四界-西界-地址</comment>
+			</column>
+		</property>
+		<property name="westLongitude">
+			<column name="westLongitude">
+				<comment>四界-西界-经度</comment>
+			</column>
+		</property>
+		<property name="westLatitude">
+			<column name="westLatitude">
+				<comment>四界-西界-纬度</comment>
+			</column>
+		</property>
+		<property name="southAddress">
+			<column name="southAddress">
+				<comment>四界-南界-地址</comment>
+			</column>
+		</property>
+		<property name="southLongitude">
+			<column name="southLongitude">
+				<comment>四界-南界-经度</comment>
+			</column>
+		</property>
+		<property name="southLatitude">
+			<column name="southLatitude">
+				<comment>四界-南界-纬度</comment>
+			</column>
+		</property>
+		<property name="northAddress">
+			<column name="northAddress">
+				<comment>四界-北界-地址</comment>
+			</column>
+		</property>
+		<property name="northLongitude">
+			<column name="northLongitude">
+				<comment>四界-北界-经度</comment>
+			</column>
+		</property>
+		<property name="northLatitude">
+			<column name="northLatitude">
+				<comment>四界-北界-纬度</comment>
+			</column>
+		</property>
+		<property name="externalCode">
+			<column name="externalCode">
+				<comment>外来数据关联字段</comment>
+			</column>
+		</property>
+		<property name="externalId">
+			<column name="externalId">
+				<comment>外来数据关联主键</comment>
+			</column>
+		</property>
+		<property name="resourceNote">
+			<column name="resourceNote">
+				<comment>数据来源说明</comment>
+			</column>
+		</property>
+		<property name="payState">
+			<column name="payState">
+				<comment>支付状态</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

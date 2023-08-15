@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-版本管理-托管标准编辑</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tgpj_EscrowStandardVerMngEditDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="update('1')">
+						<img src="../image/detail_btn_ico_save.png" width="18">
+						<span>保存</span>
+					</button>
+					<button class="btn btn-primary" @click="update('2')">
+						<img src="../image/detail_btn_ico_submit.png" width="18">
+						<span>提交</span>
+					</button>
+					<!--<button class="btn btn-warning">-->
+						<!--<img src="../image/detail_btn_ico_record.png" width="18">-->
+						<!--<span>备案</span>-->
+					<!--</button>-->
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">托管标准协议版本号：</span>
+							<div class="detail-info3">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<input type="text" v-model="theName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<!--<div class="form-group">-->
+							<!--<span class="detail-text1">是否启用：</span>-->
+							<!--<div class="detail-info3">-->
+								<!--<div class="detail-edit">-->
+									<!--<select class="form-control" v-model="hasEnable">-->
+										<!--<option value="0">是</option>-->
+										<!--<option value="1">否</option>-->
+									<!--</select>-->
+								<!--</div>-->
+							<!--</div>-->
+						<!--</div>-->
+						<div class="form-group">
+							<span class="detail-text1">托管标准：</span>
+							<div class="detail-info3">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<input type="text" v-model="standardParameter" class="form-control" @blur="changeThousands"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">启用日期：</span>
+							<div class="detail-info3">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<input type="text" id="date06010101200" class="form-control"
+										   placeholder="启用日期 - 停用日期" v-model="beginEndExpirationDate"/>
+									<img src="../image/list_search_calendar.png" class="ico-date"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">托管标准类型：</span>
+							<div class="detail-info3">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<select class="form-control" v-model="theType" @change="getTheTypeHandle">
+										<option value="1">标准金额</option>
+										<option value="2">标准比例</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">版本号：</span>
+							<div class="detail-info3">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<input type="number" v-model="theVersion" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--附件材料开始-->
+            <my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+			<!--附件材料结束-->
+		</div>
+		
+		<script src="../components/vue-components.js"></script>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tgpj/Tgpj_EscrowStandardVerMngEdit.js"></script>
+	</body>
+</html>	

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta charset="UTF-8">
+	<title>housepresell管理后台-审批流-我发起的</title>
+	<link rel="stylesheet" type="text/css" href="../../css/admin/sm/Sm_ApprovalProcess_BacklogList.css"/>
+	<!-- Vendor CSS-->
+	<link rel="stylesheet" href="../../assets/bootstrap-3.3.7/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="../../assets/bootstrap-tab-master/css/font-awesome.css">
+	<link rel="stylesheet" href="../../assets/bootstrap-tab-master/css/bootstrap-tab.css">
+	<!-- Page CSS-->
+	<link rel="stylesheet" type="text/css" href="../../css/main.css"/>
+	<link rel="stylesheet" type="text/css" href="../../assets/element/css/element.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/detail.css"/>
+
+
+</head>
+<body>
+<div class="content-wrap">
+	<div class="cs-content" id="sm_ApprovalProcess_AFListDiv">
+		<!--顶部搜索开始-->
+		<div class="content-top">
+			<div class="pull-left">
+				<div class="top-input">
+					<div class="inline">
+						<span>关键字：</span>
+						<input type="text" class="form-control cs-input"  v-model="keyword" placeholder="请输入业务单号、申请机构、申请人、主题搜索">
+					</div>
+					<div class="inline">
+						<span>业务类型：</span>
+						<vue-listselect defaultname="全部" :thevalue="busiId" :optionlist="sm_BaseParameterList" @callbackfun="changeBaseParameter" @emptybackfun="emptyBaseParameter"></vue-listselect>
+					</div>
+					<div class="inline">
+						<span>申请日期：</span>
+						<input type="text" value="" class="form-control cs-input-date" id="date0103020301" placeholder="起始日期 ~ 终止日期" />
+						<img src="../../image/list_search_calendar.png" class="ico-date"/>
+					</div>
+					<div class="inline">
+						<span>审批状态：</span>
+						<select  class="form-control cs-select" v-model="busiState" @change="changeApproval">
+							<option value="">全部</option>
+							<option value="待提交">待提交</option>
+							<option value="审核中">审核中</option>
+							<option value="已完结">已完结</option>
+							<option value="不通过">不通过</option>
+						</select>
+					</div>
+					<button class="btn btn-search" @click="search">搜索</button>
+					<button class="btn btn-reset" @click="reset">重置</button>
+				</div>
+				<div class="top-btns">
+					<button class="btn btn-primary" @click="sm_ApprovalProcess_AFWithdraw" :disabled="withdrawDisabled" data-editNum="01030203_OST_01">
+						<img src="../../image/list_btn_ico_withdraw.png"/>
+						<span>撤回</span>
+					</button>
+					<button class="btn btn-danger" @click="sm_ApprovalProcess_AFDel" :disabled="delDisabled" data-editNum="01030203_DEL_01">
+						<img src="../../image/list_btn_ico_del.png"/>
+						<span>删除</span>
+					</button>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<!--顶部搜索结束-->
+		<!--表格开始-->
+		<div class="cs-table">
+			<div>
+				<el-table :data="sm_ApprovalProcess_AFList" stripe :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle" @sort-change="sortChange">
+					<el-table-column align="center" type="selection"  width="50"></el-table-column>
+					<el-table-column align="center" type="index" :index="indexMethod" label="序号" width="60"></el-table-column>
+					<el-table-column prop="eCode" label="业务单号" min-width="220" sortable='custom'>
+						<template scope="scope">
+							<el-button type="text" size="small" @click="approvalDetail(scope.row.busiType,scope.row.sourceId,scope.row.currentWorkflowId,scope.row.tableId)">{{scope.row.eCode}}</el-button>
+						</template>
+					</el-table-column>
+					<el-table-column prop="theme" label="主题" min-width="200">
+						<template scope="scope">
+							<a  class="el-button--text hover" @click="approvalDetail(scope.row.busiType,scope.row.sourceId,scope.row.currentWorkflowId,scope.row.tableId)">{{scope.row.theme}}</a>
+						</template>
+					</el-table-column>
+					<el-table-column prop="busiType" label="业务类型" min-width="150" sortable='custom'></el-table-column>
+					<el-table-column prop="theNameOfCompanyInfo" label="申请机构" width="360" sortable='custom'></el-table-column>
+					<el-table-column prop="applicant" label="申请人" width="120"></el-table-column>
+					<el-table-column prop="createTimeStamp" label="申请日期" width="120" sortable='custom'></el-table-column>
+					<el-table-column prop="endDate" label="完成日期" width="120" ></el-table-column>
+					<el-table-column align="center" prop="busiState" label="审批状态" width="120" sortable='custom'>
+						<template scope="scope">
+							<button  v-if='scope.row.busiState == "待提交"' class="btn btn-state-warning">待提交</button>
+							<button  v-if='scope.row.busiState == "审核中"' class="btn btn-state-warning">审核中</button>
+							<button  v-if='scope.row.busiState == "已完结"' class="btn btn-state-success">已完结</button>
+							<button  v-if='scope.row.busiState == "不通过"' class="btn btn-state-danger">不通过</button>
+						</template>
+					</el-table-column>
+				</el-table>
+				<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"></vue-nav>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="../../assets/jquery/jquery.min.js" type="text/javascript"></script>
+<!-- Pages JS -->
+<script src="../../assets/vue/vue.min.js" type="text/javascript"></script>
+<script src="../../assets/element/js/element.js" type="text/javascript"></script>
+<script src="../../assets/bootstrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../../assets/bootstrap-tab-master/js/bootstrap-tab.js" type="text/javascript"></script>
+<script src="../../assets/laydate/laydate.js"></script>
+
+<!-- Noty Js -->
+<script src="../../assets/noty/jquery.noty.js"></script>
+<script src="../../assets/noty/layouts/top.js"></script>
+<script src="../../assets/noty/layouts/center.js"></script>
+<script src="../../assets/noty/themes/default.js"></script>
+
+<!-- Pushlet Js -->
+<script src="../../assets/pushlet/ajax-pushlet-client.js"></script>
+
+<script src="../../js/ServerInterface.js"></script>
+<script src="../../assets/moment/moment.js"></script>
+<script src="../../js/admin/test/Test_BaseJs.js"></script>
+<script src="../../js/viewer.min.js"></script>
+
+<script src="../../components/vue-componentsTest.js"></script>
+
+<script src="../../js/tabCommon.js"></script>
+<script src="../../js/admin/test/Test_ApprovalProcess_AFList.js"></script>
+</body>
+</html>	

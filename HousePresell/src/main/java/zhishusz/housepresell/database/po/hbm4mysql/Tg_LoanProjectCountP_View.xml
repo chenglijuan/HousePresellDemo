@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tg_LoanProjectCountP_View" table="Tg_LoanProjectCountP_View" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+		<property name="companyGroup">
+			<column name="companyGroup">
+				<comment>集团</comment>
+			</column>
+		</property>
+		<property name="companyName">
+			<column name="companyName">
+				<comment>开发企业</comment>
+			</column>
+		</property>
+		<property name="cityRegion">
+			<column name="cityRegion">
+				<comment>区域</comment>
+			</column>
+		</property>
+		<property name="projectName">
+			<column name="projectName">
+				<comment>托管项目</comment>
+			</column>
+		</property>
+		<property name="eCodeFromConstruction">
+			<column name="eCodeFromConstruction">
+				<comment>托管楼幢</comment>
+			</column>
+		</property>
+		<property name="deliveryType">
+			<column name="deliveryType">
+				<comment>交付类型</comment>
+			</column>
+		</property>
+		<property name="upTotalFloorNumber">
+			<column name="upTotalFloorNumber">
+				<comment>地上楼层数（总 ）</comment>
+			</column>
+		</property>
+		<property name="escrowArea">
+			<column name="escrowArea">
+				<comment>托管面积</comment>
+			</column>
+		</property>
+		<property name="recordAvgPriceOfBuilding">
+			<column name="recordAvgPriceOfBuilding">
+				<comment>托管楼幢备案均价</comment>
+			</column>
+		</property>
+		<property name="orgLimitedAmount">
+			<column name="orgLimitedAmount">
+				<comment>初始受限额度</comment>
+			</column>
+		</property>
+		<property name="currentLimitedAmount">
+			<column name="currentLimitedAmount">
+				<comment>当前受限额度</comment>
+			</column>
+		</property>
+		<property name="currentBuildProgress">
+			<column name="currentBuildProgress">
+				<comment>当前建设进度</comment>
+			</column>
+		</property>
+		<property name="currentLimitedNote">
+			<column name="currentLimitedNote">
+				<comment>当前受限节点</comment>
+			</column>
+		</property>
+		<property name="currentEscrowFund">
+			<column name="currentEscrowFund">
+				<comment>托管余额</comment>
+			</column>
+		</property>
+		<property name="amountOffset">
+			<column name="amountOffset">
+				<comment>抵充额度</comment>
+			</column>
+		</property>
+		<property name="sumFamilyNumber">
+			<column name="sumFamilyNumber">
+				<comment>总户数</comment>
+			</column>
+		</property>
+		<property name="signHouseNum">
+			<column name="signHouseNum">
+				<comment>签约户数</comment>
+			</column>
+		</property>
+		<property name="recordHouseNum">
+			<column name="recordHouseNum">
+				<comment>备案户数</comment>
+			</column>
+		</property>
+		<property name="depositHouseNum">
+			<column name="depositHouseNum">
+				<comment>托管户数</comment>
+			</column>
+		</property>
+		<property name="isPresell">
+			<column name="isPresell">
+				<comment>预售证（有/无）</comment>
+			</column>
+		</property>
+		<property name="escrowAgRecordTime">
+			<column name="escrowAgRecordTime" >
+				<comment>合作协议备案时间</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-托管合作协议</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="tgxy_EscrowAgreementListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input"  placeholder="请输入开发企业、项目名称"  v-model="keyword">
+							</div>
+							<div class="inline">
+								<span>签约申请日期查询：</span>							
+								<input type="text" id="dete0611020101" class="form-control cs-input-date" placeholder="开始日期 ~ 结束日期" v-model="contractApplicationDate"/>
+								<img src="../image/list_search_calendar.png" class="ico-date"/>
+								
+							</div>
+							<div class="inline">
+							    <span>审批状态：</span>
+							     <vue-listselect defaultname="请选择审批状态" :thevalue="approvalStateSearch"
+                                       :optionlist="approvalStateSearchList"
+                                       @callbackfun="changeApprovalStateSearch"
+                                       @emptybackfun="EmptyApprovalStateSearch"></vue-listselect>
+							</div>
+							<div class="inline">
+							    <span>区域：</span>
+							     <vue-listselect defaultname="请选择区域" :thevalue="cityRegionId" :optionlist="regionList" @callbackfun="getCityRegionId" @emptybackfun="emptyCityRegionId"></vue-listselect>
+							</div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="resetInfo">重置</button>
+						</div>
+						<div class="top-btns">
+							<button class="btn btn-success"  @click="EscrowAgreementAddHandle" data-editNum="06110201_ADD_01">
+								<img src="../image/list_btn_ico_add.png"/>
+								<span>新增</span>
+							</button>
+							<button class="btn btn-primary"  @click="EscrowAgreementEditHandle" v-if="flag" data-editNum="06110201_MOD_01">
+								<img src="../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+							<button class="btn btn-primary" disabled="disabled" v-if="!flag" data-editNum="06110201_MOD_01">
+								<img src="../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+							<!-- <button class="btn btn-info" >
+								<img src="../image/list_btn_ico_see.png"/>
+								<span>日志</span>
+							</button> -->
+							<button class="btn btn-danger" @click="showDelModal" v-if="flag1" data-editNum="06110201_MOD_01"> 
+								<img src="../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+							<button class="btn btn-danger" disabled="disabled" v-if="!flag1" data-editNum="06110201_MOD_01">
+								<img src="../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+						</div>
+					</div>
+					<div class="pull-right text-right">
+						<!-- <div class="top-excel">
+							<button class="btn btn-excel" @click="exportExcel">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div> -->
+						
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div >
+						<el-table id="EscrowAgreementTab" :data="tgxy_EscrowAgreementList" stripe :default-sort = "{prop: 'index'}"  @selection-change="checkCheckBox">
+							<el-table-column type="selection"  width="50" fixed align="center" @selection-change="checkCheckBox">
+								
+							</el-table-column>
+							<el-table-column type="index" :index="indexMethod" label="序号" width="60" fixed align="center"></el-table-column>
+				            <el-table-column prop="eCodeOfAgreement" label="协议编号" width="200">
+				                <template scope="scope">
+							        <el-button type="text" size="small" @click="EscrowAgreementDetailHandle(scope.row.tableId)">{{scope.row.eCodeOfAgreement}}</el-button>
+								</template>
+				            </el-table-column>
+							<el-table-column prop="contractApplicationDate" label="签约申请日期" width="180" align="center"></el-table-column>
+							<el-table-column prop="theNameOfDevelopCompany" label="开发企业名称" width="315" align="center"></el-table-column>
+							<el-table-column prop="theNameOfProject" label="项目名称" width="250" align="center"></el-table-column>
+							<el-table-column prop="theNameOfCityRegion" label="区域" width="140" align="center"></el-table-column>
+							<el-table-column prop="buildingInfoCodeList" label="楼幢编号" width="315"></el-table-column>
+							<!-- xsz 新增审批状态字段 -->
+							<el-table-column prop="approvalState" label="审批状态" width="120" align="center">
+								<template scope="scope">
+									<button  v-if="scope.row.approvalState == '已完结'" class="btn btn-state-success">已完结</button>
+							        <button  v-if="scope.row.approvalState == '待提交'" class="btn btn-state-warning">待提交</button>
+							    	<button  v-if="scope.row.approvalState == '审核中'" class="btn btn-state-warning">审核中</button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="businessProcessState" label="业务流程状态" width="120" align="center">
+								<template scope="scope">
+							        <button  v-if="scope.row.businessProcessState == 1" class="btn btn-state-warning">已保存</button>
+							    	<button  v-if="scope.row.businessProcessState == 2" class="btn btn-state-success">已申请</button>
+							    	<button  v-if="scope.row.businessProcessState == 3" class="btn btn-state-warning">项目部门已受理</button>
+							    	<button  v-if="scope.row.businessProcessState == 4" class="btn btn-state-success">项目部门退回</button>
+							    	<button  v-if="scope.row.businessProcessState == 5" class="btn btn-state-warning">受理完成</button>
+							    	<button  v-if="scope.row.businessProcessState == 6" class="btn btn-state-success">法务部门退回</button>
+							    	<button  v-if="scope.row.businessProcessState == 7" class="btn btn-state-warning">已备案</button>
+							    	
+							    	
+								</template>
+							</el-table-column>
+							<el-table-column prop="agreementState" label="协议状态" width="120" align="center">
+								<template scope="scope">
+									<button  v-if="scope.row.agreementState == 0" class="btn btn-state-success">正常</button>
+							        <button  v-if="scope.row.agreementState == 1" class="btn btn-state-warning">已终止</button>
+							    	
+								</template>
+							</el-table-column>
+
+						</el-table>
+			            <vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav> 
+					</div>
+				</div>
+				<!--表格结束-->
+				<!-- del modal -->
+			<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_warning.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1">确认要删除这条信息吗？</div>
+								<div class="del-text2">删除后不可恢复</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure"  @click="tgxy_EscrowAgreementDel">
+								确定
+							</button>
+							<button type="button" class="btn foot-cancel" data-dismiss="modal">
+								取消
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			<!-- del modal end -->
+				<!-- error modal -->
+			<div class="modal fade" id="errorEscrowAdd" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">{{errEscrowAdd}}</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" @click="errClose">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!-- success modal -->
+			<div class="modal fade" id="successEscrowAdd" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作成功</div>
+								<div class="del-text2">操作成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" @click="succClose">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div><!-- /.modal结束 -->
+		</div>
+			
+	</div>
+		
+		
+		<script src="../components/vue-components.js"></script>
+	
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/tgxy/Tgxy_EscrowAgreementList.js"></script>
+
+	</body>
+</html>	

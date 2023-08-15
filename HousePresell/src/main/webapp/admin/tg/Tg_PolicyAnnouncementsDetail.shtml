@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-政策公告详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css" />
+		<link rel="stylesheet" type="text/css" href="../css/detail.css" />
+		<style type="text/css">
+		    .contentBox {
+		        border:1px solid #dedede;
+		        border-radius:.5rem;
+		        padding:10px;
+		        margin-top:10px;
+		    }
+		</style>
+	</head>
+
+	<body>
+		<div class="content-wrap" id="policyAnnouncementsDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="editHandle">
+						<img src="../image/list_btn_ico_edit.png" width="18">
+						<span>修改</span>
+					</button>
+					<button class="btn btn-primary" v-if="policyModel.policyState == 0" @click="issueHandle">
+						<img src="../image/detail_btn_ico_submit.png" width="18">
+						<span>发布</span>
+					</button>
+					<!--<button class="btn btn-warning">
+						<img src="../image/detail_btn_ico_record.png" width="18">
+						<span>备案</span>
+					</button>-->
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">政策公告名称：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<!--<span class="required">*</span>-->
+									<input disabled="disabled" type="text" v-model="policyModel.policyType" class="form-control" placeholder="">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">发布时间：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<!--<span class="required">*</span>-->
+									<input disabled="disabled" type="text" v-model="policyModel.policyDate" class="form-control" placeholder="">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">政策公告标题：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<!--<span class="required">*</span>-->
+									<input disabled="disabled" type="text" v-model="policyModel.policyTitle" class="form-control" placeholder="">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">公告状态：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<!--<span class="required">*</span>-->
+									<input v-if="policyModel.policyState == '0'" disabled="disabled" type="text" value="未发布" class="form-control">
+									<input v-if="policyModel.policyState == '1'" disabled="disabled" type="text" value="已发布" class="form-control">
+									<input v-if="policyModel.policyState == '2'" disabled="disabled" type="text" value="已撤回" class="form-control">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">浏览次数：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<!--<span class="required">*</span>-->
+									<input disabled="disabled" type="text" v-model="policyModel.browseTimes" class="form-control" placeholder="">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+					    <h3 style="margin-top:10px">公告内容：</h3>
+					    <div class="contentBox">
+					    </div>
+						<!-- <section id="editorDetail">
+							<div id='editDetail' style="margin-top: 20px;">
+							</div>
+						</section> -->
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+		</div>
+
+		<script src="../components/vue-components.js"></script>
+
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/tg/Tg_PolicyAnnouncementsDetail.js"></script>
+		<script>
+			$(function(){
+		        /* $('#editDetail').editable({inlineMode: false, alwaysBlank: true}) */
+		        
+		        $(".fa-code").parent().remove();
+		    });
+		</script>
+	</body>
+
+</html>

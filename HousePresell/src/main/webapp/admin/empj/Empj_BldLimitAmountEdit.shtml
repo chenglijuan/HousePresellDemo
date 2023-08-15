@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="UTF-8">
+    <title>housepresell管理后台-申请表-受限额度变更编辑</title>
+    <link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+</head>
+<body>
+<div class="content-wrap" id="empj_BldLimitAmountEditDiv">
+    <div class="detail-title cs-mt-0">
+        <h1 class="inline">基本信息</h1>
+        <div class="inline title-btns">
+            <button class="btn btn-success" @click="update('1')">
+                <img src="../image/detail_btn_ico_save.png" width="18">
+                <span>保存</span>
+            </button>
+            <!-- <button class="btn btn-primary" @click="update('2')" v-if="showSubFlag">
+                <img src="../image/detail_btn_ico_submit.png" width="18">
+                <span>提交</span>
+            </button> -->
+            <!--<button class="btn btn-warning">-->
+            <!--<img src="../image/detail_btn_ico_record.png" width="18">-->
+            <!--<span>备案</span>-->
+            <!--</button>-->
+        </div>
+    </div>
+    <!--基本信息开始-->
+    <div class="cs-content detail-content">
+        <div class="row">
+			<div class="col-md-4">
+			   <div class="form-group">
+					<span class="detail-text1">工程进度节点单号：</span>
+					<div class="detail-info7">
+					   <div class="detail-unEdit">
+							<input type="text" disabled v-model="selectBuildingAccount.cashLimitedAmount" class="form-control"/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">申请日期：</span>
+					<div class="detail-info7">
+						<div class="detail-edit">
+						    <span class="required">*</span>
+							<input type="text" id="date0303010001" class="form-control" placeholder="请选择申请日期" value=""/>
+							<img src="../image/list_search_calendar.png" class="ico-date"/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">现场联系人A：</span>
+					<div class="detail-info7">
+					   <div class="detail-edit">
+							<input type="text" placeholder="请输入联系人A" v-model="selectBuildingAccount.cashLimitedAmount" class="form-control"/>
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<span class="detail-text1">现场联系人B：</span>
+					<div class="detail-info7">
+					   <div class="detail-edit">
+							<input type="text" placeholder="请输入联系人B" v-model="selectBuildingAccount.cashLimitedAmount" class="form-control"/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">预约时间：</span>
+					<div class="detail-info7">
+						<div class="detail-edit">
+						    <span class="required">*</span>
+							<input type="text" id="date0303010002" class="form-control" placeholder="请选择申请日期" value=""/>
+							<img src="../image/list_search_calendar.png" class="ico-date"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+			    <div class="form-group">
+					<span class="detail-text1">企业名称：</span>
+					<div class="detail-info7">
+					   <div v-if="isNormalUser == 1" id="developCompanyDiv" class="detail-edit">
+							<!--<vue-select defaultname="请选择开发企业" :thevalue="companyName" :optionlist="companyList"	@callbackfun="companyChangeHandle"></vue-select>-->
+							<vue-select defaultname="请选择开发企业" :thevalue="companyId" :optionlist="companyList"	@callbackfun="companyChangeHandle" @emptybackfun="noSelectCompany"></vue-select>
+						</div>
+						<div class="detail-unEdit" v-else>
+							<input type="text" disabled v-model="user.theNameOfCompany" class="form-control"/>
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<span class="detail-text1">项目名称：</span>
+					<div class="detail-info7">
+						<div class="detail-edit">
+							<vue-select defaultname="请选择项目" :thevalue="projectName" :optionlist="projectList" @callbackfun="changeProjectListener" @emptybackfun="noSelectProject"></vue-select>
+							<!--<input type="text" disabled v-model="nowBuildingModel.projectName" class="form-control"/>-->
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<span class="detail-text1">联系方式A：</span>
+					<div class="detail-info7">
+					   <div class="detail-edit">
+							<input type="text" placeholder="请输入联系方式A" v-model="selectBuildingAccount.cashLimitedAmount" class="form-control"/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">联系方式B：</span>
+					<div class="detail-info7">
+					   <div class="detail-edit">
+							<input type="text" placeholder="请输入联系方式B" v-model="selectBuildingAccount.cashLimitedAmount" class="form-control"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+			    <div class="form-group">
+					<span class="detail-text1">操作人：</span>
+					<div class="detail-info7">
+						<div class="detail-unEdit">
+							<input type="text" disabled v-model="nowBuildingModel.eCodeFromPublicSecurity" class="form-control"/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">操作时间：</span>
+					<div class="detail-info7">
+						<div class="detail-unEdit">
+							<input type="text" disabled v-model="nowBuildingModel.eCodeFromPublicSecurity" class="form-control"/>
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<span class="detail-text1">备案人：</span>
+					<div class="detail-info7">
+						<div class="detail-unEdit">
+							<input type="text" disabled v-model="nowBuildingModel.eCodeFromPublicSecurity" class="form-control"/>
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<span class="detail-text1">备案时间：</span>
+					<div class="detail-info7">
+						<div class="detail-unEdit">
+							<input type="text" disabled v-model="nowBuildingModel.eCodeFromPublicSecurity" class="form-control"/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+    <!--基本信息结束-->
+
+    <!--附件材料开始-->			
+<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+<!--附件材料结束-->
+
+
+    <!-- success modal 开始 -->
+    <div class="modal fade" id="successM" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-del">
+            <div class="modal-content">
+                <div class="modal-body csm-body">
+                    <img src="../image/popup_ico_succeed.png" class="pull-left"/>
+                    <div class="del-info">
+                        <div class="del-text1 font-bold">操作成功</div>
+                        <div class="del-text2">保存成功</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn foot-sure" data-dismiss="modal">
+                        确定
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- success modal 结束 -->
+
+    <!-- error modal 开始 -->
+    <div class="modal fade" id="errorM" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-del">
+            <div class="modal-content">
+                <div class="modal-body csm-body">
+                    <img src="../image/popup_ico_failure.png" class="pull-left"/>
+                    <div class="del-info">
+                        <div class="del-text1 font-bold">操作失败，请重试</div>
+                        <div class="del-text2">请选择要删除的机构成员</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn foot-sure">
+                        确定
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- error modal 结束 -->
+</div>
+<script src="../js/tabCommon.js"></script>
+<script src="../js/admin/empj/Empj_BldLimitAmount_AFEdit.js"></script>
+</body>
+</html>	

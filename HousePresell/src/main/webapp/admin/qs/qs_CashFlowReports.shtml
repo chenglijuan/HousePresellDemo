@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-托管现金流量表</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="cashFlowReportsDiv">
+			<div class="cs-content">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left content-top-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>查询类别 ：</span>
+							     <vue-listselect defaultname="请选择查询类别" :thevalue="queryKind" :optionlist="queryKindList" @callbackfun="getQueryKind" @emptybackfun="emptyQueryKind"></vue-listselect>
+							</div>
+							<div class="inline">
+							    <span>入账日期：</span>
+							    <input type="text" v-show="dateType == 1" id="date23011601" class="form-control cs-input-date" placeholder="开始日期     ~    结束日期" v-model="dateRange"/>
+							    <input type="text" v-show="dateType == 2" id="date23011602" class="form-control cs-input-date" placeholder="开始日期     ~    结束日期" v-model="dateRange"/>
+							    <input type="text" v-show="dateType == 3" id="date23011603" class="form-control cs-input-date" placeholder="开始日期     ~    结束日期" v-model="dateRange"/>
+							    <img src="../image/list_search_calendar.png" class="ico-date"/> 
+							</div>
+							
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="resetSearch">重置</button>
+							<div class="inline">
+							   <button class="btn-quick-navigation" @click="tableHandle" style="background: #EBF5FF;height: 33px;margin-left:10px"><!--   -->
+			                        <img src="../image/table.png" style="width: 18px;margin-bottom: 4px;"/>
+			                        <span>表</span>
+			                    </button>
+								<button class="btn-quick-navigation" @click="pictureHandle" style="background: #EBF5FF;height: 33px;margin-left:10px"><!--   -->
+			                        <img src="../image/picture.png" style="margin-right: 3px;margin-bottom: 2px;"/>
+			                        <span>图</span>
+			                    </button>
+							</div>
+							<div class="inline">
+							   <span style="font-weight:bold">入账平均数（万元）：{{ amountIn }}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+							   <span style="font-weight:bold">拨付平均数（万元）：{{ amountOut }}</span>
+							</div>
+						</div>
+					</div>
+					<div class="pull-right">
+						<div class="top-excel">
+							<button class="btn btn-excel" @click="exportForm" data-editNum="230116_EXP_01">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div id="cashFlowTable">
+						<el-table :data="cashFlowReportsList" stripe :default-sort = "{prop: 'index'}">
+							<el-table-column type="index" :index="indexMethod"  label="序号" width="80" fixed align="center"></el-table-column>
+							<el-table-column prop="billTimeStamp" label="日期" width="120"  align="center"></el-table-column>
+							<el-table-column prop="lastAmount" label="上期结余（万元）"   header-align="center" align="right"></el-table-column>
+							<el-table-column prop="loanAmountIn" label="托管资金入账（万元）"  header-align="center" align="right"></el-table-column>
+							<el-table-column prop="depositReceipt" label="存单到期金额（万元）"  header-align="center" align="right"></el-table-column>
+							<el-table-column prop="payoutAmount" label="资金拨付金额（万元）"  header-align="center" align="right"></el-table-column>
+							<el-table-column prop="depositExpire" label="存单存入金额（万元）"  header-align="center" align="right"></el-table-column>
+							<el-table-column prop="currentBalance" label="活期余额（万元）"   header-align="center" align="right"></el-table-column>
+						</el-table>
+							<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+					<div id="chartCashFlow" style="width:100%;height:640px;margin-top: 10px;display:none"></div>
+				</div>
+			</div>
+			<!-- error modal -->
+			<div class="modal fade" id="edModel" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">{{errMsg}}</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		</div>
+		<!-- success modal -->
+			<div class="modal fade" id="sdModel" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		<script src="../components/vue-components.js"></script>
+	
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/qs/qs_CashFlowReports.js"></script>
+	</body>
+</html>	

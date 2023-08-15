@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tg_LoanAmountStatement_View" table="Tg_LoanAmountStatement_View" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_Tgpf_BuildPayout_View</param>
+			</generator>
+		</id>
+		<property name="billTimeStamp">
+			<column name="billTimeStamp">
+				<comment>日期</comment>
+			</column>
+		</property>
+		<property name="lastAmount">
+			<column name="lastAmount">
+				<comment>上期结余</comment>
+			</column>
+		</property>
+		<property name="loanAmountIn">
+			<column name="loanAmountIn">
+				<comment>托管资金入账金额</comment>
+			</column>
+		</property>
+		<property name="depositReceipt">
+			<column name="depositReceipt">
+				<comment>存单存入</comment>
+			</column>
+		</property>
+		<property name="payoutAmount">
+			<column name="payoutAmount">
+				<comment>资金拨付金额</comment>
+			</column>
+		</property>
+		<property name="depositExpire">
+			<column name="depositExpire">
+				<comment>存单到期</comment>
+			</column>
+		</property>
+		<property name="currentBalance">
+			<column name="currentBalance">
+				<comment>活期余额</comment>
+			</column>
+		</property>
+		
+	</class>
+</hibernate-mapping>

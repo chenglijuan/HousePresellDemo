@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta charset="UTF-8">
+	<title>常州市商品房预售资金托管系统</title>
+<!--	&lt;!&ndash; Vendor CSS&ndash;&gt;-->
+	<link rel="stylesheet"
+		  href="../assets/bootstrap-3.3.7/css/bootstrap.min.css" />
+	<link rel="stylesheet"
+		  href="../assets/bootstrap-tab-master/css/font-awesome.css">
+	<link rel="stylesheet"
+		  href="../assets/bootstrap-tab-master/css/bootstrap-tab.css">
+	<link rel="stylesheet" type="text/css" href="../css/login.css" />
+
+	<object id="CInfControlLogin" classid="clsid:FF5A75DB-B1E2-46D3-856A-2FC65BA51A92" class="secretDog"></object>
+	<style>
+		#containerrow{
+			float: none;
+			margin-left: auto;
+			margin-right: auto;
+			height: 235px;
+			width: 311px;
+			background-image: url("../image/signal_error.png");
+		}
+		#pp1div{
+			float: none;
+			margin-left: auto;
+			margin-right: auto;
+			height: 25px;
+			width: 311px;
+			position: relative;
+		}
+
+		#pp2div{
+			float: none;
+			margin-left: auto;
+			margin-right: auto;
+			height: 50px;
+			width: 800px;
+		}
+
+
+	</style>
+</head>
+<body>
+<div class="login-bg">
+	<p class="login-version text-center">@2018 常州正泰房产居间服务有限公司</p>
+</div>
+
+<div class="container login-border" id="wrapBox">
+	<div class="container_bg" style="height: 500px">
+<!--		<br/><br/>-->
+		<div class="row" id="containerrow">
+		</div>
+
+		<br/>
+		<br/>
+
+		<div id="pp1div">
+			<p id="pp11div" style="color:#cf000d ;font-size: 20px;">当前服务地址即将暂停使用</p>
+		</div>
+
+		<br/>
+		<div id="pp2div" style="color:#cf000d ;font-size: 20px;">
+			<p>请您访问如下网址<a href="https://work.czzhengtai.com:1443/HousePresell/admin/login.shtml">
+				https://work.czzhengtai.com:1443/HousePresell/admin/login.shtml</a></p>
+		</div>
+
+
+	</div>
+</div>
+</body>
+</html>

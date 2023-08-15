@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="UTF-8">
+    <title>housepresell管理后台-托管账户详情</title>
+    <link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+    <style>
+	    .model-width{
+	       width:80%
+	    }
+	    .csm-body .detail-title{
+	       display:none;
+	    }
+	    
+    </style>
+</head>
+<body>
+<div class="content-wrap" id="tgxy_BankAccountEscrowedDetailDiv">
+    <div class="detail-title cs-mt-0">
+        <h1 class="inline">基本信息</h1>
+        <div class="inline title-btns">
+            <button class="btn btn-primary" @click="cancellation()"  :disabled="isDisabled">
+                <img src="../image/list_btn_ico_edit.png"/>
+                <span>销户</span>
+            </button>
+        </div>
+    </div>
+    <!--基本信息开始-->
+    <div class="cs-content detail-content">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <span class="detail-text1">托管账号：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled v-model="tgxy_BankAccountEscrowedModel.theAccount"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="detail-text1">开户行名称：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled v-model="tgxy_BankAccountEscrowedModel.bankBranchName"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="detail-text1">操作日期：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled
+                                 disabled="disabled"
+                                 v-model="tgxy_BankAccountEscrowedModel.lastUpdateTimeStampString"
+                                 class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="detail-text1">转出金额：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled v-model="tgxy_BankAccountEscrowedModel.transferOutAmount"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="detail-text1">转入账号：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled v-model="tgxy_BankAccountEscrowedModel.transferInAccount"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <span class="detail-text1">托管账户名称：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled v-model="tgxy_BankAccountEscrowedModel.theName"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="detail-text1">是否启用：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <!--<input type="text" disabled v-model="isUse"-->
+                                   <!--class="form-control"/>-->
+                            <select name="" class="form-control"
+                                    v-model="tgxy_BankAccountEscrowedModel.isUsing"
+                                    disabled="disabled">
+                                <option value="0">是</option>
+                                <option value="1">否</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+                  <div class="form-group">
+                    <span class="detail-text1">是否销户：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <!--<input type="text" disabled v-model="isUse"-->
+                                   <!--class="form-control"/>-->
+                            <select name="" class="form-control"
+                                    v-model="tgxy_BankAccountEscrowedModel.hasClosing"
+                                    disabled="disabled">
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <span class="detail-text1">转入金额：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled v-model="tgxy_BankAccountEscrowedModel.transferInAmount"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="detail-text1">转入银行：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled v-model="tgxy_BankAccountEscrowedModel.transferInBank"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <span class="detail-text1">银行简称：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled
+                                   v-model="tgxy_BankAccountEscrowedModel.shortNameOfBank"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="detail-text1">操作人：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled v-model="tgxy_BankAccountEscrowedModel.userUpdateName"
+                                   disabled="disabled"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <span class="detail-text1">销户时间：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled v-model="tgxy_BankAccountEscrowedModel.closingTime"
+                                   disabled="disabled"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                   <span class="detail-text1">销户人：</span>
+                   <div class="detail-info1">
+                       <div class="detail-unEdit">
+                           <input type="text" disabled
+                                 disabled="disabled"
+                                 v-model="tgxy_BankAccountEscrowedModel.closingPerson"
+                                 class="form-control"/>
+                       </div>
+                   </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <span class="detail-text1">备注：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+							<textarea type="text" disabled v-model="tgxy_BankAccountEscrowedModel.remark"
+                                            class="form-control">
+							</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--基本信息结束-->
+
+    <!--附件材料开始-->			
+   <my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+    <!--附件材料结束-->
+    <!--  销户 -->
+     <div class="modal fade" id="cancelModel" tabindex="-1" role="dialog" aria-hidden="true" >
+        <div class="modal-dialog model-width">
+            <div class="modal-content">
+            	<div class="cs-content detail-content">
+	        	<div class="modal-header">
+	                <div class="form-group">
+	                    <span class="detail-text1">托管账户：</span>
+	                    <div class="detail-info1">
+	                        <div class="detail-edit">
+	                        	<span class="required">*</span>
+	                            <input type="text"  v-model="theAccount"
+	                                   class="form-control"  @focus="theAccountShow"/>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <span class="detail-text1">托管账户名称：</span>
+	                    <div class="detail-info1">
+	                        <div class="detail-edit">
+	                        	<span class="required">*</span>
+	                            <input type="text"  v-model="theName"
+	                               class="form-control"/>
+	                        </div>
+	                    </div>
+	                </div>
+	             </div>
+	             <div class="modal-body csm-body">
+           			<!--附件材料开始-->
+					<my-uploadcomponent :loaduploadlist="loadUploadLists" :showdelete ="showDeletes" ref="listenUploadDatas" :busitype="busiTypes"></my-uploadcomponent>
+					<!--附件材料结束-->
+			     </div>
+	             <div class="modal-footer">
+	             	<button type="button" class="btn foot-sure"   @click="theNameConfirm('cancelModel')">确定</button>
+	                <button type="button" class="btn foot-cancel" data-dismiss="modal"> 取消</button>
+	             </div>
+           
+           		</div>
+           		</div>
+      		</div>
+	</div>
+	<div class="modal fade" id="theAccountModel" tabindex="-1" role="dialog" aria-hidden="true" >
+       <div class="modal-dialog model-width">
+           <div class="modal-content">
+			<div class="detail-title">
+				<h5 class="inline">托管账户列表</h5>
+				<div class="inline">
+				    <span>关键字：</span>
+				    <input type="text" class="form-control cs-input"  placeholder="请输入关键字" v-model="keyword">
+				</div>
+				<button class="btn btn-search" style="height:28px" @click="search">搜索</button>
+				<button class="btn btn-reset" style="height:28px" @click="resetSearch">重置</button>
+			</div>
+			<div class="cs-content detail-content">
+			
+			     <el-table :data="buildingList" stripe :default-sort="{prop: 'index'}">
+		             <el-table-column align="center" type="index" label="序号" width="60" fixed>
+		             </el-table-column>
+		             <el-table-column prop="theAccount" label="托管账户"    min-width="200">
+			             	<template scope="scope">
+	                            <el-button type="text" size="small" @click="mainDetailHandle(scope.row)">{{scope.row.theAccount}}</el-button>
+	                        </template>
+                      </el-table-column>
+		             <el-table-column prop="theName"   label="托管账户名称" min-width="200" align="center"></el-table-column>
+		         </el-table>
+		         <vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount"
+                         :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"
+                         v-on:countperpagechange="changeCountPerPage">
+                </vue-nav>
+			</div>
+			 <div class="modal-footer">
+          		
+                <button type="button" class="btn foot-cancel" data-dismiss="modal">取消</button>
+	        </div>
+		</div>
+	</div>
+	</div>
+</div>
+<script src="../js/tabCommon.js"></script>
+<script src="../js/admin/tgxy/Tgxy_BankAccountEscrowedDetail.js"></script>
+</body>
+</html>	

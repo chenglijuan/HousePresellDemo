@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-新增支付保证申请</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/admin/empj/footer.css" />
+	</head>
+	<body>
+		<div class="content-wrap" id="Sm_ApprovalProcess_PaymentBondDetail">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button  v-if="isNeedBackup" class="btn btn-warning" data-toggle="modal" data-target="#examine" @click="showModal" data-backdrop="static" data-keyboard=false>
+						<img src="../image/list_btn_ico_examine.png" width="18">
+						<span>审批记录</span>
+					</button>
+					<button  v-if="isNeedBackup && sourcePage == 1" class="btn btn-warning" @click="approvalHandle">
+						<img src="../image/detail_btn_ico_record.png" width="18">
+						<span>备案</span>
+					</button>
+					<button v-if="sourcePage != 2" class="btn btn-warning" data-toggle="modal" data-target="#examine" @click="showModal" data-backdrop="static" data-keyboard=false>
+						<img src="../image/list_btn_ico_examine.png" width="18">
+						<span>审批</span>
+					</button>
+					<button class="btn btn-primary" @click="exportFile">
+						<img src="../image/detail_btn_ico_submit.png" width="18">
+						<span>查看</span>
+					</button> 
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">支付保函申请单号：</span>
+							<div class="detail-info7">
+								<div class="detail-unEdit">
+									<input type="text" v-model="empj_PaymentBondDetailModel.eCode" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">项目名称：</span>
+							<div class="detail-info7">
+								<div class="detail-unEdit">
+									<select class="form-control" v-model="empj_PaymentBondDetailModel.projectId"  @change="changeProjectHandle" disabled="disabled">
+										<option value="">--请选择--</option>
+										<option v-for="project in qs_projectNameList" :value="project.tableId">{{project.theName}}</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">保证机构：</span>
+							<div class="detail-info7">
+								<div class="detail-unEdit">
+								    <span class="required">*</span>
+									<input type='text' v-model='empj_PaymentBondDetailModel.guaranteeCompany' class="form-control" disabled='true'>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">保函总金额（元）：</span>
+							<div class="detail-info7">
+								<div class="detail-unEdit">
+									<input type="text" v-model="empj_PaymentBondDetailModel.guaranteedSumAmount" class="form-control" disabled='true'/>
+								</div>
+							</div>
+						</div>
+						
+						
+						<div class="form-group">
+							<span class="detail-text1">审核人：</span>
+							<div class="detail-info7">
+								<div class="detail-unEdit">
+									<input type="text" v-model="empj_PaymentBondDetailModel.userRecord" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">申请日期：</span>
+							<div class="detail-info7">
+								<div class="detail-unEdit">
+									<input type="text" v-model="empj_PaymentBondDetailModel.applyDate" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">支付保函单号：</span>
+							<div class="detail-info7">
+								<div class="detail-unEdit">
+									<input type="text" v-model="empj_PaymentBondDetailModel.guaranteeNo" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">保函类型：</span>
+							<div class="detail-info7">
+								<div class="detail-unEdit">
+									<select disabled class="form-control" v-model="empj_PaymentBondDetailModel.guaranteeType">
+										<option value="">--请选择--</option>
+										<option value="1">银行支付保证</option>
+										<option value="2">支付保险</option>
+										<option value="3">支付担保</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作人：</span>
+							<div class="detail-info7">
+								<div class="detail-unEdit">
+									<input type="text" v-model="empj_PaymentBondDetailModel.userUpdate" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">审核日期：</span>
+							<div class="detail-info7">
+								<div class="detail-unEdit">
+									<input type="text" v-model="empj_PaymentBondDetailModel.recordTimeStamp" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">开发企业：</span>
+							<div class="detail-info7">
+								<div class="detail-unEdit">
+								    <input type="text" v-model="empj_PaymentBondDetailModel.companyName" class="form-control" disabled="disabled"/>
+									<!-- <select class="form-control" disabled="disabled" v-model="empj_PaymentBondDetailModel.companyId" >
+										<option value="">--请选择--</option>
+										<template v-for="company in qs_companyNameList" >
+											<option :value="company.tableId">{{company.theName}}</option>
+										</template>
+									</select> -->
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">保函最低控制线（%）：</span>
+							<div class="detail-info7">
+								<div class="detail-unEdit">
+								   <span class="required">*</span>
+									<input type="text" v-model="empj_PaymentBondDetailModel.controlPercentage" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div> 
+						<div class="form-group">
+							<span class="detail-text1">受益人：</span>
+							<div class="detail-info7">
+								<div class="detail-unEdit">
+									<input type="text" v-model="empj_PaymentBondDetailModel.personOfProfits" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作日期：</span>
+							<div class="detail-info7">
+								<div class="detail-unEdit">
+									<input type="text" v-model="empj_PaymentBondDetailModel.lastUpdateTimeStamp" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="form-group">
+							<span class="detail-text1">审核状态：</span>
+							<div class="detail-info7">
+								<div class="detail-unEdit">
+								   <input type="text" v-if="empj_PaymentBondDetailModel.busiState == 0" value="未申请" class="form-control" disabled="disabled"/>
+								   <input type="text" v-if="empj_PaymentBondDetailModel.busiState == 1" value="申请中" class="form-control" disabled="disabled"/>
+								   <input type="text" v-if="empj_PaymentBondDetailModel.busiState == 2" value="已审核" class="form-control" disabled="disabled"/>
+								   <input type="text" v-if="empj_PaymentBondDetailModel.busiState == 3" value="撤销审核中" class="form-control" disabled="disabled"/>
+								   <input type="text" v-if="empj_PaymentBondDetailModel.busiState == 4" value="已撤销" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div> -->
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<span class="detail-text1">备注：</span>
+							<div class="detail-info7">
+								<div class="detail-unEdit">
+									<textarea rows="3" class="form-control" disabled="disabled" v-model="empj_PaymentBondDetailModel.remark"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			
+			<!--支付保证申请开始-->
+			<div class="detail-title">
+				<h1 class="inline">支付保证申请</h1>
+			</div>
+			<div class="cs-content detail-content">
+				<el-table :data="empj_PaymentBondChildList" stripe :default-sort = "{prop: 'index'}" :summary-method="getSummaries" show-summary>
+					<el-table-column type="index" :index="indexMethod" label="序号"  width="60" sortable fixed align="center"></el-table-column>
+					<el-table-column label="施工编号" width="100" prop="eCodeFromConstruction" fixed align="center"></el-table-column>
+					<el-table-column label="历史保函" width="100" prop="hasExist" fixed align="center"></el-table-column>
+					<el-table-column label="当前有效受限额度" width="150" prop="effectiveLimitedAmount"  header-align="center" align="right"></el-table-column>
+					<el-table-column label="初始托管额度" width="150" prop="orgLimitedAmount" header-align="center" align="right"></el-table-column>
+					<el-table-column label="当前进度节点" width="150" prop="currentFigureProgress"></el-table-column>
+					<el-table-column label="当前节点受限比例" width="150" prop="currentLimitedRatio"></el-table-column>
+					<el-table-column label="当前节点受限额度" width="150" prop="nodeLimitedAmount" header-align="center" align="right"></el-table-column>
+					<!-- <el-table-column label="当前有效受限额度" width="150" prop="nodeLimitedAmount" header-align="center" align="right"></el-table-column> -->
+					
+					<el-table-column label="当前托管余额" width="150" prop="currentEscrowFund" header-align="center" align="right"></el-table-column>
+					<el-table-column label="当前溢出资金" width="150" prop="spilloverAmount" header-align="center" align="right"></el-table-column>
+					<el-table-column label="现金额度最低控制线" width="180" prop="controlAmount" header-align="center" align="right"></el-table-column>
+					<el-table-column label="最高可释放现金额度" width="180" prop="releaseAmount" header-align="center" align="right"></el-table-column>
+					<el-table-column label="本次保函金额" width="150" prop="paymentBondAmount" header-align="center" align="right"></el-table-column>
+					<el-table-column label="实际可替代保证额度（实际可释放资金）" width="180" prop="actualReleaseAmount" header-align="center" align="right"></el-table-column>
+					<el-table-column label="本次可申请金额" width="150" prop="canApplyAmount" header-align="center" align="right"></el-table-column>
+					<el-table-column label="办理后现金受限额度" width="180" prop="afterCashLimitedAmount" header-align="center" align="right"></el-table-column>
+					<el-table-column label="办理后有效受限额度" width="180" prop="afterEffectiveLimitedAmount" header-align="center" align="right"></el-table-column>
+				</el-table>
+			</div>	
+			<!--支付保证申请结束-->
+			<!--附件材料开始-->
+			 <my-uploadcomponent :loaduploadlist="loadUploadList"  :showdelete ="showDelete"  ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+
+			<!--附件材料结束-->
+		</div>
+		<script src="../components/vue-components.js"></script>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/sm/Sm_ApprovalProcess_PaymentBondDetail.js"></script>
+	</body>
+</html>	

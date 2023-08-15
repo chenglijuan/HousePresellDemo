@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-系统用户+机构用户详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="sm_OrgUserDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-primary" @click="sm_UserEdit">
+						<img src="../image/list_btn_ico_edit.png" width="18">
+						<span>修改</span>
+					</button>
+				</div>
+			</div>
+			<!--用户信息开始-->
+			<div class="cs-content">
+				<div class="detail-content">
+					<div class="row">
+						<div class="col-md-4">
+							<!-- <div class="form-group cs-mb-0">
+								<span class="detail-text1">用户编码：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<input type="text" class="form-control" v-model="sm_UserModel.eCode" disabled/>
+									</div>
+								</div>
+							</div> -->
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">用户名称：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<input type="text" class="form-control" v-model="sm_UserModel.theAccount" disabled/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">证件号码：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<input type="text" class="form-control" v-model="sm_UserModel.idNumber" disabled/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">真实姓名：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<input type="text" class="form-control" v-model="sm_UserModel.theName"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">是否启用：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<select name="" class="form-control" v-model="sm_UserModel.busiState" disabled>
+											<option value="1">是</option>
+											<option value="0">否</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">创建人：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<input type="text" class="form-control" v-model="sm_UserModel.userStart"  disabled/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">证件类型：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<select class="form-control" v-model="sm_UserModel.idType" disabled>
+											<option value="1">居民身份证</option>
+											<option value="2">护照</option>
+											<option value="3">军官证</option>
+											<option value="4">港澳台居民通行证</option>
+											<option value="5">户口簿</option>
+											<option value="6">其他证件</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">机构类型：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<input type="text" class="form-control" v-model="sm_UserModel.companyType"  disabled/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">联系电话：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<input type="text" class="form-control" v-model="sm_UserModel.phoneNumber" disabled/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">邮箱：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<input type="text" class="form-control" v-model="sm_UserModel.email"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">是否加密：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<select name="" class="form-control" v-model="sm_UserModel.isEncrypt" disabled>
+											<option value="1">是</option>
+											<option value="0">否</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">生效日期：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<input type="text" class="form-control" v-model="sm_UserModel.effectiveDateStr" disabled/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">创建日期：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<input type="text" class="form-control" v-model="sm_UserModel.createTimeStamp"  disabled/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">所属机构：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<input type="text" class="form-control" v-model="sm_UserModel.theNameOfCompany"  disabled/>
+									</div>
+								</div>
+							</div>
+						    <div class="form-group cs-mb-0">
+								<span class="detail-text1">初始密码：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<input :type="torpType" class="form-control" v-model="sm_UserModel.pwd" disabled/>
+										<img @click="showPwdEvent" v-show="showPwd" src="../image/detail_ico_eyes_show.png" class="ico-date"/>
+										<img @click="hidePwdEvent" v-show="hidePwd" src="../image/detail_ico_eyes_hide.png" class="ico-date"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">锁定状态：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<select name="" class="form-control" v-model="sm_UserModel.applyState" disabled>
+											<option value="1">锁定</option>
+											<option value="2">正常</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">用户类型：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<select name="" class="form-control" v-model="sm_UserModel.theType" disabled>
+											<option value="1">正泰机构用户</option>
+											<option value="2">普通机构用户</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group cs-mb-0" v-if="sm_UserModel.isEncrypt == 1">
+								<span class="detail-text1">加密设备序列号：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<input type="text" class="form-control" v-model="sm_UserModel.ukeyNumber" disabled/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group cs-mb-0" v-if="sm_UserModel.isEncrypt == 1" >
+								<span class="detail-text1">是否签章：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<select name="" class="form-control" v-model="sm_UserModel.isSignature" disabled>
+											<option value="1">是</option>
+											<option value="0">否</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--用户信息结束-->
+			<!--附件材料开始-->
+			<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete"  ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+			<!--附件材料结束-->
+			<!-- 用户角色维护开始 -->
+			<div class="detail-title">
+				<h1 class="inline">用户角色维护</h1>
+			</div>
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-3" v-for="sm_Permission_Role in sm_UserModel.sm_Permission_RoleSet">
+						<div class="cs-checkbox">
+							<input disabled type="checkbox" name="val" :id="'val'+sm_Permission_Role.tableId" :value="sm_Permission_Role.tableId" v-model="sm_Permission_RoleIdArr"/>
+							<label :for="'val'+sm_Permission_Role.tableId">{{sm_Permission_Role.theName}}</label>
+							<button v-if="sm_Permission_Role.busiType == '0'" class="btn btn-state-success cs-pb-0 cs-pt-0">启用</button>
+							<button v-if="sm_Permission_Role.busiType == '1'" class="btn btn-state-danger cs-pb-0 cs-pt-0">停用</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 用户角色维护结束 -->
+		</div>
+		<script src="../components/vue-components.js"></script>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/sm/Sm_OrgUserDetail.js"></script>
+	</body>
+</html>	

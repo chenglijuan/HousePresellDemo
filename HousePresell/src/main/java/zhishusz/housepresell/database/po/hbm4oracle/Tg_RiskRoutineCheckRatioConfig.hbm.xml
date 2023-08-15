@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tg_RiskRoutineCheckRatioConfig" table="Tg_RiskRoutineCheckRatioConfig" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_RiskCheckConf</param>
+			</generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<property name="largeBusinessValue">
+			<column name="largeBusinessValue">
+				<comment>业务大类值</comment>
+			</column>
+		</property>
+		<property name="largeBusinessName">
+			<column name="largeBusinessName">
+				<comment>业务大类名</comment>
+			</column>
+		</property>
+		<property name="subBusinessValue">
+			<column name="subBusinessValue">
+				<comment>业务小类值</comment>
+			</column>
+		</property>
+		<property name="subBusinessName">
+			<column name="subBusinessName">
+				<comment>业务小类名</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_Permission_Role" name="role" foreign-key="null">
+			<column name="role">
+				<comment>角色</comment>
+			</column>
+		</many-to-one>
+		<property name="theRatio">
+			<column name="theRatio">
+				<comment>抽查比例（%）</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

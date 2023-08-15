@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-入账金额核对表</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<style type="text/css">
+		    .el-input__inner {
+		        height:28px;
+		        line-height:28px;
+		    }
+		    .el-input__icon {
+		        line-height: 25px;
+		    }
+		    .el-table-filter {
+			    max-height: 300px;
+			    overflow: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="content-wrap" id="CheckingAccountDiv">
+			<div class="cs-content">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left content-top-left">
+						<div class="top-input" style="display:flex">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input" placeholder="请输入托管账哈或开户行" v-model="keyword">
+							</div>
+							<div class="inline">
+							    <span>入账日期：</span>
+							    <input type="text" name="" id="checkingaccountDateSearch" class="form-control cs-input-date" v-model="billTimeStamp"/>
+							    <img src="../image/list_search_calendar.png" class="ico-date"/> 
+							</div>
+							<div class="inline">
+							    <span style="float:left">开户行：</span>
+							    <!-- <vue-select style="float:left" defaultname="请选择银行名称" :thevalue="theNameofBank" :optionlist="bankNames" @callbackfun="getTheNameofBank"></vue-select> -->
+							         <vue-listselect defaultname="请选择银行名称" :thevalue="theNameofBank" :optionlist="bankNames" @callbackfun="getTheNameofBank" @emptybackfun="emptyTheNameofBank"></vue-listselect>
+							    <span style="clear:both"></span>
+							    <!-- <select class="form-control cs-select"  v-model="theNameofBank" @change="objectname">
+							        <option value="">--请选择--</option>
+									<option v-for="bankName in bankNames" :value="bankName.tableId">{{bankName.theName}}</option>
+							   	</select> -->
+							</div>
+							<!-- <div class="inline">
+							    <span style="float:left">托管账号名称：</span>
+							    <vue-select style="float:left" defaultname="请选择托管账号" :thevalue="theNameofEscrow" :optionlist="escrowNames" @callbackfun="getTheNameofEscrow"></vue-select>
+							    <vue-listselect defaultname="请选择托管账号" :thevalue="theNameofEscrow" :optionlist="escrowNames" @callbackfun="getTheNameofEscrow" @emptybackfun="emptyTheNameofEscrow"></vue-listselect>
+							    <span style="clear:both"></span>
+							    <select class="form-control cs-select"  v-model="theNameofEscrow">
+							        <option value="">--请选择--</option>
+									<option v-for="escrowName in escrowNames" :value="escrowName.tableId">{{escrowName.theName}}</option>
+							   	</select>
+							</div> -->
+							<button class="btn btn-search" style="height:28px" @click="search">搜索</button>
+							<button class="btn btn-reset" style="height:28px" @click="resetSearch">重置</button>
+						</div>
+						
+					</div>
+					<div class="pull-right">
+						<div class="top-excel">
+							<button class="btn btn-excel" @click="exportForm" data-editNum="230118_EXP_01">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="CheckingAccountList" stripe :default-sort = "{prop: 'index'}" >
+							<el-table-column type="index" :index="indexMethod"  label="序号" width="60" fixed align="center"></el-table-column><!---->
+							<el-table-column prop="theNameOfBank" label="开户行名称" width="360" fixed></el-table-column>
+							<el-table-column prop="recordDate" label="入账日期" width="120"  align="center"></el-table-column>							
+							<el-table-column prop="theAccountOfEscrow" label="托管账户" width="220" ></el-table-column>
+							<!-- <el-table-column prop="theNameOfEscrow" label="托管账户名称" width="220" ></el-table-column>		 -->					
+							<el-table-column prop="silverAmount" label="网银入账金额（元）" width="200"  header-align="center" align="right"></el-table-column>
+							<el-table-column prop="silverNumber" label="网银入账笔数" width="160"  header-align="center" align="right"></el-table-column>
+							<el-table-column prop="escrowAmount" label="托管系统入账金额（元）" width="220"  header-align="center" align="right"></el-table-column>
+							<el-table-column prop="escrowNumber" label="托管系统入账笔数" width="180"  header-align="center" align="right"></el-table-column>
+							<el-table-column prop="compareDifference" label="比对差额（元）" width="180"  header-align="center" align="right"></el-table-column>
+							<el-table-column prop="differenceNote" label="差异备注" width="300" ></el-table-column>
+							
+							<!--<el-table-column prop="accountType" label="托管状态" width="120">
+								<template scope="scope">
+							        <button  v-if="scope.row.accountType == 0" class="btn btn-state-warning">未对账</button>
+							    	<button  v-if="scope.row.accountType == 1" class="btn btn-state-success">已对账</button>
+								</template>
+							</el-table-column>-->
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+			<!-- error modal -->
+			<div class="modal fade" id="edModelCheckingAccountList" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">{{errMsg}}</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		</div>
+		<!-- success modal -->
+			<div class="modal fade" id="sdModelCheckingAccountList" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		<script src="../components/vue-components.js"></script>
+	
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/qs/Qs_RecordAmount_ViewList.js"></script>
+	</body>
+</html>	

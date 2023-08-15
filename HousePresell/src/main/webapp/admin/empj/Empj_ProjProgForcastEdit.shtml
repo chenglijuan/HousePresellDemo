@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="UTF-8">
+    <title>housepresell管理后台-申请表-工程进度巡查编辑</title>
+    <link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+</head>
+<body>
+<div class="content-wrap" id="empj_ProjProgForcastEditDiv">
+    <div class="detail-title cs-mt-0">
+        <h1 class="inline">基本信息</h1>
+        <div class="inline title-btns">
+            <button class="btn btn-success" @click="update('1')">
+                <img src="../image/detail_btn_ico_save.png" width="18">
+                <span>保存</span>
+            </button>
+        </div>
+        
+        <div class="pull-right text-right" @click="projectVdeio">
+			<button class="btn btn-success">
+				<img src="../image/list_btn_ico_export.png" width="18"/>
+				<span>项目视频</span>
+			</button>
+		</div>
+    </div>
+    <!--基本信息开始-->
+    <div class="cs-content detail-content">
+    <div class="row">
+	<div class="col-md-4">
+	   <div class="form-group">
+			<span class="detail-text1">巡查单号：</span>
+			<div class="detail-info2">
+			   <div class="detail-unEdit">
+					<input type="text" disabled v-model="empj_ProjProgForcast_AFModel.eCode" class="form-control"/>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<span class="detail-text1">区域名称：</span>
+			<div class="detail-info2">
+			   <div class="detail-unEdit">
+					<input type="text" disabled  v-model="empj_ProjProgForcast_AFModel.areaName" class="form-control"/>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<span class="detail-text1">操作日期：</span>
+			<div class="detail-info2">
+				<div class="detail-unEdit">
+					<input type="text" disabled  class="form-control"  v-model="empj_ProjProgForcast_AFModel.lastUpdateTimeStamp"/>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<span class="detail-text1">单据状态：</span>
+			<div class="detail-info2">
+				<div class="detail-unEdit">
+				   <input type="text" v-model="empj_ProjProgForcast_AFModel.approvalState"  class="form-control" disabled="disabled"/>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="form-group">
+			<span class="detail-text1">巡查时间：</span>
+			<div class="detail-info2">
+				<div class="detail-edit">
+					<input type="text" id="date03030201101" class="form-control"
+						   placeholder="请选择巡查日期" />
+					<img src="../image/list_search_calendar.png" class="ico-date"/>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<span class="detail-text1">项目名称：</span>
+			<div class="detail-info2">
+			   <div class="detail-unEdit">
+					<input type="text" disabled  v-model="empj_ProjProgForcast_AFModel.projectName" class="form-control"/>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<span class="detail-text1">备案人：</span>
+			<div class="detail-info2">
+				<div class="detail-unEdit">
+					<input type="text" disabled  v-model="empj_ProjProgForcast_AFModel.userRecord" class="form-control"/>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4">
+	   <div class="form-group">
+			<span class="detail-text1">巡查人：</span>
+			<div class="detail-info2">
+			   <div class="detail-unEdit">
+					<input type="text" disabled v-model="empj_ProjProgForcast_AFModel.forcastPeople" class="form-control"/>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<span class="detail-text1">操作人：</span>
+			<div class="detail-info2">
+				<div class="detail-unEdit" >
+					<input type="text" disabled v-model="empj_ProjProgForcast_AFModel.userUpdate" class="form-control"/>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<span class="detail-text1">备案日期：</span>
+			<div class="detail-info2">
+				<div class="detail-unEdit">
+					<input type="text" disabled  class="form-control"  v-model="empj_ProjProgForcast_AFModel.recordTimeStamp"/>
+				</div>
+			</div>
+		</div>
+	</div>
+		</div>
+    </div>
+    <!--基本信息结束-->
+	<div class="detail-title">
+			<h1 class="inline">楼幢信息</h1>
+	</div>
+	<div class="cs-content detail-content">
+	     <el-table :data="buildingList" stripe :default-sort="{prop: 'index'}">
+             <el-table-column align="center" type="index" label="序号" width="60" fixed></el-table-column>
+             <el-table-column prop="buildCode" label="施工编号" min-width="140" ></el-table-column>
+             <el-table-column prop="hasAchieve" label="是否达到正负零" min-width="160">
+	             <template scope="scope">
+					  <!-- <el-radio v-model="scope.row.hasAchieve" label="1">是</el-radio> -->
+					  <!-- <el-radio v-model="scope.row.hasAchieve" label="99">是</el-radio> -->
+					  <el-radio v-model="scope.row.hasAchieve" label="0">否</el-radio>
+				</template>
+             </el-table-column>
+             <el-table-column prop="floorUpNumber" label="地上层数" min-width="80"></el-table-column>
+             <el-table-column prop="nowNodeName" label="当前进度节点" min-width="200" align="center"></el-table-column>
+             <el-table-column prop="buildProgressType" label="建设进度类型" min-width="400">
+	             <template scope="scope">
+					  <el-radio v-model="scope.row.buildProgressType" label="1">主体结构施工</el-radio>
+					  <el-radio v-model="scope.row.buildProgressType" label="2">外立面装饰施工</el-radio>
+					  <el-radio v-model="scope.row.buildProgressType" label="3" v-if="scope.row.deliveryType == '2'">室内装修施工</el-radio>
+				</template>
+             </el-table-column>
+             <el-table-column  label="当前建设进度" min-width="140">
+               <template slot-scope="scope">
+                 <input size="mini" v-model="scope.row.buildProgress"  style="width:100%"/>
+               </template>
+             </el-table-column>
+              <el-table-column align="center" label="附件信息" min-width="140">
+                 <template scope="scope">
+                     <el-button type="text" size="small" @click="openFileModel(scope.row)">附件信息</el-button>
+                 </template>
+             </el-table-column>
+             <el-table-column align="center" label="视频信息" min-width="140">
+                 <template scope="scope">
+                     <el-button type="text" size="small" @click="openVdeioFile(scope.row)">视频信息</el-button>
+                 </template>
+             </el-table-column>
+         </el-table>
+	</div>
+
+	<!-- 附件模态框开始 -->
+    <div class="modal fade" id="fileNodeModelDetail" tabindex="-1" role="dialog" aria-hidden="true" >
+        <div class="modal-dialog model-width">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title csm-title">附件信息</h4>
+                </div>
+                <div class="modal-body csm-body">
+                <!--附件材料开始-->
+				<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+				<!--附件材料结束-->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn foot-sure" @click="dialogSave">确定</button>
+                    <button type="button" class="btn foot-cancel" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+	<!-- 附件模态框结束 -->
+  
+</div>
+<script src="../js/tabCommon.js"></script>
+<script src="../js/admin/empj/Empj_ProjProgForcastEdit.js"></script>
+</body>
+</html>	

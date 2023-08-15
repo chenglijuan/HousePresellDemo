@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tgpf_SocketMsg" table="Tgpf_SocMsg"
+		dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_Tgpf_SocketMsg</param>
+			</generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate"
+			foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord"
+			foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<property name="msgLength">
+			<column name="msgLength">
+				<comment>总包长</comment>
+			</column>
+		</property>
+		<property name="locationCode">
+			<column name="locationCode">
+				<comment>区位代码</comment>
+			</column>
+		</property>
+		<property name="msgBusinessCode">
+			<column name="msgBusinessCode">
+				<comment>交易代码</comment>
+			</column>
+		</property>
+		<property name="bankCode">
+			<column name="bankCode">
+				<comment>银行编码</comment>
+			</column>
+		</property>
+		<property name="returnCode">
+			<column name="returnCode">
+				<comment>返回码</comment>
+			</column>
+		</property>
+		<property name="remark">
+			<column name="remark" length="4000">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<property name="msgDirection">
+			<column name="msgDirection">
+				<comment>报文方向</comment>
+			</column>
+		</property>
+		<property name="msgStatus">
+			<column name="msgStatus">
+				<comment>发送状态</comment>
+			</column>
+		</property>
+		<property name="md5Check">
+			<column name="md5Check">
+				<comment>MD5验证</comment>
+			</column>
+		</property>
+		<property name="msgTimeStamp">
+			<column name="msgTimeStamp">
+				<comment>发生时间</comment>
+			</column>
+		</property>
+		<property name="eCodeOfTripleAgreement">
+			<column name="eCodeOfTripleAgreement">
+				<comment>三方协议号</comment>
+			</column>
+		</property>
+		<property name="eCodeOfPermitRecord">
+			<column name="eCodeOfPermitRecord">
+				<comment>预售许可证编号</comment>
+			</column>
+		</property>
+		<property name="eCodeOfContractRecord">
+			<column name="eCodeOfContractRecord">
+				<comment>预售合同编号</comment>
+			</column>
+		</property>
+		<property name="msgSerialno">
+			<column name="msgSerialno">
+				<comment>中心平台流水号</comment>
+			</column>
+		</property>
+		<property name="msgContent">
+			<column name="msgContent">
+				<comment>报文内容</comment>
+			</column>
+		</property>
+		<property name="bankPlatformSerialNo">
+			<column name="bankPlatformSerialNo">
+				<comment>银行平台流水号</comment>
+			</column>
+		</property>
+		<property name="msgContentArchives">
+			<column name="msgContentArchives">
+				<comment>与档案系统发送报文</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

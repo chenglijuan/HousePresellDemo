@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-楼幢-基础信息添加</title>
+		<!-- Vendor CSS-->
+		<link rel="stylesheet" href="../../assets/bootstrap-3.3.7/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="../../assets/bootstrap-tab-master/css/font-awesome.css">
+		<link rel="stylesheet" href="../../assets/bootstrap-tab-master/css/bootstrap-tab.css">
+		<!-- Page CSS-->
+		<link rel="stylesheet" type="text/css" href="../../css/main.css"/>
+		<link rel="stylesheet" type="text/css" href="../../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="empj_BuildingInfoAddDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="add('1')">
+						<img src="../../image/detail_btn_ico_save.png" width="18">
+						<span>保存</span>
+					</button>
+					<button class="btn btn-primary"  @click="add('2')">
+						<img src="../../image/detail_btn_ico_submit.png" width="18">
+						<span>提交</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-lg-4">
+						<div class="form-group">
+							<span class="detail-text1">企业：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<vue-select :avail="userType != 1" defaultname="请选择企业" :thevalue="emmp_CompanyInfoId" :optionlist="emmp_CompanyInfoList" @callbackfun="companyChange"></vue-select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="form-group">
+							<span class="detail-text1">项目：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<vue-select defaultname="请选择项目" :thevalue="empj_ProjectInfoId" :optionlist="empj_ProjectInfoList" @callbackfun="getProjectId"></vue-select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="form-group">
+							<span class="detail-text1">托管标准：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<vue-select defaultname="请选择托管标准" :thevalue="tgpj_EscrowStandardVerMngId" :optionlist="tgpj_EscrowStandardVerMngList" @callbackfun="getEscrowStandardVerMngId"></vue-select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4">
+						<div class="form-group">
+							<span class="detail-text1">建筑面积（㎡）：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="number" v-model="buildingArea" class="form-control" placeholder="请输入建筑面积"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="form-group">
+							<span class="detail-text1">托管面积（㎡）：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="number" v-model="escrowArea" class="form-control" placeholder="请输入托管面积"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="form-group">
+							<span class="detail-text1">房屋类型：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<vue-select defaultname="请选择交付类型" :thevalue="parameterId" :optionlist="deliveryTypeList"  @callbackfun="baseParameterChange" ></vue-select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4">
+						<div class="form-group">
+							<span class="detail-text1">地上楼层数：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="number" v-model="upfloorNumber" class="form-control" placeholder="请输入地上楼层数"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="form-group">
+							<span class="detail-text1">地下楼层数：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="number" v-model="downfloorNumber" class="form-control" placeholder="请输入地下楼层数"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="form-group">
+							<span class="detail-text1">土地抵押状态：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<select name="" class="form-control" v-model="landMortgageState">
+										<option value="">请选择土地抵押状态</option>
+										<option value="0">无</option>
+										<option value="1">有</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4">
+						<div class="form-group" v-if="landMortgageState == 0">
+							<span class="detail-text1">土地抵押权人：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="landMortgagor" class="form-control" placeholder="请输入土地抵押权人" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group" v-if="landMortgageState == 1">
+							<span class="detail-text1">土地抵押权人：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="landMortgagor" class="form-control" placeholder="请输入土地抵押权人"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="form-group" v-if="landMortgageState == 0">
+							<span class="detail-text1">土地抵押金额：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="landMortgageAmount" class="form-control" placeholder="请输入土地抵押金额" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group" v-if="landMortgageState == 1">
+							<span class="detail-text1">土地抵押金额（元）：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="landMortgageAmount" class="form-control" placeholder="请输入土地抵押金额" @blur="changeThousands"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="form-group">
+							<span class="detail-text1">上限比例：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<select name="" class="form-control" v-model="paymentLines">
+										<!--<option value="">请选择支付保证上限比例</option>-->
+										<option value="50">50%</option>
+										<option value="80">80%</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4">
+						<div class="form-group">
+							<span class="detail-text1">施工编号：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="eCodeFromConstruction" class="form-control" placeholder="请输入施工编号"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="form-group">
+							<span class="detail-text1">公安编号：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="eCodeFromPublicSecurity" class="form-control" placeholder="请输入公安编号"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<span class="detail-text1">备注：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<textarea type="text" v-model="remark" class="form-control" placeholder="请输入备注"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--附件材料开始-->
+			<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete"  ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+			<!--附件材料结束-->
+		</div>
+		<script src="../../assets/jquery/jquery.min.js" type="text/javascript"></script>
+		<!-- Pages JS -->
+		<script src="../../assets/vue/vue.min.js" type="text/javascript"></script>
+		<script src="../../assets/element/js/element.js" type="text/javascript"></script>
+		<script src="../../assets/bootstrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="../../assets/bootstrap-tab-master/js/bootstrap-tab.js" type="text/javascript"></script>
+		<script src="../../assets/laydate/laydate.js"></script>
+
+		<!-- Noty Js -->
+		<script src="../../assets/noty/jquery.noty.js"></script>
+		<script src="../../assets/noty/layouts/top.js"></script>
+		<script src="../../assets/noty/layouts/center.js"></script>
+		<script src="../../assets/noty/themes/default.js"></script>
+
+		<!-- Pushlet Js -->
+		<script src="../../assets/pushlet/ajax-pushlet-client.js"></script>
+
+		<script src="../../js/ServerInterface.js"></script>
+		<script src="../../assets/moment/moment.js"></script>
+		<script src="../../js/admin/test/Test_BaseJs.js"></script>
+		<script src="../../js/viewer.min.js"></script>
+
+		<script src="../../components/vue-componentsTest.js"></script>
+
+		<script src="../../js/tabCommon.js"></script>
+		<script src="../../js/admin/test/Test_BuildingInfoAdd.js"></script>
+	</body>
+</html>	

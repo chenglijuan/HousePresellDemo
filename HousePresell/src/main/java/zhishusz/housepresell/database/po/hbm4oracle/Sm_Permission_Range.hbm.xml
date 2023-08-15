@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Sm_Permission_Range" table="Sm_Permission_Range" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_Range</param>
+			</generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="theType">
+			<column name="theType">
+				<comment>类型:区域，项目，楼幢 S_RangeType</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userInfo" foreign-key="null">
+			<column name="userInfo">
+				<comment>正泰用户，按照用户进行授权（冗余字段，方便查询）</comment>
+			</column>
+		</many-to-one>
+		<many-to-one class="Sm_CityRegionInfo" name="cityRegionInfo" foreign-key="null">
+			<column name="cityRegionInfo">
+				<comment>区域</comment>
+			</column>
+		</many-to-one>
+		<many-to-one class="Emmp_CompanyInfo" name="companyInfo" foreign-key="null">
+			<column name="companyInfo">
+				<comment>机构（冗余字段，方便查询）</comment>
+			</column>
+		</many-to-one>
+		<many-to-one class="Empj_ProjectInfo" name="projectInfo" foreign-key="null">
+			<column name="projectInfo">
+				<comment>项目</comment>
+			</column>
+		</many-to-one>
+		<many-to-one class="Empj_BuildingInfo" name="buildingInfo" foreign-key="null">
+			<column name="buildingInfo">
+				<comment>楼幢</comment>
+			</column>
+		</many-to-one>
+		<many-to-one class="Sm_Permission_RangeAuthorization" name="rangeAuth" foreign-key="null">
+			<column name="rangeAuth">
+				<comment>关联范围授权</comment>
+			</column>
+		</many-to-one>
+		<property name="authStartTimeStamp">
+			<column name="authStartTimeStamp">
+				<comment>授权起始日期</comment>
+			</column>
+		</property>
+		<property name="authEndTimeStamp">
+			<column name="authEndTimeStamp">
+				<comment>授权截止日期</comment>
+			</column>
+		</property>
+		
+	</class>
+</hibernate-mapping>

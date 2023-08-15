@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="UTF-8">
+    <title>housepresell管理后台-金融机构(承办银行)详情</title>
+    <link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+</head>
+<body>
+<div class="content-wrap" id="BankInfoDetailId">
+    <div class="detail-title cs-mt-0">
+        <h1 class="inline">基本信息</h1>
+        <div class="inline title-btns">
+            <button class="btn btn-primary" @click="bankInfoEditHandle">
+                <img src="../image/list_btn_ico_edit.png"/>
+                <span>修改</span>
+            </button>
+        </div>
+    </div>
+    <!--基本信息开始-->
+    <div class="cs-content detail-content">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">银行名称：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input disabled="" type="text" v-model="emmp_BankInfoModel.theName"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">机构类型：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input disabled="" type="text" value="金融机构"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">银行代码：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input disabled="" type="text" v-model="emmp_BankInfoModel.bankCode"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">科目代码：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input disabled="" type="text" v-model="emmp_BankInfoModel.eCodeOfSubject"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="detail-text1">操作人：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input disabled="" type="text"
+                                   v-model="emmp_BankInfoModel.userUpdateName"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!--<div class="form-group">-->
+                    <!--<span class="detail-text1">银行代号：</span>-->
+                    <!--<div class="detail-info1">-->
+                        <!--<div class="detail-unEdit">-->
+                            <!--<input type="text" disabled=""-->
+                                   <!--v-model="emmp_BankInfoModel.bankNo"-->
+                                   <!--class="form-control"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            </div>
+            <div class="col-md-4">
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">银行简称：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input disabled="" type="text" v-model="emmp_BankInfoModel.shortName"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">联系人：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input disabled="" type="text"
+                                   v-model="emmp_BankInfoModel.contactPerson" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">银行编号：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input disabled="" type="text"
+                                   v-model="emmp_BankInfoModel.bankNo" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">金融机构：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input disabled="" type="text"
+                                   v-model="emmp_BankInfoModel.financialInstitution" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">公积金代码：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input disabled="" type="text"
+                                   v-model="emmp_BankInfoModel.eCodeOfProvidentFundCenter" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">资金归集模式：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <select disabled class="form-control" v-model="emmp_BankInfoModel.capitalCollectionModel" >
+                                <option value="">全部</option>
+                                <option value="1">对接银行核心系统</option>
+                                <option value="2">正泰银行端</option>
+                                <option value="3">对接银行特色平台</option>
+                            </select>
+                            <!--<input disabled="" type="text"-->
+                                   <!--v-model="emmp_BankInfoModel.capitalCollectionModel"-->
+                                   <!--class="form-control"/>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">联系电话：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input disabled="" type="text" v-model="emmp_BankInfoModel.contactPhone"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">POS机型号：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input disabled="" type="text" v-model="emmp_BankInfoModel.theTypeOfPOS"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="detail-text1">操作日期：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input type="text" disabled=""
+                                   v-model="emmp_BankInfoModel.lastUpdateTimeStampString"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="form-group">-->
+                    <!--<span class="detail-text1">银行代码：</span>-->
+                    <!--<div class="detail-info1">-->
+                        <!--<div class="detail-unEdit">-->
+                            <!--<input type="text" disabled=""-->
+                                   <!--v-model="emmp_BankInfoModel.bankCode"-->
+                                   <!--class="form-control"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">备注：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <textarea rows="3" disabled="" type="text" v-model="emmp_BankInfoModel.remark"
+                                   class="form-control"></textarea> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--基本信息结束-->
+    
+    <!-- FTP地址配置 -->
+    <div class="detail-title">
+        <h1 class="inline">FTP地址配置</h1>
+    </div>
+    <div class="cs-content detail-content">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">FTP目录地址：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input disabled="" type="text" v-model="emmp_BankInfoModel.ftpDirAddress"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">FTP地址：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input disabled="" type="text" v-model="emmp_BankInfoModel.ftpAddress"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">FTP端口：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input disabled="" type="text"
+                                   v-model="emmp_BankInfoModel.ftpPort" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">FTP用户名：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input disabled="" type="text" v-model="emmp_BankInfoModel.ftpUserName"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group cs-mb-0">
+                    <span class="detail-text1">FTP密码：</span>
+                    <div class="detail-info1">
+                        <div class="detail-unEdit">
+                            <input disabled="" type="text" v-model="emmp_BankInfoModel.ftpPwd"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--联系人信息开始-->
+    <div class="detail-title">
+        <h1 class="inline">机构成员列表</h1>
+    </div>
+    <div class="cs-content">
+        <!--表格开始-->
+        <div class="cs-table">
+            <div id="table2">
+                <el-table :data="orgMemberList" stripe >
+                    <!--<el-table-column type="selection" width="55" v-model="selectItem" fixed></el-table-column>-->
+                    <el-table-column type="index" :index="indexMethod" label="序号" width="60" fixed></el-table-column>
+                    <el-table-column prop="theName" label="姓名" min-width="120"></el-table-column>
+                    <el-table-column label="证件类型" min-width="120">
+                        <template scope="scope">
+                            <span v-if="scope.row.idType=='00'">居民身份证</span>
+                            <span v-if="scope.row.idType=='01'">护照</span>
+                            <span v-if="scope.row.idType=='02'">港澳台居民身份证</span>
+                            <span v-if="scope.row.idType=='04'">旅行证据</span>
+                            <span v-if="scope.row.idType=='05'">其他</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="idNumber" label="证件号码" min-width="220"></el-table-column>
+                    <el-table-column prop="theNameOfDepartment" label="所属部门" min-width="160"></el-table-column>
+                    <el-table-column prop="parameterName" label="职务" min-width="120"></el-table-column>
+                    <el-table-column prop="positionName" label="职称" min-width="120"></el-table-column>
+                    <el-table-column prop="phoneNumber" label="手机号" min-width="160"></el-table-column>
+                    <el-table-column prop="email" label="邮箱" min-width="180"></el-table-column>
+                    <el-table-column prop="qq" label="QQ" min-width="160"></el-table-column>
+                    <el-table-column prop="weixin" label="微信" min-width="160"></el-table-column>
+                </el-table>
+                <vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :sidepagecount="4"  v-on:pagechange="changePageNumber"></vue-nav>
+            </div>
+        </div>
+    </div>
+    <!--联系人信息结束-->
+
+    <!--附件材料开始-->			
+<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+<!--附件材料结束-->
+
+    <!-- error modal 开始 -->
+    <div class="modal fade" id="errorM" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-del">
+            <div class="modal-content">
+                <div class="modal-body csm-body">
+                    <img src="../image/popup_ico_failure.png" class="pull-left"/>
+                    <div class="del-info">
+                        <div class="del-text1 font-bold">操作失败，请重试</div>
+                        <div class="del-text2">请选择要删除的机构成员</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn foot-sure">
+                        确定
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- error modal 结束 -->
+
+</div>
+
+<!--<script src="../components/vue-components.js"></script>-->
+<script src="../js/tabCommon.js"></script>
+<script src="../js/admin/emmp/Emmp_BankInfoDetail.js"></script>
+</body>
+</html>	

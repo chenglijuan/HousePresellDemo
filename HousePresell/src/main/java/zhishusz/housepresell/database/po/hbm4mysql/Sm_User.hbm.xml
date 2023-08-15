@@ -1,0 +1,233 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Sm_User" table="Sm_User" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态：起用、停用</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<property name="lockUntil">
+			<column name="lockUntil">
+				<comment>登录失败N次锁定M小时</comment>
+			</column>
+		</property>
+		<many-to-one class="Emmp_CompanyInfo" name="company" foreign-key="null">
+			<column name="company">
+				<comment>所属机构组织</comment>
+			</column>
+		</many-to-one>
+		<property name="eCodeOfCompany">
+			<column name="eCodeOfCompany">
+				<comment>企业编号</comment>
+			</column>
+		</property>
+		<property name="theNameOfCompany">
+			<column name="theNameOfCompany">
+				<comment>企业名称</comment>
+			</column>
+		</property>
+		<many-to-one class="Emmp_Department" name="department" foreign-key="null">
+			<column name="department">
+				<comment>所属部门</comment>
+			</column>
+		</many-to-one>
+		<property name="eCodeOfDepartment">
+			<column name="eCodeOfDepartment">
+				<comment>所属部门编号</comment>
+			</column>
+		</property>
+		<property name="theNameOfDepartment">
+			<column name="theNameOfDepartment">
+				<comment>所属部门名称</comment>
+			</column>
+		</property>
+		<property name="theType">
+			<column name="theType">
+				<comment>类型</comment>
+			</column>
+		</property>
+		<property name="theName">
+			<column name="theName">
+				<comment>用户名</comment>
+			</column>
+		</property>
+		<property name="realName">
+			<column name="realName">
+				<comment>真实姓名</comment>
+			</column>
+		</property>
+		<property name="idType">
+			<column name="idType">
+				<comment>证件类型 S_IDType</comment>
+			</column>
+		</property>
+		<property name="idNumber">
+			<column name="idNumber">
+				<comment>证件号码</comment>
+			</column>
+		</property>
+		<property name="phoneNumber">
+			<column name="phoneNumber">
+				<comment>手机号码</comment>
+			</column>
+		</property>
+		<property name="email">
+			<column name="email">
+				<comment>邮箱</comment>
+			</column>
+		</property>
+		<property name="weixin">
+			<column name="weixin">
+				<comment>微信号</comment>
+			</column>
+		</property>
+		<property name="qq">
+			<column name="qq">
+				<comment>QQ</comment>
+			</column>
+		</property>
+		<property name="address">
+			<column name="address">
+				<comment>地址</comment>
+			</column>
+		</property>
+		<property name="loginPassword">
+			<column name="loginPassword">
+				<comment>登录密码</comment>
+			</column>
+		</property>
+		<property name="errPwdCount">
+			<column name="errPwdCount">
+				<comment>密码错误次数（登陆成功后清零）</comment>
+			</column>
+		</property>
+		<property name="heardImagePath">
+			<column name="heardImagePath">
+				<comment>头像路径</comment>
+			</column>
+		</property>
+		<property name="lastLoginTimeStamp">
+			<column name="lastLoginTimeStamp">
+				<comment>最后一次登录时间</comment>
+			</column>
+		</property>
+		<property name="loginMode">
+			<column name="loginMode">
+				<comment>登录方式</comment>
+			</column>
+		</property>
+		<property name="ukeyNumber">
+			<column name="ukeyNumber">
+				<comment>UKey序列号</comment>
+			</column>
+		</property>
+		<property name="hasQC">
+			<column name="hasQC">
+				<comment>是否有资质证书</comment>
+			</column>
+		</property>
+		<many-to-one class="Emmp_QualificationInfo" name="qualificationInfo" foreign-key="null">
+			<column name="qualificationInfo">
+				<comment>证书信息</comment>
+			</column>
+		</many-to-one>
+		<property name="menuPermissionHtmlPath">
+			<column name="menuPermissionHtmlPath">
+				<comment>菜单权限</comment>
+			</column>
+		</property>
+		<property name="buttonPermissionJsonPath">
+			<column name="buttonPermissionJsonPath">
+				<comment>按钮权限</comment>
+			</column>
+		</property>
+		<property name="dataPermssion">
+			<column name="dataPermssion">
+				<comment>数据权限</comment>
+			</column>
+		</property>
+		<property name="isEncrypt">
+			<column name="isEncrypt">
+				<comment>是否加密</comment>
+			</column>
+		</property>
+		<property name="startTimeStamp">
+			<column name="startTimeStamp">
+				<comment>生效开始时间</comment>
+			</column>
+		</property>
+		<property name="endTimeStamp">
+			<column name="endTimeStamp">
+				<comment>生效结束时间</comment>
+			</column>
+		</property>
+		<property name="theAccount">
+			<column name="theAccount">
+				<comment>账户名</comment>
+			</column>
+		</property>
+		<property name="loginState">
+			<column name="loginState">
+				<comment>登录状态 0：未登录 1：已登录</comment>
+			</column>
+		</property>
+		<property name="loginSessionId">
+			<column name="loginSessionId">
+				<comment>登录sessionId</comment>
+			</column>
+		</property>
+		<property name="isSignature">
+			<column name="isSignature">
+				<comment>是否具有签章 0：否 1：是</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

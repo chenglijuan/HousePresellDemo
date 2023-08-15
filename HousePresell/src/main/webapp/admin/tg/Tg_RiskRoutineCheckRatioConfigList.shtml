@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-风控例行抽查比例配置表</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="tg_RiskRoutineCheckRatioConfigListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>风控抽查比例配置</span>
+							</div>
+							<div class="inline">
+							    <button class="btn btn-success" @click="updateRiskRoutineCheckRatioConfig">
+									<img src="../image/detail_btn_ico_save.png"/>
+									<span>保存</span>
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="tg_RiskRoutineCheckRatioConfigList" stripe :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle">
+							<el-table-column type="index" :index="indexMethod" label="序号" width="60" fixed align="center"></el-table-column>
+							<el-table-column prop="largeBusinessName" label="业务大类" min-width="200"></el-table-column>
+							<el-table-column prop="subBusinessName" label="业务小类" min-width="200"></el-table-column>
+							<el-table-column label="抽查比例" min-width="200">
+								<template scope="scope">
+									<!-- 
+										<select v-model="scope.row.theRatio" class="form-control">
+											<option value="">请选择比例</option>
+											<option v-for="theRatio in theRatioList" :value="theRatio">{{theRatio}}%</option>
+										</select>
+									 -->
+									<input type="number" placeholder="请输入选择比例" v-model="scope.row.theRatio" class="form-control"/>
+								</template>
+							</el-table-column>
+							<el-table-column label="对口角色" min-width="200">
+								<template scope="scope">
+									<select v-model="scope.row.roleId" class="form-control">
+										<option value="">请选择角色</option>
+										<option v-for="role in sm_Permission_RoleList" :value="role.tableId">{{role.theName}}</option>
+									</select>
+								</template>
+							</el-table-column>
+							<el-table-column prop="userUpdateName" label="最新配置人" width="120"></el-table-column>
+							<el-table-column prop="lastUpdateTimeStamp" label="最新配置时间" width="120" align="center"></el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Pages JS -->
+		<script src="../js/admin/tg/Tg_RiskRoutineCheckRatioConfigList.js"></script>
+	</body>
+</html>	

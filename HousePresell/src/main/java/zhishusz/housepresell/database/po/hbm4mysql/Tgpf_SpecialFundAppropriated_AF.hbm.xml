@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tgpf_SpecialFundAppropriated_AF" table="Tgpf_SpecialFund_AF" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<property name="approvalState">
+			<column name="approvalState">
+				<comment>审批状态</comment>
+			</column>
+		</property>
+		<many-to-one class="Emmp_CompanyInfo" name="developCompany" foreign-key="null">
+			<column name="developCompany">
+				<comment>关联开发企业</comment>
+			</column>
+		</many-to-one>
+		<property name="theNameOfDevelopCompany">
+			<column name="theNameOfDevelopCompany">
+				<comment>开发企业名称 - 冗余</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_ProjectInfo" name="project" foreign-key="null">
+			<column name="project">
+				<comment>关联项目</comment>
+			</column>
+		</many-to-one>
+		<property name="theNameOfProject">
+			<column name="theNameOfProject">
+				<comment>项目名称-冗余</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_BuildingInfo" name="building" foreign-key="null">
+			<column name="building">
+				<comment>关联楼幢</comment>
+			</column>
+		</many-to-one>
+		<property name="eCodeFromConstruction">
+			<column name="eCodeFromConstruction">
+				<comment>施工编号</comment>
+			</column>
+		</property>
+		<property name="eCodeFromPublicSecurity">
+			<column name="eCodeFromPublicSecurity">
+				<comment>公安编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Tgpj_BuildingAccountLog" name="buildingAccountLog" foreign-key="null">
+			<column name="buildingAccountLog">
+				<comment>关联楼幢账户log表</comment>
+			</column>
+		</many-to-one>
+		<many-to-one class="Tgpj_BankAccountSupervised" name="bankAccount" foreign-key="null">
+			<column name="bankAccount">
+				<comment>关联监管账户</comment>
+			</column>
+		</many-to-one>
+		<property name="theAccountOfBankAccount">
+			<column name="theAccountOfBankAccount">
+				<comment>监管账号</comment>
+			</column>
+		</property>
+		<property name="theNameOfBankAccount">
+			<column name="theNameOfBankAccount">
+				<comment>监管账号名称</comment>
+			</column>
+		</property>
+		<property name="theBankOfBankAccount">
+			<column name="theBankOfBankAccount">
+				<comment>监管账户开户行</comment>
+			</column>
+		</property>
+		<property name="appropriatedType">
+			<column name="appropriatedType">
+				<comment>拨付类型</comment>
+			</column>
+		</property>
+		<property name="appropriatedRemark">
+			<column name="appropriatedRemark">
+				<comment>拨付说明</comment>
+			</column>
+		</property>
+		<property name="totalApplyAmount">
+			<column name="totalApplyAmount">
+				<comment>申请金额</comment>
+			</column>
+		</property>
+		<property name="applyDate">
+			<column name="applyDate">
+				<comment>申请日期</comment>
+			</column>
+		</property>
+		<property name="applyState">
+			<column name="applyState">
+				<comment>申请状态</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

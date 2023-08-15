@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-附件配置详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="sm_AttachmentCfgDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="editAttachmentCfgHandle">
+						<img src="../image/list_btn_ico_edit.png" width="18">
+						<span>修改</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+				
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">业务类型：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="busiTypeFather" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">创建人：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="sm_AttachmentCfgModel.createTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">创建日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="sm_AttachmentCfgModel.recordTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>-->
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--附件类型信息开始-->
+			<div class="detail-title">
+				<h1 class="inline">附件类型信息</h1>
+			</div>
+			<div class="cs-content">
+				<div class="detail-content">
+					<el-table :data="Sm_AttachmentCfgDetailList" border :default-sort = "{prop: 'index'}">
+						<el-table-column type="index" :index="indexMethod" label="序号" width="60" fixed></el-table-column><!-- :index="indexMethod"  -->
+						<el-table-column prop="theName" label="附件类型名称" min-width="200"></el-table-column>
+						<el-table-column prop="acceptFileType" label="可接受文件类型" width="260"></el-table-column>
+						<el-table-column prop="acceptFileCount" label="可接受文件数量" width="140"></el-table-column>
+						<el-table-column prop="minFileSize" label="单个文件大小限制（kb）" width="220"></el-table-column>
+						<el-table-column prop="isCfgSignature" label="是否签章" width="120">
+							<template scope="scope">
+								<span v-if="scope.row.isCfgSignature == 1">是</span>
+								<span v-if="scope.row.isCfgSignature == 0">否</span>
+							</template>
+						</el-table-column>
+						<el-table-column prop="isImage" label="是否是图片" width="120">
+							<template scope="scope">
+								<span v-if="scope.row.isImage == true">是</span>
+								<span v-if="scope.row.isImage == false">否</span>
+							</template>
+						</el-table-column>
+						<el-table-column prop="isNeeded" label="是否必须上传" width="120">
+							<template scope="scope">
+								<span v-if="scope.row.isNeeded == true">是</span>
+								<span v-if="scope.row.isNeeded == false">否</span>
+							</template>
+						</el-table-column>
+						<el-table-column prop="listType" label="附件列表类型" width="120">
+							<template scope="scope">
+								<span v-if="scope.row.listType == 'text'">文本</span>
+								<span v-if="scope.row.listType == 'picture-card'">图片</span>
+							</template>
+						</el-table-column>
+						<el-table-column prop="remark" label="备注" width="300"></el-table-column>
+					</el-table>
+					 <vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav> 
+				</div>
+				
+			</div>	
+			<!--附件类型信息结束-->
+		</div>
+		<script src="../components/vue-components.js"></script>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/sm/Sm_AttachmentCfgDetail.js"></script>
+	</body>
+</html>	

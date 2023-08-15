@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tg_projectDetailOfBrowse_View" table="Tg_projectDetailOfBrowse_View" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="cityRegion">
+			<column name="cityRegion">
+				<comment>区域</comment>
+			</column>
+		</property>
+		
+		<property name="projectName">
+			<column name="projectName">
+				<comment>项目名称</comment>
+			</column>
+		</property>
+		
+		<property name="eCodeFromConstruction">
+			<column name="eCodeFromConstruction">
+				<comment>施工楼幢编号</comment>
+			</column>
+		</property>
+
+		<property name="forEcastArea">
+			<column name="forEcastArea">
+				<comment>建筑面积</comment>
+			</column>
+		</property>
+		
+		<property name="escrowArea">
+			<column name="escrowArea">
+				<comment>托管面积</comment>
+			</column>
+		</property>
+		
+		<property name="recordAveragePrice">
+			<column name="recordAveragePrice">
+				<comment>物价备案均价</comment>
+			</column>
+		</property>
+		
+		<property name="houseTotal">
+			<column name="houseTotal">
+				<comment>总户数</comment>
+			</column>
+		</property>
+		
+		<property name="produceOfProject">
+			<column name="produceOfProject">
+				<comment>项目介绍</comment>
+			</column>
+		</property>
+		
+		<property name="queryYear">
+			<column name="queryYear">
+				<comment>查询年份</comment>
+			</column>
+		</property>
+		
+		<property name="queryMonth">
+			<column name="queryMonth">
+				<comment>查询月份</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

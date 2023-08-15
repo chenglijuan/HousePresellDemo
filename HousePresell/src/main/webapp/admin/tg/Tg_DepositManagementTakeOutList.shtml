@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-存单管理</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="tg_DepositManagementTakeOutListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left search-left">
+						<div class="top-input">
+							<div class="inline">
+								<span>关键字：</span>
+								<input type="text" class="form-control cs-input" v-model="keyword" placeholder="请输入存单号、托管账号搜索">
+							</div>
+							<div class="inline">
+								<span>开户行：</span>
+								<vue-listselect defaultname="请选择开户行" :thevalue="bankBranchId" :optionlist="emmp_BankBranchList" @callbackfun="bankBranchChange" @emptybackfun="bankBranchEmpty"></vue-listselect>
+							</div>
+							<div class="inline">
+								<span>存款性质：</span>
+								<vue-listselect defaultname="请选择存款性质" :thevalue="depositProperty" :optionlist="depositPropertyList" @callbackfun="depositPropertyChange" @emptybackfun="depositPropertyEmpty"></vue-listselect>
+							</div>
+							<div class="inline">
+								<span>到期日期：</span>
+								<input type="text" id="date21010501" class="form-control cs-input" placeholder="请选择到期日期"/>
+								<img src="../image/list_search_calendar.png" class="ico-date"/>
+							</div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="searchWithoutKey">重置</button>
+						</div>
+						<div class="top-btns">
+							<!--<button class="btn btn-primary" @click="depositManagementEditHandle" v-if="selectItem.length == 1" data-editNum="210105_MOD_01">-->
+								<!--<img src="../image/list_btn_ico_edit.png"/>-->
+								<!--<span>修改</span>-->
+							<!--</button>-->
+							<!--<button class="btn btn-primary" disabled="disabled" v-if="selectItem.length != 1">-->
+								<!--<img src="../image/list_btn_ico_edit.png"/>-->
+								<!--<span>修改</span>-->
+							<!--</button>-->
+							<!--<button class="btn btn-danger" @click="depositManagementDeleteHandle" v-if="selectItem.length > 0" data-editNum="210105_DEL_01">-->
+								<!--<img src="../image/list_btn_ico_del.png"/>-->
+								<!--<span>删除</span>-->
+							<!--</button>-->
+							<!--<button class="btn btn-danger" disabled="disabled" v-if="selectItem.length == 0" data-editNum="210105_DEL_01">-->
+								<!--<img src="../image/list_btn_ico_del.png"/>-->
+								<!--<span>删除</span>-->
+							<!--</button>-->
+						</div>
+					</div>
+					<div class="pull-right text-right">
+						<div class="top-excel">
+							<button class="btn btn-excel" @click="depositManagementExportExcelHandle">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="tg_DepositManagementList" stripe :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle">
+							<el-table-column type="selection" width="50" fixed align="center"></el-table-column>
+							<el-table-column type="index" :index="indexMethod" label="序号" width="60" fixed align="center"></el-table-column>
+							<el-table-column label="存单号" min-width="220">
+								<template scope="scope">
+									<div class="el-button--text hover" @click="depositManagementDetailHandle(scope.row.tableId)">{{scope.row.eCode}}</div>
+								</template>
+							</el-table-column>
+							<el-table-column label="存款性质" min-width="120">
+								<template slot-scope="scope">
+									<p v-if="scope.row.depositProperty=='01'">
+										大额存单
+									</p>
+									<p v-else-if="scope.row.depositProperty=='02'">
+										结构性存款
+									</p>
+									<p v-else-if="scope.row.depositProperty=='03'">
+										保本理财
+									</p>
+								</template>
+							</el-table-column>
+							<el-table-column prop="bankOfDepositName" label="开户行" min-width="200"></el-table-column>
+							<el-table-column prop="escrowAcountAcount" label="托管账号" min-width="180"></el-table-column>
+							<el-table-column label="本金金额（元）" min-width="140">
+								<template scope="scope">
+									<div class="text-right">{{scope.row.principalAmount | setThousands}}</div>
+								</template>
+							</el-table-column>
+							<el-table-column align="center" prop="startDateStr" label="起息日" min-width="120"></el-table-column>
+							<el-table-column align="center" prop="stopDateStr" label="到期日" min-width="120" ></el-table-column>
+							<el-table-column label="存款期限" min-width="120">
+								<template slot-scope="scope">
+									<p v-if="scope.row.storagePeriodCompany=='01'">
+										{{scope.row.storagePeriod}}年
+									</p>
+									<p v-else-if="scope.row.storagePeriodCompany=='02'">
+										{{scope.row.storagePeriod}}月
+									</p>
+									<p v-else-if="scope.row.storagePeriodCompany=='03'">
+										{{scope.row.storagePeriod}}天
+									</p>
+								</template>
+							</el-table-column>
+							<el-table-column label="年利率（%）" min-width="120">
+								<template scope="scope">
+									<div class="text-right">{{scope.row.annualRate | setThousands}}</div>
+								</template>
+							</el-table-column>
+							<!--<el-table-column prop="applyState" label="备案状态" min-width="120">-->
+								<!--<template scope="scope">-->
+							        <!--<button v-if="scope.row.applyState == 1" class="btn btn-state-warning">申请中</button>-->
+							    	<!--<button v-if="scope.row.applyState == 2" class="btn btn-state-success">已备案</button>-->
+								<!--</template>-->
+							<!--</el-table-column>-->
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount"
+						:countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"
+						v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+			<!-- 友情提示 modal -->
+			<div class="modal fade" id="remindModal" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">友情提示</div>
+								<div class="del-text2" v-model="remindText">请选择要删除的存单</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		</div>
+		 <script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tg/Tg_DepositManagementTakeOutList.js"></script>
+	</body>
+</html>	

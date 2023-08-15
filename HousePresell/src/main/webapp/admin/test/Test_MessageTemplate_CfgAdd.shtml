@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-审批流-流程配置添加</title>
+		<link rel="stylesheet" href="../../assets/bootstrap-3.3.7/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="../../assets/bootstrap-tab-master/css/font-awesome.css">
+		<link rel="stylesheet" href="../../assets/bootstrap-tab-master/css/bootstrap-tab.css">
+		<!-- Page CSS-->
+		<link rel="stylesheet" type="text/css" href="../../css/main.css"/>
+		<link rel="stylesheet" type="text/css" href="../../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="sm_MessageTemplate_CfgAddDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success"  @click="addSm_MessageTemplate_Cfg">
+						<img src="../../image/detail_btn_ico_save.png" width="18">
+						<span>保存</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">业务编码：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<vue-select defaultname="请选择业务编码" :thevalue="busiId" :optionlist="sm_BaseParameterList"  @callbackfun="baseParameterChange" ></vue-select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">模板编码：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text"  v-model="sm_MessageTemplate_CfgModel.eCode" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">消息模板名称：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text"  v-model="sm_MessageTemplate_CfgModel.theName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<span class="detail-text1">模板描述：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<textarea type="text"   v-model="sm_MessageTemplate_CfgModel.theDescribe" class="form-control" placeholder="请输入模板描述"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<span class="detail-text1">消息标题：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<textarea type="text"   v-model="sm_MessageTemplate_CfgModel.theTitle" class="form-control" placeholder="请输入消息标题"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<span class="detail-text1">消息内容：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<textarea type="text"  v-model="sm_MessageTemplate_CfgModel.theContent" class="form-control" placeholder="请输入消息内容"></textarea>
+								</div>
+							</div>
+						</div>
+			    	</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<span class="detail-text1"></span>
+							<div class="detail-info1">
+								<label>示例：</label>
+								<label class="label label-success">0</label>
+								<label class="label label-warning">:</label>
+								<label class="label label-danger">{oldPo.userStart.theName},{oldPo.theName}</label>
+								<label class="label label-primary">;</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<span class="detail-text1"></span>
+							<div class="detail-info1">
+								<div>1: “消息标题”和“消息内容” 中的内容必须由“示例”中四部分组成。</div>
+								<div>2: “示例”中绿色背景内容为“审批操作”；黄色背景内容为“英文冒号”；红色背景内容为“推送内容”；蓝色背景内容为“英文分号”。</div>
+								<div>3：“示例”中绿色背景中 只能写 0 , 1 , 2 , 3 ；分别代表 "通过" ,"驳回" ,"不通过","发起"</div>
+								<div>4： 动态参数必须用 <label class="label label-danger">{}</label> 括起来。</div>
+								<div>5： 所有符号必须都为英文。</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<span class="detail-text1">消息接收人：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<el-checkbox-group v-model="selectItem">
+										<el-checkbox v-for="role in sm_Permission_RoleList" :label="role.tableId" >{{role.theName}}</el-checkbox>
+									</el-checkbox-group>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+		</div>
+		<script src="../../assets/jquery/jquery.min.js" type="text/javascript"></script>
+		<!-- Pages JS -->
+		<script src="../../assets/vue/vue.min.js" type="text/javascript"></script>
+		<script src="../../assets/element/js/element.js" type="text/javascript"></script>
+		<script src="../../assets/bootstrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="../../assets/bootstrap-tab-master/js/bootstrap-tab.js" type="text/javascript"></script>
+		<script src="../../assets/laydate/laydate.js"></script>
+
+		<!-- Noty Js -->
+		<script src="../../assets/noty/jquery.noty.js"></script>
+		<script src="../../assets/noty/layouts/top.js"></script>
+		<script src="../../assets/noty/layouts/center.js"></script>
+		<script src="../../assets/noty/themes/default.js"></script>
+
+		<!-- Pushlet Js -->
+		<script src="../../assets/pushlet/ajax-pushlet-client.js"></script>
+
+		<script src="../../js/ServerInterface.js"></script>
+		<script src="../../assets/moment/moment.js"></script>
+		<script src="../../js/admin/test/Test_BaseJs.js"></script>
+		<script src="../../js/viewer.min.js"></script>
+
+		<script src="../../components/vue-componentsTest.js"></script>
+
+		<script src="../../js/tabCommon.js"></script>
+		<script src="../../js/admin/test/Test_MessageTemplate_CfgAdd.js"></script>
+	</body>
+</html>	

@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tg_JournalCount_View" table="Tg_JournalCount_View" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_Tgpf_BuildPayout_View</param>
+			</generator>
+		</id>
+		<property name="loanInDate">
+			<column name="loanInDate">
+				<comment>入账日期</comment>
+			</column>
+		</property>
+		<property name="escrowAcountName">
+			<column name="escrowAcountName">
+				<comment>托管账户名称</comment>
+			</column>
+		</property>
+		<property name="tradeCount">
+			<column name="tradeCount">
+				<comment>确认总笔数</comment>
+			</column>
+		</property>
+		<property name="totalTradeAmount">
+			<column name="totalTradeAmount">
+				<comment>确认总金额</comment>
+			</column>
+		</property>
+		<property name="aToatlLoanAmoutCount">
+			<column name="aToatlLoanAmoutCount">
+				<comment>公积金贷款总笔数</comment>
+			</column>
+		</property>
+		<property name="aToatlLoanAmout">
+			<column name="aToatlLoanAmout">
+				<comment>公积金贷款总金额</comment>
+			</column>
+		</property>
+		<property name="bToatlLoanAmoutCount">
+			<column name="bToatlLoanAmoutCount">
+				<comment>商业贷款总笔数</comment>
+			</column>
+		</property>
+		<property name="bToatlLoanAmout">
+			<column name="bToatlLoanAmout">
+				<comment>商业贷款总金额</comment>
+			</column>
+		</property>
+		<property name="oToatlLoanAmoutCount">
+			<column name="oToatlLoanAmoutCount">
+				<comment>自有资金总笔数</comment>
+			</column>
+		</property>
+		<property name="oToatlLoanAmout">
+			<column name="oToatlLoanAmout">
+				<comment>自有资金总金额</comment>
+			</column>
+		</property>
+		<property name="aFristToatlLoanAmoutCount">
+			<column name="aFristToatlLoanAmoutCount">
+				<comment>公积金首付款总笔数</comment>
+			</column>
+		</property>
+		<property name="aFristToatlLoanAmout">
+			<column name="aFristToatlLoanAmout">
+				<comment>公积金首付款总金额</comment>
+			</column>
+		</property>
+		<property name="aToBusinessToatlLoanAmoutCount">
+			<column name="aToBusinessToatlLoanAmoutCount">
+				<comment>公转商贷款总笔数</comment>
+			</column>
+		</property>
+		<property name="aToBusinessToatlLoanAmout">
+			<column name="aToBusinessToatlLoanAmout">
+				<comment>公转商贷款总金额</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

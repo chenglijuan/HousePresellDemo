@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-银行对账单数据</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="tgpf_BankUploadDataDetailListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input"  v-model="keyword" @keyup.enter="search" placeholder="请输入关键字搜索">
+							</div>
+							<div class="inline">
+							    <span>审批状态：</span>
+							    <select  class="form-control cs-select">
+							    	<option value="">申请中</option>
+							    	<option value="">已备案</option>
+							    </select>
+							</div>
+							<button class="btn btn-search">搜索</button>
+							<button class="btn btn-reset">重置</button>
+						</div>
+						<div class="top-btns">
+							<button class="btn btn-success">
+								<img src="../image/list_btn_ico_add.png"/>
+								<span>新增</span>
+							</button>
+							<button class="btn btn-success">
+								<img src="../image/list_btn_ico_import.png"/>
+								<span>导入</span>
+							</button>
+							<button class="btn btn-primary">
+								<img src="../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+							<button class="btn btn-info">
+								<img src="../image/list_btn_ico_see.png"/>
+								<span>日志</span>
+							</button>
+							<button class="btn btn-danger">
+								<img src="../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+						</div>
+					</div>
+					<div class="pull-right text-right">
+						<div class="top-excel">
+							<button class="btn btn-excel">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+						<div class="top-batch">
+							<button class="btn btn-pass">
+								<img src="../image/list_check_yes.png"/>
+								<span>审批通过</span>
+							</button>
+							<button class="btn btn-fail">
+								<img src="../image/list_check_no.png"/>
+								<span>审批退回</span>
+							</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="tgpf_BankUploadDataDetailList" stripe :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle">
+							<el-table-column type="selection"  width="55" fixed></el-table-column>
+							<el-table-column type="index" :index="indexMethod" label="序号" width="80" fixed></el-table-column>
+							
+							<el-table-column prop="theState" label="状态 S_TheState 初始为Normal" width="315"></el-table-column>
+							<el-table-column prop="busiState" label="业务状态" width="315"></el-table-column>
+							<el-table-column prop="eCode" label="编号" width="315"></el-table-column>
+							<el-table-column prop="userStartName" label="创建人" width="315"></el-table-column>
+							<el-table-column prop="createTimeStamp" label="创建时间" width="315"></el-table-column>
+							<el-table-column prop="lastUpdateTimeStamp" label="最后修改日期" width="315"></el-table-column>
+							<el-table-column prop="userRecordName" label="备案人" width="315"></el-table-column>
+							<el-table-column prop="recordTimeStamp" label="备案日期" width="315"></el-table-column>
+							<el-table-column prop="bankName" label="银行" width="315"></el-table-column>
+							<el-table-column prop="theNameOfBank" label="银行名称-冗余" width="315"></el-table-column>
+							<el-table-column prop="bankBranchName" label="开户行" width="315"></el-table-column>
+							<el-table-column prop="theNameOfBankBranch" label="支行名称" width="315"></el-table-column>
+							<el-table-column prop="bankAccountEscrowedName" label="托管账号" width="315"></el-table-column>
+							<el-table-column prop="theNameOfBankAccountEscrowed" label="托管银行名称" width="315"></el-table-column>
+							<el-table-column prop="theAccountBankAccountEscrowed" label="托管账号名称" width="315"></el-table-column>
+							<el-table-column prop="theAccountOfBankAccountEscrowed" label="托管账户账号" width="315"></el-table-column>
+							<el-table-column prop="tradeAmount" label="交易金额" width="315"></el-table-column>
+							<el-table-column prop="enterTimeStamp" label="入账日期" width="315"></el-table-column>
+							<el-table-column prop="recipientAccount" label="对方账号" width="315"></el-table-column>
+							<el-table-column prop="recipientName" label="对方名称" width="315"></el-table-column>
+							<el-table-column prop="lastCfgUser" label="配置人" width="315"></el-table-column>
+							<el-table-column prop="lastCfgTimeStamp" label="配置日期" width="315"></el-table-column>
+							<el-table-column prop="bkpltno" label="银行平台流水号" width="315"></el-table-column>
+							<el-table-column prop="eCodeOfTripleAgreement" label="三方协议号" width="315"></el-table-column>
+							<el-table-column prop="reconciliationState" label="业务对账状态" width="315"></el-table-column>
+							<el-table-column prop="reconciliationStamp" label="业务对账时间" width="315"></el-table-column>
+							<el-table-column prop="remark" label="备注" width="315"></el-table-column>
+							<el-table-column prop="coreno" label="核心流水号" width="315"></el-table-column>
+							<el-table-column prop="reconciliationUser" label="对账人" width="315"></el-table-column>
+							
+							<el-table-column prop="applyState" label="状态" width="120">
+								<template scope="scope">
+							        <button  v-if="scope.row.applyState == 1" class="btn btn-state-warning">申请中</button>
+							    	<button  v-if="scope.row.applyState == 2" class="btn btn-state-success">已备案</button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<script src="../components/vue-components.js"></script>
+	
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/Tgpf_BankUploadDataDetailList.js"></script>
+	</body>
+</html>	

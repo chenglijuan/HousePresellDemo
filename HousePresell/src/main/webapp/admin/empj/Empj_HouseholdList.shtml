@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-户信息</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<style type="text/css">
+		    .el-input__inner {
+		        height:28px;
+		        line-height:28px;
+		    }
+		    .el-input__icon {
+		        line-height: 25px;
+		    }
+		</style>
+	</head>
+	<body>
+		<div class="content-wrap" id="Empj_HouseholdListDiv">
+			<div class="cs-content" >
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input1"  v-model="keyword" @keyup.enter="search" placeholder="请输入施工编号或单元关键字搜索">
+							</div>
+							<div class="inline">
+							    <span>项目名称：</span>
+							    <vue-listselect defaultname="请选择项目名称" :thevalue="projectId" :optionlist="qs_projectNameList" @callbackfun="getProjectId" @emptybackfun = "emptyProjectId"></vue-listselect>
+							</div>
+							<div class="inline">
+							    <span >施工编号：</span>
+							    <vue-listselect defaultname="请选择施工编号" :thevalue="buildingId" :optionlist="qs_buildingNumberList" @callbackfun="getBuildingId" @emptybackfun = "emptyBuildingId"></vue-listselect>
+							</div>
+							<button class="btn btn-search" style="height:28px" @click="search">搜索</button>
+							<button class="btn btn-reset" style="height:28px" @click="resetSearchInfo">重置</button>
+						</div>
+						<div class="top-btns">
+							<button class="btn btn-primary" :disabled="editDisabled" @click="householdEditHandle" data-editNum="03010205_MOD_01">
+								<img src="../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div class="div-scroll">
+						<el-table :data="Empj_HouseholdList" stripe :default-sort = "{prop: 'index'}" @selection-change="handleSelectionChange">
+							<el-table-column type="selection"  width="50" v-model="selectItem" fixed align="center"></el-table-column>
+							<el-table-column type="index" :index="indexMethod" label="序号"  width="60" sortable fixed align="center"></el-table-column>
+							<el-table-column label="项目名称" width="360">
+								<template scope="scope">
+									<!-- <el-button type="text" size="small" @click="paymentGuaranteeApplicationDetailHandle(scope.row.tableId)">{{scope.row.building.theNameOfProject}}</el-button> -->
+								    <span>{{scope.row.building.theNameOfProject}}</span>
+								</template>
+							</el-table-column>
+							<el-table-column prop="eCodeFromConstruction" label="楼幢施工编号" width="200">
+							    <template scope="scope">
+									<span>{{scope.row.building.eCodeFromConstruction}}</span>
+								</template>
+							</el-table-column>
+							<el-table-column prop="position" label="楼幢坐落" width="540">
+							    <template scope="scope">
+									<span>{{scope.row.building.position}}</span>
+								</template>
+							</el-table-column>
+							<el-table-column prop="theName" label="单元" width="100"></el-table-column>
+							<el-table-column prop="upfloorNumber" label="地上层数" width="100" header-align="center" align="right">
+								<template scope="scope">
+									<span>{{scope.row.building.upfloorNumber}}</span>
+								</template>
+							</el-table-column>
+							<el-table-column prop="downfloorNumber" label="地下层数" width="100" header-align="center" align="right">
+								<template scope="scope">
+									<span>{{scope.row.building.downfloorNumber}}</span>
+								</template>
+							</el-table-column>
+							<el-table-column prop="sumFamilyNumber" label="总户数" width="100" header-align="center" align="right">
+								<template scope="scope">
+									<span>{{scope.row.building.sumFamilyNumber}}</span>
+								</template>
+							</el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :countperpage="countPerPage" :totalcount="totalCount" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+			<!-- error modal -->
+			<div class="modal fade" id="edModelHouseholdList" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">{{errMsg}}</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!-- success modal -->
+			<div class="modal fade" id="sdModelHouseholdList" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		</div>
+		
+		<script src="../components/vue-components.js"></script>
+	
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/empj/Empj_HouseholdList.js"></script>
+	</body>
+</html>	

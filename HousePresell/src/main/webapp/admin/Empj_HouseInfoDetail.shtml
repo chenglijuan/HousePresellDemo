@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-楼幢-户室详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="empj_HouseInfoDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success">
+						<img src="../image/detail_btn_ico_edit.png" width="18">
+						<span>修改</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+				
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">状态 S_TheState 初始为Normal：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.theState" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">业务状态：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.busiState" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">编号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.eCode" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">创建时间：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.createTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">最后修改日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.lastUpdateTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">备案日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.recordTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">楼幢编号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.eCodeOfBuilding" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">楼幢单元：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.eCodeOfUnitInfo" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">预售系统户编号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.eCodeFromPresellSystem" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">托管系统户编号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.eCodeFromEscrowSystem" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">公安编号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.eCodeFromPublicSecurity" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">公安坐落：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.addressFromPublicSecurity" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">物价备案价格：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.recordPrice" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">预售系统物价备案价格最后一次同步时间：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.lastTimeStampSyncRecordPriceToPresellSystem" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">三方协议结算状态：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.settlementStateOfTripleAgreement" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">预售证号-来源于楼栋：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.eCodeFromPresellCert" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">所在楼层：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.floor" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">室号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.roomId" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">室号名称：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.theNameOfRoomId" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">户室纵向跨度：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.ySpan" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">户室横向跨度：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.xSpan" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">是否合并：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.isMerged" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">合并间数：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.mergedNums" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">是否跃层：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.isOverFloor" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">跃层数：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.overFloors" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">房屋坐落：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.position" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">房屋用途：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.purpose" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">房屋性质：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.property" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">交付类型：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.deliveryType" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">建筑面积（预测）：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.forecastArea" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">建筑面积（实测）：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.actualArea" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">套内建筑面积（㎡）：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.innerconsArea" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">分摊建筑面积（㎡）：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.shareConsArea" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">使用面积（㎡）：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.useArea" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">阳台面积（㎡）：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.balconyArea" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">层高：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.heigh" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">户型：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.unitType" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">室：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.roomNumber" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">厅：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.hallNumber" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">厨：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.kitchenNumber" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">卫：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.toiletNumber" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">原房屋编号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.eCodeOfOriginalHouse" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">是否开户：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.isOpen" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">是否预售：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.isPresell" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">是否抵押：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.isMortgage" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">限制状态：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.limitState" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">不动产单元号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.eCodeOfRealBuidingUnit" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">业务管理号1-预留字段：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.eCodeOfBusManage1" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">业务管理号2-预留字段：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.eCodeOfBusManage2" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">测绘编号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.eCodeOfMapping" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">图幅号(分层分户图号)：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.eCodeOfPicture" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">备注：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.remark" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">关联日志Id：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_HouseInfoModel.logId" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--附件材料开始-->
+			<div class="detail-title">
+				<h1 class="inline">附件材料</h1>
+			</div>
+			<div class="cs-content detail-content">
+				<div class="form-group">
+					<div class="detail-text2">
+						<span class="text-danger">*</span>
+						<span>营业执照：</span>
+					</div>
+					<div class="row attachments-wrap">
+						<div class="col-md-2">
+							<div class="attachments1">
+								<img src="../image/test.jpg" width="100%"/>
+								<img src="../image/detail_pic_del.png" class="ico-close"/>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="attachments1">
+								<img src="../image/test2.jpg" width="100%"/>
+								<img src="../image/detail_pic_del.png" class="ico-close"/>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="attachments1">
+								<img src="../image/detail_pic_add.png" class="ico-up"/>
+								<input type="file" value="" class="ico-input" />
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="detail-explain">jpg、png格式的图片，单张不超过2M</div>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="form-group">
+					<div class="detail-text2">
+						<span class="text-danger" style="opacity: 0;">*</span>
+						<span>其他附件：</span>
+					</div>
+					<div class="attachments-wrap">
+						<div class="attachments2">
+							<button class="btn btn-selFile">选取文件</button>
+							<input type="file" value="" />
+						</div>
+						<div class="hover file-item">
+							<img src="../image/detail_file_doc.png"/>
+							<span>资质证明.doc</span>
+							<img src="../image/detail_file_del.png" class="file-del"/>
+						</div>
+						<div class="hover file-item">
+							<img src="../image/detail_file_excel.png"/>
+							<span>资质证明.xlsx</span>
+							<img src="../image/detail_file_del.png" class="file-del"/>
+						</div>
+						<div class="hover file-item">
+							<img src="../image/detail_file_jpg.png"/>
+							<span>资质证明.jpg</span>
+							<img src="../image/detail_file_del.png" class="file-del"/>
+						</div>
+						<div class="hover file-item">
+							<img src="../image/detail_file_pdf.png"/>
+							<span>资质证明.pdf</span>
+							<img src="../image/detail_file_del.png" class="file-del"/>
+						</div>
+						<div class="hover file-item">
+							<img src="../image/detail_file_png.png"/>
+							<span>资质证明.png</span>
+							<img src="../image/detail_file_del.png" class="file-del"/>
+						</div>
+						<div class="hover file-item">
+							<img src="../image/detail_file_rar.png"/>
+							<span>资质证明.rar</span>
+							<img src="../image/detail_file_del.png" class="file-del"/>
+						</div>
+						<div class="hover file-item">
+							<img src="../image/detail_file_zip.png"/>
+							<span>资质证明.zip</span>
+							<img src="../image/detail_file_del.png" class="file-del"/>
+						</div>
+						<div class="hover file-item">
+							<img src="../image/detail_file_other.png"/>
+							<span>其他类型文件</span>
+							<img src="../image/detail_file_del.png" class="file-del"/>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			<!--附件材料结束-->
+		</div>
+		
+		<script src="../components/vue-components.js"></script>
+		
+		<script src="../js/admin/Empj_HouseInfoDetail.js"></script>
+	</body>
+</html>	

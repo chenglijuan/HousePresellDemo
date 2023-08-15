@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tg_RiskLogInfo" table="Tg_RiskLogInfo" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Emmp_CompanyInfo" name="developCompany" foreign-key="null">
+			<column name="developCompany">
+				<comment>关联开发企业</comment>
+			</column>
+		</many-to-one>
+		<property name="eCodeOfDevelopCompany">
+			<column name="eCodeOfDevelopCompany">
+				<comment>开发企业编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_ProjectInfo" name="project" foreign-key="null">
+			<column name="project">
+				<comment>关联项目</comment>
+			</column>
+		</many-to-one>
+		<property name="theNameOfProject">
+			<column name="theNameOfProject">
+				<comment>项目名称-冗余</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_CityRegionInfo" name="cityRegion" foreign-key="null">
+			<column name="cityRegion">
+				<comment>所属区域</comment>
+			</column>
+		</many-to-one>
+		<property name="theNameOfCityRegion">
+			<column name="theNameOfCityRegion">
+				<comment>区域名称</comment>
+			</column>
+		</property>
+		<property name="riskRating">
+			<column name="riskRating">
+				<comment>项目风险评级</comment>
+			</column>
+		</property>
+		<property name="riskLog">
+			<column name="riskLog">
+				<comment>风险日志</comment>
+			</column>
+		</property>
+		<property name="logDate">
+			<column name="logDate">
+				<comment>日志日期</comment>
+			</column>
+		</property>
+		<property name="eCodeOfPjRiskRating">
+			<column name="eCodeOfPjRiskRating">
+				<comment>项目风险评级单号</comment>
+			</column>
+		</property>
+		<many-to-one class="Tg_PjRiskRating" name="pjRiskRating" foreign-key="null">
+			<column name="pjRiskRating">
+				<comment>项目风险评级</comment>
+			</column>
+		</many-to-one>
+
+	</class>
+</hibernate-mapping>

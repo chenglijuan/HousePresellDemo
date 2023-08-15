@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po.pdf">
+	<class name="Sm_ExportPdfModelInfo" table="Sm_ExportPdfModelInfo" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="barCodePath">
+			<column name="barCodePath">
+				<comment>条形码</comment>
+			</column>
+		</property>
+		<property name="qrCodePath">
+			<column name="qrCodePath">
+				<comment>二维码</comment>
+			</column>
+		</property>
+		<property name="watermarkPaht">
+			<column name="watermarkPaht">
+				<comment>水印图片路径</comment>
+			</column>
+		</property>
+		<property name="parametersMap">
+			<column name="parametersMap" length="4000">
+				<comment>查询语句不循环</comment>
+			</column>
+		</property>
+		<property name="busiCode">
+			<column name="busiCode">
+				<comment>业务编码</comment>
+			</column>
+		</property>
+		<property name="sourceId">
+			<column name="sourceId">
+				<comment>业务主键</comment>
+			</column>
+		</property>
+		<property name="impModelPath">
+			<column name="impModelPath">
+				<comment>导入路径</comment>
+			</column>
+		</property>
+		<property name="querySql">
+			<column name="querySql" length="4000">
+				<comment>查询语句循环</comment>
+			</column>
+		</property>
+		<property name="createTime">
+			<column name="createTime">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<property name="dateSourceType">
+			<column name="dateSourceType">
+				<comment>数据源类型</comment>
+			</column>
+		</property>
+		<property name="isUsing">
+			<column name="isUsing">
+				<comment>是否启用（0 未启用  1 启用）</comment>
+			</column>
+		</property>
+		<property name="url">
+			<column name="url">
+				<comment>数据库地址</comment>
+			</column>
+		</property>
+		<property name="driver">
+			<column name="driver">
+				<comment>数据库驱动</comment>
+			</column>
+		</property>
+		<property name="userName">
+			<column name="userName">
+				<comment>用户名称</comment>
+			</column>
+		</property>
+		<property name="passWord">
+			<column name="passWord">
+				<comment>密码</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

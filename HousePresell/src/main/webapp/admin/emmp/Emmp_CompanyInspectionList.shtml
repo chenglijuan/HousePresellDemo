@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta charset="UTF-8">
+	<title>housepresell管理后台-无人机巡查机构</title>
+	<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+</head>
+<body>
+<div class="content-wrap">
+	<div class="cs-content" id="emmp_CompanyInspectionListDiv">
+		<!--顶部搜索开始-->
+		<div class="content-top">
+			<div class="pull-left">
+				<div class="top-input">
+					<div class="inline">
+						<span>关键字：</span>
+						<input type="text" class="form-control cs-input"  v-model="keyword" placeholder="请输入无人机巡查机构名称搜索">
+					</div>
+					<div class="inline">
+						<span>业务状态：</span>
+						<vue-listselect defaultname="请选择业务状态" :thevalue="busiState" :optionlist="busiStateList" @callbackfun="busiStateChange" @emptybackfun = "emptyBusiState"></vue-listselect>
+						<!-- <select class="form-control cs-select" v-model="busiState">
+							<option value="">请选择业务状态</option>
+							<option value="未备案">未备案</option>
+							<option value="已备案">已备案</option>
+						</select> -->
+					</div>
+					<div class="inline">
+						<span>流程状态：</span>
+						<vue-listselect defaultname="请选择流程状态" :thevalue="approvalState" :optionlist="approvalStateList" @callbackfun="approvalStateChange" @emptybackfun = "emptyApprovalState"></vue-listselect>
+						<!-- <select class="form-control cs-select" v-model="approvalState">
+							<option value="">请选择审批状态</option>
+							<option value="待提交">待提交</option>
+							<option value="审核中">审核中</option>
+							<option value="已完结">已完结</option>
+						</select> -->
+					</div>
+					<button class="btn btn-search" @click="search">搜索</button>
+					<button class="btn btn-reset" @click="searchWithoutKey">重置</button>
+				</div>
+				<div class="top-btns">
+					<button class="btn btn-success" @click="CompanyInspectionAddHandle" data-editNum="020141_ADD_01">
+						<img src="../image/list_btn_ico_add.png"/>
+						<span>新增</span>
+					</button>
+					<button class="btn btn-primary" @click="CompanyInspectionEditHandle" :disabled="upDisabled" data-editNum="020141_MOD_01">
+						<img src="../image/list_btn_ico_edit.png"/>
+						<span>修改</span>
+					</button>
+					<button class="btn btn-info" data-editNum="020141_LOG_01" @click="showLog" :disabled="diabaleShowLog">
+						<img src="../image/list_btn_ico_see.png"/>
+						<span>日志</span>
+					</button>
+					<button class="btn btn-danger" @click="CompanyInspectionDeleteHandle" :disabled="delDisabled" data-editNum="020141_DEL_01">
+						<img src="../image/list_btn_ico_del.png"/>
+						<span>删除</span>
+					</button>
+				</div>
+			</div>
+			<div class="pull-right text-right">
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<!--顶部搜索结束-->
+		<!--表格开始-->
+		<div class="cs-table">
+			<div>
+				<el-table :data="emmp_CompanyInspectionList" stripe @selection-change="handleSelectionChange" @sort-change="sortChange">
+					<el-table-column type="selection" width="50" v-model="selectItem" fixed align="center"></el-table-column>
+					<el-table-column type="index" :index="indexMethod" label="序号" width="60" fixed align="center"></el-table-column>
+					<el-table-column prop="eCode" label="机构编号" min-width="220">
+						<template scope="scope">
+							<div class="el-button--text hover" @click="CompanyInspectionDetailHandle(scope.row.tableId)">{{scope.row.eCode}}</div>
+						</template>
+					</el-table-column>
+					<el-table-column prop="theName" label="无人机巡查机构名称" min-width="360" sortable="custom">
+						<template scope="scope">
+							<div class="el-button--text hover" @click="CompanyInspectionDetailHandle(scope.row.tableId)">{{scope.row.theName}}</div>
+						</template>
+					</el-table-column>
+					<el-table-column prop="address" label="无人机巡查机构地址" min-width="540"></el-table-column>
+					<el-table-column prop="unifiedSocialCreditCode" label="统一社会信用代码" min-width="220"></el-table-column>
+					<el-table-column align="center" prop="registeredDateStr" label="成立日期" min-width="120"></el-table-column>
+					<el-table-column prop="legalPerson" label="法定代表人" min-width="120"></el-table-column>
+					<el-table-column align="center" label="是否启用" min-width="100">
+						<template scope="scope">
+							<button v-if="scope.row.isUsedState == '1'" class="btn-state-success">启用</button>
+							<button v-if="scope.row.isUsedState == '0'" class="btn-state-danger" >停用</button>
+						</template>
+					</el-table-column>
+					<el-table-column align="center" prop="busiState" label="业务状态" min-width="120">
+						<template scope="scope">
+							<button v-if="scope.row.busiState == '未备案'" class="btn btn-state-danger" >未备案</button>
+							<button v-if="scope.row.busiState == '已备案'" class="btn btn-state-success">已备案</button>
+						</template>
+					</el-table-column>
+					<el-table-column align="center" prop="approvalState" label="审批状态" min-width="120">
+						<template scope="scope">
+							<button v-if="scope.row.approvalState == '待提交'" class="btn btn-state-danger" >待提交</button>
+							<button v-if="scope.row.approvalState == '审核中'" class="btn btn-state-warning">审核中</button>
+							<button v-if="scope.row.approvalState == '已完结'" class="btn btn-state-success">已完结</button>
+						</template>
+					</el-table-column>
+				</el-table>
+				<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount"
+						 :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"
+						 v-on:countperpagechange="changeCountPerPage"></vue-nav>
+			</div>
+		</div>
+
+		<!-- success modal -->
+		<div class="modal fade" id="CompanyInspectionList_successM" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-del">
+				<div class="modal-content">
+					<div class="modal-body csm-body">
+						<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+						<div class="del-info">
+							<div class="del-text1 font-bold">操作成功</div>
+							<div class="del-text2">{{successMessage}}</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn foot-sure" data-dismiss="modal">
+							确定
+						</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal -->
+		</div>
+
+		<!-- error modal -->
+		<div class="modal fade" id="CompanyInspectionList_errorM" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-del">
+				<div class="modal-content">
+					<div class="modal-body csm-body">
+						<img src="../image/popup_ico_failure.png" class="pull-left"/>
+						<div class="del-info">
+							<div class="del-text1 font-bold">操作失败，请重试</div>
+							<div class="del-text2">{{errorMessage}}</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn foot-sure">
+							确定
+						</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal -->
+		</div>
+
+		<!-- remind modal -->
+		<div class="modal fade" id="CompanyInspectionList_remindM" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-del">
+				<div class="modal-content">
+					<div class="modal-body csm-body">
+						<img src="../image/popup_ico_warning.png" class="pull-left"/>
+						<div class="del-info">
+							<div class="del-text1 font-bold">友情提示</div>
+							<div class="del-text2" >{{remindMessage}}</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn foot-sure">
+							确定
+						</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal -->
+		</div>
+
+		<!-- select modal -->
+		<div class="modal fade" id="CompanyInspectionList_selectM" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-del">
+				<div class="modal-content">
+					<div class="modal-body csm-body">
+						<img src="../image/popup_ico_warning.png" class="pull-left"/>
+						<div class="del-info">
+							<div class="del-text1 font-bold">友情提示</div>
+							<div class="del-text2">{{selectMessage}}</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button v-if="selectMethod == 'CompanyInspectionDel'" type="button" class="btn foot-sure" @click="CompanyInspectionDel" data-dismiss="modal">
+							确定
+						</button>
+						<button v-if="selectMethod == 'CompanyInspectionDelOne'" type="button" class="btn foot-sure" @click="CompanyInspectionDelOne" data-dismiss="modal">
+							确定
+						</button>
+						<button type="button" class="btn foot-cancel" data-dismiss="modal">
+							取消
+						</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal -->
+		</div>
+	</div>
+</div>
+
+<script src="../components/vue-components.js"></script>
+
+<!-- Pages JS -->
+<script src="../js/ServerInterface.js"></script>
+<script src="../js/admin/emmp/Emmp_CompanyInspectionList.js"></script>
+</body>
+</html>

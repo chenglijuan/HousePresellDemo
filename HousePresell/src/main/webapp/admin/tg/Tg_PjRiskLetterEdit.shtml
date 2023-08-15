@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-项目风险函编辑</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tg_PjRiskLetterEditDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="update()">
+						<img src="../image/detail_btn_ico_save.png" width="18">
+						<span>保存</span>
+					</button>
+					<!-- <button class="btn btn-primary">
+						<img src="../image/detail_btn_ico_submit.png" width="18">
+						<span>提交</span>
+					</button> -->
+					<!-- <button class="btn btn-warning">
+						<img src="../image/detail_btn_ico_record.png" width="18">
+						<span>备案</span>
+					</button> -->
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">风险提示函编号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled type="text" v-model="tg_PjRiskLetterModel.eCode" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">区域：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled type="text" v-model="tg_PjRiskLetterModel.cityRegionName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作人：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled type="text" v-model="tg_PjRiskLetterModel.userUpdate" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">项目：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled type="text" v-model="tg_PjRiskLetterModel.projectName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">主送单位：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<input type="text" v-model="tg_PjRiskLetterModel.deliveryCompany" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled type="text" v-model="tg_PjRiskLetterModel.lastUpdateTimeStamp" class="form-control"/>
+									<img src="../image/list_search_calendar.png" class="ico-date"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">开发企业：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled type="text" v-model="tg_PjRiskLetterModel.companyName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">发布日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled type="text" id="riskLetter" v-model="tg_PjRiskLetterModel.releaseDate" class="form-control"/>
+									<img src="../image/list_search_calendar.png" class="ico-date"/>
+								</div>
+							</div>
+						</div>
+					</div><br>
+					<div class="col-md-12">
+						<div class="form-group">
+							<span class="detail-text1">风险提示：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<textarea v-model="tg_PjRiskLetterModel.riskNotification" class="form-control"></textarea>
+								</div>
+							</div>
+						</div>
+					</div><br>
+					<div class="col-md-12">
+						<div class="form-group">
+							<span class="detail-text1">基本情况：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<textarea v-model="tg_PjRiskLetterModel.basicSituation" class="form-control"></textarea>
+								</div>
+							</div>
+						</div>
+					</div><br>
+					<div class="col-md-12">
+						<div class="form-group">
+							<span class="detail-text1">项目风险评估：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<textarea v-model="tg_PjRiskLetterModel.riskAssessment" class="form-control"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			
+			<!-- 邮件收件人开始 -->
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">邮件收件人</h1>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+			    <div class="top-btns">
+					<button class="btn btn-primary" @click="addHandle">
+						<img src="../image/list_btn_ico_add.png"/>
+						<span>新增</span>
+					</button>
+					<!-- <button class="btn btn-success" @click="">
+						<img src="../image/list_btn_ico_add.png"/>
+						<span>发送</span>
+					</button> -->
+					<button class="btn btn-danger" @click="tg_PjRiskLetterDel" v-if="selectItem.length >= 1">
+						<img src="../image/list_btn_ico_del.png"/>
+						<span>删除</span>
+					</button>
+					<button class="btn btn-danger" disabled="disabled" v-if="selectItem.length == 0">
+						<img src="../image/list_btn_ico_del.png"/>
+						<span>删除</span>
+					</button>
+				</div>
+				<div class="row">
+			        <div class="cs-table">
+						<div>
+							<el-table ref="moviesTable" :data="tg_PjRiskLetterDetailList" border :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle">
+								<el-table-column type="selection"  width="55" fixed></el-table-column>
+								<el-table-column type="index" :index="indexMethod" label="序号" width="" fixed></el-table-column>
+								<el-table-column prop="theName" label="姓名" width=""></el-table-column>
+								<!-- <el-table-column prop="busiState" label="所属部门" width="315"></el-table-column>
+								<el-table-column prop="eCode" label="职务" width="315"></el-table-column>
+								<el-table-column prop="userStartName" label="联系电话" width="315"></el-table-column> -->
+								<el-table-column prop="email" label="邮箱" width=""></el-table-column>
+							</el-table>
+							<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"></vue-nav>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 邮件收件人结束 -->
+			
+			<!-- 新增/修改模态框 -->
+			<div class="modal fade" id="letterDetail" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+							<h4 class="modal-title csm-title">
+								新增邮件收件人
+							</h4>
+						</div>
+						<div class="modal-body csm-body">
+							<div class="row">
+							    <div class="col-md-10">
+									<div class="form-group">
+										<span class="detail-text1">收件方名称：</span>
+										<div class="detail-info1">
+											<div class="detail-edit">
+												<input type="text" v-model="theName" class="form-control"/>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+							    <div class="col-md-10">
+									<div class="form-group">
+										<span class="detail-text1">收件方邮箱：</span>
+										<div class="detail-info1">
+											<div class="detail-edit">
+												<input data-errorInfoId="editEmailPjRiskLetterId" data-reg="IsNull&&emailCheck"
+											   data-error="邮箱格式错误" data-empty="请输入邮箱" @blur="errorCheck($event.target)" @change="errorCheck($event.target)" type="text" v-model="email" class="form-control"/>
+											</div>
+											<div id="editEmailPjRiskLetterId" class="red-text">输入有误，请重新填写</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" @click="handleEditSave('letterDetail')"> 
+								保存
+							</button>
+							<button type="button" class="btn foot-cancel" data-dismiss="modal" @click="LogModelClose">
+								取消
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!--附件材料开始-->
+			<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete"  ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+			<!--附件材料结束-->
+		</div>
+		
+		<script src="../components/vue-components.js"></script>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tg/Tg_PjRiskLetterEdit.js"></script>
+	</body>
+</html>	

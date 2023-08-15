@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-网银对账-后台上传的账单原始Excel数据-主表详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tgpf_CyberBankStatementDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="cyberBankStatementEditHandle">
+						<img src="../image/list_btn_ico_edit.png" width="18">
+						<span>修改</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+				
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">银行名称：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_CyberBankStatementModel.theNameOfBank" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<span class="detail-text1">开户行：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_CyberBankStatementModel.theNameOfBankBranch" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">托管账号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_CyberBankStatementModel.theAccountOfBankAccountEscrowed" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						
+						
+						<div class="form-group">
+							<span class="detail-text1">记账日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_CyberBankStatementModel.billTimeStamp" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">托管账号名称：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_CyberBankStatementModel.theNameOfBankAccountEscrowed" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<span class="detail-text1">上传日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_CyberBankStatementModel.uploadTimeStamp" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			
+			<!--数据列表开始-->
+			<div class="detail-title">
+				<h1 class="inline">数据列表</h1>
+			</div>
+			<div class="cs-content">
+				<div class="detail-content">
+					<el-table :data="tgpf_CyberBankStatementDetail" stripe :default-sort = "{prop: 'index'}">
+						<!-- <el-table-column prop="index" label="序号"  width="90" sortable fixed></el-table-column>
+						<el-table-column prop="enterTimeStamp" label="上传日期" width="160"></el-table-column>
+						<el-table-column prop="theNameOfBank" label="银行名称" width="200"></el-table-column>
+						<el-table-column prop="accountOfBankAccountEscrowed" label="托管账户" width="240"></el-table-column>
+						<el-table-column prop="theAccountOfBankAccountEscrowed" label="托管账号名称" width="220"></el-table-column>
+						<el-table-column prop="busiState" label="贷款金额（元）" sortable width="220"></el-table-column>
+						<el-table-column prop="busiState" label="上传人" width="315"></el-table-column>
+						<el-table-column prop="reconciliationState" label="上传状态" width="120">
+						<template scope="scope">
+					        <button  v-if="scope.row.reconciliationState == 1" class="btn btn-state-warning">申请中</button>
+					    	<button  v-if="scope.row.reconciliationState == 2" class="btn btn-state-success">已备案</button>
+						</template>
+						</el-table-column> -->
+						
+						<el-table-column type="index" label="序号" width="80" fixed></el-table-column><!-- :index="indexMethod"  -->
+						<el-table-column prop="tradeTimeStamp" label="交易日期" width="200"></el-table-column>
+						<el-table-column prop="income" label="交易金额（元）" width="260"></el-table-column>
+						<el-table-column prop="recipientAccount" label="对方账号" width="240"></el-table-column>
+						<el-table-column prop="recipientName" label="对方账户名称" width="220"></el-table-column>
+						<el-table-column prop="remark" label="备注摘要" width="300"></el-table-column>
+						
+						<el-table-column prop="reconciliationState" label="对账状态" width="120">
+						<template scope="scope">
+					        <button  v-if="scope.row.reconciliationState == 0" class="btn btn-state-warning">未对账</button>
+					    	<button  v-if="scope.row.reconciliationState == 1" class="btn btn-state-success">已对账</button>
+						</template>
+						</el-table-column>
+						
+						<el-table-column prop="theState" label="数据状态" width="120">
+						<template scope="scope">
+					        <button  v-if="scope.row.theState == 0" class="btn btn-state-warning">已保存</button>
+					    	<button  v-if="scope.row.theState == 1" class="btn btn-state-success">已删除</button>
+						</template>
+						</el-table-column>
+						
+						<el-table-column prop="sourceType" label="数据来源" width=""></el-table-column>
+						
+					</el-table>
+					<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :sidepagecount="4"></vue-nav>
+				</div>
+				
+			</div>	
+			<!--数据列表结束-->
+			<!-- error modal -->
+			<div class="modal fade" id="edModelCyberBankStatementDetail" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">{{errMsg}}</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		</div>
+		
+		<script src="../components/vue-components.js"></script>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tgpf/Tgpf_CyberBankStatementDetail.js"></script>
+	</body>
+</html>	

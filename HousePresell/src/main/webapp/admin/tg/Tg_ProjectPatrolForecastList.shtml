@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-项目巡查预测表</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+		<style>
+			.el-upload-list__item .is-success{
+				display: none;
+			}
+			.el-input__inner {
+		        height:28px;
+		        line-height:28px;
+		    }
+		    .el-input__icon {
+		        line-height: 25px;
+		    }
+		</style>
+	</head>
+	<body>
+		<div class="content-wrap" id="projectPatrolForecastListDiv">
+			<div class="cs-content">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left content-top-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>区域：</span>
+							   	<!-- <select class="form-control cs-select" v-model="areaId" @change="handleChange">
+							     	<option value="">--全部--</option>
+									<option v-for="company in tg_AreaList" :value="company.tableId">{{company.theName}}</option>
+							   	</select> -->
+							   	<vue-listselect defaultname="请选择区域" :thevalue="areaId" :optionlist="tg_AreaList" @callbackfun="handleChange" @emptybackfun="emptyAreaId"></vue-listselect>
+							</div>
+							<div class="inline">
+							    <span >项目名称：</span>
+							   <!--  <vue-select style="float:left" defaultname="请选择项目名称" :thevalue="mortgageId" :optionlist="projectList" @callbackfun="getMortgageId"></vue-select> -->
+							   <vue-listselect defaultname="请选择项目名称" :thevalue="mortgageId" :optionlist="projectList" @callbackfun="getMortgageId" @emptybackfun="emptyMortgageId"></vue-listselect>
+							</div>
+							<div class="inline">
+							    <span>日期：</span>
+							    <input type="text" name="" id="date23020601" class="form-control cs-input" placeholder="日期" v-model="dateRange"/>
+							    <img src="../image/list_search_calendar.png" class="ico-date"/> 
+							</div>
+							<div class="inline">
+							    <button class="btn btn-search" style="height:28px;margin-left:15px" @click="search">搜索</button>
+						        <button class="btn btn-reset" style="height:28px" @click="resetSearch">重置</button>
+							</div>
+						</div>
+					</div>
+					<div class="pull-right">
+						<div class="top-excel">
+							<button class="btn btn-excel" @click="exportForm">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<!--<div class="cs-table">
+					<div>
+					    <el-table :data="tableData3" style="width: 100%" stripe :default-sort="{prop: 'index'}" :span-method="objectSpanMethod">
+						    <el-table-column prop="date" label="序号" width="80"  fixed> </el-table-column>
+						    <el-table-column label="项目情况">
+						        <el-table-column prop="name" label="托管项目" width="120"></el-table-column>
+						        <el-table-column prop="name" label="托管楼幢" width="120"></el-table-column>
+						        <el-table-column prop="name" label="托管面积（㎡）" width="120"></el-table-column>
+						        <el-table-column prop="name" label="预售许可批准日期" width="140"></el-table-column>
+						        <el-table-column prop="name" label="地上总层数" width="120"></el-table-column>
+						    </el-table-column>
+						    <el-table-column label="建设进度情况">
+						        <el-table-column prop="name" label="当前建设进度" width="120"></el-table-column>
+						        <el-table-column prop="name" label="进度更新时间" width="120"></el-table-column>
+						        <el-table-column prop="name" label="合同约定交付时间" width="150"></el-table-column>
+						        <el-table-column prop="name" label="进度评定" width="120"></el-table-column>
+						    </el-table-column>
+						    <el-table-column label="房屋销售及资金归集情况">
+						        <el-table-column prop="name" label="合同签订率(%)" width="120"></el-table-column>
+						        <el-table-column prop="name" label="合同备案率(%)" width="120"></el-table-column>
+						        <el-table-column prop="name" label="合同贷款率(%)" width="120"></el-table-column>
+						        <el-table-column prop="name" label="托管满额率(%)" width="120"></el-table-column>
+						    </el-table-column>
+						    <el-table-column label="房屋限制风险指标">
+						        <el-table-column prop="name" label="未签订合同查封" width="120"></el-table-column>
+						        <el-table-column prop="name" label="已签订合同查封" width="120"></el-table-column>
+						        <el-table-column prop="name" label="限制" width="120"></el-table-column>
+						    </el-table-column>
+						    <el-table-column prop="date" label="土地抵押情况" width="150" > </el-table-column>
+						    <el-table-column prop="date" label="其他风险" width="150" > </el-table-column>
+						    <el-table-column prop="date" label="风险评级" width="150" > </el-table-column>
+						</el-table>
+					</div>
+				</div>-->
+				
+				<div class="cs-table">
+					<div>
+						<el-table :data="bankLendingReportsList" stripe :default-sort = "{prop: 'index'}" border :span-method="objectSpanMethod">
+						    <template v-for="col in companyList">
+				                <el-table-column
+				                        v-if="col.prop === 'index'"
+				                        :type="col.prop"
+				                        align="center"
+				                        :label="col.label"
+				                        width="80"
+				                >
+				                </el-table-column>
+				                <el-table-column
+			                        v-else
+			                        :align="col.align"
+			                        :type="col.prop"
+			                        :label="col.label"
+			                        :prop="col.prop" 
+			                        :width="col.width"
+			                        >  
+				                </el-table-column>
+				            </template>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script src="../components/vue-components.js"></script>
+	
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/tg/Tg_ProjectPatrolForecastList.js"></script>
+	</body>
+</html>	

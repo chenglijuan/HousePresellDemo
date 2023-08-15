@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-合作备忘录</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css" />
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="tgxy_CoopMemoListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+								<span>关键字：</span>
+								<input type="text" v-model="keyword" class="form-control cs-input"  placeholder="请输入编号、银行名称">
+							</div>
+							<div class="inline">
+								<span>签署日期：</span>
+								<input type="text" id="date0611010201" class="form-control cs-input" placeholder="请选择签署日期">
+								<img src="../image/list_search_calendar.png" class="ico-date"/>
+							</div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="resetInfo">重置</button>
+						</div>
+						<div class="top-btns">
+							<button class="btn btn-success" @click="coopMemoAddHandle" data-editNum="06110102_ADD_01">
+								<img src="../image/list_btn_ico_add.png"/>
+								<span>新增</span>
+							</button>
+							<button class="btn btn-primary" @click="coopMemoEditHandle" v-if="selNum == 1" data-editNum="06110102_MOD_01">
+								<img src="../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+							<button class="btn btn-primary" disabled="disabled" v-if="selNum != 1" data-editNum="06110102_MOD_01">
+								<img src="../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+							<!-- <button class="btn btn-info" @click="coopMemoLogHandle">
+								<img src="../image/list_btn_ico_see.png"/>
+								<span>日志</span>
+							</button> -->
+							<button class="btn btn-danger" @click="tgxy_CoopMemoDel" v-if="selNum >= 1" data-editNum="06110102_DEL_01">
+								<img src="../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+							<button class="btn btn-danger" disabled="disabled" v-if="selNum == 0" data-editNum="06110102_DEL_01">
+								<img src="../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+						</div>
+					</div>
+					<!-- <div class="pull-right text-right">
+						<div class="top-excel">
+							<button class="btn btn-excel" @click="exportExcel">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+					</div> -->
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table id="coopMemoTab" :data="tgxy_CoopMemoList" stripe :default-sort="{prop: 'index'}" @selection-change="handleSelectionChange">
+							<el-table-column type="selection" width="50" fixed align="center"></el-table-column>
+							<el-table-column type="index" :index="indexMethod" label="序号" width="60" sortable fixed align="center"></el-table-column>
+							<el-table-column prop="eCode" label="合作备忘录编号" width="315">
+								<template scope="scope">
+									<el-button type="text" size="small" @click="openDetails(scope.row.tableId)">{{scope.row.eCode}}</el-button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="theNameOfBank" label="银行名称" align="center"></el-table-column>
+							<el-table-column prop="signDate" label="签署日期"  align="center"></el-table-column>
+							<el-table-column prop="userUpdate.theName" label="操作人" width="315"></el-table-column>
+							<el-table-column prop="lastUpdateTimeStamp" label="操作时间"  align="center"></el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+				
+				<!-- error modal -->
+			<div class="modal fade" id="edModel" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">请选择要修改的合作备忘录</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" @click="errClose">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<div class="modal fade" id="warnModel" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_warning.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">确认删除吗？</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" @click="saClose">
+								确定
+							</button>
+							<button type="button" class="btn foot-cancel" @click="swClose">
+								取消
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!-- success modal -->
+			<div class="modal fade" id="sdModel" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">提示</div>
+								<div class="del-text2">操作成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" @click="succClose">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		</div>
+
+		
+		<script src="../components/vue-components.js"></script>
+		<script src="../assets/exportExcel/FileSaver.js"></script>
+		<script src="../assets/exportExcel/xlsx.js"></script>
+
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/tgxy/Tgxy_CoopMemoList.js"></script>
+	</body>
+
+</html>

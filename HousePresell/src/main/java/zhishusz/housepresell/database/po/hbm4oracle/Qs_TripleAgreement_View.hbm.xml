@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po.extra">
+	<class name="Qs_TripleAgreement_View" table="Qs_TripleAgreement_View" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_TrpAgreeView</param>
+			</generator>
+		</id>
+		<property name="bankAccountEscrowedId">
+			<column name="bankAccountEscrowedId">
+				<comment>托管账户ID</comment>
+			</column>
+		</property>
+		<property name="projectId">
+			<column name="projectId">
+				<comment>项目ID</comment>
+			</column>
+		</property>
+		<property name="tripleAgreementId">
+			<column name="tripleAgreementId">
+				<comment>三方协议ID</comment>
+			</column>
+		</property>
+		<property name="depositDetailId">
+			<column name="depositDetailId">
+				<comment>资金归集ID</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

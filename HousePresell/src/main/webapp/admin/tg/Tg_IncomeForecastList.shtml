@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-收入预测</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="tg_IncomeForecastListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+								<span>预测时间：</span>
+								<input type="text" class="form-control cs-input-date" id="date21010101" placeholder="预测日期" />
+								<img src="../image/list_search_calendar.png" class="ico-date"/>
+							</div>
+							<button class="btn btn-search" @click="refresh">搜索</button>
+							<!--<button class="btn btn-reset">重置</button>-->
+						</div>
+						<div class="top-btns">
+							<!-- <button class="btn btn-success" @click="saveHandle" data-editNum="210101_ADD_01"> -->
+							<button class="btn btn-success" @click="saveHandle" >
+								<img src="../image/detail_btn_ico_save.png" width="18">
+								<span>保存</span>
+							</button>
+						</div>
+					</div>
+					<div class="pull-right text-right">
+						<div class="top-excel">
+							<button class="btn btn-excel" @click="exportExcelHandle">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="tg_IncomeForecastList" border>
+							<el-table-column prop="theDayStr" label="日期" min-width="110"></el-table-column>
+							<el-table-column prop="theWeekStr" label="星期" min-width="80"></el-table-column>
+							<el-table-column label="入账资金趋势预测（元）" min-width="160">
+								<template scope="scope">
+									<div class="text-right">{{scope.row.incomeTrendForecast | setThousands}}</div>
+								</template>
+							</el-table-column>
+							<el-table-column label="定期到期（元）" min-width="160">
+								<template scope="scope">
+									<div class="text-right">{{scope.row.fixedExpire | setThousands}}</div>
+								</template>
+							</el-table-column>
+							<!--<el-table-column label="结构性理财（元）" min-width="160">-->
+								<!--<template scope="scope">-->
+									<!--<input type="text" class="form-control">{{scope.row.eCode}}</input>-->
+								<!--</template>-->
+							<!--</el-table-column>-->
+							<el-table-column label="银行放贷额度（元）" min-width="160">
+								<template scope="scope">
+									<input type="text" class="form-control text-right" v-model="scope.row.bankLending"
+										   @keyup="clearNoNum(scope.row, 'bankLending')"
+										   @blur ="changeThousands(scope.row, 'bankLending')"
+										   @focus="clearNoNum(scope.row, 'bankLending')"/>
+								</template>
+							</el-table-column>
+							<el-table-column label="收入预测（元）" min-width="160">
+								<template scope="scope">
+									<input type="text" class="form-control text-right" v-model="scope.row.incomeForecast1"
+										   @keyup="clearNoNum(scope.row, 'incomeForecast1')"
+										   @blur ="changeThousands(scope.row, 'incomeForecast1')"
+										   @focus="clearNoNum(scope.row, 'incomeForecast1')"/>
+								</template>
+							</el-table-column>
+							<!-- <el-table-column label="收入预测2（元）" min-width="160">
+								<template scope="scope">
+									<input type="text" class="form-control text-right" v-model="scope.row.incomeForecast2"
+										   @keyup="clearNoNum(scope.row, 'incomeForecast2')"
+										   @blur ="changeThousands(scope.row, 'incomeForecast2')"
+										   @focus="clearNoNum(scope.row, 'incomeForecast2')"/>
+								</template>
+							</el-table-column>
+							<el-table-column label="收入预测3（元）" min-width="160">
+								<template scope="scope">
+									<input type="text" class="form-control text-right" v-model="scope.row.incomeForecast3"
+										   @keyup="clearNoNum(scope.row, 'incomeForecast3')"
+										   @blur ="changeThousands(scope.row, 'incomeForecast3')"
+										   @focus="clearNoNum(scope.row, 'incomeForecast3')"/>
+								</template>
+							</el-table-column> -->
+							<el-table-column label="收入合计（元）" min-width="160">
+								<template scope="scope">
+									<div class="text-right"> {{addThousands(
+										((commafyback(scope.row.incomeTrendForecast) == null || isNaN(Number(commafyback(scope.row.incomeTrendForecast)))) ? 0 : commafyback(scope.row.incomeTrendForecast) - 0)
+										+ ((commafyback(scope.row.fixedExpire) == null || isNaN(Number(commafyback(scope.row.fixedExpire)))) ? 0 : commafyback(scope.row.fixedExpire) - 0)
+										+ ((commafyback(scope.row.bankLending) == null || isNaN(Number(commafyback(scope.row.bankLending)))) ? 0 : commafyback(scope.row.bankLending) - 0)
+										+ ((commafyback(scope.row.incomeForecast1) == null || isNaN(Number(commafyback(scope.row.incomeForecast1)))) ? 0 : commafyback(scope.row.incomeForecast1) - 0)
+										+ ((commafyback(scope.row.incomeForecast2) == null || isNaN(Number(commafyback(scope.row.incomeForecast2)))) ? 0 : commafyback(scope.row.incomeForecast2) - 0)
+										+ ((commafyback(scope.row.incomeForecast3) == null || isNaN(Number(commafyback(scope.row.incomeForecast3)))) ? 0 : commafyback(scope.row.incomeForecast3) - 0)
+										)}}
+									</div>
+								</template>
+							</el-table-column>
+						</el-table>
+					</div>
+				</div>
+			</div>
+		</div>
+        <script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tg/Tg_IncomeForecastList.js"></script>
+
+	</body>
+</html>	

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
+
+	<diskStore path="java.io.tmpdir" />
+
+	<!-- 
+	name:缓存名称。 
+	maxElementsInMemory：缓存最大个数。 
+	eternal:对象是否永久有效，一但设置了，timeout将不起作用。 
+	timeToIdleSeconds：设置对象在失效前的允许闲置时间（单位：秒）。仅当eternal=false对象不是永久有效时使用，可选属性，默认值是0，也就是可闲置时间无穷大。 
+	timeToLiveSeconds：设置对象在失效前允许存活时间（单位：秒）。最大时间介于创建时间和失效时间之间。 仅当eternal=false对象不是永久有效时使用，默认是0.，也就是对象存活时间无穷大。 
+	overflowToDisk：当内存中对象数量达到maxElementsInMemory时，Ehcache将会对象写到磁盘中。
+	diskSpoolBufferSizeMB：这个参数设置DiskStore（磁盘缓存）的缓存区大小。默认是30MB。每个Cache都应该有自己的一个缓冲区。 
+	maxElementsOnDisk：硬盘最大缓存个数。 
+	diskPersistent：是否缓存虚拟机重启期数据
+		Whether the disk store persists between restarts of the Virtual Machine.
+		The default value is false.
+	diskExpiryThreadIntervalSeconds：磁盘失效线程运行时间间隔，默认是120秒。
+	memoryStoreEvictionPolicy：当达到maxElementsInMemory限制时，Ehcache将会根据指定的策略去清理内存。
+		默认策略是LRU（最近最少使用）。你可以设置为FIFO（先进先出）或是LFU（较少使用）。 
+	clearOnFlush：内存数量最大时是否清除。 -->
+		
+	<defaultCache
+		eternal="false"
+		maxElementsInMemory="10000"
+		maxElementsOnDisk="10000000"
+		timeToIdleSeconds="5"
+		timeToLiveSeconds="5"
+		overflowToDisk="true"
+		diskPersistent="false"
+		diskSpoolBufferSizeMB="50"
+		diskExpiryThreadIntervalSeconds="120"
+		memoryStoreEvictionPolicy="LFU" />
+
+	<cache name="Emmp_BankBranch" maxEntriesLocalHeap="10000" />
+	<cache name="Emmp_BankInfo" maxEntriesLocalHeap="10000" />
+	<cache name="Emmp_ComAccount" maxEntriesLocalHeap="10000" />
+	<cache name="Emmp_CompanyInfo" maxEntriesLocalHeap="10000" />
+	<cache name="Emmp_Department" maxEntriesLocalHeap="10000" />
+	<cache name="Emmp_OrgMember" maxEntriesLocalHeap="10000" />
+	<cache name="Emmp_QualificationInfo" maxEntriesLocalHeap="10000" />
+	<cache name="Empj_BldEscrowCompleted_Dtl" maxEntriesLocalHeap="10000" />
+	<cache name="Empj_BldEscrowCompleted" maxEntriesLocalHeap="10000" />
+	<cache name="Empj_BldLimitAmount_AF" maxEntriesLocalHeap="10000" />
+	<cache name="Empj_BuildingExtendInfo" maxEntriesLocalHeap="10000" />
+	<cache name="Empj_BuildingInfo_AF" maxEntriesLocalHeap="10000" />
+	<cache name="Empj_BuildingInfo" maxEntriesLocalHeap="10000" />
+	<cache name="Empj_BuildingAccountSupervised" maxEntriesLocalHeap="10000" />
+	<cache name="Empj_HouseInfo" maxEntriesLocalHeap="10000" />
+	<cache name="Empj_PjDevProgressForcast" maxEntriesLocalHeap="10000" />
+	<cache name="Empj_PjDevProgressForcastDtl" maxEntriesLocalHeap="10000" />
+	<cache name="Empj_PresellDocumentInfo" maxEntriesLocalHeap="10000" />
+	<cache name="Empj_ProjectInfo_AF" maxEntriesLocalHeap="10000" />
+	<cache name="Empj_ProjectInfo" maxEntriesLocalHeap="10000" />
+	<cache name="Empj_UnitInfo" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_ApprovalProcess_AF" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_ApprovalProcess_Cfg" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_ApprovalProcess_Node" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_ApprovalProcess_Condition" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_ApprovalProcess_WorkflowCondition" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_MessageTemplate_Cfg" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_ApprovalProcess_Record" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_ApprovalProcess_Workflow" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_Attachment" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_AttachmentCfg" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_BaseParameter" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_BusinessCode" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_BusiState_Log" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_CityRegionInfo" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_eCode_Log" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_FastNavigate" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_Operate_Log" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_Permission_Range" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_Permission_RangeAuthorization" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_Permission_Role" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_Permission_RoleCompanyType" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_Permission_RoleData" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_Permission_RoleUser" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_Permission_UIResource" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_StreetInfo" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_User" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_CommonMessage" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_CommonMessageDtl" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_ExportPdfModelInfo" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_DepositManagement" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_DepositHouseHoldsDtl_View" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_ExpForecast" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_HandleTimeLimitConfig" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_Holiday" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_IncomeExpDepositForecast" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_IncomeForecast" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_OtherRiskInfo" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_PjRiskAssessment" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_PjRiskLetter" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_PjRiskRating" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_RiskLogInfo" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_RiskCheckBusiCodeSum" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_RiskRoutineCheckInfo" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_RiskCheckMonthSum" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_RiskRoutineCheckRatioConfig" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_TotalEscrowAmountForecast" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_JournalCount_View" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_LoanAmountStatement_View" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_LoanProjectCountM_View" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_Build_View" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_BuildCount_View" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_BuildPayout_View" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_HouseLoanAmount_View" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_BankLoanInSituation_View" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_BankLoanOutSituation_View" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_ProInspectionSchedule_View" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_BigAmountCompare_View" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_WitnessStatistics" maxEntriesLocalHeap="10000" />	
+	<cache name="Tg_InterestForecast_View" maxEntriesLocalHeap="10000" />	
+	<cache name="Tg_ProjectDetailOfBrowse" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_DepositProjectAnalysis_View" maxEntriesLocalHeap="10000" />	
+	<cache name="Tg_LoanProjectCountP_View" maxEntriesLocalHeap="10000" />	
+	<cache name="Tg_RetainedRightsView" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_AccVoucher" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_BalanceOfAccount" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_BankUploadDataDetail" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_BuildingRemainRightLog" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_CyberBankStatement" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_CyberBankStatementDtl" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_DayEndBalancing" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_DepositDetail" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_FundAccountInfo" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_FundAppropriated_AF" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_FundAppropriated_AFDtl" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_FundAppropriated" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_FundOverallPlanRecord" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_FundOverallPlanDetail" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_FundOverallPlan" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_FundProjectInfo" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_OverallPlanAccout" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_RefundInfo" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_RemainRight_Bak" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_RemainRight" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_SerialNumber" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_SocketMsg" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpj_BankAccountSupervised" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpj_BldLimitAmountVer_AF" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpj_BldLimitAmountVer_AFDtl" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpj_BuildingAccount" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpj_BuildingAccountLog" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpj_BuildingAvgPrice" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpj_EscrowStandardVerMng" maxEntriesLocalHeap="10000" />
+	<cache name="Tgxy_BankAccountEscrowed" maxEntriesLocalHeap="10000" />
+	<cache name="Tgxy_BuyerInfo" maxEntriesLocalHeap="10000" />
+	<cache name="Tgxy_ContractInfo" maxEntriesLocalHeap="10000" />
+	<cache name="Tgxy_CoopAgreement" maxEntriesLocalHeap="10000" />
+	<cache name="Tgxy_CoopAgreementSettle" maxEntriesLocalHeap="10000" />
+	<cache name="Tgxy_CoopAgreementSettleDtl" maxEntriesLocalHeap="10000" />
+	<cache name="Tgxy_CoopAgreementVerMng" maxEntriesLocalHeap="10000" />
+	<cache name="Tgxy_CoopMemo" maxEntriesLocalHeap="10000" />
+	<cache name="Tgxy_DepositAgreement" maxEntriesLocalHeap="10000" />
+	<cache name="Tgxy_EscrowAgreement" maxEntriesLocalHeap="10000" />
+	<cache name="Tgxy_TripleAgreement" maxEntriesLocalHeap="10000" />
+	<cache name="Tgxy_TripleAgreementReview_View" maxEntriesLocalHeap="10000" />
+	<cache name="Tgxy_TripleAgreementVerMng" maxEntriesLocalHeap="10000" />
+	<cache name="Qs_EscrowBankFunds_View" maxEntriesLocalHeap="10000" />
+	<cache name="Qs_BuildingAccount_View" maxEntriesLocalHeap="10000" />
+	<cache name="Qs_RecordAmount_View" maxEntriesLocalHeap="10000" />
+	<cache name="Qs_BigAmountCompare_View" maxEntriesLocalHeap="10000" />
+	<cache name="Qs_ProjectEscrowAmount_View" maxEntriesLocalHeap="10000" />
+	<cache name="Qs_TripleAgreement_View" maxEntriesLocalHeap="10000" />
+	<cache name="Empj_PaymentGuarantee" maxEntriesLocalHeap="10000" />
+	<cache name="Empj_PaymentGuaranteeChild" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_PjRiskLetterReceiver" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_ProjectRisk" maxEntriesLocalHeap="10000" />
+	<cache name="Tg_AccountabilityEnquiry" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_SpecialFundAppropriated_AF" maxEntriesLocalHeap="10000" />
+	<cache name="Tgpf_SpecialFundAppropriated_AFDtl" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_BusinessRecord" maxEntriesLocalHeap="10000" />
+	<cache name="Empj_HouseExtendInfo" maxEntriesLocalHeap="10000" />
+	<cache name="Sm_UserSignInLog" maxEntriesLocalHeap="10000" />
+	
+</ehcache>
+ 

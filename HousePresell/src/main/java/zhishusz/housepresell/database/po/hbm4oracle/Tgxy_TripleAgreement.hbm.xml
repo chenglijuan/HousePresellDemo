@@ -1,0 +1,261 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tgxy_TripleAgreement" table="Tgxy_TripleAgreement"
+		dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_TripleAgreement</param>
+			</generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate"
+			foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord"
+			foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<property name="approvalState">
+			<column name="approvalState">
+				<comment>流程状态</comment>
+			</column>
+		</property>
+		<property name="eCodeOfTripleAgreement">
+			<column name="eCodeOfTripleAgreement">
+				<comment>三方协议号</comment>
+			</column>
+		</property>
+		<property name="tripleAgreementTimeStamp">
+			<column name="tripleAgreementTimeStamp">
+				<comment>协议日期</comment>
+			</column>
+		</property>
+		<property name="eCodeOfContractRecord">
+			<column name="eCodeOfContractRecord">
+				<comment>合同备案号</comment>
+			</column>
+		</property>
+		<property name="sellerName">
+			<column name="sellerName">
+				<comment>出卖人</comment>
+			</column>
+		</property>
+		<property name="escrowCompany">
+			<column name="escrowCompany">
+				<comment>托管机构</comment>
+			</column>
+		</property>
+		<property name="theNameOfProject">
+			<column name="theNameOfProject">
+				<comment>项目名称</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_BuildingInfo" name="buildingInfo"
+			foreign-key="null">
+			<column name="buildingInfo">
+				<comment>关联楼幢</comment>
+			</column>
+		</many-to-one>
+		<property name="eCodeOfBuilding">
+			<column name="eCodeOfBuilding">
+				<comment>楼幢编号</comment>
+			</column>
+		</property>
+		<property name="eCodeFromConstruction">
+			<column name="eCodeFromConstruction">
+				<comment>施工编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_UnitInfo" name="unitInfo"
+			foreign-key="null">
+			<column name="unitInfo">
+				<comment>关联单元</comment>
+			</column>
+		</many-to-one>
+		<property name="eCodeOfUnit">
+			<column name="eCodeOfUnit">
+				<comment>单元</comment>
+			</column>
+		</property>
+		<property name="unitRoom">
+			<column name="unitRoom">
+				<comment>户室</comment>
+			</column>
+		</property>
+		<property name="buildingArea">
+			<column name="buildingArea">
+				<comment>建筑面积（m2）</comment>
+			</column>
+		</property>
+		<property name="contractAmount">
+			<column name="contractAmount">
+				<comment>合同金额（元）</comment>
+			</column>
+		</property>
+		<property name="firstPayment">
+			<column name="firstPayment">
+				<comment>首付款</comment>
+			</column>
+		</property>
+		<property name="loanAmount">
+			<column name="loanAmount">
+				<comment>贷款金额</comment>
+			</column>
+		</property>
+		<set name="buyerInfoSet">
+			<key>
+				<column name="tripleAgreement" not-null="false">
+					<comment>三方协议信息</comment>
+				</column>
+			</key>
+			<one-to-many class="Tgxy_BuyerInfo" />
+		</set>
+		<property name="theStateOfTripleAgreement">
+			<column name="theStateOfTA">
+				<comment>三方协议状态</comment>
+			</column>
+		</property>
+		<property name="theStateOfTripleAgreementFiling">
+			<column name="theStateOfTAF">
+				<comment>三方协议归档状态</comment>
+			</column>
+		</property>
+		<property name="theStateOfTripleAgreementEffect">
+			<column name="theStateOfTAE">
+				<comment>三方协议效力状态</comment>
+			</column>
+		</property>
+		<property name="printMethod">
+			<column name="printMethod">
+				<comment>打印方式</comment>
+			</column>
+		</property>
+		<property name="theAmountOfRetainedEquity">
+			<column name="theAmountOfRE">
+				<comment>留存权益总金额</comment>
+			</column>
+		</property>
+		<property name="theAmountOfInterestRetained">
+			<column name="theAmountOfIE">
+				<comment>到期留存权益金额</comment>
+			</column>
+		</property>
+		<property name="theAmountOfInterestUnRetained">
+			<column name="theAmountOfIUR">
+				<comment>未到期留存权益金额</comment>
+			</column>
+		</property>
+		<property name="totalAmountOfHouse">
+			<column name="amountOfHouse">
+				<comment>户托管入账总金额（按揭入账）</comment>
+			</column>
+		</property>
+		<property name="totalAmount">
+			<column name="totalAmount">
+				<comment>户托管入账总金额</comment>
+			</column>
+		</property>
+		<property name="buyerName">
+			<column name="buyerName">
+				<comment>买受人姓名</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_ProjectInfo" name="project"
+			foreign-key="null">
+			<column name="project">
+				<comment>关联项目</comment>
+			</column>
+		</many-to-one>
+		<many-to-one class="Empj_HouseInfo" name="house"
+			foreign-key="null">
+			<column name="house">
+				<comment>关联户室</comment>
+			</column>
+		</many-to-one>
+		<!-- <many-to-one class="Tgxy_BankAccountEscrowed" name="tgxy_BankAccountEscrowed"
+			foreign-key="null">
+			<column name="tgxy_BankAccountEscrowed">
+				<comment>托管账户表</comment>
+			</column>
+		</many-to-one> -->
+		<property name="ecodeOfContract">
+			<column name="ecodeOfContract">
+				<comment>关联合同编号</comment>
+			</column>
+		</property>
+		<property name="escrowPattern">
+			<column name="escrowPattern">
+				<comment>托管模式  0-贷款、1-全额</comment>
+			</column>
+		</property>
+		<property name="escrowMode">
+			<column name="escrowMode">
+				<comment>托管方式 0-按幢、1-按户</comment>
+			</column>
+		</property>
+		<property name="earnestMoney">
+			<column name="earnestMoney">
+				<comment>定金金额（元）</comment>
+			</column>
+		</property>
+		<property name="processingResults">
+			<column name="processingResults">
+				<comment>处理结果</comment>
+			</column>
+		</property>
+		<property name="processingOpinions">
+			<column name="processingOpinions">
+				<comment>处理意见</comment>
+			</column>
+		</property>
+		<property name="roomlocation">
+			<column name="roomlocation">
+				<comment>房屋坐落</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

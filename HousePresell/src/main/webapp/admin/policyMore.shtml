@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>政策公告-更多</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="policyMoreDiv">
+			<el-tabs type="border-card" v-model="noticeTab" @tab-click="getNoticeData">
+			    <el-tab-pane :label="item.theName" v-for="item in policyRecordTypeList" :name="item.theValue">
+				    <template>
+				        <div class="row">
+				            <div v-for="item1 in sm_PolicyRecordList" :title="item1.policyTitle" class="testDIV" >
+								   <img src="../image/gonggao.png" /><span style="margin:0px 10px 0px 5px">[{{ item1.policyDate }}]</span>{{ item1.policyTitle }}
+						    </div>
+                           </div>
+				    </template>
+			    </el-tab-pane>
+			</el-tabs>
+		</div>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/policyMore.js"></script>
+	</body>
+</html>

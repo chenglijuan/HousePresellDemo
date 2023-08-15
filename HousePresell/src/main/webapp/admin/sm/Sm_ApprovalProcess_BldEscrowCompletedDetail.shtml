@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="UTF-8">
+    <title>housepresell管理后台-申请表-项目托管终止（审批）-主表详情</title>
+    <link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+</head>
+<body>
+<div class="content-wrap" id="sm_ApprovalProcess_BldEscrowCompletedDetailDiv">
+    <div class="detail-title cs-mt-0">
+        <h1 class="inline">基本信息</h1>
+        <div class="inline title-btns">
+            <button  v-if="isNeedBackup" class="btn btn-warning" data-toggle="modal" data-target="#examine" @click="showModal" data-backdrop="static" data-keyboard=false>
+                <img src="../image/list_btn_ico_examine.png" width="18">
+                <span>审批记录</span>
+            </button>
+            <button  v-if="isNeedBackup && sourcePage == 1" class="btn btn-warning" @click="approvalHandle">
+                <img src="../image/detail_btn_ico_record.png" width="18">
+                <span>备案</span>
+            </button>
+            <button v-if="!isNeedBackup && sourcePage != 2" class="btn btn-warning" data-toggle="modal" data-target="#examine" @click="showModal" data-backdrop="static" data-keyboard=false>
+                <img src="../image/list_btn_ico_examine.png" width="18">
+                <span>审批</span>
+            </button>
+        </div>
+        <div class="inline title-btns pull-right" >
+        	<button class="btn btn-success" @click="exportPdf2" >
+				<img src="../image/detail_btn_ico_save.png" width="18">
+				<span>公安-施工对照表</span>
+			</button>
+			
+			<button class="btn btn-success" @click="exportPdf" >
+				<img src="../image/detail_btn_ico_save.png" width="18">
+				<span>查看</span>
+			</button>
+		</div>
+    </div>
+    <!--基本信息开始-->
+    <div class="cs-content detail-content">
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <span class="detail-text1">托管终止申请单号：</span>
+                    <div class="detail-info3">
+                        <div class="detail-unEdit">
+                            <input type="text" v-model="eCode" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="detail-text1">项目名称：</span>
+                    <div class="detail-info3">
+                        <div class="detail-unEdit">
+                            <input type="text" v-model="projectName" class="form-control" disabled="true"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="detail-text1">项目托管面积：</span>
+                    <div class="detail-info3">
+                        <div class="detail-unEdit">
+                            <input type="text" v-model="allBldEscrowSpace" class="form-control" disabled="true"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="detail-text1">终止申请日期：</span>
+                    <div class="detail-info3">
+                        <div class="detail-unEdit">
+                            <input type="text" v-model="lastUpdateTimeStamp" class="form-control" disabled="true"/>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group cs-mb-0">
+					<span class="detail-text1">是否已公示：</span>
+					<div class="detail-info3">
+						<div class="detail-unEdit">
+							<input type="text" v-model="hasFormula" class="form-control" disabled="true"/>
+						</div>
+					</div>
+				</div>
+				
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <span class="detail-text1">交付备案批准文件号：</span>
+                    <div class="detail-info3">
+                        <div class="detail-unEdit">
+                            <input type="text" v-model="eCodeFromDRAD" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="detail-text1">区域：</span>
+                    <div class="detail-info3">
+                        <div class="detail-unEdit">
+                            <input type="text" v-model="cityRegionName" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="detail-text1">本次终止托管面积：</span>
+                    <div class="detail-info3">
+                        <div class="detail-unEdit">
+                            <input type="text" v-model="currentBldEscrowSpace" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="detail-text1">审核人：</span>
+                    <div class="detail-info3">
+                        <div class="detail-unEdit">
+                            <input type="text" v-model="userRecordName" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+					<span class="detail-text1">公示网址：</span>
+					<div class="detail-info3">
+						<div class="detail-unEdit">
+							<a :href="webSite" target="_blank" style="text-decoration:none;">{{webSite}}</a>
+							<!-- <input type="text" v-model="webSite" class="form-control" disabled="true"/> -->
+						</div>
+					</div>
+				</div>
+				
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <span class="detail-text1">开发企业：</span>
+                    <div class="detail-info3">
+                        <div class="detail-unEdit" >
+                            <input type="text" v-model="developCompanyName" class="form-control" disabled="true"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="detail-text1">项目坐落：</span>
+                    <div class="detail-info3">
+                        <div class="detail-unEdit">
+                            <input type="text" v-model="address" class="form-control" disabled="true"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="detail-text1">终止申请人：</span>
+                    <div class="detail-info3">
+                        <div class="detail-unEdit">
+                            <input type="text" v-model="userUpdateName" class="form-control" disabled="true"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="detail-text1">审核时间：</span>
+                    <div class="detail-info3">
+                        <div class="detail-unEdit">
+                            <input type="text" v-model="recordTimeStamp" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <span class="detail-text1">备注：</span>
+                    <div class="detail-info3">
+                        <div class="detail-unEdit">
+                            <textarea type="text" v-model="remark" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--基本信息结束-->
+    <!--表格开始-->
+    <div class="detail-title">
+        <h1 class="inline">托管终止楼幢</h1>
+    </div>
+    <div class="cs-content">
+        <div class="detail-content">
+            <el-table :data="empj_BldEscrowCompleted_DtlList" stripe :default-sort = "{prop: 'index'}">
+                <el-table-column type="index" :index="indexMethod" label="序号"  width="min-width" fixed></el-table-column>
+                <el-table-column prop="eCodeofBuilding" label="楼幢编号" width="min-width"></el-table-column>
+                <el-table-column prop="eCodeFromConstruction" label="施工编号" width="min-width"></el-table-column>
+                <el-table-column prop="eCodeFromPublicSecurity" label="公安编号" width="min-width"></el-table-column>
+                <el-table-column prop="newEscrowStandard" label="托管标准" width="min-width"></el-table-column>
+                <el-table-column prop="upfloorNumber" label="地上层数" width="min-width"></el-table-column>
+                <el-table-column prop="buildingArea" label="建筑面积(㎡)" width="min-width"></el-table-column>
+                <el-table-column prop="escrowArea" label="托管面积(㎡)" width="min-width"></el-table-column>
+                <el-table-column prop="deliveryTypeName" label="房屋交付类型" width="min-width"></el-table-column>
+                <el-table-column label="托管余额(元)" width="min-width">
+                    <template scope="scope">
+                        <div class="text-right">{{scope.row.currentEscrowFund}}</div>
+                    </template>
+                </el-table-column>
+                <el-table-column label="可拨付余额" width="min-width">
+                    <template scope="scope">
+                        <div class="text-right">{{scope.row.allocableAmount}}</div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="currentFigureProgress" label="当前形象进度" width="min-width"></el-table-column>
+                <el-table-column label="当前受限额度(元)" width="min-width">
+                    <template scope="scope">
+                        <div class="text-right">{{scope.row.effectiveLimitedAmount}}</div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="escrowState" label="状态" width="min-width">
+                    <template scope="scope">
+                        <button  v-if="scope.row.escrowState == '未托管'" class="btn btn-state-danger">未托管</button>
+                        <button  v-if="scope.row.escrowState == '已托管'" class="btn btn-state-success">已托管</button>
+                        <button  v-if="scope.row.escrowState == '申请托管终止'" class="btn btn-state-warning">申请托管终止</button>
+                        <button  v-if="scope.row.escrowState == '托管终止'" class="btn btn-state-danger">托管终止</button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </div>
+    </div>
+    <!--表格结束-->
+    <!--附件材料开始-->
+    <my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+    <!--附件材料结束-->
+</div>
+
+<script src="../js/admin/sm/Sm_ApprovalProcess_BldEscrowCompletedDetail.js"></script>
+</body>
+</html>

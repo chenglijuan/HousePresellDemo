@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-申请表-受限额度变更详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+		<style>
+		    .model-width{
+		       width:80%
+		    }
+		    .csm-body .detail-title{
+		       display:none;
+		    }
+		</style>
+	</head>
+	<body>
+		<div class="content-wrap" id="empj_BldLimitAmountDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-primary" @click="editFileActive()"  v-if="editFile">
+						<img src="../image/list_btn_ico_edit.png" />
+						<span>修改附件</span>
+					</button>
+					
+					<!-- <button class="btn btn-primary" @click="saveFileActive()" v-if="saveFile">
+						<img src="../image/detail_btn_ico_save.png" />
+						<span>保存附件</span>
+					</button> -->
+					<button class="btn btn-primary" @click="mainSubmitHandle()" v-if="empj_BldLimitAmountModel.approvalState == '待提交' " >
+		                <img src="../image/detail_btn_ico_submit.png" width="18">
+		                <span>提交</span>
+		            </button>
+		            
+		            <span style="color:red;font-weight:bold;font-size:20px;display:inline-block;margin-left:300px">一个单号可以同时申请多个楼幢，请勿分开申请。</span>
+				</div>
+				<div class="inline title-btns pull-right" >
+					<button class="btn btn-success" @click="exportPdf" >
+						<img src="../image/detail_btn_ico_save.png" width="18">
+						<span>打印</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+					   <div class="form-group">
+							<span class="detail-text1">工程进度节点单号：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.eCode" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">申请日期：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled  class="form-control" placeholder="请选择申请日期" v-model="empj_BldLimitAmountModel.applyDate"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">现场联系人A：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled placeholder="请输入联系人A" v-model="empj_BldLimitAmountModel.contactOne" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<span class="detail-text1">现场联系人B：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled placeholder="请输入联系人B" v-model="empj_BldLimitAmountModel.contactTwo" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="form-group">
+							<span class="detail-text1">预约时间：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled  class="form-control" placeholder="请选择申请日期" v-model="empj_BldLimitAmountModel.appointTimeStamp"/>
+								</div>
+							</div>
+						</div> -->
+						
+						<!-- <div class="form-group">
+							<span class="detail-text1">监理机构A：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit" >
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.companyOne" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<span class="detail-text1">监理机构B：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit" >
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.companyTwo" class="form-control"/>
+								</div>
+							</div>
+						</div> -->
+						
+						<div class="form-group">
+							<span class="detail-text1">业务办理码A：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.businessCodeA" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<span class="detail-text1">业务办理码B：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.businessCodeB" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="col-md-4">
+					    <div class="form-group">
+							<span class="detail-text1">企业名称：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit" >
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.developName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<span class="detail-text1">项目名称：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.theNameOfProject" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<span class="detail-text1">联系方式A：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled placeholder="请输入联系方式A" v-model="empj_BldLimitAmountModel.telephoneOne" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">联系方式B：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled placeholder="请输入联系方式B" v-model="empj_BldLimitAmountModel.telephoneTwo" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<span class="detail-text1">预约时间A：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled  class="form-control" v-model="empj_BldLimitAmountModel.appointmentDateOne"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">预约时间B：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled  class="form-control" v-model="empj_BldLimitAmountModel.appointmentDateTwo"/>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="col-md-4">
+					
+						<!-- <div class="form-group">
+							<span class="detail-text1">业务办理码：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.businessCode" class="form-control"/>
+								</div>
+							</div>
+						</div> -->
+						<div class="form-group">
+							<span class="detail-text1">总包单位：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.countUnit" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					
+					    <div class="form-group">
+							<span class="detail-text1">操作人：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.userUpdateName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作时间：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.updateDate" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<span class="detail-text1">备案人：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.userRecordName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<span class="detail-text1">备案时间：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.recordDate" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			<!--基本信息结束-->
+			<div class="detail-title">
+				<h1 class="inline">楼幢信息</h1>
+			</div>
+			<div class="cs-content detail-content">
+			     <el-table :data="buildingList" stripe :default-sort="{prop: 'index'}">
+		             <el-table-column align="center" type="index" label="序号" width="60" fixed></el-table-column>
+		             <el-table-column prop="eCodeFromConstruction" label="施工编号" min-width="120" ></el-table-column>
+		             <el-table-column prop="upfloorNumber" label="地上层数" width="100"></el-table-column>
+		             <el-table-column prop="deliveryType" label="交付类型" min-width="100" >
+		                 <template scope="scope">
+		                     <div v-if="scope.row.deliveryType == '1'">毛坯房</div>
+		                     <div v-else>成品房</div>
+		                 </template>
+		             </el-table-column>
+		             
+		             <el-table-column prop="nowLimitedAmount" label="当前形象进度" min-width="150" align="center"></el-table-column>
+		             <el-table-column prop="limitedName" label="变更形象进度" min-width="200"> </el-table-column>
+		             
+		             <el-table-column prop="limitedAmount" label="变更受限比例(%)" min-width="150" align="center"></el-table-column>
+			
+		             <el-table-column prop="escrowStandard" label="托管标准" min-width="185" ></el-table-column>
+		             <el-table-column align="center" label="附件信息" width="140">
+		                 <template scope="scope">
+		                     <el-button type="text" size="small" @click="openFileModel(scope.row)">附件信息</el-button>
+		                 </template>
+		             </el-table-column>
+		             <!-- <el-table-column prop="orgLimitedAmount" label="初始受限额度（元）" min-width="180" align="right">
+		                 <template scope="scope">
+		                     <div class="text-right">{{addThousands(scope.row.orgLimitedAmount)}}</div>
+		                 </template>
+		             </el-table-column> -->
+		             
+		             <el-table-column  prop="signingDate" label="签约时间" width="120" align="center"></el-table-column>
+		             <el-table-column prop="bldLimitAmountName" label="受限额度版本" width="280"></el-table-column>
+		             
+		             <el-table-column  prop="predictionNodeName" label="预测节点名称" width="120" align="center" ></el-table-column>
+		             <el-table-column  prop="completeDateOne" label="A预测完成时间" width="140" align="center" v-if="empj_BldLimitAmountModel.approvalState == '已完结'"></el-table-column>
+		             <el-table-column  prop="completeDateTwo" label="B预测完成时间" width="140" align="center" v-if="empj_BldLimitAmountModel.approvalState == '已完结'" ></el-table-column>
+		             
+		             <el-table-column prop="resultOne" label="A审批结果" min-width="100" align="center" v-if="empj_BldLimitAmountModel.approvalState == '已完结'" >
+		                 <template scope="scope">
+		                     <div v-if="scope.row.resultOne == '0'" style="color: rgb(255, 0, 0); ">不通过</div>
+		                     <div v-else>通过</div>
+		                 </template>
+		             </el-table-column>
+		             <el-table-column prop="resultInfoOne" label="A不通过原因" min-width="150" v-if="empj_BldLimitAmountModel.approvalState == '已完结'"></el-table-column>
+		             
+		             <el-table-column prop="resultTwo" label="B审批结果" min-width="100" align="center" v-if="empj_BldLimitAmountModel.approvalState == '已完结'" >
+		                 <template scope="scope">
+		                     <div v-if="scope.row.resultTwo == '0'" style="color: rgb(255, 0, 0); ">不通过</div>
+		                     <div v-else>通过</div>
+		                 </template>
+		             </el-table-column>
+		             <el-table-column prop="resultInfoTwo" label="B不通过原因" min-width="150" v-if="empj_BldLimitAmountModel.approvalState == '已完结'"></el-table-column>
+		             
+		             
+		             
+		             <el-table-column prop="approvalResult" label="审批结果" min-width="90" align="center" v-if="empj_BldLimitAmountModel.approvalState == '已完结'" >
+		                 <template scope="scope">
+		                     <div v-if="scope.row.approvalResult == '0'" style="color: rgb(255, 0, 0); ">不通过</div>
+		                     <div v-else>通过</div>
+		                 </template>
+		             </el-table-column>
+		             <el-table-column prop="approvalInfo" label="不通过原因" min-width="150" v-if="empj_BldLimitAmountModel.approvalState == '已完结'"></el-table-column>
+		         </el-table>
+			</div>
+			
+			<!-- 附件模态框开始 -->
+		    <div class="modal fade" id="fileNodeModelDetail" tabindex="-1" role="dialog" aria-hidden="true" >
+		        <div class="modal-dialog model-width">
+		            <div class="modal-content">
+		                <div class="modal-header">
+		                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+		                        &times;
+		                    </button>
+		                    <h4 class="modal-title csm-title">附件信息</h4>
+		                </div>
+		                <div class="modal-body csm-body">
+			                <!--附件材料开始-->
+							<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+							<!--附件材料结束-->
+		                </div>
+		                <div class="modal-footer" v-if="saveFile">
+		                    <button type="button" class="btn foot-sure" @click="dialogSave">确定</button>
+		                    <button type="button" class="btn foot-cancel" data-dismiss="modal" ><!-- @click="refresh" --> 取消</button>
+		                </div>
+		                
+		            </div><!-- /.modal-content -->
+		        </div><!-- /.modal -->
+		    </div>
+		    <!-- 附件模态框结束 -->
+			
+			<!-- 			
+			<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+			附件材料结束 -->
+			
+		</div>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/empj/Empj_BldLimitAmountDetail.js"></script>
+	</body>
+</html>	

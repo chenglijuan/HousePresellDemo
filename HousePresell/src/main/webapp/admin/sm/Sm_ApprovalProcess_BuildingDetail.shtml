@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-楼幢变更审批</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body >
+		<div class="content-wrap" id="sm_ApprovalProcess_BuildingDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button  v-if="isNeedBackup" class="btn btn-warning" data-toggle="modal" data-target="#examine" @click="showModal" data-backdrop="static" data-keyboard=false>
+						<img src="../image/list_btn_ico_examine.png" width="18">
+						<span>审批记录</span>
+					</button>
+					<button  v-if="isNeedBackup && sourcePage == 1" class="btn btn-warning" @click="approvalHandle">
+						<img src="../image/detail_btn_ico_record.png" width="18">
+						<span>备案</span>
+					</button>
+					<button v-if="!isNeedBackup && sourcePage != 2" class="btn btn-warning" data-toggle="modal" data-target="#examine" @click="showModal" data-backdrop="static" data-keyboard=false>
+						<img src="../image/list_btn_ico_examine.png" width="18">
+						<span>审批</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">项目名称：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_BuildingInfo.empj_ProjectInfoName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="form-group cs-mb-0">
+							<span class="detail-text1">预售系统项目编号：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_BuildingInfo.eCodeOfProjectFromPresellSystem" class="form-control"/>
+								</div>
+							</div>
+						</div> -->
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">托管状态：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<div class="form-control">
+										<button class="btn btn-state-danger cs-pt-0 cs-pb-0" v-if="empj_BuildingInfo.escrowState == '未托管'">未托管</button>
+										<button class="btn btn-state-success cs-pt-0 cs-pb-0" v-if="empj_BuildingInfo.escrowState == '已托管'">已托管</button>
+										<button class="btn btn-state-warning cs-pt-0 cs-pb-0" v-if="empj_BuildingInfo.escrowState == '申请托管终止'">申请托管终止</button>
+										<button class="btn btn-state-primary cs-pt-0 cs-pb-0" v-if="empj_BuildingInfo.escrowState == '托管终止'">托管终止</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="form-group cs-mb-0">
+							<span class="detail-text1">已实际支付累计金额：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_BuildingInfo.buildAmountPaid" class="form-control"/>
+								</div>
+							</div>
+						</div> -->
+						<div class="form-group">
+							<span class="detail-text1">备案人：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_BuildingInfo.sm_UserRecordName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">备案人日期：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_BuildingInfo.recordTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">开发企业：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_BuildingInfo.developCompanyName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">预售证号：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_BuildingInfo.eCodeFromPresellCert" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="form-group cs-mb-0">
+							<span class="detail-text1">已落实支付累计金额：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_BuildingInfo.totalAmountGuaranteed" class="form-control"/>
+								</div>
+							</div>
+						</div> -->
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">预售楼幢：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_BuildingInfo.isAdvanceSale" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">操作人：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_BuildingInfo.sm_UserStartName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="form-group">
+							<span class="detail-text1">备案人日期：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_BuildingInfo.recordTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div> -->
+					</div>
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">预售项目名称：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_BuildingInfo.theNameFromPresellSystem" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="form-group cs-mb-0">
+							<span class="detail-text1">是否支付保证业务楼幢：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input v-if="empj_BuildingInfo.isSupportPGS" disabled="" type="text" value="是" class="form-control"/>
+									<input v-if="!empj_BuildingInfo.isSupportPGS" disabled="" type="text" value="否" class="form-control"/>
+								</div>
+							</div>
+						</div> -->
+						<!-- <div class="form-group cs-mb-0">
+							<span class="detail-text1">待支付承保累计金额：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_BuildingInfo.buildAmountPay" class="form-control"/>
+								</div>
+							</div>
+						</div> -->
+						<div class="form-group">
+							<span class="detail-text1">操作日期：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="empj_BuildingInfo.createTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="cs-border">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">施工编号：</span>
+								<div class="detail-info3">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" v-model="empj_BuildingInfo.eCodeFromConstruction" class="form-control"/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">公安编号：</span>
+								<div class="detail-info3">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" v-model="empj_BuildingInfo.eCodeFromPublicSecurity" class="form-control"/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">建筑面积（㎡）：</span>
+								<div class="detail-info3">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" v-model="empj_BuildingInfoNew.buildingArea" class="form-control"/>
+									</div>
+									<div class="change-info" v-if="empj_BuildingInfoNew.buildingArea != empj_BuildingInfo.buildingArea">
+										<img src="../image/detail_ico_warning.png" width="15"/>
+										<span class="text-danger vertical-m">变更前：{{empj_BuildingInfo.buildingArea}}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">托管面积：</span>
+								<div class="detail-info3">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" v-model="empj_BuildingInfoNew.escrowArea" class="form-control"/>
+									</div>
+									<div class="change-info" v-if="empj_BuildingInfoNew.escrowArea != empj_BuildingInfo.escrowArea">
+										<img src="../image/detail_ico_warning.png" width="15"/>
+										<span class="text-danger vertical-m">变更前：{{empj_BuildingInfo.escrowArea}}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="col-md-4">
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">托管标准：</span>
+								<div class="detail-info3">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" v-model="empj_BuildingInfo.escrowStandard" class="form-control"/>
+									</div>
+								</div>
+							</div>
+						</div> -->
+						<div class="col-md-4">
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">交付类型：</span>
+								<div class="detail-info3">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" class="form-control" v-model="empj_BuildingInfoNew.parameterName"/>
+									</div>
+									<div class="change-info" v-if="empj_BuildingInfoNew.parameterName != empj_BuildingInfo.parameterName">
+										<img src="../image/detail_ico_warning.png" width="15"/>
+										<span class="text-danger vertical-m">{{empj_BuildingInfo.parameterName}}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">土地抵押状态：</span>
+								<div class="detail-info3">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" value="无" class="form-control" v-if="empj_BuildingInfoNew.landMortgageState == 0"/>
+										<input disabled="" type="text" value="有" class="form-control" v-if="empj_BuildingInfoNew.landMortgageState == 1"/>
+									</div>
+									<div class="change-info" v-if="empj_BuildingInfoNew.landMortgageState != empj_BuildingInfo.landMortgageState">
+										<img src="../image/detail_ico_warning.png" width="15"/>
+										<span class="text-danger vertical-m" v-if="empj_BuildingInfo.landMortgageState == 0">变更前：无</span>
+										<span class="text-danger vertical-m" v-if="empj_BuildingInfo.landMortgageState == 1">变更前：有</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">地上层数：</span>
+								<div class="detail-info3">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" v-model="empj_BuildingInfoNew.upfloorNumber" class="form-control"/>
+									</div>
+									<div class="change-info" v-if="empj_BuildingInfoNew.upfloorNumber != empj_BuildingInfo.upfloorNumber">
+										<img src="../image/detail_ico_warning.png" width="15"/>
+										<span class="text-danger vertical-m">变更前：{{empj_BuildingInfo.upfloorNumber}}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">地下层数：</span>
+								<div class="detail-info3">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" v-model="empj_BuildingInfoNew.downfloorNumber" class="form-control"/>
+									</div>
+									<div class="change-info" v-if="empj_BuildingInfoNew.downfloorNumber != empj_BuildingInfo.downfloorNumber">
+										<img src="../image/detail_ico_warning.png" width="15"/>
+										<span class="text-danger vertical-m">变更前：{{empj_BuildingInfo.downfloorNumber}}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="col-md-4">
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">土地抵押状态：</span>
+								<div class="detail-info3">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" value="无" class="form-control" v-if="empj_BuildingInfoNew.landMortgageState == 0"/>
+										<input disabled="" type="text" value="有" class="form-control" v-if="empj_BuildingInfoNew.landMortgageState == 1"/>
+									</div>
+									<div class="change-info" v-if="empj_BuildingInfoNew.landMortgageState != empj_BuildingInfo.landMortgageState">
+										<img src="../image/detail_ico_warning.png" width="15"/>
+										<span class="text-danger vertical-m" v-if="empj_BuildingInfo.landMortgageState == 0">变更前：无</span>
+										<span class="text-danger vertical-m" v-if="empj_BuildingInfo.landMortgageState == 1">变更前：有</span>
+									</div>
+								</div>
+							</div>
+						</div> -->
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group cs-mb-0" v-if="empj_BuildingInfoNew.landMortgageState == 0">
+								<span class="detail-text1">土地抵押权人：</span>
+								<div class="detail-info3">
+									<div class="detail-unEdit">
+										<input type="text" v-model="empj_BuildingInfoNew.landMortgagor" class="form-control" disabled/>
+									</div>
+									<div class="change-info" v-if="empj_BuildingInfo.landMortgagor != empj_BuildingInfoNew.landMortgagor">
+										<img src="../image/detail_ico_warning.png" width="15"/>
+										<span class="text-danger vertical-m">变更前：{{empj_BuildingInfo.landMortgagor}}</span>
+									</div>
+								</div>
+							</div>
+							<div class="form-group cs-mb-0" v-if="empj_BuildingInfoNew.landMortgageState == 1">
+								<span class="detail-text1">土地抵押权人：</span>
+								<div class="detail-info3">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" v-model="empj_BuildingInfoNew.landMortgagor" class="form-control"/>
+									</div>
+									<div class="change-info" v-if="empj_BuildingInfo.landMortgagor != empj_BuildingInfoNew.landMortgagor">
+										<img src="../image/detail_ico_warning.png" width="15"/>
+										<span class="text-danger vertical-m">变更前：{{empj_BuildingInfo.landMortgagor}}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group cs-mb-0" v-if="empj_BuildingInfoNew.landMortgageState == 0">
+								<span class="detail-text1">土地抵押金额（元）：</span>
+								<div class="detail-info3">
+									<div class="detail-unEdit">
+										<input type="text" v-model="empj_BuildingInfoNew.landMortgageAmount" class="form-control" disabled/>
+									</div>
+									<div class="change-info" v-if="empj_BuildingInfo.landMortgageAmount != null && empj_BuildingInfoNew.landMortgageAmount != null && empj_BuildingInfoNew.landMortgageAmount != empj_BuildingInfo.landMortgageAmount">
+										<img src="../image/detail_ico_warning.png" width="15"/>
+										<span class="text-danger vertical-m">变更前：{{empj_BuildingInfo.landMortgageAmount}}</span>
+									</div>
+								</div>
+							</div>
+							<div class="form-group cs-mb-0" v-if="empj_BuildingInfoNew.landMortgageState == 1">
+								<span class="detail-text1">土地抵押金额（元）：</span>
+								<div class="detail-info3">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" v-model="empj_BuildingInfoNew.landMortgageAmount" class="form-control"/>
+									</div>
+									<div class="change-info" v-if="empj_BuildingInfoNew.landMortgageAmount != empj_BuildingInfo.landMortgageAmount">
+										<img src="../image/detail_ico_warning.png" width="15"/>
+										<span class="text-danger vertical-m">变更前：{{empj_BuildingInfo.landMortgageAmount}}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="col-md-4">
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">支付保证上限比例：</span>
+								<div class="detail-info3">
+									<div class="detail-unEdit">
+										<input disabled="" type="text" v-model="empj_BuildingInfo.paymentLines" class="form-control"/>
+									</div>
+								</div>
+							</div>
+						</div> -->
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group cs-mb-0">
+								<span class="detail-text1">备注：</span>
+								<div class="detail-info3">
+									<div class="detail-unEdit">
+										<textarea disabled="" type="text" v-model="empj_BuildingInfo.remark" class="form-control"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--附件材料开始-->
+			<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete"  ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+			<!--附件材料结束-->
+		</div>
+
+		<script src="../js/admin/sm/Sm_ApprovalProcess_BuildingDetail.js"></script>
+	</body>
+</html>	

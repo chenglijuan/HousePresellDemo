@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tg_WitnessStatistics" table="Tg_WitnessStatistics" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_Tg_WitnessStatistics</param>
+			</generator>
+		</id>
+		<property name="projectName">
+			<column name="projectName">
+				<comment>项目名称</comment>
+			</column>
+		</property>
+		<property name="projectArea">
+			<column name="projectArea">
+				<comment>项目区域</comment>
+			</column>
+		</property>	
+		<property name="constructionNumber">
+			<column name="constructionNumber">
+				<comment>施工编号</comment>
+			</column>
+		</property>	
+		<property name="witnessNode">
+			<column name="witnessNode">
+				<comment>见证节点</comment>
+			</column>
+		</property>	
+		<property name="supervisionCompany">
+			<column name="supervisionCompany">
+				<comment>监理公司</comment>
+			</column>
+		</property>	
+		<property name="witnessAppoinTime">
+			<column name="witnessAppoinTime">
+				<comment>见证预约时间</comment>
+			</column>
+		</property>	
+		<property name="reportUploadTime">
+			<column name="reportUploadTime">
+				<comment>报告上传时间</comment>
+			</column>
+		</property>	
+	</class>
+</hibernate-mapping>

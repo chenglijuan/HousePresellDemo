@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+    <class name="zhishusz.housepresell.util.gjj.Gjj_BulidingRelation" table="Gjj_BulidingRelation" dynamic-update="true"
+           dynamic-insert="true">
+        <id name="tableId">
+            <generator class="sequence">
+                <param name="sequence">Seq_BuildingInfo</param>
+            </generator>
+        </id>
+        <property name="empjBuildingId">
+            <column name="empjBuildingId">
+                <comment>托管楼栋id</comment>
+            </column>
+        </property>
+        <property name="gjjBuildingId">
+            <column name="gjjBuildingId">
+                <comment>公积金楼栋id</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,103 @@
+.login-bg{
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	background:url(../image/login_bg.png) no-repeat;
+	background-size:100% 100%;
+	z-index:-1;
+	}
+.login-version{position:absolute;bottom:2vh;left:0;width:100%;color:#317fb5;}
+.pad-top{padding-top:2vh}
+.login-border{
+border:16px solid rgba(255,255,255,0.5);		
+border-radius:10px;
+position:absolute; 
+margin:auto;
+left:0;
+right:0;
+/* top:50%;
+left:50%;
+-webkit-transform:translate(-50%,-50%);
+-moz-transform:translate(-50%,-50%);
+-o-transform:translate(-50%,-50%);
+-ms-transform:translate(-50%,-50%);
+transform:translate(-50%,-50%); */
+box-shadow: 1px 1px 8px #98b9d6;
+}
+h2,h3{font-weight:bold;}
+.container_bg{
+background:#e3f3f9;
+padding-top:5vh;
+padding-bottom:5vh;
+border-radius:10px;
+margin-left:-18px;
+margin-right:-18px;
+margin-top:-3px;
+margin-bottom:-3px;
+box-shadow: 1px 1px 5px #98b9d6;
+}
+.container_liner{
+	background:url(../image/login_line.png) right center no-repeat ;
+}
+.login_tips{height:40px;line-height:40px;font-weight:bold;}
+.login-inputs .form-group{position:relative;box-sizing: border-box;height:48px;}
+.form-group img{position:absolute;left:10px;top:15px;}
+.form-group input{padding-left:40px;height:48px;}
+@media (min-width: 1200px){
+	.container {
+    width: 1068px;
+	}
+}
+
+@media (max-width: 992px){
+    container_liner{
+	background:url(../image/login_line.png) center bottom no-repeat ;
+	transform:rotate(180deg);
+	}
+}
+.csm-title{
+	font-size: 18px;
+	font-weight: 600;
+	margin-top: 13px;
+}
+.csm-body{
+	padding-left: 50px;
+	padding-right: 50px;
+	padding-top: 35px;
+	padding-bottom: 45px;
+}
+.modal-footer{
+	border-top: none;
+	background: #f6f6f6;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+}
+.foot-sure,.foot-sure:hover,.foot-sure:focus{
+	background: #18c25b;
+	color: #fff;
+	border: 1px solid #3b9c11;
+	padding: 10px 30px;
+}
+.foot-cancel,.foot-cancel:hover,.foot-cancel:focus{
+	background: #fff;
+	color: #333333;
+	border: 1px solid #c5c5c5;
+	padding: 10px 30px;
+}
+.modal-del{
+	width: 540px;
+}
+.del-info{
+	padding-left: 60px;
+	padding-top: 11px;
+}
+.del-info .del-text1{
+	font-size: 20px;
+}
+.del-info .del-text2{
+	color: #666;
+	margin-top: 30px;
+	word-break: break-all;
+}

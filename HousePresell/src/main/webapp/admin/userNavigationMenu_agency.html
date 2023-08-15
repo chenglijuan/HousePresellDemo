@@ -1,0 +1,143 @@
+<!--
+	作者：tony.yang
+	时间：2018-08-09
+	
+	静态化模板作者：percy.hu
+	模板创建时间：2018-10-09
+	
+	描述：用户权限菜单
+-->
+<!-- 去除首页默认加载显示
+<ul class="nav-ul">
+	<li class="nav-padding nav-borderB" onclick="enterNewTab('000000', '首页', 'home.shtml')">
+		<a href="#" class="nav-home">
+			<span class="nav-text">首页</span>
+		</a>
+	</li>
+</ul>
+-->
+<ul class="nav-ul" data-switchmenu data-isonlyoneopen="false">
+	<!-- 递归  宏定义 -->
+    <!-- 调用宏 生成递归树 -->
+	<!-- <li class="nav-padding nav-borderB">
+		<div class="nav-parent hover">
+			<img src="../image/side_arrow.png" class="icon"/>
+			<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+			<span class="nav-text">项目管理</span>
+		</div>
+		<ul class="nav-children">
+	<li>
+		<div class="nav-parent hover">
+			<img src="../image/side_arrow.png" class="icon"/>
+			<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+			<span class="nav-text">项目信息管理</span>
+		</div>
+		<ul class="nav-children">
+    <li onclick="enterNewTab('030101', '项目信息', 'empj/Empj_ProjectInfoList.shtml')">
+		<a>
+    	<img src='../image/side_ico_jggl.png' class="menu-icon"/>
+		项目信息
+		</a>
+	</li>
+    <li onclick="enterNewTab('03010201', '楼幢信息', 'empj/Empj_BuildingInfoList.shtml')">
+		<a>
+    	<img src='../image/side_ico_jggl.png' class="menu-icon"/>
+		楼幢信息
+		</a>
+	</li>
+    <li onclick="enterNewTab('03010301', '楼幢备案价格', 'tgpj/Tgpj_BuildingAvgPriceList.shtml')">
+		<a>
+    	<img src='../image/side_ico_jggl.png' class="menu-icon"/>
+		楼幢备案价格
+		</a>
+	</li>
+		</ul>
+	</li>
+	<li>
+		<div class="nav-parent hover">
+			<img src="../image/side_arrow.png" class="icon"/>
+			<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+			<span class="nav-text">楼盘表</span>
+		</div>
+		<ul class="nav-children">
+    <li onclick="enterNewTab('030201', '楼盘表管理', 'empj/Empj_BuildingInfoTable.shtml')">
+		<a>
+    	<img src='../image/side_ico_jggl.png' class="menu-icon"/>
+		楼盘表管理
+		</a>
+	</li>
+		</ul>
+	</li>
+		</ul>
+	</li> -->
+    <li class="nav-padding nav-borderB" 
+    	onclick="enterNewTab('0001', '托管预售统计表', 'qs/qs_TrusteeshipProjectReports.shtml')"><!-- 托管项目资金收支情况表 -->
+		<a>
+    	<img src='../image/side_ico_jggl.png' class="menu-icon"/>
+		托管预售统计表
+		</a>
+	</li>
+    <!-- <li class="nav-padding nav-borderB" 
+    	onclick="enterNewTab('0002', '托管项目统计表 ', 'tgpf/Tgpf_ManagedProjectStatisticsList.shtml')">
+		<a>
+    	<img src='../image/side_ico_jggl.png' class="menu-icon"/>
+		托管项目统计表 
+		</a>
+	</li> -->
+    <li class="nav-padding nav-borderB" 
+    	onclick="enterNewTab('0003', '托管项目户信息明细表 ', 'tg/Tg_DepositHouseholdsDtlList.shtml')">
+		<a>
+    	<img src='../image/side_ico_jggl.png' class="menu-icon"/>
+		托管项目户信息明细表 
+		</a>
+	</li>
+    <li class="nav-padding nav-borderB" 
+    	onclick="enterNewTab('0010', '项目风险明细表 ', 'tg/Tg_ProjectRisksDetailedList.shtml')">
+		<a>
+    	<img src='../image/side_ico_jggl.png' class="menu-icon"/>
+		项目风险明细表 
+		</a>
+	</li>
+    <li class="nav-padding nav-borderB" 
+    	onclick="enterNewTab('0004', '托管项目详情一览表 ', 'tgpf/Tgpf_ManagedProjectDetailList.shtml')">
+		<a>
+    	<img src='../image/side_ico_jggl.png' class="menu-icon"/>
+		托管项目详情一览表 
+		</a>
+	</li>
+    <li class="nav-padding nav-borderB" 
+    	onclick="enterNewTab('0005', '项目情况分析表 ', 'tgpf/Tgpf_ManagedProjectAnalyseList.shtml')">
+		<a>
+    	<img src='../image/side_ico_jggl.png' class="menu-icon"/>
+		项目情况分析表 
+		</a>
+	</li>
+    <li class="nav-padding nav-borderB" 
+    	onclick="enterNewTab('0006', '项目统计表 ', 'tgpf/Tgpf_ManagedProjectStatisticsList.shtml')">
+		<a>
+    	<img src='../image/side_ico_jggl.png' class="menu-icon"/>
+		项目统计表 
+		</a>
+	</li>
+    <li class="nav-padding nav-borderB" 
+    	onclick="enterNewTab('0008', '银行放款出账情况表 ', 'qs/qs_BankPaymentReports.shtml')">
+		<a>
+    	<img src='../image/side_ico_jggl.png' class="menu-icon"/>
+		银行放款出账情况表 
+		</a>
+	</li>
+    <li class="nav-padding nav-borderB" 
+    	onclick="enterNewTab('0007', '银行放款入账情况表 ', 'qs/qs_BankLendingReports.shtml')">
+		<a>
+    	<img src='../image/side_ico_jggl.png' class="menu-icon"/>
+		银行放款入账情况表 
+		</a>
+	</li>
+    <li class="nav-padding nav-borderB" 
+    	onclick="enterNewTab('0009', '楼幢信息查询表 ', 'qs/qs_FloorAccountReports.shtml')">
+		<a>
+    	<img src='../image/side_ico_jggl.png' class="menu-icon"/>
+		楼幢信息查询表 
+		</a>
+	</li>
+</ul>

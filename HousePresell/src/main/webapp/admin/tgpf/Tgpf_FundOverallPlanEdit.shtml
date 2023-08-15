@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta charset="UTF-8">
+	<title>housepresell管理后台-资金统筹修改</title>
+	<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css" />
+	<link rel="stylesheet" type="text/css" href="../css/detail.css" />
+	<link rel="stylesheet" type="text/css" href="../css/admin/tgpf/Tgpf_FundOverallPlanListDetail.css" />
+</head>
+
+<body>
+<div class="content-wrap" id="tgpf_FundOverallPlanEditDiv">
+	<div class="detail-title cs-mt-0">
+		<h1 class="inline">基本信息</h1>
+		<div class="inline title-btns">
+			<button class="btn btn-success" @click="updateTgpf_FundOverallPlan(1)" :disabled="addDisabled">
+				<img src="../image/detail_btn_ico_save.png" width="18">
+				<span>保存</span>
+			</button>
+			<button class="btn btn-primary" @click="updateTgpf_FundOverallPlan(2)" :disabled="addDisabled" v-if="showSubFlag">
+				<img src="../image/detail_btn_ico_submit.png" width="18">
+				<span>提交</span>
+			</button>
+		</div>
+	</div>
+	<!--基本信息开始-->
+	<div class="cs-content detail-content">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<span class="detail-text1">统筹单号：</span>
+					<div class="detail-info1">
+						<div class="detail-unEdit">
+							<input type="text" v-model="tgpf_FundOverallPlanModel.eCode" class="form-control" disabled />
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">统筹状态：</span>
+					<div class="detail-info1">
+						<div class="detail-unEdit">
+							<div class="form-control">
+								<button  v-if="tgpf_FundOverallPlanModel.busiState == '统筹中'" class="btn btn-state-warning cs-pt-0 cs-pb-0">统筹中</button>
+								<button  v-if="tgpf_FundOverallPlanModel.busiState == '已统筹'" class="btn btn-state-success cs-pt-0 cs-pb-0">已统筹</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<span class="detail-text1">统筹日期：</span>
+					<div class="detail-info1">
+						<div class="detail-unEdit">
+							<input type="text" id="date061203020201" class="form-control"  disabled/>
+							<!--<img src="../image/list_search_calendar.png" class="ico-date"/>-->
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">统筹人员：</span>
+					<div class="detail-info1">
+						<div class="detail-unEdit">
+							<input type="text" v-model="tgpf_FundOverallPlanModel.userStart" class="form-control" disabled/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--基本信息结束-->
+
+	<!--用款计划详情-->
+	<div class="detail-title">
+		<h1 class="inline">用款计划详情</h1>
+	</div>
+	<div class="cs-content">
+		<!--表格开始-->
+		<div class="cs-table">
+			<div>
+				<el-table :data="tgpf_overallPlanAccoutList" border :default-sort="{prop: 'index'}"
+						  show-summary :summary-method="getSummaries"
+						  v-loading="loading"
+						  element-loading-text="拼命加载中" height="250">
+					<el-table-column align="center" type="index"  label="序号" width="60" fixed></el-table-column>
+					<el-table-column prop="theNameOfBankBranch" label="开户行"   fixed></el-table-column>
+					<!-- <el-table-column prop="theAccount" label="托管账号" width="180" fixed>
+				
+					</el-table-column> -->
+					<el-table-column prop="currentBalance" label="托管活期余额" fixed>
+						<template scope="scope">
+							<div class="text-right">{{scope.row.currentBalanceView}}</div>
+						</template>
+					</el-table-column>
+					<!-- <el-table-column prop="canPayAmount" label="托管可拨付金额(元)" width="180" fixed>
+						<template scope="scope">
+							<div class="text-right">{{scope.row.canPayAmount}}</div>
+						</template>
+					</el-table-column>
+					<el-table-column prop="largeAndCurrentRatio" label="大额+活期占比" width="160" sortable fixed></el-table-column> -->
+<!--					<el-table-column prop="totalFundsRatio" label="总资金沉淀占比" width="160" sortable fixed></el-table-column>-->
+					<el-table-column prop="totalFundsRatio" label="总资金沉淀占比" width="160" sortable>
+						<template scope="scope">
+							<div class="text-right">{{scope.row.totalFundsRatioView}}</div>
+						</template>
+
+					</el-table-column>
+					<!-- <el-table-column prop="transactionAmount" label="网银入账金额" width="140">
+						<template scope="scope">
+							<div class="text-right">{{scope.row.transactionAmount}}</div>
+						</template>
+					</el-table-column>
+					<el-table-column prop="accountAmountTrim" label="当天入账金额调整项" width="140">
+						<template scope="scope">
+							<input placeholder="请输入当天入账金额调整项"
+								   class="form-control text-right"
+								   v-model="scope.row.accountAmountTrim"
+								   @keyup="adjustAmount($event)"
+								   @focus="accountAmountTrimFocus($event,scope.$index)"
+								   @blur="accountAmountTrimBlur($event,scope.$index)"/>
+						</template>
+					</el-table-column>
+					 -->
+					 <el-table-column prop="coordinatedNoPayout" label="已统筹未拨付金额" width="140">
+						<template scope="scope">
+							<div class="text-right">{{scope.row.coordinatedNoPayout}}</div>
+						</template>
+					</el-table-column>
+					<el-table-column prop="handling" label="正在办理中" >
+						<template scope="scope">
+							<div class="text-right">{{scope.row.handling}}</div>
+						</template>
+					</el-table-column>
+					<el-table-column prop="overallPlanAmount" label="拨付合计" >
+						<template scope="scope">
+							<div class="text-right">{{scope.row.overallPlanAmount}}</div>
+						</template>
+					</el-table-column>
+					<template  v-for="items in fundOverallPlanDetailList">
+						<el-table-column  :label="items.theNameOfProject" width="200" align="center">
+							<template  v-for="item in items.data">
+								<el-table-column  :label="item.theNameOfBankBranch" min-width="180">
+									<el-table-column  :label="item.supervisedBankAccount" min-width="180">
+										<el-table-column  :label="item.appliedAmount" min-width="180">
+											<template scope="scope">
+												<input placeholder="请输入内容"
+													   :data-bankAccountEscrowedId="scope.row.bankAccountEscrowId"
+													   :data-bankAccountSupervisedId="item.supervisedBankAccountId"
+													   :data-EscroweBank = "scope.row.theNameOfBankBranch"
+													   :data-SupervisedBank = "item.theNameOfBankBranch"
+													   :data-fundAppropriated_AFId = "item.mainTableId"
+													   :data-canPayAmount = "scope.row.canPayAmount"
+													   class="form-control inputMoneyEdit text-right"
+													   @focus="inputMoneyFocus($event)"
+													   @blur="inputmoneyBlur($event)"
+													   @keyup="generateSummary($event)"/>
+											</template>
+										</el-table-column>
+									</el-table-column>
+								</el-table-column>
+							</template>
+						</el-table-column>
+					</template>
+				</el-table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Pages JS -->
+<script src="../js/tabCommon.js"></script>
+<script src="../js/admin/tgpf/Tgpf_FundOverallPlanEdit.js"></script>
+</body>
+
+</html>

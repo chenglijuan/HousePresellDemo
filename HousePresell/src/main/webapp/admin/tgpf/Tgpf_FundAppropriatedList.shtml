@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-资金拨付</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tgpf_FundAppropriatedListDiv">
+			<div class="cs-content">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input"  v-model="keyword" placeholder="请输入用款申请单号搜索">
+							</div>
+							<div class="inline">
+								<span>项目名称：</span>
+								<vue-listselect defaultname="请选择项目" :thevalue="projectId"
+												:optionlist="projectList"
+												@callbackfun="changeprojectListener"
+												@emptybackfun="changeProjectEmpty"></vue-listselect>
+							</div>
+							<div class="inline">
+							    <span>用款申请日期：</span>
+							    <input type="text" name="" id="date0612030301" value="" class="form-control cs-input" placeholder="请选择用款申请日期"/>
+								<img src="../image/list_search_calendar.png" class="ico-date"/>
+							</div>
+							<div class="inline">
+								<span>统筹日期：</span>
+								<input type="text" id="date0612030302" class="form-control cs-input" placeholder="请选择统筹日期">
+								<img src="../image/list_search_calendar.png" class="ico-date"/>
+							</div>
+							<div class="inline">
+								<span>拨付状态：</span>
+								<vue-listselect defaultname="请选择审批状态" :thevalue="applyState"
+										:optionlist="applyStateList"
+										@callbackfun="applyStateChange"
+										@emptybackfun="applyStateChangeEmpty"></vue-listselect>
+										
+								<!-- <select  class="form-control cs-select" v-model="applyState" @change="applyStateChange">
+									<option value="" selected>全部</option>
+									<option value="4">已统筹</option>
+									<option value="5">拨付中</option>
+									<option value="6">已拨付</option>
+								</select> -->
+							</div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="reset">重置</button>
+						</div>
+					</div>
+
+					<div class="pull-right">
+						<div class="top-excel">
+							<button class="btn btn-excel" @click="exportForm">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+					</div>
+
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="tgpf_FundAppropriatedList" stripe :default-sort = "{prop: 'index'}"  @selection-change="listItemSelectHandle" @sort-change="sortChange">
+							<el-table-column align="center" type="index" :index="indexMethod" label="序号" width="60" fixed></el-table-column>
+							<el-table-column prop="eCode" label="用款申请单号" width="220">
+								<template scope="scope">
+									<el-button type="text" size="small" @click="tgpf_FundAppropriatedDetail(scope.row.tableId)">{{scope.row.eCode}}</el-button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="theNameOfProject" label="项目名称" min-width="100" sortable='custom'></el-table-column>
+							<el-table-column prop="totalApplyAmount" label="申请拨付金额（元）" width="220" sortable>
+								<template scope="scope">
+									<div class="text-right">{{scope.row.totalApplyAmount}}</div>
+								</template>
+							</el-table-column>
+							<el-table-column align="center" prop="applyDate" label="用款申请日期" width="180" sortable='custom'></el-table-column>
+							<el-table-column align="center" prop="paystate" label="受控情况" width="120"></el-table-column>
+							<el-table-column align="center" prop="fundOverallPlanDate" label="统筹日期" width="180" sortable='custom'></el-table-column>
+							<el-table-column align="center" prop="applyState" label="拨付状态" width="120" sortable='custom'>
+								<template scope="scope">
+									<button  v-if="scope.row.applyState == 4" class="btn btn-state-warning">已统筹</button>
+							        <button  v-if="scope.row.applyState == 5" class="btn btn-state-warning">拨付中</button>
+							    	<button  v-if="scope.row.applyState == 6" class="btn btn-state-success">已拨付</button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Pages JS -->
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tgpf/Tgpf_FundAppropriatedList.js"></script>
+	</body>
+</html>	

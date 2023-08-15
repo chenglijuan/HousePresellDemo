@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-托管项目户信息明细</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="tg_DepositManagementListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input" v-model="keyword" placeholder="请输入关键字搜索">
+							</div>
+							<!-- <div class="inline">
+							    <span style="float:left;margin-left:20px">项目名称：</span>
+							    <vue-select style="float:left" defaultname="请选择项目名称" :thevalue="projectId" :optionlist="qs_projectNameList" @callbackfun="getProjectId"></vue-select>
+							    <vue-listselect defaultname="请选择项目名称" :thevalue="projectId" :optionlist="qs_projectNameList" @callbackfun="getProjectId" @emptybackfun="emptyProjectId"></vue-listselect>
+								<span style="clear:both"></span>
+							</div> -->
+							
+							<div class="inline">
+							<span>所属区域：</span>
+							<!-- <select class="form-control cs-select" v-model="areaId" @change="changeCityFun">
+							     	<option value="">--全部--</option>
+									<option v-for="company in tg_AreaList" :value="company.tableId">{{company.theName}}</option>
+							   	</select> -->
+							<vue-listselect defaultname="请选择区域" :thevalue="areaId"
+								:optionlist="tg_AreaList" @callbackfun="changeCityFun"
+								@emptybackfun="changeCityFunEmpty"></vue-listselect>
+							</div>
+							<div class="inline">
+								<span>托管项目：</span>
+								<!-- <select class="form-control cs-select" v-model="projectId">
+								     	<option value="">--全部--</option>
+										<option v-for="project in tg_projectNameList" :value="project.tableId">{{project.theName}}</option>
+								   	</select> -->
+								<vue-listselect defaultname="请选择托管项目" :thevalue="projectId"
+									:optionlist="tg_projectNameList" @callbackfun="getProjectId"
+									@emptybackfun="emptyProjectId"></vue-listselect>
+							</div>
+							
+							<div class="inline">
+							    <span>付款方式：</span>
+							    <!-- <select class="form-control cs-select" v-model="paymentMethod">
+							          <option value="">--请选择--</option>
+							          <option value="1">一次性付款</option>
+							          <option value="2">分期付款</option>
+							          <option value="3">贷款方式付款</option>
+							          <option value="4">其他方式</option>
+							   	</select> -->
+							   	<vue-listselect defaultname="请选择付款方式" :thevalue="paymentMethod" :optionlist="paymentMethodList" @callbackfun="getPaymentMethod" @emptybackfun="emptyPaymentMethod"></vue-listselect>
+							</div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="handleReset">重置</button>
+						</div>
+						<!--<div class="top-btns">
+							<button class="btn btn-success">
+								<img src="../image/list_btn_ico_add.png"/>
+								<span>新增</span>
+							</button>
+						</div>-->
+					</div>
+					<div class="pull-right text-right" @click="exportExcelHandle">
+						<div class="top-excel">
+							<button class="btn btn-excel">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="Tg_DepositHouseholdsDtl_View" stripe :default-sort = "{prop: 'index'}">
+							<el-table-column type="index" :index="indexMethod" label="序号" width="60" fixed></el-table-column>
+							
+							<el-table-column prop="eCodeOfContractRecord" label="合同编号" width="240"></el-table-column>
+							<el-table-column prop="position" label="坐落" width="540"></el-table-column>
+							<el-table-column prop="buyerName" label="买受人姓名" width="280"></el-table-column>
+							<el-table-column prop="eCodeOfcertificate" label="买受人证件号" width="370"></el-table-column>
+							<el-table-column prop="contactPhone" label="买受人电话" width="370"></el-table-column>
+							<el-table-column prop="payWay" label="付款方式" width="140">
+							    <template scope="scope">
+									<button  v-if="scope.row.payWay == '1'" class="btn btn-state-warning">一次性付款</button>
+							        <button  v-if="scope.row.payWay == '2'" class="btn btn-state-warning">分期付款</button>
+							        <button  v-if="scope.row.payWay == '3'" class="btn btn-state-warning">贷款方式付款</button>
+							        <button  v-if="scope.row.payWay == '4'" class="btn btn-state-warning">其他方式</button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="contractCteateState" label="买卖合同签订与备案状态" width="100">
+								 <template scope="scope">
+									<button  v-if="scope.row.contractCteateState == 1" class="btn btn-state-warning">已草签</button>
+							        <button  v-if="scope.row.contractCteateState == 2" class="btn btn-state-warning">已签订</button>
+							        <button  v-if="scope.row.contractCteateState == 3" class="btn btn-state-warning">待备案</button>
+							        <button  v-if="scope.row.contractCteateState == 4" class="btn btn-state-warning">已备案</button>
+							        <button  v-if="scope.row.contractCteateState == 5" class="btn btn-state-warning">已注销</button>
+							        <button  v-if="scope.row.contractCteateState == 6" class="btn btn-state-warning">已修改</button>
+							        <button  v-if="scope.row.contractCteateState == 99" class="btn btn-state-warning">未签订</button>
+								 </template>
+							</el-table-column>
+							<el-table-column prop="contractCreateTime" label="买卖合同签订时间" width="120"></el-table-column>
+							<el-table-column prop="contractRecordTime" label="买卖合同备案时间" width="120"></el-table-column>
+							<el-table-column prop="tripleAgreementRecordState" label="三方协议备案状态" width="100">
+								<template scope="scope">
+									<button  v-if="scope.row.tripleAgreementRecordState == 0" class="btn btn-state-warning">未备案</button>
+							        <button  v-if="scope.row.tripleAgreementRecordState == 1" class="btn btn-state-warning">已备案</button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="tripleAgreementRecordTime" label="三方协议备案时间" width="120"></el-table-column>
+							<el-table-column prop="totalAmountOfHouse" label="入账金额（元）" width="140"></el-table-column>
+							<el-table-column prop="theAmountOfRetainedEquity" label="留存权益（元）" width="140"></el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<script src="../components/vue-components.js"></script>
+	
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/tg/Tg_DepositHouseholdsDtlList.js"></script>
+	</body>
+</html>	

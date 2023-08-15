@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-楼幢预测信息查询</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+		<style>
+		    .model-width{
+		       width:80%
+		    }
+		    .csm-body .detail-title{
+		       display:none;
+		    }
+		</style>
+	</head>
+	<body>
+		<div class="content-wrap" id="empj_ProjProgInspectionViewDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+				</div>
+				 
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+					
+						<div class="form-group">
+							<span class="detail-text1">开发企业：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled  v-model="empj_ProjProgInspectionModel.companyName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">当前托管余额：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_ProjProgInspectionModel.currentEscrowFund" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">现金受限额度：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_ProjProgInspectionModel.cashLimitedAmount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">节点受限额度：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_ProjProgInspectionModel.nodeLimitedAmount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					
+					</div>
+					<div class="col-md-4">
+					    <div class="form-group">
+							<span class="detail-text1">项目名称：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled  v-model="empj_ProjProgInspectionModel.projectName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">初始受限额度：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled  v-model="empj_ProjProgInspectionModel.orgLimitedAmount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">当前形象进度：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled  class="form-control"  v-model="empj_ProjProgInspectionModel.currentFigureProgress"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">有效受限额度：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_ProjProgInspectionModel.effectiveLimitedAmount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+								<span class="detail-text1">施工楼幢：</span>
+								<div class="detail-info2">
+								   <div class="detail-unEdit">
+										<input type="text" disabled  v-model="empj_ProjProgInspectionModel.buildCode" class="form-control"/>
+									</div>
+								</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">保函金额：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled  v-model="empj_ProjProgInspectionModel.guaranteeAmount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">受限比例（%）：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled  v-model="empj_ProjProgInspectionModel.currentLimitedRatio" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					</div>
+				</div>
+			<!--基本信息结束-->
+			<div class="detail-title">
+				<h1 class="inline">预测节点信息</h1>
+			</div>
+			<div class="cs-content detail-content">
+			     <el-table :data="buildingList" stripe :default-sort="{prop: 'index'}">
+		             <el-table-column align="center" type="index" label="序号" width="60" fixed></el-table-column>
+		             <el-table-column prop="forecastCompleteDate" label="预测时间" align="center" min-width="160"> </el-table-column>
+		             <el-table-column prop="buildProgress" label="形象进度" min-width="160"> </el-table-column>
+		             <el-table-column prop="limitedRatio" label="受限比例（%）" align="center" min-width="150"> </el-table-column>
+		             <el-table-column prop="cashLimitAmount" label="现金受限额度（元）" align="right" min-width="180"> </el-table-column>
+		             <el-table-column prop="nodeLimitAmount" label="节点受限额度（元）" align="right" min-width="180"> </el-table-column>
+		             <el-table-column prop="effLimitAmount" label="有效受限额度（元）" min-width="180" align="right"> </el-table-column>
+		             <el-table-column prop="applyAmount" label="预测需拨付金额（元）" min-width="180" align="right"> </el-table-column>
+		         </el-table>
+			</div>
+		</div>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/empj/Empj_ProjProgInspectionViewDetail.js"></script>
+	</body>
+</html>	

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-资金拨付详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tgpf_FundAppropriatedDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">拨付申请基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="updateTgpf_FundAppropriated('1')" :disabled="disabled" v-if="flag">
+						<img src="../image/detail_btn_ico_save.png" width="18">
+						<span>保存</span>
+					</button>
+					<button class="btn btn-warning" @click="updateTgpf_FundAppropriated('2')" :disabled="disabled" v-if="showDownFlag">
+						<img src="../image/detail_btn_ico_allocated.png" width="18">
+						<span>拨付完成</span>
+					</button>
+				</div>
+				<div class="pull-right text-right">
+					<button class="btn btn-success" @click="exportPdf" v-if="isPrint">
+						<img src="../image/detail_btn_ico_save.png" width="18"/>
+						<span>打印</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row" >
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">用款申请单号：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tgpf_FundAppropriated_AFModel.eCode" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">项目名称：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tgpf_FundAppropriated_AFModel.theNameOfProject" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">用款计划申请日期：</span>
+							<div class="detail-info2">
+								<div class="detail-edit">
+									<input disabled="" type="text" v-model="tgpf_FundAppropriated_AFModel.createTimeStamp" class="form-control" />
+									<img src="../image/list_search_calendar.png" class="ico-date"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" >
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">计划申请总金额：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tgpf_FundAppropriated_AFModel.totalApplyAmount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">本次拨付金额(元)：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tgpf_FundAppropriated_AFModel.totalApplyAmount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">拨付状态：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<div class="form-control">
+										<button  v-if="tgpf_FundAppropriated_AFModel.applyState == 4" class="btn btn-state-warning cs-pt-0 cs-pb-0">已统筹</button>
+										<button  v-if="tgpf_FundAppropriated_AFModel.applyState == 5" class="btn btn-state-warning cs-pt-0 cs-pb-0">拨付中</button>
+										<button  v-if="tgpf_FundAppropriated_AFModel.applyState == 6" class="btn btn-state-success cs-pt-0 cs-pb-0">已拨付</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<span class="detail-text1">备注：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<textarea type="text" v-model="tgpf_FundAppropriated_AFModel.remark" class="form-control" placeholder="-" :disabled="disabled"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--表格开始-->
+			<div class="detail-title">
+				<h1 class="inline">楼幢信息</h1>
+			</div>
+			<div class="cs-content">
+				<div class="detail-content">
+					<el-table :data="tgpf_fundAppropriated_afDtltab" stripe :default-sort = "{prop: 'index'}">
+						<el-table-column align="center" type="index" label="序号" width="60" fixed></el-table-column>
+						<el-table-column prop="eCodeFromConstruction" label="施工编号" width="200"></el-table-column>
+						<el-table-column prop="eCodeFromPublicSecurity" label="公安编号" min-width="100"></el-table-column>
+						<el-table-column prop="cashLimitedAmount" label="现金受限额度（元）" min-width="180">
+							<template scope="scope">
+								<div class="text-right">{{scope.row.cashLimitedAmount}}</div>
+							</template>
+						</el-table-column>
+						<el-table-column prop="effectiveLimitedAmount" label="有效受限额度（元）" min-width="180">
+							<template scope="scope">
+								<div class="text-right">{{scope.row.effectiveLimitedAmount}}</div>
+							</template>
+						</el-table-column>
+						<el-table-column prop="supervisedBankAccount" label="预售资金监管账号" min-width="150"></el-table-column>
+						<el-table-column prop="theNameOfBank" label="监管账户开户行" min-width="150"></el-table-column>
+						<el-table-column prop="allocableAmount" label="当前可划拨金额（元）" min-width="210" sortable>
+							<template scope="scope">
+								<div class="text-right">{{scope.row.allocableAmount}}</div>
+							</template>
+						</el-table-column>
+						<el-table-column prop="appliedAmount" label="本次划款申请金额（元）" min-width="220" >
+							<template scope="scope">
+								<div class="text-right">{{scope.row.appliedAmount}}</div>
+							</template>
+						</el-table-column>
+						<el-table-column prop="escrowStandard" label="托管标准" min-width="180" sortable></el-table-column>
+						<el-table-column prop="orgLimitedAmount" label="初始受限额度（元）" min-width="200" sortable>
+							<template scope="scope">
+								<div class="text-right">{{scope.row.orgLimitedAmount}}</div>
+							</template>
+						</el-table-column>
+						<el-table-column prop="currentFigureProgress" label="当前形象进度" min-width="180" sortable></el-table-column>
+						<el-table-column prop="currentLimitedRatio" label="当前受限比例（%）" min-width="200" sortable></el-table-column>
+						<el-table-column prop="currentLimitedAmount" label="当前受限额度（元）" min-width="200" sortable>
+							<template scope="scope">
+								<div class="text-right">{{scope.row.currentLimitedAmount}}</div>
+							</template>
+						</el-table-column>
+						<el-table-column prop="totalAccountAmount" label="总入账金额（元）" min-width="180" sortable>
+							<template scope="scope">
+								<div class="text-right">{{scope.row.totalAccountAmount}}</div>
+							</template>
+						</el-table-column>
+						<el-table-column prop="appliedPayoutAmount" label="已申请拨付金额（元）" min-width="220" sortable>
+							<template scope="scope">
+								<div class="text-right">{{scope.row.appliedPayoutAmount}}</div>
+							</template>
+						</el-table-column>
+						<el-table-column prop="currentEscrowFund" label="当前托管余额（元）" min-width="200" sortable>
+							<template scope="scope">
+								<div class="text-right">{{scope.row.currentEscrowFund}}</div>
+							</template>
+						</el-table-column>
+						<el-table-column prop="refundAmount" label="退房退款金额（元）" min-width="200" sortable>
+							<template scope="scope">
+								<div class="text-right">{{scope.row.refundAmount}}</div>
+							</template>
+						</el-table-column>
+						<el-table-column align="center" prop="payoutState" label="拨付状态" width="100" >
+							<template scope="scope">
+								<button  v-if="scope.row.payoutState == 1" class="btn btn-state-warning">未拨付</button>
+								<button  v-if="scope.row.payoutState == 2" class="btn btn-state-success">已拨付</button>
+							</template>
+						</el-table-column>
+					</el-table>
+				</div>
+			</div>
+			<div class="detail-title">
+				<h1 class="inline">统筹信息</h1>
+			</div>
+			<div class="cs-content">
+				<div class="detail-content">
+					<el-table :data="tgpf_fundAppropriatedtab" stripe :default-sort = "{prop: 'index'}">
+						<el-table-column align="center" type="index"  label="序号" sortable width="60"></el-table-column>
+						<el-table-column prop="escroweBankAccount" label="托管账户" min-width="110"></el-table-column>
+						<el-table-column prop="shortNameOfBankBranch" label="开户行简称" min-width="80"></el-table-column>
+						<!-- <el-table-column prop="theNameOfEscroweBankAccount" label="托管账户名称" min-width="110"></el-table-column> -->
+						<el-table-column prop="supervisedBankAccount" label="监管账号" min-width="110"></el-table-column>
+						<el-table-column prop="theNameOfSupervisedBankAccount" label="监管账户名称" min-width="110"></el-table-column>
+						<el-table-column prop="canPayAmount" label="可拨付金额（元）" width="180">
+							<template scope="scope">
+								<div class="text-right">{{scope.row.canPayAmount}}</div>
+							</template>
+						</el-table-column>
+						<el-table-column prop="currentPayoutAmount" label="本次拨付金额（元）" width="180">
+							<template scope="scope">
+								<div class="text-right">{{scope.row.currentPayoutAmount}}</div>
+							</template>
+						</el-table-column>
+						<el-table-column  align="center" label="拨付时间" width="160">
+							<template scope="scope">
+								<input type="text" class="form-control payoutDateTime text-center" :disabled="disabled" :id='"date0612030302"+scope.$index' />
+							</template>
+						</el-table-column>
+						<el-table-column  label="拨付单据号" width="220">
+							<template scope="scope">
+								<input type="text"  v-model="scope.row.eCodeFromPayoutBill"  class="form-control" :disabled="disabled"/>
+							</template>
+						</el-table-column>
+					</el-table>
+				</div>
+			</div>
+			<!--表格结束-->
+		</div>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tgpf/Tgpf_FundAppropriatedDetail.js"></script>
+	</body>
+</html>	

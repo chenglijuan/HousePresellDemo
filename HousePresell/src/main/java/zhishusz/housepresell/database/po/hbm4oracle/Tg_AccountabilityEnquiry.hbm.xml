@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tg_AccountabilityEnquiry" table="Tg_AccountabilityEnquiry" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_BankBranch</param>
+			</generator>
+		</id>
+		
+		<property name="bank">
+			<column name="bank">
+				<comment>存款银行</comment>
+			</column>
+		</property>
+		
+		<property name="bankOfDeposit">
+			<column name="bankOfDeposit">
+				<comment>开户行</comment>
+			</column>
+		</property>
+		
+		<property name="depositProperty">
+			<column name="depositProperty">
+				<comment>存款性质</comment>
+			</column>
+		</property>
+		
+		<property name="escrowAccount">
+			<column name="escrowAccount">
+				<comment>托管账号</comment>
+			</column>
+		</property>
+		
+		<property name="escrowAcountName">
+			<column name="escrowAcountName">
+				<comment>托管账号名称</comment>
+			</column>
+		</property>
+		
+		<property name="recordDate">
+			<column name="recordDate">
+				<comment>登记日期</comment>
+			</column>
+		</property>
+		
+		<property name="loadTime">
+			<column name="loadTime">
+				<comment>存入时间"</comment>
+			</column>
+		</property>
+		
+		<property name="expirationTime">
+			<column name="expirationTime">
+				<comment>到期时间</comment>
+			</column>
+		</property>
+		
+		<property name="amountDeposited">
+			<column name="amountDeposited">
+				<comment>存款金额</comment>
+			</column>
+		</property>
+		
+		<property name="depositCeilings">
+			<column name="depositCeilings">
+				<comment>存款期限</comment>
+			</column>
+		</property>
+		
+		<property name="interestRate">
+			<column name="interestRate">
+				<comment>利率</comment>
+			</column>
+		</property>
+		
+		<property name="fate">
+			<column name="fate">
+				<comment>天数</comment>
+			</column>
+		</property>
+		
+		<property name="interest">
+			<column name="interest">
+				<comment>利息</comment>
+			</column>
+		</property>
+		
+	</class>
+</hibernate-mapping>

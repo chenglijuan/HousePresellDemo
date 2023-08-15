@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tgxy_BuyerInfo" table="Tgxy_BuyerInfo"
+		dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_BuyerInfo</param>
+			</generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate"
+			foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord"
+			foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<property name="buyerName">
+			<column name="buyerName">
+				<comment>买受人姓名</comment>
+			</column>
+		</property>
+		<property name="buyerType">
+			<column name="buyerType">
+				<comment>买受人类型</comment>
+			</column>
+		</property>
+		<property name="certificateType">
+			<column name="certificateType">
+				<comment>证件类型</comment>
+			</column>
+		</property>
+		<property name="eCodeOfcertificate">
+			<column name="eCodeOfcertificate">
+				<comment>证件号码</comment>
+			</column>
+		</property>
+		<property name="contactPhone">
+			<column name="contactPhone">
+				<comment>联系电话</comment>
+			</column>
+		</property>
+		<property name="contactAdress">
+			<column name="contactAdress">
+				<comment>联系地址</comment>
+			</column>
+		</property>
+		<property name="agentName">
+			<column name="agentName">
+				<comment>代理人姓名</comment>
+			</column>
+		</property>
+		<property name="agentCertType">
+			<column name="agentCertType">
+				<comment>代理人证件类型</comment>
+			</column>
+		</property>
+		<property name="agentCertNumber">
+			<column name="agentCertNumber">
+				<comment>代理人证件号</comment>
+			</column>
+		</property>
+		<property name="agentPhone">
+			<column name="agentPhone">
+				<comment>代理人联系电话</comment>
+			</column>
+		</property>
+		<property name="agentAddress">
+			<column name="agentAddress">
+				<comment>代理人联系地址</comment>
+			</column>
+		</property>
+		<property name="eCodeOfContract">
+			<column name="eCodeOfContract">
+				<comment>合同备案号</comment>
+			</column>
+		</property>
+		
+		<many-to-one class="Tgxy_ContractInfo" name="contractInfo" foreign-key="null">
+			<column name="contractInfo">
+				<comment>合同信息</comment>
+			</column>
+		</many-to-one>
+	
+		<many-to-one class="Tgxy_TripleAgreement" name="tripleAgreement" foreign-key="null">
+			<column name="tripleAgreement">
+				<comment>三方协议信息</comment>
+			</column>
+		</many-to-one>
+	
+		<property name="eCodeOfTripleAgreement">
+			<column name="eCodeOfTripleAgreement">
+				<comment>三方协议号</comment>
+			</column>
+		</property>
+		
+		<many-to-one class="Empj_HouseInfo" name="houseInfo" foreign-key="null">
+			<column name="houseInfo">
+				<comment>关联户室</comment>
+			</column>
+		</many-to-one>
+	</class>
+</hibernate-mapping>

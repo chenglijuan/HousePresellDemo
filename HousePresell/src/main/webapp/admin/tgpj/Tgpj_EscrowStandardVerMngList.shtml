@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-版本管理-托管标准</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="tgpj_EscrowStandardVerMngListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input"  v-model="keyword" placeholder="请输入托管终止申请单号、交付备案批准文件号搜索">
+							</div>
+							<div class="inline">
+							    <span>类型：</span>
+								<!-- <select  class="form-control cs-select" v-model="theType" @change="changeBusiState">
+									<option value="全部">全部</option>
+									<option value="1">托管金额</option>
+									<option value="2">托管比例</option>
+								</select> -->
+								 <vue-listselect defaultname="请选择类型" :thevalue="theType"
+												:optionlist="theTypeList"
+												@callbackfun="changeTheType"
+												@emptybackfun="theTypeEmpty"></vue-listselect>
+							</div>
+							<!--<div class="inline">-->
+								<!--<span>启用状态：</span>-->
+								<!--<select  class="form-control cs-select" v-model="enableState">-->
+									<!--<option value="0">全部</option>-->
+									<!--<option value="1">启用</option>-->
+									<!--<option value="2">停用</option>-->
+								<!--</select>-->
+							<!--</div>-->
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="resetSearchInfo">重置</button>
+						</div>
+						<div class="top-btns">
+							<button class="btn btn-success" @click="escrowStandardVerMngAddHandle" data-editNum="06010101_ADD_01">
+								<img src="../image/list_btn_ico_add.png"/>
+								<span>新增</span>
+							</button>
+							<!--<button class="btn btn-success">-->
+								<!--<img src="../image/list_btn_ico_import.png"/>-->
+								<!--<span>导入</span>-->
+							<!--</button>-->
+							<button class="btn btn-primary" @click="escrowStandardVerMngEditHandle"
+									:disabled="selectItem.length != 1 || !enableEdit"
+											data-editNum="06010101_MOD_01">
+								<img src="../image/list_btn_ico_edit.png" />
+								<span>修改</span>
+							</button>
+							<!--<button class="btn btn-info">-->
+								<!--<img src="../image/list_btn_ico_see.png"/>-->
+								<!--<span>日志</span>-->
+							<!--</button>-->
+							<button class="btn btn-danger" @click="escrowStandardVerMngDeleteHandle"
+									:disabled="selectItem.length == 0 || !enableDelete"  data-editNum="06010101_DEL_01">
+								<img src="../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+						</div>
+					</div>
+					<div class="pull-right text-right">
+						<!--<div class="top-excel">-->
+							<!--<button class="btn btn-excel" @click="escrowStandardVerMngExportExcelHandle">-->
+								<!--<img src="../image/export_ico_excel.png"/>-->
+								<!--<span>导出为Excel</span>-->
+							<!--</button>-->
+						<!--</div>-->
+						<!--<div class="top-batch">-->
+							<!--<button class="btn btn-pass">-->
+								<!--<img src="../image/list_check_yes.png"/>-->
+								<!--<span>审批通过</span>-->
+							<!--</button>-->
+							<!--<button class="btn btn-fail">-->
+								<!--<img src="../image/list_check_no.png"/>-->
+								<!--<span>审批退回</span>-->
+							<!--</button>-->
+						<!--</div>-->
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="tgpj_EscrowStandardVerMngList" stripe :default-sort = "{prop: 'index'}"
+								  @selection-change="listItemSelectHandle" @sort-change='sortChange'>
+							<el-table-column type="selection"  width="50" align="center" fixed></el-table-column>
+							<el-table-column type="index" :index="indexMethod" label="序号" width="60" align="center" sortable
+											 fixed></el-table-column>
+							<el-table-column prop="theName" label="托管标准协议版本号" min-width="220" sortable='custom'>
+								<template scope="scope">
+									<div class="el-button--text hover"
+											   @click="tgpj_EscrowStandardVerMngDetailPageOpen(scope.row.tableId)">{{scope.row.theName}}</div>
+								</template>
+							</el-table-column>
+							<el-table-column prop="theVersion" label="版本名称" min-width="200"></el-table-column>
+							<el-table-column prop="theType" label="托管标准类型" min-width="120"></el-table-column>
+							<el-table-column prop="theContent" label="托管标准" min-width="160"></el-table-column>
+							<el-table-column prop="beginExpirationDate" label="启用日期" min-width="120" align="center"
+											 sortable='custom'></el-table-column>
+							<el-table-column prop="endExpirationDate" label="停用日期" min-width="120" align="center"></el-table-column>
+							<el-table-column prop="busiState" label="业务状态" min-width="100" align="center">
+								<template scope="scope">
+									<button  v-if="scope.row.busiState == '未备案'" class="btn btn-state-warning">未备案</button>
+									<button  v-if="scope.row.busiState == '已备案'" class="btn btn-state-success">已备案</button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="approvalState" label="审批状态" min-width="100" align="center">
+								<template scope="scope">
+									<button  v-if="scope.row.approvalState == '待提交'" class="btn btn-state-danger">待提交
+									</button>
+									<button  v-if="scope.row.approvalState == '审核中'" class="btn btn-state-warning">审核中
+									</button>
+									<button  v-if="scope.row.approvalState == '已完结'" class="btn btn-state-success">已完结
+									</button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<script src="../components/vue-components.js"></script>
+	
+		<!-- Pages JS busiState，hasEnable -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/tgpj/Tgpj_EscrowStandardVerMngList.js"></script>
+	</body>
+</html>	

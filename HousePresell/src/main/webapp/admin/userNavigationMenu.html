@@ -1,0 +1,666 @@
+<!--
+	作者：tony.yang
+	时间：2018-08-09
+	描述：用户权限菜单
+-->
+<ul class="nav-ul">
+<!-- <li class="nav-padding nav-borderB" onclick="enterNewTab('00', '首页', 'index.shtml')"> -->
+<li class="nav-padding nav-borderB" onclick="getIndexTab()">
+	<a href="#" class="nav-home">
+		<span class="nav-text">首页</span>
+	</a>
+</li>
+</ul>
+<ul class="nav-ul" data-switchmenu data-isonlyoneopen="false">
+<!--<li class="nav-padding nav-borderB">
+	<div class="nav-parent hover">
+		<img src="../image/side_arrow.png" class="icon"/>
+		<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+		<span class="nav-text">单位用户</span>
+	</div>
+	<ul class="nav-children">
+		<li>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">机构管理2级</span>
+			</div>
+			<ul class="nav-children">
+				<li>
+					<div class="nav-parent hover">
+						<img src="../image/side_arrow.png" class="icon"/>
+						<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+						<span class="nav-text">机构管理3级</span>
+					</div>
+					<ul class="nav-children">
+						<li>
+							<a>开发企业</a>
+						</li>
+						<li>
+							<a>代理公司</a>
+						</li>
+						<li>
+							<a>进度见证服务单位</a>
+						</li>
+						<li class="active">
+							<a>合作机构</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</li>-->
+<li class="nav-padding nav-borderB">
+	<div class="nav-parent hover">
+		<img src="../image/side_arrow.png" class="icon"/>
+		<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+		<span class="nav-text">系统管理</span>
+	</div>
+	<ul class="nav-children">
+		<li>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">权限管理</span>
+			</div>
+			<ul class="nav-children">
+				<li onclick="enterNewTab('010101', '用户管理', 'sm/Sm_UserList.shtml')">
+					<a>用户管理</a>
+				</li>
+				<li onclick="enterNewTab('010102', '角色管理', 'sm/Sm_Permission_RoleList.shtml')">
+					<img src="../image/home_ico_pic.png" class="menu-icon"/><a>角色管理</a>
+				</li>
+				 <li onclick="enterNewTab('010103', '角色授权', 'sm/Sm_Permission_RoleUIList.shtml')">
+					<a>角色授权</a>
+				</li>
+				<li onclick="enterNewTab('010104', '菜单管理', 'sm/Sm_Management_Menu.shtml')">
+					<a>菜单管理</a>
+				</li>
+				 <li onclick="enterNewTab('010105', '范围授权', 'sm/Sm_Range_AuthorizationList.shtml')">
+					<a>范围授权</a>
+				</li>
+				 <li onclick="enterNewTab('010106', '系统用户范围授权', 'sm/Sm_Range_AuthorizationForZTList.shtml')">
+					<a>系统用户范围授权</a>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">档案管理</span>
+			</div>
+			<ul class="nav-children">
+				<li onclick="enterNewTab('010201', '档案配置', 'sm/Sm_AttachmentCfgList.shtml')">
+					<a>档案配置</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</li>
+<li class="nav-padding nav-borderB">
+	<div class="nav-parent hover">
+		<img src="../image/side_arrow.png" class="icon"/>
+		<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+		<span class="nav-text">机构管理</span>
+	</div>
+	<ul class="nav-children">
+		<li>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">从业机构管理</span>
+			</div>
+			<ul class="nav-children">
+				<li onclick="enterNewTab('020101', '开发企业', 'emmp/Emmp_CompanyInfoList.shtml')">
+					<a>开发企业</a>
+				</li>
+				<li onclick="enterNewTab('020103', '代理公司', 'emmp/Emmp_CompanyAgencyList.shtml')">
+					<a>代理公司</a>
+				</li>
+				<li onclick="enterNewTab('020106', '进度见证服务单位', 'emmp/Emmp_CompanyWitnessList.shtml')">
+					<a>进度见证服务单位</a>
+				</li>
+				<li onclick="enterNewTab('020108', '合作机构', 'emmp/Emmp_CompanyCooperationList.shtml')">
+					<a>合作机构</a>
+				</li>
+			</ul>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">金融机构管理</span>
+			</div>
+			<ul class="nav-children">
+				 <li onclick="enterNewTab('020201','金融机构','emmp/Emmp_BankInfoList.shtml')">
+					<a>金融机构</a>
+				</li>
+				<li onclick="enterNewTab('020202','开户行','emmp/Emmp_BankBranchList.shtml')">
+					<a>开户行</a>
+				</li>
+			</ul>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">机构授权管理</span>
+			</div>
+			<ul class="nav-children">
+				<li onclick="enterNewTab('020301','机构用户与授权管理','sm/Sm_OrgUserList.shtml')">
+					<a>机构用户与授权管理</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</li>
+<li class="nav-padding nav-borderB">
+	<div class="nav-parent hover">
+		<img src="../image/side_arrow.png" class="icon"/>
+		<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+		<span class="nav-text">项目管理</span>
+	</div>
+	<ul class="nav-children">
+		<li>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">项目信息管理</span>
+			</div>
+			<ul class="nav-children">
+				<li onclick="enterNewTab('030101', '项目信息', 'empj/Empj_ProjectInfoList.shtml')">
+					<a>项目信息</a>
+				</li>
+				<li onclick="enterNewTab('030102', '楼幢信息', 'empj/Empj_BuildingInfoList.shtml')">
+					<a>楼幢信息</a>
+				</li>
+				<li onclick="enterNewTab('03010204', '单元信息', 'empj/Empj_BuildingList.shtml')">
+					<a>单元信息</a>
+				</li>
+				<li onclick="enterNewTab('03010205', '户信息', 'empj/Empj_HouseholdList.shtml')">
+					<a>户信息</a>
+				</li>
+				<li onclick="enterNewTab('030103', '备案价格', 'tgpj/Tgpj_BuildingAvgPriceList.shtml')">
+					<a>备案价格</a>
+				</li>
+			</ul>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">楼盘表</span>
+			</div>
+			<ul class="nav-children">
+				 <li onclick="enterNewTab('030201','楼盘表管理','empj/Empj_BuildingInfoTable.shtml')">
+					<a>楼盘表管理</a>
+				</li>
+			</ul>
+
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">工程进度管理</span>
+			</div>
+			<ul class="nav-children">
+				<li onclick="enterNewTab('030301','受限额度管理','empj/Empj_BldLimitAmount_AFList.shtml')">
+					<a>受限额度管理</a>
+				</li>
+				<li onclick="enterNewTab('03030102','托管终止','empj/Empj_BldEscrowCompletedList.shtml')">
+					<a>托管终止</a>
+				</li>
+				<li onclick="enterNewTab('03030201','进度巡查预测','empj/Empj_PjDevProgressForcastList.shtml')">
+					<a>工程进度巡查管理</a>
+				</li>
+			</ul>
+		</li>
+		<!-- <li onclick="enterNewTab('030102', '托管标准管理', 'tgpj/Tgpj_EscrowStandardVerMngList.shtml')">
+			<a>托管标准管理</a>
+		</li> -->
+	</ul>
+</li>
+<li class="nav-padding nav-borderB">
+	<div class="nav-parent hover">
+		<img src="../image/side_arrow.png" class="icon"/>
+		<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+		<span class="nav-text">资金管理</span>
+	</div>
+	<ul class="nav-children">
+		<li>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">退房退款管理</span>
+			</div>
+			<ul class="nav-children">
+				<li onclick="enterNewTab(06120201, '退房退款申请-贷款已结清', 'tgpf/Tgpf_RefundInfoList.shtml')">
+					<a>退房退款申请-贷款已结清</a>
+				</li>
+				<li onclick="enterNewTab(06120202, '退房退款申请-贷款未结清', 'tgpf/Tgpf_RefundInfoUnclearedList.shtml')">
+					<a>退房退款申请-贷款未结清</a>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">托管一般拨付管理</span>
+			</div>
+			<ul class="nav-children">
+				<li onclick="enterNewTab('06120301', '用款申请与复核', 'tgpf/Tgpf_FundAppropriated_AFList.shtml')">
+					<a>用款申请与复核</a>
+				</li>
+				<li onclick="enterNewTab('06120302', '统筹与复核', 'tgpf/Tgpf_FundOverallPlanList.shtml')">
+					<a>统筹与复核</a>
+				</li>
+				<li onclick="enterNewTab('06120303', '资金拨付', 'tgpf/Tgpf_FundAppropriatedList.shtml')">
+					<a>资金拨付</a>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">托管特殊拨付管理</span>
+			</div>
+			<ul class="nav-children">
+				<li onclick="enterNewTab('06120603', '特殊拨付', 'tgpf/Tgpf_SpecialFundAppropriatedList.shtml')">
+					<a>特殊拨付</a>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">支付保证业务</span>
+			</div>
+			<ul class="nav-children">
+				<li onclick="enterNewTab('06120401', '支付保证申请与复核', 'empj/Empj_PaymentGuaranteeApplicationList.shtml')">
+					<a>支付保证申请与复核</a>
+				</li>
+				<li onclick="enterNewTab('06120403', '支付保证申请撤销', 'empj/Empj_CancelPaymentGuaranteeApplicationList.shtml')">
+					<a>支付保证申请撤销</a>
+				</li>
+			</ul>
+		</li>
+		
+		
+		<li>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">对账</span>
+			</div>
+			<ul class="nav-children">
+				<li onclick="enterNewTab(200201, '网银数据上传', 'tgpf/Tgpf_CyberBankStatementList.shtml')">
+					<a>网银数据上传</a>
+				</li>
+				<li onclick="enterNewTab(200202, '业务对账', 'tgpf/Tgpf_DayEndBalancingList.shtml')">
+					<a>业务对账</a>
+				</li>
+				<li onclick="enterNewTab(200203, '网银对账', 'tgpf/Tgpf_CyberBankStatementDtlList.shtml')">
+					<a>网银对账</a>
+				</li>
+				<li onclick="enterNewTab(200204, '日终结算', 'tgpf/Tgpf_DayEndBalanceList.shtml')">
+					<a>日终结算</a>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">推送财务凭证</span>
+			</div>
+			<ul class="nav-children">
+				<li onclick="enterNewTab(200401, '入账凭证', 'tgpf/Tgpf_AccVoucherList.shtml')">
+					<a>入账凭证</a>
+				</li>
+				<li onclick="enterNewTab(200402, '拨付凭证', 'tgpf/Tgpf_AccVoucherDisbursementList.shtml')">
+					<a>拨付凭证</a>
+				</li>
+				<li onclick="enterNewTab(200403, '托管与财务系统配置对照表', 'tgpf/Tgpf_FundAccountInfoList.shtml')">
+					<a>托管与财务系统配置对照表</a>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">留存权益</span>
+			</div>
+			<ul class="nav-children">
+				<li onclick="enterNewTab(500401, '留存权益', 'tgpf/Tgpf_RemainRightList.shtml')">
+					<a>留存权益</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</li>
+<li class="nav-padding nav-borderB">
+	<div class="nav-parent hover">
+		<img src="../image/side_arrow.png" class="icon"/>
+		<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+		<span class="nav-text">辅助管理</span>
+	</div>
+	<ul class="nav-children">
+		<li>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">决策支持管理</span>
+			</div>
+			<ul class="nav-children">
+				<li onclick="enterNewTab('210101', '收入预测', 'tg/Tg_IncomeForecastList.shtml')">
+					<a>收入预测</a>
+				</li>
+				<li onclick="enterNewTab('210102', '支出预测', 'tg/Tg_ExpForecastList.shtml')">
+					<a>支出预测</a>
+				</li>
+				<li onclick="enterNewTab('210103', '收支存预测', 'tg/Tg_IncomeExpDepositForecastList.shtml')">
+					<a>收支存预测</a>
+				</li>
+				<li onclick="enterNewTab('210104', '存单存入管理', 'tg/Tg_DepositManagementList.shtml')">
+					<a>存单存入管理</a>
+				</li>
+				<li onclick="enterNewTab('210105', '存单提取管理', 'tg/Tg_DepositManagementTakeOutList.shtml')">
+					<a>存单提取管理</a>
+				</li>
+				<li onclick="enterNewTab('210106', '存单正在办理', 'tg/Tg_DepositManagementInProgressList.shtml')">
+					<a>存单正在办理</a>
+				</li>
+			</ul>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">风控管理</span>
+			</div>
+			<ul class="nav-children">
+				<li>
+					<div class="nav-parent hover">
+						<img src="../image/side_arrow.png" class="icon"/>
+						<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+						<span class="nav-text">内控管理</span>
+					</div>
+					<ul class="nav-children">
+						<li onclick="enterNewTab('21020101', '工作时限检查', 'tg/Tg_WorkTimeLimitCheckList.shtml')">
+							<a>工作时限检查</a>
+						</li>
+						<li onclick="enterNewTab('21020102', '风控例行抽查', 'tg/Tg_RiskCheckMonthSumList.shtml')">
+							<a>风控例行抽查</a>
+						</li>
+						<li onclick="enterNewTab('21020103', '风控抽查结果处理', 'tg/Tg_RiskCheckBusiCodeSumList.shtml')">
+							<a>风控例行结果处理</a>
+						</li>
+						<li onclick="enterNewTab('21020104', '风控月度小结', 'tg/Tg_RiskRoutineMonthSumList.shtml')">
+							<a>风控月度小结</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<div class="nav-parent hover">
+						<img src="../image/side_arrow.png" class="icon"/>
+						<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+						<span class="nav-text">项目风控指标</span>
+					</div>
+					<ul class="nav-children">
+						<li onclick="enterNewTab('21020204', '其他风险信息', 'tg/Tg_OtherRiskInfoList.shtml')">
+							<a>其他风险信息</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<div class="nav-parent hover">
+						<img src="../image/side_arrow.png" class="icon"/>
+						<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+						<span class="nav-text">项目风险管理</span>
+					</div>
+					<ul class="nav-children">
+						<li onclick="enterNewTab('21020301', '项目风险评估', 'tg/Tg_PjRiskAssessmentList.shtml')">
+							<a>项目风险评估</a>
+						</li>
+						<li onclick="enterNewTab('21020302', '风险等级评判', 'tg/Tg_ProjectRiskGradeList.shtml')">
+							<a>风险等级评判</a>
+						</li>
+						<li onclick="enterNewTab('21020303', '项目风险日志', 'tg/Tg_ProjectRiskLogList.shtml')">
+							<a>项目风险日志</a>
+						</li>
+						<li onclick="enterNewTab('21020304', '风险提示函', 'tg/Tg_PjRiskLetterList.shtml')">
+							<a>风险提示函</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</li>
+<li class="nav-padding nav-borderB">
+		<div class="nav-parent hover">
+			<img src="../image/side_arrow.png" class="icon"/>
+			<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+			<span class="nav-text">基础配置管理</span>
+		</div>
+		<ul class="nav-children">
+			<li>
+				<div class="nav-parent hover">
+					<img src="../image/side_arrow.png" class="icon"/>
+					<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+					<span class="nav-text">版本管理</span>
+				</div>
+				<ul class="nav-children">
+					<li onclick="enterNewTab('06010101', '托管标准版本管理', 'tgpj/Tgpj_EscrowStandardVerMngList.shtml')">
+						<a>托管标准版本管理</a>
+					</li>
+					<li onclick="enterNewTab('06010102', '受限额度节点版本管理', 'tgpj/Tgpj_BldLimitAmountVer_AFList.shtml')">
+						<a>受限额度节点版本管理</a>
+					</li>
+				</ul>
+			</li>
+
+		</ul>
+	</li>
+<li class="nav-padding nav-borderB">
+	<div class="nav-parent hover">
+		<img src="../image/side_arrow.png" class="icon"/>
+		<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+		<span class="nav-text">协议管理</span>
+	</div>
+	<ul class="nav-children">
+		<li>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">银行协议</span>
+			</div>
+			<ul class="nav-children">
+				<li onclick="enterNewTab(06110102, '合作备忘录', 'tgxy/Tgxy_CoopMemoList.shtml')">
+					<a>合作备忘录</a>
+				</li>
+				<li onclick="enterNewTab(06110103, '合作协议', 'tgxy/Tgxy_CoopAgreementList.shtml')">
+					<a>合作协议</a>
+				</li>
+				<li onclick="enterNewTab(06110101, '协定存款协议', 'tgxy/Tgxy_DepositAgreementList.shtml')">
+					<a>协定存款协议</a>
+				</li>
+				
+				
+			</ul>
+		</li>
+		<li>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">合作协议</span>
+			</div>
+			<ul class="nav-children">
+				<li onclick="enterNewTab(06110201, '贷款托管合作协议', 'tgxy/Tgxy_EscrowAgreementList.shtml')">
+					<a>贷款托管合作协议</a>
+				</li>
+				<li onclick="enterNewTab(06110202, '合作协议版本管理', 'tgxy/Tgxy_CoopAgreementVerMngList.shtml')">
+					<a>合作协议版本管理</a>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">三方协议</span>
+			</div>
+			<ul class="nav-children">
+				<li onclick="enterNewTab(06110301, '贷款三方托管协议', 'tgxy/Tgxy_TripleAgreementList.shtml')">
+					<a>贷款三方托管协议</a>
+				</li>
+				<li onclick="enterNewTab(06010103, '三方协议版本管理', 'tgxy/Tgxy_TripleAgreementVerMngList.shtml')">
+					<a>三方协议版本管理</a>
+				</li>
+				<li onclick="enterNewTab(06110303, '三方协议考评', 'tgxy/Tgxy_TripartiteAgreementEvaluationList.shtml')">
+					<a>三方协议考评</a>
+				</li>
+				<li onclick="enterNewTab(06110304, '三方协议计量结算', 'tgxy/Tgxy_CoopAgreementSettleDtlList.shtml')">
+					<a>三方协议计量结算</a>
+				</li>
+				
+			</ul>
+		</li>
+	</ul>
+</li>
+<li class="nav-padding nav-borderB">
+	<div class="nav-parent hover">
+		<img src="../image/side_arrow.png" class="icon"/>
+		<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+		<span class="nav-text">报表</span>
+	</div>
+	<ul class="nav-children">
+		<li>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">财务部门报表</span>
+			</div>
+			<ul class="nav-children">
+				<li onclick="enterNewTab(230101, '托管银行资金情况表', 'qs/Qs_EscrowBankFunds_ViewList.shtml')">
+					<a>托管银行资金情况表</a>
+				</li>
+				<li onclick="enterNewTab(230102, '楼幢账户报表', 'qs/qs_FloorAccountReports.shtml')">
+					<a>楼幢账户报表</a>
+				</li>
+				<li onclick="enterNewTab(230118, '入账金额核对表', 'qs/Qs_RecordAmount_ViewList.shtml')">
+					<a>入账金额核对表</a>
+				</li>
+				<li onclick="enterNewTab(230108, '项目托管资金收支情况表', 'qs/Qs_ProjectEscrowAmount_ViewList.shtml')">
+					<a>项目托管资金收支情况表</a>
+				</li>
+				<li onclick="enterNewTab(230109, '托管楼幢明细表', 'qs/qs_TrusteeshipBuildingDetailReports.shtml')">
+					<a>托管楼幢明细表</a>
+				</li>
+				<li onclick="enterNewTab(230110, '托管楼幢入账统计表', 'qs/qs_TrusteeshipBuildingReports.shtml')">
+					<a>托管楼幢入账统计表</a>
+				</li>
+				<li onclick="enterNewTab(230111, '托管楼幢拨付明细表', 'qs/qs_DisbursementReports.shtml')">
+					<a>托管楼幢拨付明细表</a>
+				</li>
+				<li onclick="enterNewTab(230112, '户入账明细', 'qs/qs_HouseholdEntryReports.shtml')">
+					<a>户入账明细</a>
+				</li>
+				<li onclick="enterNewTab(230113, '银行放款项目入账情况表', 'qs/qs_BankLendingReports.shtml')">
+					<a>银行放款项目入账情况表</a>
+				</li>
+				<li onclick="enterNewTab(230114, '银行付款项目出账情况表', 'qs/qs_BankPaymentReports.shtml')">
+					<a>银行付款项目出账情况表</a>
+				</li>
+				<li onclick="enterNewTab(230115, '日记账确认统计', 'qs/qs_JournalConfirmationReports.shtml')">
+					<a>日记账确认统计</a>
+				</li>
+				<li onclick="enterNewTab(230116, '托管现金流量表', 'qs/qs_CashFlowReports.shtml')">
+					<a>托管现金流量表</a>
+				</li>
+				<li onclick="enterNewTab(230117, '托管项目统计表', 'qs/qs_TrusteeshipProjectReports.shtml')">
+					<a>托管项目统计表</a>
+				</li>
+				<li onclick="enterNewTab(230104, '拨付留存权益查询', 'tgpf/Tgpf_RemainRightSearchList.shtml')">
+					<a>拨付留存权益查询</a>
+				</li>
+				<li onclick="enterNewTab(230119, '三方协议入账查询', 'tg/Tg_TripleAgreementEnterAccount.shtml')">
+					<a>三方协议入账查询</a>
+				</li>
+				<li onclick="enterNewTab(230105, '大额到期对比表', 'tg/Tg_LargeMaturityComparisonReports.shtml')">
+					<a>大额到期对比表</a>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<div class="nav-parent hover">
+				<img src="../image/side_arrow.png" class="icon"/>
+				<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+				<span class="nav-text">项目部门报表</span>
+			</div>
+			<ul class="nav-children">
+				<li onclick="enterNewTab(230203, '托管项目户信息明细', 'tg/Tg_DepositHouseholdsDtlList.shtml')">
+					<a>托管项目户信息明细</a>
+				</li>
+				<li onclick="enterNewTab(230206, '项目巡查预测计划表', 'tg/Tg_ProjectPatrolForecastList.shtml')">
+					<a>项目巡查预测计划表</a>
+				</li>
+				<li onclick="enterNewTab(230202, '见证报告统计表', 'tg/Tg_WitnessReportStatisticsList.shtml')">
+					<a>见证报告统计表</a>
+				</li>
+				<li onclick="enterNewTab(230207, '托管项目统计表', 'tgpf/Tgpf_ManagedProjectStatisticsList.shtml')">
+					<a>托管项目统计表</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</li>
+<li class="nav-padding nav-borderB">
+	<div class="nav-parent hover">
+		<img src="../image/side_arrow.png" class="icon"/>
+		<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+		<span class="nav-text">审批中心</span>
+	</div>
+	<ul class="nav-children">
+		<li onclick="enterNewTab(240101, '待办流程', 'sm/Sm_ApprovalProcess_AgencyList.shtml')">
+			<a>待办流程</a>
+		</li>
+		<li onclick="enterNewTab(240102, '已办流程', 'sm/Sm_ApprovalProcess_AlreadyHandledList.shtml')">
+			<a>已办流程</a>
+		</li>
+		<li onclick="enterNewTab(240103, '我发起的', 'sm/Sm_ApprovalProcess_AFList.shtml')">
+			<a>我发起的</a>
+		</li>
+		<li onclick="enterNewTab(240104, '审批流程设置', 'sm/Sm_ApprovalProcess_CfgList.shtml')">
+			<a>审批流程设置</a>
+		</li>
+		<li onclick="enterNewTab(240105, '消息模板配置', 'sm/Sm_MessageTemplate_CfgList.shtml')">
+			<a>消息模板配置</a>
+		</li>
+	</ul>
+</li>
+	<li class="nav-padding nav-borderB">
+		<div class="nav-parent hover">
+			<img src="../image/side_arrow.png" class="icon"/>
+			<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+			<span class="nav-text">账务管理</span>
+		</div>
+		<ul class="nav-children">
+			<li>
+				<div class="nav-parent hover">
+					<img src="../image/side_arrow.png" class="icon"/>
+					<img src="../image/side_arrow_selected.png" class="icon-sel"/>
+					<span class="nav-text">账户维护</span>
+				</div>
+				<ul class="nav-children">
+					<li onclick="enterNewTab(250101, '托管账户', 'tgxy/Tgxy_BankAccountEscrowedList.shtml')">
+						<a>托管账户</a>
+					</li>
+					<li onclick="enterNewTab('250102-Menu', '监管账户', 'tgpj/Tgpj_BankAccountSupervisedList.shtml')">
+						<a>监管账户</a>
+					</li>
+					<li onclick="enterNewTab(250103, '楼幢监管账户', 'tgpj/Tgpj_BankAccountBuildingSupervisedList.shtml')">
+						<a>楼幢监管账户</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+</ul>

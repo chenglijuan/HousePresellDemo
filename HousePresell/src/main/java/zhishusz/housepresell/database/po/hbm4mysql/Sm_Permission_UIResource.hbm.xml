@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Sm_Permission_UIResource" table="Sm_Permission_UIResource" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<property name="busiCode">
+			<column name="busiCode">
+				<comment>业务编码</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<property name="theOriginalName">
+			<column name="theOriginalName">
+				<comment>UI权限原始名称，用于初始化</comment>
+			</column>
+		</property>
+		<property name="levelNumber">
+			<column name="levelNumber">
+				<comment>自身的层级编码</comment>
+			</column>
+		</property>
+		<property name="parentLevelNumber">
+			<column name="parentLevelNumber">
+				<comment>父级的层级编码</comment>
+			</column>
+		</property>
+		<property name="theName">
+			<column name="theName">
+				<comment>UI权限名称，用于显示</comment>
+			</column>
+		</property>
+		<property name="theIndex">
+			<column name="theIndex">
+				<comment>排序</comment>
+			</column>
+		</property>
+		<property name="theResource">
+			<column name="theResource">
+				<comment>资源（URL、）</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_Permission_UIResource" name="resourceUI" foreign-key="null">
+			<column name="resourceUI">
+				<comment>管理链接资源对象，只有theType为菜单时，有值</comment>
+			</column>
+		</many-to-one>
+		<property name="theType">
+			<column name="theType">
+				<comment>类型：上层菜单、底层菜单、按钮</comment>
+			</column>
+		</property>
+		<property name="isDefault">
+			<column name="isDefault">
+				<comment>是否是默认权限</comment>
+			</column>
+		</property>
+		<property name="remark">
+			<column name="remark" length="4000">
+				<comment>备注说明</comment>
+			</column>
+		</property>
+		<property name="iconPath">
+			<column name="iconPath">
+				<comment>图标路径</comment>
+			</column>
+		</property>
+		<property name="editNum">
+			<column name="editNum">
+				<comment>按钮编号（系统全局唯一，事先定义所有页面的每一个可以控制的按钮编号）</comment>
+			</column>
+		</property>
+		<property name="controllerurl">
+			<column name="controllerurl">
+				<comment>页面运行访问的url集合</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_Permission_UIResource" name="parentUI" foreign-key="null">
+			<column name="parentUI">
+				<comment>父级UI资源</comment>
+			</column>
+		</many-to-one>
+		<list name="childrenUIList" cascade="all" table="Rel_Parent_Children_UIResource">
+			<key column="parentUI"/>
+			<list-index column="theIndex"/>
+			<many-to-many class="Sm_Permission_UIResource" column="childrenUI"/>
+		</list>
+	</class>
+</hibernate-mapping>

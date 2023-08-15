@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tg_IncomeExpDepositForecast" table="Tg_IncomeExpDepositForecast" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_IncomeForecast</param>
+			</generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<property name="theDay">
+			<column name="theDay">
+				<comment>日期(工作日)</comment>
+			</column>
+		</property>
+		<property name="theWeek">
+			<column name="theWeek">
+				<comment>星期一到星期日</comment>
+			</column>
+		</property>
+		<property name="lastDaySurplus">
+			<column name="lastDaySurplus">
+				<comment>上日活期结余（元）</comment>
+			</column>
+		</property>
+		<property name="incomeTotal">
+			<column name="incomeTotal">
+				<comment>收入合计（元）</comment>
+			</column>
+		</property>
+		<property name="expTotal">
+			<column name="expTotal">
+				<comment>支出合计（元）</comment>
+			</column>
+		</property>
+		<property name="todaySurplus">
+			<column name="todaySurplus">
+				<comment>本日活动结余（元）</comment>
+			</column>
+		</property>
+		<property name="collocationReference">
+			<column name="collocationReference">
+				<comment>托管余额参考值（元）</comment>
+			</column>
+		</property>
+		<property name="collocationBalance">
+			<column name="collocationBalance">
+				<comment>扣减参考值后的托管余额（元）</comment>
+			</column>
+		</property>
+		<property name="canDepositReference1">
+			<column name="canDepositReference1">
+				<comment>可存入参考值1（元）</comment>
+			</column>
+		</property>
+		<property name="canDepositReference2">
+			<column name="canDepositReference2">
+				<comment>可存入参考值2（元）</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

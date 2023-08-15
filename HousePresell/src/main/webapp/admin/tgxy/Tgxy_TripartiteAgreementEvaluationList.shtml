@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-三方协议考评</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tripartiteAgreementEvaluationListDiv">
+			<div class="cs-content">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="content-top-left" >
+						<div class="top-input">
+							<div class="first-left-bottom">
+								<div class="inline">
+								    <span>关键字：</span>
+								    <input type="text" name="" class="form-control cs-input" v-model="keyword" placeholder="请输入关键字搜索"/>
+								</div>
+								
+								<div class="inline">
+								    <span>启用时间：</span>
+								    <input type="text" name="" id="tripartiteAgreementEvaluationDate" class="form-control cs-input-date" placeholder="开始日期     ~    结束日期" v-model="dateRange"/>
+								    <img src="../image/list_search_calendar.png" class="ico-date"/> 
+								</div>
+								<div class="inline">
+								    <span>代理公司：</span>
+								   <!-- 	<select class="form-control cs-select" v-model="agencyCompanyId">
+								     	<option value="">--请选择--</option>
+										<option v-for="company in agencyCompanyList" :value="company.tableId">{{company.theName}}</option>
+								   	</select> -->
+								   	 <vue-listselect defaultname="请选择代理公司" :thevalue="agencyCompanyId"
+												:optionlist="agencyCompanyList"
+												@callbackfun="changeAgencyCompany"
+												@emptybackfun="agencyCompanyEmpty"></vue-listselect>
+								</div>
+								<div class="inline">
+								    <span>退回原因：</span>
+								    <!-- <select class="form-control cs-select"  v-model="reasonId">
+								       <option value="">--请选择--</option>
+										<option  v-for="reason in reasonList" :value="reason.tableId">{{reason.theValue}}</option>
+								   	</select> -->
+								   	<vue-listselect defaultname="请选择退回原因" :thevalue="reasonId"
+												:optionlist="reasonList"
+												@callbackfun="changeReason"
+												@emptybackfun="reasonEmpty"></vue-listselect>
+								</div>
+								<button class="btn btn-search" @click="search">搜索</button>
+							    <button class="btn btn-reset" @click="resetSearch">重置</button>
+								<div class="pull-right">
+						            <div class="top-excel">
+										<button class="btn btn-excel" @click="exportForm" data-editNum="06110303_EXP_01">
+											<img src="../image/export_ico_excel.png"/>
+											<span>导出为Excel</span>
+										</button>
+									</div>
+					            </div>
+							</div>
+							
+						</div>
+					</div>
+					
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+				
+					<div>
+						<el-table :data="TripartiteAgreementEvaluationList" stripe :default-sort = "{prop: 'index'}">
+							<el-table-column type="index" :index="indexMethod"  label="序号" width="80" fixed></el-table-column><!---->
+							<el-table-column prop="eCode" label="协议编号" width="220" sortable></el-table-column>
+							<el-table-column prop="projectName" label="项目名称" width="200" sortable></el-table-column>
+							<el-table-column prop="position" label="房屋坐落" width="220" sortable></el-table-column>
+							<el-table-column prop="buyerName" label="买受人姓名" width="140" sortable></el-table-column>
+							<el-table-column prop="areaManager" label="区域负责人" width="140" sortable></el-table-column>
+							<el-table-column prop="rejectReason" label="退回原因" width="220" sortable></el-table-column>
+							<el-table-column prop="rejectTimeStamp" label="退回时间" width="220" sortable></el-table-column>
+							<el-table-column prop="proxyCompany" label="代理公司" width="220" sortable></el-table-column>
+							<el-table-column prop="changeTimeStamp" label="整改时间" width="200" sortable></el-table-column>
+						</el-table>
+					</div>
+				</div>
+			</div>
+			<!-- error modal -->
+			<div class="modal fade" id="edModelTripartiteAgreementEvaluation" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">{{errMsg}}</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		</div>
+		<!-- success modal -->
+			<div class="modal fade" id="sdModelTripartiteAgreementEvaluation" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		
+		<script src="../components/vue-components.js"></script>
+	
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/tgxy/Tgxy_TripartiteAgreementEvaluationList.js"></script>
+	</body>
+</html>	

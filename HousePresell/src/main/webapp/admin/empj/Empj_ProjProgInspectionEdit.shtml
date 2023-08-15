@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="UTF-8">
+    <title>housepresell管理后台-申请表-项目进度巡查编辑</title>
+    <link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+</head>
+<body>
+<div class="content-wrap" id="empj_ProjProgInspectionEditDiv">
+    <div class="detail-title cs-mt-0">
+        <h1 class="inline">基本信息</h1>
+        <div class="inline title-btns">
+            <button class="btn btn-success" @click="update('1')">
+                <img src="../image/detail_btn_ico_save.png" width="18">
+                <span>保存</span>
+            </button>
+        </div>
+    </div>
+    <!--基本信息开始-->
+    <div class="cs-content detail-content">
+      <div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<span class="detail-text1">区域名称：</span>
+					<div class="detail-info2">
+					   <div class="detail-unEdit">
+							<input type="text" disabled  v-model="empj_ProjProgInspection_AFModel.areaName" class="form-control"/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">交付类型：</span>
+					<div class="detail-info2">
+						<div class="detail-unEdit">
+							   <input type="text" v-if="empj_ProjProgInspection_AFModel.deliveryType == 1" value="毛坯房" class="form-control" disabled="disabled"/>
+							   <input type="text" v-if="empj_ProjProgInspection_AFModel.deliveryType == 2" value="成品房" class="form-control" disabled="disabled"/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">数据来源：</span>
+					<div class="detail-info2">
+					   <div class="detail-unEdit">
+							<input type="text" disabled v-model="empj_ProjProgInspection_AFModel.dataSources" class="form-control"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+			    <div class="form-group">
+					<span class="detail-text1">项目名称：</span>
+					<div class="detail-info2">
+					   <div class="detail-unEdit">
+							<input type="text" disabled  v-model="empj_ProjProgInspection_AFModel.projectName" class="form-control"/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">当前建设进度：</span>
+					<div class="detail-info2">
+					   <div class="detail-edit">
+							<input type="text"   v-model="empj_ProjProgInspection_AFModel.buildProgress" class="form-control"/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">更新日期：</span>
+					<div class="detail-info2">
+						<div class="detail-unEdit">
+							<input type="text" disabled  class="form-control"  v-model="empj_ProjProgInspection_AFModel.updateDateTime"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<span class="detail-text1">楼幢名称：</span>
+					<div class="detail-info2">
+					   <div class="detail-unEdit">
+							<input type="text" disabled  v-model="empj_ProjProgInspection_AFModel.buildCode" class="form-control"/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">当前节点名称：</span>
+					<div class="detail-info2">
+					   <div class="detail-unEdit">
+							<input type="text" disabled  v-model="empj_ProjProgInspection_AFModel.nowNodeName" class="form-control"/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+    <!--基本信息结束-->
+	<div class="detail-title">
+			<h1 class="inline">楼幢信息</h1>
+	</div>
+	<div class="cs-content detail-content">
+	     <el-table :data="buildingList" stripe :default-sort="{prop: 'index'}">
+            <el-table-column align="center" type="index" label="序号" width="60" fixed></el-table-column>
+	            <el-table-column prop="buildProgress" label="当前建设进度" min-width="200"> </el-table-column>
+	             <el-table-column prop="dataSources" label="数据来源" align="center" min-width="200"> </el-table-column>
+	             <el-table-column prop="forecastNodeName" label="预测节点名称" align="center" min-width="200"> </el-table-column>
+	             <el-table-column  label="预测完成日期" align="center" min-width="200">
+		             <template slot-scope="scope">
+	                 	<input size="mini" v-model="scope.row.forecastCompleteDate" type="date" style="width:100%" />
+	                 </template>
+	             </el-table-column>	
+             	 <el-table-column  label="进度判定" min-width="200"  align="center"> 
+	             	<template scope="scope">
+	             		<el-select v-model="scope.row.determine" placeholder="请选择" >
+						    <el-option
+						      v-for="item in determineList"
+						      :key="item.value"
+						      :label="item.label"
+						      :value="item.value">
+						    </el-option>
+						  </el-select>
+                    </template>
+	             </el-table-column>
+	             <el-table-column label="原因" min-width="200" align="center">
+	             	 <template slot-scope="scope">
+	                 	<input size="mini" v-model="scope.row.reason"  style="width:100%"/>
+	                 </template>
+	             </el-table-column>
+         </el-table>
+	</div>
+
+<!-- 附件模态框开始 -->
+		    <div class="modal fade" id="fileNodeModelDetail" tabindex="-1" role="dialog" aria-hidden="true" >
+		        <div class="modal-dialog model-width">
+		            <div class="modal-content">
+		                <div class="modal-header">
+		                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+		                        &times;
+		                    </button>
+		                    <h4 class="modal-title csm-title">附件信息</h4>
+		                </div>
+		                <div class="modal-body csm-body">
+			                <!--附件材料开始-->
+							<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+							<!--附件材料结束-->
+		                </div>
+		                <div class="modal-footer" v-if="saveFile">
+		                    <button type="button" class="btn foot-sure" @click="dialogSave">确定</button>
+		                    <button type="button" class="btn foot-cancel" data-dismiss="modal" ><!-- @click="refresh" --> 取消</button>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		    <!-- 附件模态框结束 -->
+		    <!-- 弹框 -->
+
+
+</div>
+<script src="../js/tabCommon.js"></script>
+<script src="../js/admin/empj/Empj_ProjProgInspectionEdit.js"></script>
+</body>
+</html>	

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta charset="UTF-8">
+	<title>housepresell管理后台-申请-用款申请审批</title>
+	<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+</head>
+<body>
+<div class="content-wrap" id="sm_ApprovalProcess_FundAppropriated_AF">
+	<div class="detail-title cs-mt-0">
+		<h1 class="inline">基本信息</h1>
+		<div class="inline title-btns">
+			<button  v-if="isNeedBackup" class="btn btn-warning" data-toggle="modal" data-target="#examine" @click="showModal" data-backdrop="static" data-keyboard=false>
+				<img src="../image/list_btn_ico_examine.png" width="18">
+				<span>审批记录</span>
+			</button>
+			<button  v-if="isNeedBackup && sourcePage == 1" class="btn btn-warning" @click="approvalHandle">
+				<img src="../image/detail_btn_ico_record.png" width="18">
+				<span>备案</span>
+			</button>
+			<button v-if="!isNeedBackup && sourcePage != 2" class="btn btn-warning" data-toggle="modal" data-target="#examine" @click="showModal" data-backdrop="static" data-keyboard=false>
+				<img src="../image/list_btn_ico_examine.png" width="18">
+				<span>审批</span>
+			</button>
+		</div>
+	</div>
+	<!--基本信息开始-->
+	<div class="cs-content detail-content">
+		<div class="row" >
+			<div class="col-md-4">
+				<div class="form-group">
+					<span class="detail-text1">用款申请单号：</span>
+					<div class="detail-info1">
+						<div class="detail-unEdit">
+							<input disabled="" type="text" v-model="tgpf_FundAppropriated_AFModel.eCode" class="form-control" disabled/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">用款申请日期：</span>
+					<div class="detail-info1">
+						<div class="detail-unEdit">
+							<input disabled="" type="text" v-model="tgpf_FundAppropriated_AFModel.lastUpdateTimeStamp"  class="form-control"/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">本次申请总金额：</span>
+					<div class="detail-info1">
+						<div class="detail-unEdit">
+							<input disabled="" type="text" v-model="tgpf_FundAppropriated_AFModel.totalApplyAmount" class="form-control"/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">申请单状态：</span>
+					<div class="detail-info1">
+						<div class="detail-unEdit">
+							<div class="form-control">
+								<button  v-if="tgpf_FundAppropriated_AFModel.applyState == 1" class="btn btn-state-danger cs-pt-0 cs-pb-0">申请中</button>
+								<button  v-if="tgpf_FundAppropriated_AFModel.applyState == 2" class="btn btn-state-success cs-pt-0 cs-pb-0">已受理</button>
+								<button  v-if="tgpf_FundAppropriated_AFModel.applyState == 3" class="btn btn-state-warning cs-pt-0 cs-pb-0">统筹中</button>
+								<button  v-if="tgpf_FundAppropriated_AFModel.applyState == 4" class="btn btn-state-warning cs-pt-0 cs-pb-0">已统筹</button>
+								<button  v-if="tgpf_FundAppropriated_AFModel.applyState == 5" class="btn btn-state-warning cs-pt-0 cs-pb-0">拨付中</button>
+								<button  v-if="tgpf_FundAppropriated_AFModel.applyState == 6" class="btn btn-state-success cs-pt-0 cs-pb-0">已拨付</button>
+								<button  v-if="tgpf_FundAppropriated_AFModel.applyState == 9" class="btn btn-state-danger cs-pt-0 cs-pb-0">已撤销</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<span class="detail-text1">项目名称：</span>
+					<div class="detail-info1">
+						<div class="detail-unEdit">
+							<input disabled="" type="text" v-model="tgpf_FundAppropriated_AFModel.theNameOfProject" class="form-control"/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">操作人：</span>
+					<div class="detail-info1">
+						<div class="detail-unEdit">
+							<input disabled="" type="text" v-model="tgpf_FundAppropriated_AFModel.userUpdate" class="form-control" disabled/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">审核人：</span>
+					<div class="detail-info1">
+						<div class="detail-unEdit">
+							<input disabled="" type="text" v-model="tgpf_FundAppropriated_AFModel.userRecord" class="form-control" disabled/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<span class="detail-text1">开发企业名称：</span>
+					<div class="detail-info1">
+						<div class="detail-unEdit">
+							<input disabled="" type="text" v-model="tgpf_FundAppropriated_AFModel.theNameOfDevelopCompany" class="form-control" disabled/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">操作人日期：</span>
+					<div class="detail-info1">
+						<div class="detail-unEdit">
+							<input disabled="" type="text" v-model="tgpf_FundAppropriated_AFModel.lastUpdateTimeStamp" class="form-control" disabled/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">审核日期：</span>
+					<div class="detail-info1">
+						<div class="detail-unEdit">
+							<input disabled="" type="text" v-model="tgpf_FundAppropriated_AFModel.recordTimeStamp" class="form-control" disabled/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--基本信息结束-->
+	<!--表格开始-->
+	<div class="detail-title">
+		<h1 class="inline">楼幢信息</h1>
+	</div>
+	<div class="cs-content">
+		<div class="detail-content">
+			<!-- <el-table :data="tgpf_fundAppropriated_afDtltab" stripe :default-sort = "{prop: 'index'}">
+				<el-table-column align="center" type="index" label="序号" width="60" fixed></el-table-column>
+				<el-table-column prop="eCodeFromConstruction" label="施工编号" width="200" fixed></el-table-column>
+				<el-table-column prop="eCodeFromPublicSecurity" label="公安编号" min-width="100"></el-table-column>
+				<el-table-column prop="totalAccountAmount" label="总入账金额（元）" min-width="180" sortable>
+					<template scope="scope">
+						<div class="text-right">{{scope.row.totalAccountAmount}}</div>
+					</template>
+				</el-table-column>
+				<el-table-column prop="appliedPayoutAmount" label="已拨付金额（元）" min-width="220" sortable>
+					<template scope="scope">
+						<div class="text-right">{{scope.row.appliedPayoutAmount}}</div>
+					</template>
+				</el-table-column>
+				<el-table-column prop="refundAmount" label="退房退款金额（元）" min-width="200" sortable>
+					<template scope="scope">
+						<div class="text-right">{{scope.row.refundAmount}}</div>
+					</template>
+				</el-table-column>
+				<el-table-column prop="currentEscrowFund" label="当前托管余额（元）" min-width="200" sortable>
+					<template scope="scope">
+						<div class="text-right">{{scope.row.currentEscrowFund}}</div>
+					</template>
+				</el-table-column>
+				<el-table-column prop="effectiveLimitedAmount" label="有效受限额度（元）" min-width="180">
+					<template scope="scope">
+						<div class="text-right">{{scope.row.effectiveLimitedAmount}}</div>
+					</template>
+				</el-table-column>
+				
+				<el-table-column prop="supervisedBankAccount" label="预售资金监管账号" min-width="150"></el-table-column>
+				<el-table-column prop="theNameOfBank" label="监管账户开户行" min-width="200"></el-table-column>
+				<el-table-column prop="allocableAmount" label="当前可划拨金额（元）" min-width="210" sortable>
+					<template scope="scope">
+						<div class="text-right">{{scope.row.allocableAmount}}</div>
+					</template>
+				</el-table-column>
+				<el-table-column prop="appliedAmount" label="本次划款申请金额（元）" min-width="220" >
+					<template scope="scope">
+						<div class="text-right">{{scope.row.appliedAmount}}</div>
+					</template>
+				</el-table-column>
+				<el-table-column prop="escrowStandard" label="托管标准" min-width="180" sortable></el-table-column>
+				<el-table-column prop="orgLimitedAmount" label="初始受限额度（元）" min-width="200" sortable>
+					<template scope="scope">
+						<div class="text-right">{{scope.row.orgLimitedAmount}}</div>
+					</template>
+				</el-table-column>
+				<el-table-column prop="currentFigureProgress" label="当前形象进度" min-width="180" sortable></el-table-column>
+				<el-table-column prop="currentLimitedRatio" label="当前受限比例（%）" min-width="200" sortable></el-table-column>
+				<el-table-column prop="currentLimitedAmount" label="当前受限额度（元）" min-width="200" sortable>
+					<template scope="scope">
+						<div class="text-right">{{scope.row.currentLimitedAmount}}</div>
+					</template>
+				</el-table-column>
+				<el-table-column prop="cashLimitedAmount" label="现金受限额度（元）" min-width="180">
+					<template scope="scope">
+						<div class="text-right">{{scope.row.cashLimitedAmount}}</div>
+					</template>
+				</el-table-column>
+				<el-table-column align="center" prop="payoutState" label="拨付状态" width="100" >
+					<template scope="scope">
+						<button  v-if="scope.row.payoutState == 1" class="btn btn-state-warning">未拨付</button>
+						<button  v-if="scope.row.payoutState == 2" class="btn btn-state-success">已拨付</button>
+					</template>
+				</el-table-column>
+			</el-table> -->
+			<el-table :data="tgpf_fundAppropriated_afDtltab" stripe :default-sort = "{prop: 'index'}">
+				<el-table-column align="center" type="index" label="序号" width="60" fixed></el-table-column>
+				<el-table-column prop="eCodeFromConstruction" label="施工编号" width="200" fixed ></el-table-column>
+				
+				<el-table-column prop="supervisedBankAccount" label="预售资金监管账号" min-width="150"></el-table-column>
+				<el-table-column prop="theNameOfBank" label="监管账户开户行" min-width="200"></el-table-column>
+				<el-table-column prop="allocableAmount" label="实际可替代保证额度（元）" min-width="210" sortable v-if="tgpf_FundAppropriated_AFModel.applyType == '1'">
+					<template scope="scope">
+						<div class="text-right">{{scope.row.actualReleaseAmount}}</div>
+					</template>
+				</el-table-column>
+				<!-- <el-table-column prop="allocableAmount" label="当前可划拨金额（元）" min-width="210" sortable>
+					<template scope="scope">
+						<div class="text-right">{{scope.row.allocableAmount}}</div>
+					</template>
+				</el-table-column> -->
+				<el-table-column prop="allocableAmount" label="溢出金额（元）" min-width="210" sortable>
+					<template scope="scope">
+						<div class="text-right">{{scope.row.allocableAmount}}</div>
+					</template>
+				</el-table-column>
+				<el-table-column prop="appliedAmount" label="本次划款申请金额（元）" min-width="220" >
+					<template scope="scope">
+						<div class="text-right">{{scope.row.appliedAmount}}</div>
+					</template>
+				</el-table-column>
+				
+				
+				<el-table-column prop="effectiveLimitedAmount" label="有效受限额度（元）" min-width="180">
+					<template scope="scope">
+						<div class="text-right">{{scope.row.effectiveLimitedAmount}}</div>
+					</template>
+				</el-table-column>
+				<el-table-column prop="totalAccountAmount" label="总入账金额（元）" min-width="180" sortable>
+					<template scope="scope">
+						<div class="text-right">{{scope.row.totalAccountAmount}}</div>
+					</template>
+				</el-table-column>
+				<el-table-column prop="appliedPayoutAmount" label="已拨付金额（元）" min-width="220" sortable>
+					<template scope="scope">
+						<div class="text-right">{{scope.row.appliedPayoutAmount}}</div>
+					</template>
+				</el-table-column>
+				<el-table-column prop="currentEscrowFund" label="当前托管余额（元）" min-width="200" sortable>
+					<template scope="scope">
+						<div class="text-right">{{scope.row.currentEscrowFund}}</div>
+					</template>
+				</el-table-column>
+				<el-table-column prop="refundAmount" label="退房退款金额（元）" min-width="200" sortable>
+					<template scope="scope">
+						<div class="text-right">{{scope.row.refundAmount}}</div>
+					</template>
+				</el-table-column>
+				
+				<el-table-column prop="escrowStandard" label="托管标准" min-width="180" sortable></el-table-column>
+				<el-table-column prop="orgLimitedAmount" label="初始受限额度（元）" min-width="200" sortable >
+					<template scope="scope">
+						<div class="text-right">{{scope.row.orgLimitedAmount}}</div>
+					</template>
+				</el-table-column>
+				<el-table-column prop="currentFigureProgress" label="当前形象进度" min-width="180" sortable></el-table-column>
+				<el-table-column prop="currentLimitedRatio" label="当前受限比例（%）" min-width="200" sortable></el-table-column>
+				<!-- <el-table-column prop="currentLimitedAmount" label="当前受限额度（元）" min-width="200" sortable>
+					<template scope="scope">
+						<div class="text-right">{{scope.row.currentLimitedAmount}}</div>
+					</template>
+				</el-table-column> -->
+				<el-table-column prop="currentLimitedAmount" label="当前节点受限额度（元）" min-width="200" sortable>
+					<template scope="scope">
+						<div class="text-right">{{scope.row.currentLimitedAmount}}</div>
+					</template>
+				</el-table-column>
+				<el-table-column prop="cashLimitedAmount" label="现金受限额度（元）" min-width="180">
+					<template scope="scope">
+						<div class="text-right">{{scope.row.cashLimitedAmount}}</div>
+					</template>
+				</el-table-column>
+				
+				<el-table-column prop="eCodeFromPublicSecurity" label="公安编号" min-width="100"></el-table-column>
+				
+				<el-table-column align="center" prop="payoutState" label="拨付状态" width="100" >
+					<template scope="scope">
+						<button  v-if="scope.row.payoutState == 1" class="btn btn-state-warning">未拨付</button>
+						<button  v-if="scope.row.payoutState == 2" class="btn btn-state-success">已拨付</button>
+					</template>
+				</el-table-column>
+			</el-table>
+		</div>
+	</div>
+	<div class="detail-title">
+		<h1 class="inline">用款申请汇总信息</h1>
+	</div>
+	<div class="cs-content">
+		<div class="detail-content">
+			<el-table :data="tgpf_FundOverPlanDetailltab" stripe :default-sort = "{prop: 'index'}">
+				<el-table-column align="center" type="index"  label="序号" sortable width="60"></el-table-column>
+				<el-table-column prop="theNameOfAccount" label="监管账户名称" min-width="200"></el-table-column>
+				<el-table-column prop="supervisedBankAccount" label="预售资金监管账号" min-width="200"></el-table-column>
+				<el-table-column prop="appliedAmount" label="本次划款申请金额（元）" width="200">
+					<template scope="scope">
+						<div class="text-right">{{scope.row.appliedAmount}}</div>
+					</template>
+				</el-table-column>
+			</el-table>
+		</div>
+	</div>
+	<!--表格结束-->
+</div>
+
+<script src="../js/admin/sm/Sm_ApprovalProcess_FundAppropriatedAFDetail.js"></script>
+</body>
+</html>	

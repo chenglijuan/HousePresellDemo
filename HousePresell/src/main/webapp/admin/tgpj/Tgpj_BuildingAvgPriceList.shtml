@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-楼幢-备案均价</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="tgpj_BuildingAvgPriceListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+                            <div class="inline">
+                                <span>关键字：</span>
+                                <input type="text" class="form-control cs-input" 
+                                       v-model="keyword" @keyup.enter="search"
+                                       placeholder="请输入施工编号搜索">
+                            </div>
+                            <div class="inline">
+                                <span>开发企业：</span>
+                                <vue-listselect defaultname="请选择开发企业" :thevalue="companyId"
+                                                :optionlist="companyList"
+                                                @callbackfun="changeCompanyListener"
+                                                @emptybackfun="changeCompanyEmpty"></vue-listselect>
+                            </div>
+                            <div class="inline">
+                                <span>项目：</span>
+                                <vue-listselect defaultname="请选择项目" :thevalue="projectId"
+                                                :optionlist="projectList"
+                                                @callbackfun="changeprojectListener"
+                                                @emptybackfun="changeProjectEmpty"></vue-listselect>
+                            </div>
+                            <div class="inline">
+                                <span>审批状态：</span>
+                                <vue-listselect defaultname="请选择审批状态" :thevalue="approvalState"
+												:optionlist="approvalStateList"
+												@callbackfun="changeApprovalState"
+												@emptybackfun="changeApprovalStateEmpty"></vue-listselect>
+												
+                                <!-- <select class="form-control cs-select" v-model="approvalState"
+                                        @change="changeApprovalState">
+                                    <option value="">全部</option>
+                                    <option value="待提交">待提交</option>
+                                    <option value="审核中">审核中</option>
+                                    <option value="已完结">已完结</option>
+                                </select> -->
+                            </div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="resetSearch">重置</button>
+						</div>
+						<div class="top-btns">
+							<button class="btn btn-success" @click="mainAddHandle" data-editNum="030103_ADD_01">
+								<img src="../image/list_btn_ico_add.png"/>
+								<span>新增</span>
+							</button>
+							<!--<button class="btn btn-success">-->
+								<!--<img src="../image/list_btn_ico_import.png"/>-->
+								<!--<span>导入</span>-->
+							<!--</button>-->
+							<button class="btn btn-primary" @click="mainEditHandle" v-if="selectItem.length == 1 && approvalState == '待提交'" data-editNum="030103_MOD_01">
+								<img src="../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+							<button class="btn btn-primary" disabled="disabled" v-if="selectItem.length != 1 || approvalState != '待提交'" data-editNum="030103_MOD_01">
+								<img src="../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+							<!--<button class="btn btn-info"  @click="showLog" data-editNum="030103_LOG_01">-->
+								<!--<img src="../image/list_btn_ico_see.png"/>-->
+								<!--<span>日志</span>-->
+							<!--</button>-->
+							<!-- <button class="btn btn-danger" @click="mainDeleteHandle" v-if="selectItem.length > 0" data-editNum="030103_DEL_01">
+								<img src="../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+							<button class="btn btn-danger" disabled="disabled" v-if="selectItem.length == 0" data-editNum="030103_DEL_01">
+								<img src="../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button> -->
+							
+							<button class="btn btn-danger" @click="mainDeleteHandle" :disabled="selectItem.length == 0 || !enableDelete" data-editNum="030103_DEL_01">
+								<img src="../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+							
+						</div>
+					</div>
+					<!--<div class="pull-right text-right">-->
+						<!--<div class="top-excel">-->
+							<!--<button class="btn btn-excel" @click="mainExportExcelHandle">-->
+								<!--<img src="../image/export_ico_excel.png"/>-->
+								<!--<span>导出为Excel</span>-->
+							<!--</button>-->
+						<!--</div>-->
+						<!--<div class="top-batch">-->
+							<!--<button class="btn btn-pass">-->
+								<!--<img src="../image/list_check_yes.png"/>-->
+								<!--<span>审批通过</span>-->
+							<!--</button>-->
+							<!--<button class="btn btn-fail">-->
+								<!--<img src="../image/list_check_no.png"/>-->
+								<!--<span>审批退回</span>-->
+							<!--</button>-->
+						<!--</div>-->
+					<!--</div>-->
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="tgpj_BuildingAvgPriceList" stripe :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle" @sort-change='sortChange'>
+							<el-table-column type="selection"  width="50" fixed></el-table-column>
+							<el-table-column  align="center" type="index" :index="indexMethod" label="序号" width="60" fixed></el-table-column>
+							<el-table-column prop="eCode" label="申请单号" width="220">
+								<template scope="scope">
+									<el-button type="text" size="small" @click="mainDetailHandle(scope.row.tableId)">{{scope.row.eCode}}</el-button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="company.theName" label="开发企业" width="360" sortable='custom'>
+								<template scope="scope">
+									<el-button type="text" size="small" @click="companyDetailHandle(scope.row.companyId)">{{scope.row.companyName}}</el-button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="project.theName" label="项目名称" width="200" sortable='custom'>
+								<template scope="scope">
+									<el-button type="text" size="small" @click="projectDetailHandle(scope.row.projectId)">{{scope.row.projectName}}</el-button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="building.eCodeFromConstruction" label="施工编号" width="200" sortable='custom'></el-table-column>
+							<el-table-column prop="eCodeFromPublicSecurity" label="公安编号" width="200"></el-table-column>
+							<!--<el-table-column prop="buildingEcode" label="楼幢编号" width="315"></el-table-column>-->
+							<el-table-column align="right" prop="recordAveragePrice" label="楼幢住宅备案均价(元/㎡)" width="140"></el-table-column>
+							<el-table-column align="right" prop="recordAveragePriceFromPresellSystem" label="预售系统备案均价(元/㎡)" width="140"></el-table-column>
+							<el-table-column align="center" prop="averagePriceRecordDate" label="物价备案日期" width="120">
+								<template scope="scope">
+									{{timeStamp2DayDate(scope.row.averagePriceRecordDate)}}
+								</template>
+							</el-table-column>
+
+							<el-table-column align="center" prop="busiState" label="业务状态" min-width="100">
+								<template scope="scope">
+									<button v-if="scope.row.busiState == '未备案'" class="btn btn-state-danger" >未备案</button>
+									<button v-if="scope.row.busiState == '已备案'" class="btn btn-state-success">已备案</button>
+								</template>
+							</el-table-column>
+							<el-table-column align="center" prop="approvalState" label="审批状态" min-width="100">
+								<template scope="scope">
+									<button v-if="scope.row.approvalState == '待提交'" class="btn btn-state-danger" >待提交</button>
+									<button v-if="scope.row.approvalState == '审核中'" class="btn btn-state-warning">审核中</button>
+									<button v-if="scope.row.approvalState == '已完结'" class="btn btn-state-success">已完结</button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount"
+								 :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"
+								 v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Pages JS -->
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tgpj/Tgpj_BuildingAvgPriceList.js"></script>
+	</body>
+</html>	

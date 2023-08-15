@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po.extra">
+	<class name="Qs_BuildingAccount_View" table="Qs_BuildingAccount_View" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+		<property name="theNameOfCompany">
+			<column name="theNameOfCompany">
+				<comment>开发企业</comment>
+			</column>
+		</property>
+		<property name="theNameOfProject">
+			<column name="theNameOfProject">
+				<comment>项目</comment>
+			</column>
+		</property>
+		<property name="deliveryType">
+			<column name="deliveryType">
+				<comment>交付类型</comment>
+			</column>
+		</property>
+		<property name="eCodeFromConstruction">
+			<column name="eCodeFromConstruction">
+				<comment>施工楼幢</comment>
+			</column>
+		</property>
+		<property name="escrowStandard">
+			<column name="escrowStandard">
+				<comment>托管标准</comment>
+			</column>
+		</property>
+		<property name="escrowArea">
+			<column name="escrowArea">
+				<comment>托管面积</comment>
+			</column>
+		</property>
+		<property name="buildingArea">
+			<column name="buildingArea">
+				<comment>建筑面积</comment>
+			</column>
+		</property>
+		<property name="orgLimitedAmount">
+			<column name="orgLimitedAmount">
+				<comment>初始受限额度（元）</comment>
+			</column>
+		</property>
+		<property name="currentFigureProgress">
+			<column name="currentFigureProgress">
+				<comment>当前形象进度</comment>
+			</column>
+		</property>
+		<property name="currentLimitedRatio">
+			<column name="currentLimitedRatio">
+				<comment>当前受限比例（%）</comment>
+			</column>
+		</property>
+		<property name="currentLimitedAmount">
+			<column name="currentLimitedAmount">
+				<comment>当前受限额度（元）</comment>
+			</column>
+		</property>
+		<property name="totalAccountAmount">
+			<column name="totalAccountAmount">
+				<comment>总入账金额（元）</comment>
+			</column>
+		</property>
+		<property name="spilloverAmount">
+			<column name="spilloverAmount">
+				<comment>溢出金额（元）</comment>
+			</column>
+		</property>
+		<property name="payoutAmount">
+			<column name="payoutAmount">
+				<comment>已拨付金额（元）</comment>
+			</column>
+		</property>
+		<property name="appliedNoPayoutAmount">
+			<column name="appliedNoPayoutAmount">
+				<comment>已申请未拨付金额（元）</comment>
+			</column>
+		</property>
+		<property name="applyRefundPayoutAmount">
+			<column name="applyRefundPayoutAmount">
+				<comment>已申请退款未拨付金额（元）</comment>
+			</column>
+		</property>
+		<property name="refundAmount">
+			<column name="refundAmount">
+				<comment>已退款金额（元）</comment>
+			</column>
+		</property>
+		<property name="currentEscrowFund">
+			<column name="currentEscrowFund">
+				<comment>当前托管余额（元）</comment>
+			</column>
+		</property>
+		<property name="allocableAmount">
+			<column name="allocableAmount">
+				<comment>可划拨金额（元）</comment>
+			</column>
+		</property>
+		<property name="recordAvgPriceBldPS">
+			<column name="recordAvgPriceBldPS">
+				<comment>预售系统楼幢住宅备案均价</comment>
+			</column>
+		</property>
+		<property name="recordAvgPriceOfBuilding">
+			<column name="recordAvgPriceOfBuilding">
+				<comment>楼幢住宅备案均价</comment>
+			</column>
+		</property>
+		<property name="zfbzPrice">
+			<column name="zfbzPrice">
+				<comment>支付保证金额</comment>
+			</column>
+		</property>
+		<property name="xjsxPrice">
+			<column name="xjsxPrice">
+				<comment>现金受限金额</comment>
+			</column>
+		</property>
+		<property name="yxsxPrice">
+			<column name="yxsxPrice">
+				<comment>有效受限额度</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

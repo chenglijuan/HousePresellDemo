@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po.extra">
+	<class name="Qs_RecordAmount_View" table="Qs_RecordAmount_View" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_RecordAmtView</param>
+			</generator>
+		</id>
+		<property name="serialNumber">
+			<column name="serialNumber">
+				<comment>流水号</comment>
+			</column>
+		</property>
+		<property name="theNameOfBank">
+			<column name="theNameOfBank">
+				<comment>银行名称</comment>
+			</column>
+		</property>
+		<property name="theAccountOfEscrow">
+			<column name="theAccountOfEscrow">
+				<comment>托管账户</comment>
+			</column>
+		</property>
+		<property name="theNameOfEscrow">
+			<column name="theNameOfEscrow">
+				<comment>托管账户名称</comment>
+			</column>
+		</property>
+		<property name="silverAmount">
+			<column name="silverAmount">
+				<comment>网银入账金额</comment>
+			</column>
+		</property>
+		<property name="silverNumber">
+			<column name="silverNumber">
+				<comment>网银入账笔数</comment>
+			</column>
+		</property>
+		<property name="escrowAmount">
+			<column name="escrowAmount">
+				<comment>托管系统入账金额</comment>
+			</column>
+		</property>
+		<property name="escrowNumber">
+			<column name="escrowNumber">
+				<comment>托管系统入账笔数</comment>
+			</column>
+		</property>
+		<property name="compareDifference">
+			<column name="compareDifference">
+				<comment>比对差额</comment>
+			</column>
+		</property>
+		<property name="differenceNote">
+			<column name="differenceNote">
+				<comment>差异备注</comment>
+			</column>
+		</property>
+		<property name="recordDate">
+			<column name="recordDate">
+				<comment>入账日期</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

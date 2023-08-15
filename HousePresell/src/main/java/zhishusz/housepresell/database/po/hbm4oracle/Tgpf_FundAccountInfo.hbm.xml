@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tgpf_FundAccountInfo" table="Tgpf_FundAccountInfo"
+		dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_FundActInfo</param>
+			</generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate"
+			foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord"
+			foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Emmp_CompanyInfo" name="companyInfo"
+			foreign-key="null">
+			<column name="companyInfo">
+				<comment>机构信息</comment>
+			</column>
+		</many-to-one>
+		<property name="theNameOfCompany">
+			<column name="theNameOfCompany">
+				<comment>托管库企业名称</comment>
+			</column>
+		</property>
+		<property name="eCodeOfCompany">
+			<column name="eCodeOfCompany">
+				<comment>托管库企业编码</comment>
+			</column>
+		</property>
+		<property name="fullNameOfCompanyFromFinanceSystem">
+			<column name="fullNameOfCFromFS">
+				<comment>财务库企业全称</comment>
+			</column>
+		</property>
+		<property name="shortNameOfCompanyFromFinanceSystem">
+			<column name="shortNameOfCFromFS">
+				<comment>财务库企业简称</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_ProjectInfo" name="project"
+			foreign-key="null">
+			<column name="project">
+				<comment>托管库项目</comment>
+			</column>
+		</many-to-one>
+		<property name="theNameOfProject">
+			<column name="theNameOfProject">
+				<comment>托管库项目名称-冗余</comment>
+			</column>
+		</property>
+		<property name="eCodeOfProject">
+			<column name="eCodeOfProject">
+				<comment>托管库项目编码-冗余</comment>
+			</column>
+		</property>
+		<property name="fullNameOfProjectFromFinanceSystem">
+			<column name="fullNameOfPFromFS">
+				<comment>财务库项目全称</comment>
+			</column>
+		</property>
+		<property name="shortNameOfProjectFromFinanceSystem">
+			<column name="shortNameOfPFromFS">
+				<comment>财务库项目简称</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_BuildingInfo" name="building"
+			foreign-key="null">
+			<column name="building">
+				<comment>楼幢</comment>
+			</column>
+		</many-to-one>
+		<property name="eCodeFromConstruction">
+			<column name="eCodeFromConstruction">
+				<comment>托管库楼幢施工编号</comment>
+			</column>
+		</property>
+		<property name="eCodeOfBuilding">
+			<column name="eCodeOfBuilding">
+				<comment>托管库楼幢编码-冗余</comment>
+			</column>
+		</property>
+		<property name="fullNameOfBuildingFromFinanceSystem">
+			<column name="fullNameOfBFromFS">
+				<comment>财务库楼幢全称</comment>
+			</column>
+		</property>
+		<property name="shortNameOfBuildingFromFinanceSystem">
+			<column name="shortNameOfBFromFS">
+				<comment>财务库楼幢简称</comment>
+			</column>
+		</property>
+		<property name="operateType">
+			<column name="operateType">
+				<comment>操作类型</comment>
+			</column>
+		</property>
+		<property name="configureUser">
+			<column name="configureUser">
+				<comment>配置人</comment>
+			</column>
+		</property>
+		<property name="configureTime">
+			<column name="configureTime">
+				<comment>配置时间</comment>
+			</column>
+		</property>
+		<property name="depositRemark">
+			<column name="depositRemark">
+				<comment>托管系统备注</comment>
+			</column>
+		</property>
+		<property name="financeRemark">
+			<column name="financeRemark">
+				<comment>财务系统备注</comment>
+			</column>
+		</property>
+		
+		<property name="ITEM_ISN">
+			<column name="ITEM_ISN">
+				<comment>财务系统编号</comment>
+			</column>
+		</property>
+		<property name="ITEM_CODE">
+			<column name="ITEM_CODE">
+				<comment>财务系统编号2</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-托管账户</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="tgxy_BankAccountEscrowedListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+								<input type="text" class="form-control cs-input"  v-model="keyword" @keyup.enter="search" placeholder="请输入银行简称、托管账户搜索">
+							</div>
+							<div class="inline">
+								<span>开户行：</span>
+								<vue-listselect defaultname="请选择开户行" :thevalue="bankBranchId"
+												:optionlist="bankBranchList"
+												@callbackfun="changeBankBranchListener"
+												@emptybackfun="changeBankBranchEmpty"></vue-listselect>
+							</div>
+							<div class="inline">
+								<span>启用状态：</span>
+								<select class="form-control cs-select" v-model="isUsing" @change="isUsingChange">
+									<option value="">全部</option>
+									<option value="0">已启用</option>
+									<option value="1">未启用</option>
+								</select>
+							</div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="resetSearch">重置</button>
+						</div>
+						<div class="top-btns">
+                            <button class="btn btn-success" @click="mainAddHandle" data-editNum="200101_ADD_01">
+                                <img src="../image/list_btn_ico_add.png"/>
+                                <span>新增</span>
+                            </button>
+							<!--<button class="btn btn-success">-->
+								<!--<img src="../image/list_btn_ico_import.png"/>-->
+								<!--<span>导入</span>-->
+							<!--</button>-->
+							<!-- <button class="btn btn-primary" @click="mainEditHandle" v-if="selectItem.length == 1" data-editNum="200101_MOD_01">
+								<img src="../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+							<button class="btn btn-primary" disabled="disabled" v-if="selectItem.length != 1" data-editNum="200101_MOD_01">
+								<img src="../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button> -->
+							<!--<button class="btn btn-info" @click="showLog" data-editNum="200101_LOG_01">-->
+								<!--<img src="../image/list_btn_ico_see.png"/>-->
+								<!--<span>日志</span>-->
+							<!--</button>-->
+							<button class="btn btn-danger" @click="mainDeleteHandle" v-if="selectItem.length > 0" data-editNum="200101_DEL_01">
+								<img src="../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+							<button class="btn btn-danger" disabled="disabled" v-if="selectItem.length == 0" data-editNum="200101_DEL_01">
+								<img src="../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+						</div>
+					</div>
+					<!--<div class="pull-right text-right">-->
+						<!--<div class="top-excel">-->
+							<!--<button class="btn btn-excel" @click="mainExportExcelHandle">-->
+								<!--<img src="../image/export_ico_excel.png"/>-->
+								<!--<span>导出为Excel</span>-->
+							<!--</button>-->
+						<!--</div>-->
+						<!--<div class="top-batch">-->
+							<!--<button class="btn btn-pass">-->
+								<!--<img src="../image/list_check_yes.png"/>-->
+								<!--<span>审批通过</span>-->
+							<!--</button>-->
+							<!--<button class="btn btn-fail">-->
+								<!--<img src="../image/list_check_no.png"/>-->
+								<!--<span>审批退回</span>-->
+							<!--</button>-->
+						<!--</div>-->
+					<!--</div>-->
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="tgxy_BankAccountEscrowedList" stripe :default-sort = "{prop: 'index'}"  @selection-change="listItemSelectHandle" @sort-change='sortChange'>
+							<el-table-column type="selection"  width="50" fixed></el-table-column>
+							<el-table-column align="center" type="index" :index="indexMethod" label="序号" width="60" fixed></el-table-column>
+							<el-table-column prop="theAccount" label="托管账号" width="315">
+                                <template scope="scope">
+                                    <div class="el-button--text hover" @click="mainDetailHandle(scope.row.tableId)">{{scope.row.theAccount}}</div>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="theName" label="托管账户名称" width="315">	</el-table-column>
+							<el-table-column prop="bankBranchShortName" label="开户行简称" width="360" sortable='custom'></el-table-column>
+							<el-table-column prop="bankBranchName" label="开户行名称" width="360" sortable='custom'>
+								<template scope="scope">
+									<div class="el-button--text hover" @click="bankDetailHandle(scope.row.bankBranchId)">{{scope.row.bankBranchName}}</div>
+								</template>
+							</el-table-column>
+							<el-table-column prop="userStartName" label="操作人" width="120"></el-table-column>
+							<el-table-column align="center" prop="createTimeStampString" label="操作日期" width="120"></el-table-column>
+							<el-table-column align="center" prop="hasClosing" label="是否销户" width="120">
+							<template scope="scope">
+									<button v-if="scope.row.hasClosing == 0" class="btn btn-state-danger" >否</button>
+									<button v-if="scope.row.hasClosing == 1" class="btn btn-state-success">是</button>
+								</template>
+							</el-table-column>
+							<el-table-column align="center" prop="isUsing" label="启用状态" width="100">
+								<template scope="scope">
+									<button  v-if="scope.row.isUsing == 0" class="btn btn-state-success">启用</button>
+									<button  v-if="scope.row.isUsing == 1" class="btn btn-state-danger">停用</button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount"
+								 :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"
+								 v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/tgxy/Tgxy_BankAccountEscrowedList.js"></script>
+	</body>
+</html>	

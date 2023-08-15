@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Empj_PaymentBondChild" table="Empj_PaymentBondChild" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_PaymentBondChild</param>
+			</generator>
+		</id>
+		
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+
+		<property name="eCodeFromConstruction">
+			<column name="eCodeFromConstruction">
+				<comment>施工编号</comment>
+			</column>
+		</property>
+		<property name="eCodeFromPublicSecurity">
+			<column name="eCodeFromPublicSecurity">
+				<comment>公安编号</comment>
+			</column>
+		</property>
+		
+		<property name="orgLimitedAmount">
+			<column name="orgLimitedAmount">
+				<comment>初始受限额度（元）</comment>
+			</column>
+		</property>
+		<property name="currentFigureProgress">
+			<column name="currentFigureProgress">
+				<comment>当前形象进度</comment>
+			</column>
+		</property>
+		<property name="currentLimitedRatio">
+			<column name="currentLimitedRatio">
+				<comment>当前受限比例（%）</comment>
+			</column>
+		</property>
+		<property name="nodeLimitedAmount">
+			<column name="nodeLimitedAmount">
+				<comment>当前节点受限额度（元）</comment>
+			</column>
+		</property>
+		<property name="currentEscrowFund">
+			<column name="currentEscrowFund">
+				<comment>当前托管余额（元）</comment>
+			</column>
+		</property>
+		<property name="spilloverAmount">
+			<column name="spilloverAmount">
+				<comment>溢出金额（元）</comment>
+			</column>
+		</property>
+		<property name="controlAmount">
+			<column name="controlAmount">
+				<comment>现金额度最低控制线（元）</comment>
+			</column>
+		</property>
+		<property name="releaseAmount">
+			<column name="releaseAmount">
+				<comment>最高可释放额度（元）</comment>
+			</column>
+		</property>
+		<property name="paymentBondAmount">
+			<column name="paymentBondAmount">
+				<comment>本次保函金额（元）</comment>
+			</column>
+		</property>
+		<property name="actualReleaseAmount">
+			<column name="actualReleaseAmount">
+				<comment>实际可释放金额（元）</comment>
+			</column>
+		</property>
+		<property name="cashLimitedAmount">
+			<column name="cashLimitedAmount">
+				<comment>现金受限额度（元）</comment>
+			</column>
+		</property>
+		<property name="effectiveLimitedAmount">
+			<column name="effectiveLimitedAmount">
+				<comment>有效受限额度（元）</comment>
+			</column>
+		</property>
+		<property name="afterCashLimitedAmount">
+			<column name="afterCashLimitedAmount">
+				<comment>办理后现金受限额度（元）</comment>
+			</column>
+		</property>
+		<property name="afterEffectiveLimitedAmount">
+			<column name="afterEffectiveLimitedAmount">
+				<comment>办理后有效受限额度（元）</comment>
+			</column>
+		</property>
+		<property name="remark">
+			<column name="remark" length="4000">
+				<comment>备注</comment>
+			</column>
+		</property>
+		
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态 </comment>
+			</column>
+		</property>
+		
+		<many-to-one  name="userStart"  class="Sm_User" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间 </comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期 </comment>
+			</column>
+		</property>
+		
+		
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期 </comment>
+			</column>
+		</property>
+		<property name="versionNo">
+			<column name="versionNo">
+				<comment>版本号</comment>
+			</column>
+		</property>
+		
+		<property name="hasExist">
+			<column name="hasExist">
+				<comment>历史保函</comment>
+			</column>
+		</property>
+		<property name="canApplyAmount">
+			<column name="canApplyAmount">
+				<comment>本次可申请金额</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_PaymentBond" name="empj_PaymentBond" foreign-key="null">
+			<column name="empj_PaymentBond">
+				<comment>关联主表</comment>
+			</column>
+		</many-to-one>
+		<many-to-one class="Empj_BuildingInfo" name="empj_BuildingInfo" foreign-key="null">
+			<column name="empj_BuildingInfo">
+				<comment>关联楼幢</comment>
+			</column>
+		</many-to-one>
+		
+	</class>
+</hibernate-mapping>

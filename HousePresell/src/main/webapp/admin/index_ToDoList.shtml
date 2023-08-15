@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-代办事项，未读公告，未处理预警</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css" />
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+		<style type="text/css">
+		.todo_btn {
+		    padding:0 15px;
+		}
+		.todo_left {
+		    padding:13px 0px;
+		    margin-right:30px;
+		    cursor: pointer;
+		}
+		.content-top>.active_link_item {
+		    color:red;
+		    botder-bottom:2px solid red;
+		}
+		.todo_num {
+		    margin:0px 2px;
+		}
+		.el-checkbox+.el-checkbox {
+		    margin-left: 0px;
+		}
+		
+        .el-form-item__content {
+            width:100%;
+        }
+        .content {
+            display:inline-block;
+            margin-right:20px;
+            font-size:16px;
+        }
+        label {
+            border-bottm:1px solid gray;
+        }
+        .con_color {
+            color:#2E6CCC;
+        }
+         .el-checkbox, .el-checkbox__input {
+            white-space: normal;
+        }
+        .el-checkbox__label>.content_box {
+            max-width:1150px;
+            text-overflow:ellipsis;
+            overflow:hidden;
+            white-space:nowrap;
+        }
+        .el-checkbox__label>.con_color:first-child {
+            max-width:240px;
+            text-overflow:ellipsis;
+            overflow:hidden;
+            white-space:nowrap;
+        }
+		</style>
+	</head>
+
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="index_ToDoListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<!-- <span :class="{'todo_left':true,'active_link_item':activeTodo}" @click="handleToDoList">待办事项(<span class="todo_num">{{ todo_num }}</span>)</span> -->
+					<span :class="{'todo_left':true,'active_link_item':activeNotice}" @click="handleNoticeList">未读公告(<span class="read_num">{{ read_num }}</span>)</span>
+					<span :class="{'todo_left':true,'active_link_item':activeWarn}" @click="handleWarnList">未处理预警(<span class="warn_num">{{ warn_num }}</span>)</span>
+					<!-- <div class="pull-right text-right">
+						<div class="top-excel">
+							<button class="btn btn-excel" @click="exportExcel">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+					</div> -->
+				</div>
+				<div class="top-btns todo_btn">
+				    <!-- 待办事项 -->
+				    <div v-if="isToDoList" class="todoList">
+						<button class="btn btn-success" @click="handleRead">
+							<img src="../image/list_btn_ico_add.png"/>
+							<span>已读</span>
+						</button>
+						<button class="btn btn-danger" @click="handleDelete">
+							<img src="../image/list_btn_ico_del.png"/>
+							<span>删除</span>
+						</button>
+						<button class="btn btn-primary" @click="handleConfirmation">
+							<img src="../image/list_btn_ico_edit.png"/>
+							<span>确认办理</span>
+						</button>
+					</div>
+					<!-- 未读公告 -->
+					<div v-if="isReadList" class="readList">
+						<button class="btn btn-success" @click="handleReadNew">
+							<img src="../image/list_btn_ico_add.png"/>
+							<span>已读</span>
+						</button>
+						<button class="btn btn-danger" @click="handleDelete1">
+							<img src="../image/list_btn_ico_del.png"/>
+							<span>删除</span>
+						</button>
+					</div>
+					<!-- 未处理预警 -->
+					<div v-if="isWarnList" class="warnList">
+						<div class="top-input">
+							<div class="inline">
+								<span>触发日期：</span>
+								<input type="text" id="IndextodoList_Date" class="form-control cs-input" value=""> 
+								<img src="../image/list_search_calendar.png" class="ico-date"/>
+							</div>
+							<div class="inline">
+							    <span>预警业务类型</span>
+							    <select class="form-control cs-select" v-modal="defaultStatu">
+							        <option value="">全部</option>
+							        <option v-for="item in warnType" :value="item.id">{{ item.name }}</option>
+							    </select>
+							</div>
+							<!-- <div class="inline">
+							    <span>当前状态</span>
+							    <select class="form-control cs-select" v-modal="defaultStatu">
+							        <option value="">全部</option>
+							        <option v-for="item in currentStatus" :value="item.id">{{ item.name }}</option>
+							    </select>
+							</div> -->
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="resetInfo">重置</button>
+						</div>
+						<button class="btn btn-success" @click="handleReadWarn" v-if="selNum2 > 0">
+							<img src="../image/list_btn_ico_add.png"/>
+							<span>已读</span>
+						</button>
+						<button class="btn btn-success" disabled v-if="selNum2 == 0">
+							<img src="../image/list_btn_ico_add.png"/>
+							<span>已读</span>
+						</button>
+						<button class="btn btn-danger" @click="handleDelete2" v-if="selNum2 > 0">
+							<img src="../image/list_btn_ico_del.png"/>
+							<span>删除</span>
+						</button>
+						<button class="btn btn-danger" disabled v-if="selNum2 == 0">
+							<img src="../image/list_btn_ico_del.png"/>
+							<span>删除</span>
+						</button>
+						<button class="btn btn-primary" @click="handleConduct">
+							<img src="../image/list_btn_ico_edit.png"/>
+							<span>确认办理</span>
+						</button>
+					</div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+				    <!-- 待办事项 -->
+					<div v-if="showToDoTab">
+						<el-table :data="tgxy_ToDoList" stripe :default-sort="{prop: 'index'}" @selection-change="handleSelectionChange">
+							<el-table-column type="selection" width="33" fixed></el-table-column>
+							<el-table-column type="index" :index="indexMethod" label="序号" width="90" sortable fixed></el-table-column>
+							<el-table-column prop="eCode" label="业务单号" width="" fixed></el-table-column>
+							<el-table-column prop="theNameOfBank" label="主题" width=""></el-table-column>
+							<el-table-column prop="signDate" label="业务类型" width=""></el-table-column>
+							<el-table-column prop="userUpdate.theName" label="申请机构" width=""></el-table-column>
+							<el-table-column prop="lastUpdateTimeStamp" label="申请人" width=""></el-table-column>
+							<el-table-column prop="lastUpdateTimeStamp" label="申请日期" width=""></el-table-column>
+							<el-table-column prop="lastUpdateTimeStamp" label="当前处理人" width=""></el-table-column>
+							<el-table-column prop="lastUpdateTimeStamp" label="办理状态" width=""></el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+					<!-- 未读公告 -->
+					<div v-if="showNoticeTab">
+						<div class="noticeTab">
+			              <div class="check-group" v-for="(item, index) in equipments" :key="index">
+			                  <el-checkbox-group v-model="checkedEquipments[index]" @change="handleChange(index,item.tableId)">
+			                      <el-checkbox style="width:100%;border-bottom:1px solid #F1F1F1;padding:12px 0px 12px 0px;" v-for="data in item.childMenu" @change="" :label="data.tableId">
+			                          <div class="content con_color" @click.stop="openDetail(item.tableId)">{{data.sender}}</div>
+			                          <div class="content content_box" @click.stop="openDetail(item.tableId)">{{data.theTitle}}</div>
+			                          <div class="content con_color" @click.stop="openDetail(item.tableId)">{{data.sendTimeStamp}}</div>
+			                      </el-checkbox>
+			                  </el-checkbox-group>
+			              </div>
+						</div>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+					<!-- 未处理预警 -->
+					<div v-if="showWarnTab">
+						<el-table :data="tgxy_WarnList" stripe :default-sort="{prop: 'index'}" @selection-change="handleWarnSelectionChange">
+							<el-table-column type="selection" width="48" fixed></el-table-column>
+							<el-table-column type="index" :index="indexMethod" label="序号" width="90" sortable fixed></el-table-column>
+							<el-table-column prop="eCode" label="预警编号" width="" fixed>
+							    <template scope="scope">              
+							        <span v-if="scope.row.isReader==0" style="color:blue">{{ scope.row.eCode }}</span>              
+							        <span v-else style="color: black">{{ scope.row.eCode }}</span>        
+							    </template>
+							</el-table-column>
+							<el-table-column prop="sendTimeStamp" label="触发日期" width=""></el-table-column>
+							<!-- <el-table-column prop="theState" label="预警业务类型" width=""></el-table-column> -->
+							<el-table-column prop="theTitle" label="主题" width=""></el-table-column>
+							<el-table-column prop="theContent" label="内容" width="">
+							    <template scope="scope">              
+							        <span v-if="scope.row.isReader==0" style="color:blue">{{ scope.row.theContent }}</span>              
+							        <span v-else style="color: black">{{ scope.row.theContent }}</span>        
+							    </template>
+							</el-table-column>
+							<el-table-column prop="busiState" label="消息状态" width="">
+							    <template scope="scope">
+							        <button  v-if="scope.row.busiState== '0'" class="btn btn-state-warning">未确认</button>
+							    	<button  v-if="scope.row.busiState == '1'" class="btn btn-state-success">已确认</button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+				
+				<!-- error modal -->
+			<div class="modal fade" id="edModel" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2"></div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" @click="errClose">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!-- success modal -->
+			<div class="modal fade" id="sdModel" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作成功</div>
+								<div class="del-text2">保存成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" @click="succClose">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		</div>
+
+		<script src="../assets/element/js/element.js" type="text/javascript"></script>
+		<script src="../components/vue-components.js"></script>
+		<script src="../assets/exportExcel/FileSaver.js"></script>
+		<script src="../assets/exportExcel/xlsx.js"></script>
+
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/index_ToDoList.js"></script>
+	</body>
+
+</html>

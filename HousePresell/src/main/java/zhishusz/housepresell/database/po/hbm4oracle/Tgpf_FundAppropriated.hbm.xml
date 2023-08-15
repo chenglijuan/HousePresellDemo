@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tgpf_FundAppropriated" table="Tgpf_FundAppropriated" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_FundAppro</param>
+			</generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Emmp_CompanyInfo" name="developCompany" foreign-key="null">
+			<column name="developCompany">
+				<comment>关联开发企业</comment>
+			</column>
+		</many-to-one>
+		<property name="eCodeOfDevelopCompany">
+			<column name="eCodeOfDevelopCompany">
+				<comment>开发企业编号</comment>
+			</column>
+		</property>
+		<property name="canPayAmount">
+			<column name="canPayAmount">
+				<comment>托管可拨付金额</comment>
+			</column>
+		</property>
+		<many-to-one class="Tgpf_FundOverallPlan" name="fundOverallPlan" foreign-key="null">
+			<column name="tgpf_FundOverallPlan_Id">
+				<comment>资金统筹</comment>
+			</column>
+		</many-to-one>
+		<many-to-one class="Tgpf_FundAppropriated_AF" name="fundAppropriated_AF" foreign-key="null">
+			<column name="fundAppropriated_AF_Id">
+				<comment>用款申请</comment>
+			</column>
+		</many-to-one>
+		<property name="overallPlanPayoutAmount">
+			<column name="overallPlanPayoutAmount">
+				<comment>统筹拨付金额</comment>
+			</column>
+		</property>
+		<many-to-one class="Tgxy_BankAccountEscrowed" name="bankAccountEscrowed" foreign-key="null">
+			<column name="bankAccountEscrowed">
+				<comment>托管账户</comment>
+			</column>
+		</many-to-one>
+		<many-to-one class="Tgpj_BankAccountSupervised" name="bankAccountSupervised" foreign-key="null">
+			<column name="bankAccountSupervised">
+				<comment>监管账户</comment>
+			</column>
+		</many-to-one>
+		<property name="actualPayoutDate">
+			<column name="actualPayoutDate">
+				<comment>实际拨款日期</comment>
+			</column>
+		</property>
+		<property name="eCodeFromPayoutBill">
+			<column name="eCodeFromPayoutBill">
+				<comment>打款单号</comment>
+			</column>
+		</property>
+		<property name="currentPayoutAmount">
+			<column name="currentPayoutAmount">
+				<comment>本次实际拨付金额</comment>
+			</column>
+		</property>
+		<property name="approvalState">
+			<column name="approvalState">
+				<comment>审批状态</comment>
+			</column>
+		</property>
+		<property name="colorState">
+			<column name="colorState">
+				<comment>颜色状态</comment>
+			</column>
+		</property>
+		<property name="pushState">
+			<column name="pushState">
+				<comment>反馈状态 0-发起中 1-成功 2-失败</comment>
+			</column>
+		</property>
+		<property name="pushInfo">
+			<column name="pushInfo">
+				<comment>反馈信息</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

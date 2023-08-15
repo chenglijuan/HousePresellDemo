@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta charset="UTF-8">
+	<title>housepresell管理后台-申请表-项目托管终止（审批）-主表编辑</title>
+	<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+</head>
+<body>
+<div class="content-wrap" id="empj_BldEscrowCompletedUpdateEditDiv">
+	<div class="detail-title cs-mt-0">
+		<h1 class="inline">基本信息</h1>
+		<div class="inline title-btns">
+			<button class="btn btn-success" @click="update('1')">
+				<img src="../image/detail_btn_ico_save.png" width="18">
+				<span>保存</span>
+			</button>
+			<!-- <button class="btn btn-primary" @click="update('2')">
+				<img src="../image/detail_btn_ico_submit.png" width="18">
+				<span>提交</span>
+			</button> -->
+			<!--<button class="btn btn-warning">-->
+			<!--<img src="../image/detail_btn_ico_record.png" width="18">-->
+			<!--<span>备案</span>-->
+			<!--</button>-->
+		</div>
+	</div>
+	<!--基本信息开始-->
+	<div class="cs-content detail-content">
+		<div class="row">
+
+			<div class="col-md-4">
+				<div class="form-group">
+					<span class="detail-text1">交付备案批准文件号：</span>
+					<div class="detail-info3">
+						<div class="detail-edit">
+						     <span class="required">*</span>
+							<input type="text" v-model="eCodeFromDRAD" class="form-control"/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">项目名称：</span>
+					<div class="detail-info3">
+						<div class="detail-edit">
+						   <span class="required">*</span>
+							<!--<select name="" class="form-control" v-model="projectId" @change="projectInfoChange($event)" >-->
+								<!--<option value="0">请选择项目</option>-->
+								<!--<template v-for="empj_ProjectInfo in empj_ProjectInfoList">-->
+									<!--<option :value="empj_ProjectInfo.tableId" :data-cityregionname="empj_ProjectInfo.cityRegionName" :data-address="empj_ProjectInfo.address">{{empj_ProjectInfo.theName}}</option>-->
+								<!--</template>-->
+							<!--</select>-->
+							<vue-select defaultname="请选择项目" :thevalue="projectId"
+										:optionlist="empj_ProjectInfoList"
+										@callbackfun="projectInfoChange"
+										@emptybackfun="resetProjectInfoChange"></vue-select>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">项目托管面积：</span>
+					<div class="detail-info3">
+						<div class="detail-edit">
+							<input type="text" v-model="allBldEscrowSpace" class="form-control"
+								   disabled="true"/>
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<span class="detail-text1">是否已公示：</span>
+					<div class="detail-info3">
+						<div class="detail-edit">
+						    <span class="required">*</span>
+							<vue-select defaultname="请选择是否公示"  :thevalue="hasFormula" :optionlist="hasFormulaList" @callbackfun="hasFormulaChange" @emptybackfun="hasFormulaEmpty"></vue-select>				
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<span class="detail-text1">本次终止托管面积：</span>
+					<div class="detail-info3">
+						<div class="detail-edit">
+							<input type="text" v-model="currentBldEscrowSpace" class="form-control" disabled="true"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<span class="detail-text1">开发企业：</span>
+					<div class="detail-info3">
+						<div class="detail-edit" >
+						   <span class="required">*</span>
+							<input type="text" v-model="developCompanyName" class="form-control" disabled="true"/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">区域：</span>
+					<div class="detail-info3">
+						<div class="detail-edit">
+							<input type="text" v-model="cityRegionName" class="form-control" disabled="true"/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1">项目坐落：</span>
+					<div class="detail-info3">
+						<div class="detail-edit">
+							<input type="text" v-model="address" class="form-control" disabled="true"/>
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<span class="detail-text1">公示网址：</span>
+					<div class="detail-info3">
+						<div class="detail-edit">
+							<input type="text" v-model="webSite" class="form-control"/>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<span class="detail-text1">备注：</span>
+					<div class="detail-info3">
+						<div class="detail-edit">
+							<textarea v-model="remark" class="form-control"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<!--基本信息结束-->
+	<!--表格开始-->
+	<div class="detail-title">
+		<h1 class="inline">托管终止楼幢</h1>
+	</div>
+	<div class="cs-content">
+		<div class="detail-content">
+			<el-table ref="multipleTable" :data="empj_BuildingInfoList" stripe :default-sort =
+					"{prop: 'index'}" @selection-change="handleSelectionChange">
+				<el-table-column type="selection" :selectable='checkboxInit' width="50" v-model="selectItem" align="center" fixed
+								 sortable></el-table-column>
+				<el-table-column type="index" :index="indexMethod" label="序号" width="60" align="center" fixed></el-table-column>
+				<el-table-column prop="eCode" label="楼幢编号" min-width="220"></el-table-column>
+				<el-table-column prop="eCodeFromConstruction" label="施工编号" min-width="200"></el-table-column>
+				<el-table-column  label="公安编号" min-width="200" sortable>
+					<template scope="scope">
+						<input placeholder="请输入人公安编号" v-model="scope.row.eCodeFromPublicSecurity" 
+							   size="mini" style="width:100%"/>
+					</template>
+				</el-table-column>
+				<!-- @keyup="keyupCodeFromPublicSecurity($event,scope.$index)" -->
+				<!-- <el-table-column prop="eCodeFromPublicSecurity" label="公安编号" min-width="200"></el-table-column> -->
+				<el-table-column prop="newEscrowStandard" label="托管标准" min-width="160"></el-table-column>
+				<el-table-column prop="upfloorNumber" label="地上层数" min-width="140" align="right"></el-table-column>
+				<el-table-column prop="buildingArea" label="建筑面积（㎡）" min-width="140" align="right"></el-table-column>
+				<el-table-column prop="escrowArea" label="托管面积（㎡）" min-width="140" align="right"></el-table-column>
+				<el-table-column prop="deliveryTypeName" label="房屋交付类型" min-width="120"></el-table-column>
+				<el-table-column label="托管余额（元）" min-width="140" align="right">
+					<template scope="scope">
+						<div class="text-right">{{scope.row.currentEscrowFund}}</div>
+					</template>
+				</el-table-column>
+				<el-table-column label="可拨付余额（元）" min-width="140" align="right">
+					<template scope="scope">
+						<div class="text-right">{{scope.row.allocableAmount}}</div>
+					</template>
+				</el-table-column>
+				<el-table-column prop="currentFigureProgress" label="当前形象进度" min-width="160"></el-table-column>
+				<el-table-column label="当前受限额度（元）" min-width="140" align="right">
+					<template scope="scope">
+						<div class="text-right">{{scope.row.effectiveLimitedAmount}}</div>
+					</template>
+				</el-table-column>
+				<el-table-column prop="escrowState" label="状态" min-width="100" align="center">
+					<template scope="scope">
+						<button  v-if="scope.row.escrowState == '未托管'" class="btn btn-state-danger">未托管</button>
+						<button  v-if="scope.row.escrowState == '已托管'" class="btn btn-state-success">已托管</button>
+						<button  v-if="scope.row.escrowState == '申请托管终止'" class="btn btn-state-warning">申请托管终止</button>
+						<button  v-if="scope.row.escrowState == '托管终止'" class="btn btn-state-danger">托管终止</button>
+					</template>
+				</el-table-column>
+			</el-table>
+		</div>
+	</div>
+	<!--表格结束-->
+	<!--附件材料开始-->
+	<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+	<!--附件材料结束-->
+</div>
+
+<script src="../components/vue-components.js"></script>
+<script src="../js/tabCommon.js"></script>
+<script src="../js/admin/empj/Empj_BldEscrowCompletedEdit.js"></script>
+</body>
+</html>	

@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta charset="UTF-8">
+	<title>首页</title>
+	<!-- Vendor CSS-->
+	<link rel="stylesheet" href="../assets/bootstrap-3.3.7/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="../assets/bootstrap-tab-master/css/font-awesome.css">
+	<link rel="stylesheet" href="../assets/bootstrap-tab-master/css/bootstrap-tab.css">
+	<!-- Page CSS-->
+	<link rel="stylesheet" type="text/css" href="../css/main.css"/>
+	<!-- <link rel="stylesheet" type="text/css" href="../css/viewer.min.css"/> -->
+	<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/froala_editor.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/admin/sm/Sm_ApprovalProcess_BacklogEdit.css"/>
+	<OBJECT class="secretDog" ID="CInfControlLoginIndex" CLASSID="clsid:FF5A75DB-B1E2-46D3-856A-2FC65BA51A92"></OBJECT>
+	<OBJECT class="secretDog" ID="TZKeyOcxIndex" CLASSID="CLSID:C28F551F-2616-4FB0-BCC3-ED208B6FC58F" ></OBJECT>
+	<OBJECT class="secretDog" ID=TZPdfViewer  align=middle   width=0  height=0  CLASSID="CLSID:8537D1E8-73B4-4060-8AC5-8817E3344C8E"></OBJECT>
+	<style type="text/css">
+		#menuText{
+			width: 0; /*设置为0 隐藏自定义菜单*/
+			overflow: hidden; /*隐藏溢出的元素*/
+			box-shadow: 0 1px 1px #888,1px 0 1px #ccc;
+			position: fixed; /*自定义菜单相对与body元素进行定位*/
+		}
+		.menu{
+			width: 90px;
+			height: 28px;
+			line-height: 28px;
+			background:white;
+			margin:2px;
+			border-radius:.4rem;
+		    cursor:pointer;
+		}
+		
+		.cs-main-home{
+		      padding-top: 100px;
+              height: 100%;
+  
+		}
+	</style>
+</head>
+<body >
+<!--顶部开始-->
+<div class="cs-head" >
+	<div class="pull-left cs-logo text-center">
+		<img src="../image/top_logo.png"/>
+	</div>
+	<div class="cs-title text-center">
+		<div class="pull-left hover" id="indexHead" v-if="pageHomeStr!='homeCooperativeAgency'">
+			<img src="../image/top_side_btn.png" id="switchBtn1"/>
+			<img src="../image/top_side_btn.png" id="switchBtn2" style="display: none;"/>
+		</div>
+		<h1 class="cs-text inline">商品房预售资金托管系统</h1>
+		<div class="cs-user inline pull-right" id="indexDiv">
+			<span>您好，{{ userName }}</span>
+			<!-- 加密操作 -->
+			<span id="isEncrypt" style="display:none"></span>
+			<!-- 新增需求：合作机构，开发企业首页 -->
+			<span id="pageHome" style="display:none">{{ pageHome }}</span>
+			
+			<!-- 右击自定义菜单 -->
+			<div id="menuText" style="background:rgb(92, 156, 255);border-radius:0.4rem">
+				<div class="menu" onclick="allClose()">全部关闭</div>
+				<div class="menu" onclick="otherClose()">关闭其他</div>
+			</div>
+			
+			<span class="outLogin" @click="outLogin">退出</span>
+			<span class="outLogin" data-toggle="modal" data-target="#editPwd">修改密码</span>
+			<!-- <img src="../image/list_search_arrow_down.png"/> -->
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</div>
+<!--顶部结束-->
+<!-- 修改密码开始 -->
+<div class="modal fade" id="editPwd" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title csm-title">
+					修改密码
+				</h4>
+			</div>
+			<div class="modal-body csm-body">
+				<div class="form-group">
+					<span class="detail-text1"><strong class="red-icon">*</strong>旧密码：</span>
+					<div class="detail-info1">
+						<div class="detail-edit">
+							<input :type="torpType" data-errorInfoId="oldPwdId" data-reg="IsNull"
+								   data-error="" data-empty="请输入旧密码" @blur="errorCheck($event.target)" 
+								   @change="errorCheck($event.target)"
+								   value="" class="form-control" placeholder="请输入旧密码" v-model="oldPwd" />
+							<img @click="showPwdEvent" v-show="showPwd" src="../image/detail_ico_eyes_show.png" class="ico-date"/>
+							<img @click="hidePwdEvent" v-show="hidePwd" src="../image/detail_ico_eyes_hide.png" class="ico-date"/>
+						</div>
+						<div id="oldPwdId" class="red-text">输入有误，请重新填写</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1"><strong class="red-icon">*</strong>新密码：</span>
+					<div class="detail-info1">
+						<div class="detail-edit">
+							<input :type="torpNewType" data-errorInfoId="newPwdId" data-reg="IsNull"
+								   data-error="" data-empty="请输入新密码" @blur="errorCheck($event.target)" 
+								   @change="errorCheck($event.target)"
+								   value="" class="form-control" placeholder="请输入新密码" v-model="newPwd" />
+							<img @click="showNewPwdEvent" v-show="showNewPwd" src="../image/detail_ico_eyes_show.png" class="ico-date"/>
+							<img @click="hideNewPwdEvent" v-show="hideNewPwd" src="../image/detail_ico_eyes_hide.png" class="ico-date"/>
+						</div>
+						<div id="newPwdId" class="red-text">输入有误，请重新填写</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn foot-sure" @click="editPassword('editPwd')">
+					确定
+				</button>
+				<button type="button" class="btn foot-cancel" data-dismiss="modal">
+					取消
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 修改密码结束 -->
+
+<!-- 提醒修改密码开始 -->
+<div class="modal fade" id="cEditPwd" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+<!--				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">-->
+<!--					&times;-->
+<!--				</button>-->
+				<h4 class="modal-title csm-title">
+					修改密码
+				</h4>
+				<br/>
+				<h6 style="color: #ff0000">
+					您的密码已经过期或密码安全级别过低:请修改，密码规则：8-16位大小写数字组合
+				</h6>
+				<br/>
+			</div>
+
+			<div class="modal-body csm-body">
+				<div class="form-group">
+					<span class="detail-text1"><strong class="red-icon">*</strong>旧密码：</span>
+					<div class="detail-info1">
+						<div class="detail-edit">
+							<input :type="torpType" id="cOldPwdId" data-errorInfoId="oldPwdId" data-reg="IsNull"
+								   data-error="" data-empty="请输入旧密码" @blur="errorCheck($event.target)"
+								   @change="errorCheck($event.target)"
+								   value="" class="form-control" placeholder="请输入旧密码" v-model="oldPwd" />
+							<img @click="showPwdEvent" v-show="showPwd" src="../image/detail_ico_eyes_show.png" class="ico-date"/>
+							<img @click="hidePwdEvent" v-show="hidePwd" src="../image/detail_ico_eyes_hide.png" class="ico-date"/>
+						</div>
+						<div  class="red-text">输入有误，请重新填写</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1"><strong class="red-icon">*</strong>新密码：</span>
+					<div class="detail-info1">
+						<div class="detail-edit">
+							<input :type="torpNewType" id="cNewPwdId" data-errorInfoId="newPwdId" data-reg="IsNull"
+								   data-error="" data-empty="请输入新密码" @blur="errorCheck($event.target)"
+								   @change="errorCheck($event.target)"
+								   value="" class="form-control" placeholder="请输入新密码" v-model="newPwd" />
+							<img @click="showNewPwdEvent" v-show="showNewPwd" src="../image/detail_ico_eyes_show.png" class="ico-date"/>
+							<img @click="hideNewPwdEvent" v-show="hideNewPwd" src="../image/detail_ico_eyes_hide.png" class="ico-date"/>
+						</div>
+						<div  class="red-text">输入有误，请重新填写</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="detail-text1"><strong class="red-icon">*</strong>确认新密码：</span>
+					<div class="detail-info1">
+						<div class="detail-edit">
+							<input :type="torpNewType" id="ccNewPwdId" data-errorInfoId="newPwdId" data-reg="IsNull"
+								   data-error="" data-empty="请输入新密码" @blur="errorCheck($event.target)"
+								   @change="errorCheck($event.target)"
+								   value="" class="form-control" placeholder="请输入新密码" v-model="newPwd" />
+							<img @click="showNewPwdEvent" v-show="showNewPwd" src="../image/detail_ico_eyes_show.png" class="ico-date"/>
+							<img @click="hideNewPwdEvent" v-show="hideNewPwd" src="../image/detail_ico_eyes_hide.png" class="ico-date"/>
+						</div>
+						<div  class="red-text">输入有误，请重新填写</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn foot-sure" onclick="editChangePassword('cEditPwd')">
+					确定
+				</button>
+<!--				<button type="button" class="btn foot-cancel" data-dismiss="modal">-->
+<!--					取消-->
+<!--				</button>-->
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 提醒修改密码结束 -->
+
+<!--左侧导航开始-->
+<div class="cs-sidebar" id="sideBarDiv" v-if="pageHomeStr!='homeCooperativeAgency'">
+	<!-- 静态 -->
+	<!-- <div class="sidebar" data-href="userNavigationMenu_agency.html"  v-if="pageHomeStr==='homeCooperativeAgency'"></div> -->
+	<!-- 动态(根据用户动态生成) -->
+	<div class="sidebar" :data-href="'userNavigationMenu_'+userId+'.html'" ></div>
+</div>
+<!--左侧导航结束-->
+<!--内容区域开始-->
+<div :class="pageHomeStr==='homeCooperativeAgency' ? 'cs-main-home' :'cs-main'" id="tabDiv"  ><!-- :style="{padding-left: (pageHomeStr==='homeCooperativeAgency' ? 0px : 220px) }"cs-main-home -->
+	<div id="tabContainer" class="cs-tab"></div>
+	<!-- <a href="login.shtml">登录</a> -->
+</div>
+
+<!-- success modal 开始 -->
+<div class="modal fade" id="sm" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-del">
+		<div class="modal-content">
+			<div class="modal-body csm-body">
+				<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+				<div class="del-info">
+					<div class="del-text1 font-bold">操作成功</div>
+					<div class="del-text2">操作成功</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn foot-sure" data-dismiss="modal">确定</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+<!-- success modal 结束 -->
+
+<!-- success 进度更新 开始 -->
+<div class="modal fade" id="sm_dialog" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-del">
+		<div class="modal-content">
+			<div class="modal-body csm-body">
+				<!-- <img src="../image/popup_ico_succeed.png" class="pull-left"/> -->
+					<div align="center" style="font-size:20px;font-weight:bold">进度节点变更操作提示</div>
+					<div class="del-text2">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font-bold" align="center">一、监理随机选派</span></br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在托管系统中提交进度节点变更申请时，系统将从监理库随机选派两家监理机构，并生成监理机构服务验证码，可用于现场身份确认。</br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font-bold">二、监理审核情形</span></br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1、若两家现场查勘监理机构出具的监理报告结论均为达到相应进度，系统将通过进度节点变更。</br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2、若两家现场查勘监理机构出具的监理报告结论均为未达到相应进度，该进度节点变更不予通过。再次提交进度节点变更申请应在5个工作日之后。</br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3、若两家现场查勘监理机构出具的报告结论不一致，其中有一家监理机构报告认为未达相应进度的，该进度节点变更暂不予通过。开发企业可在5个工作日内在系统发起复议，重新随机选择另外两家监理单位再次进行现场查勘。若复议程序中两家监理机构报告一致认为达到相应进度，复议通过进度节点变更。复议监理机构有一家以上认为未达相应进度的，该进度节点变更不予通过。再次提交进度节点变更申请应在5个工作日之后。</br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font-bold">三、监理报告公示</span></br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;进度节点变更通过的楼幢，相对应的监理报告将在正泰公司官网公示。</br></br></br>
+						
+						附录（业务办理节点完成证明材料下载地址）：</br>
+						http://changzhou.zhishusz.com:19000/节点完成证明材料.doc</br>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn foot-sure" data-dismiss="modal">确定</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>业务办理节点完成证明材料下载地址
+<!-- success 进度更新 结束 -->
+
+<!-- success modal 开始 -->
+<div class="modal fade" id="approvalTheAcction" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-del">
+		<div class="modal-content">
+			<div class="modal-body csm-body">
+				<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+				<div class="del-info">
+					<div class="del-text1 font-bold">操作成功</div>
+					<div class="del-text2">该审核节点完成</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn foot-sure" data-dismiss="modal">确定</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+<!-- success modal 结束 -->
+
+<!-- error modal 开始 -->
+<div class="modal fade" id="fm" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-del">
+		<div class="modal-content">
+			<div class="modal-body csm-body">
+				<img src="../image/popup_ico_failure.png" class="pull-left"/>
+				<div class="del-info">
+					<div class="del-text1 font-bold">操作失败</div>
+					<div id="errorMsgModal" class="del-text2"></div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn foot-sure" data-dismiss="modal" id="errorModelConfirmBtn">确定</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+<!-- error modal 结束 -->
+
+<!-- UKEY modal 开始 -->
+<div class="modal fade" id="fm1" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-del">
+		<div class="modal-content">
+			<div class="modal-body csm-body">
+				<img src="../image/popup_ico_warning.png" class="pull-left"/>
+				<div class="del-info">
+					<div class="del-text1 font-bold">请检查UKEY是否正确插入!</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn foot-sure" data-dismiss="modal" onclick="getIndexPage()">确定</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+<!-- UKEY modal 结束 -->
+
+<!-- select modal 开始 -->
+<div class="modal fade" id="selectM" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-del">
+		<div class="modal-content">
+			<div class="modal-body csm-body">
+				<img src="../image/popup_ico_warning.png" class="pull-left"/>
+				<div class="del-info">
+					<div class="del-text1 font-bold">友情提示</div>
+					<div id="selectMsgModal" class="del-text2"></div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn foot-sure" id="selectConfirmBtn" data-dismiss="modal">
+					确定
+				</button>
+				<button type="button" class="btn foot-cancel" id="selectCancelBtn" data-dismiss="modal">
+					取消
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+<!-- select modal 结束 -->
+
+<!-- 审批弹框开始 -->
+<div class="modal fade approvalModalBody" id="examine" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog examine-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="approvalModalClose">
+					&times;
+				</button>
+				<h4 class="modal-title csm-title">
+					审批
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="examine-body">
+					<ul class="examine-tab nav nav-tabs" style="position: static;">
+						<li class="active approvalFirst" v-if="sourcePage == 1 && !isNeedBackup"><a href="#examineHandle" data-toggle="tab" @click="selectState = 1">审批处理</a></li>
+						<li class="approvalSecond"><a href="#examinePro" data-toggle="tab" @click="selectState = 2">审批流程</a></li>
+						<li class="approvalThird"><a href="#examineRecord" data-toggle="tab" @click="selectState = 3">审批记录</a></li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane fade in active" id="examineHandle"  v-if="sourcePage == 1">
+							<div class="row tab-first">
+								<div class="col-md-6">
+									<div class="form-group">
+										<span class="detail-text1">审批人员：</span>
+										<div class="detail-info1">
+											<div class="detail-unEdit">
+												<input type="text" disabled="disabled" class="form-control" :value="userName">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<span class="detail-text1 cs-mt-0">审批结果：</span>
+										<div class="detail-info1">
+											<el-radio-group v-model="theAction">
+												<el-radio :label="0">通过</el-radio>
+												<!-- <el-radio  :label="2">不通过</el-radio> -->
+												<el-radio :label="1">驳回</el-radio>
+											</el-radio-group>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<span class="detail-text1 cs-mt-0">审批评语：</span>
+										<div class="detail-info1">
+											<el-input type="textarea" :autosize="{ minRows: 3}" placeholder="请输入审批评语" v-model="sm_ApprovalProcess_Handle.theContent"></el-input>
+											<div class="attachments2">
+												<el-upload
+														class="upload-demo"
+														:action="approvalUploadCfg.data.upLoadUrl"
+														 multiple
+														:accept="approvalUploadCfg.acceptFileType"
+														:data="approvalUploadCfg.data"
+														:on-success="approvalUploadSuccess">
+													<el-button size="small" type="primary" :disabled="uploadDisabled">上传附件</el-button>
+												</el-upload>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane fade tab-second in active" id="examinePro">
+							<el-table :data="sm_ApprovalProcess_WorkflowList" border stripe :default-sort = "{prop: 'index'}" >
+								<el-table-column align="center" type="index" width="100" label="审批步骤" fixed ></el-table-column>
+								<el-table-column prop='theName' label="步骤名称" min-width="80"></el-table-column>
+								<el-table-column prop='approvalModel' label="审批模式" min-width="80">
+									<template scope="scope">
+										<span v-if="scope.row.approvalModel == 0">抢占</span>
+										<span v-if="scope.row.approvalModel == 1">会签</span>
+									</template>
+								</el-table-column>
+								<el-table-column prop='roleName' label="处理角色" min-width="120"></el-table-column>
+								<el-table-column align="center" prop='operateTimeStamp' label="处理时间" width="180"></el-table-column>
+								<el-table-column prop='busiState' label="审批进度" min-width="120"></el-table-column>
+							</el-table>
+						</div>
+						<div class="tab-pane fade tab-third" id="examineRecord">
+							<el-table :data="sm_ApprovalProcess_RecordList" border stripe :default-sort = "{prop: 'index'}" >
+								<el-table-column align="center" type="index" width="60" label="序号"></el-table-column>
+								<el-table-column prop='theName' label="步骤名称" min-width="120"></el-table-column>
+								<el-table-column prop='approvalModel' label="审批模式" min-width="120">
+									<template scope="scope">
+										<span v-if="scope.row.approvalModel == 0">抢占</span>
+										<span v-if="scope.row.approvalModel == 1">会签</span>
+									</template>
+								</el-table-column>
+								<el-table-column prop='userOperate' label="处理人" width="120"></el-table-column>
+								<el-table-column prop='operateTimeStamp' label="处理时间" width="180"></el-table-column>
+								<el-table-column prop='theAction' label="审批结果" min-width="120">
+									<template scope="scope">
+										<div v-if="scope.row.theAction == 0" class="text-success">同意</div>
+										<div v-if="scope.row.theAction == 1" class="text-danger">驳回</div>
+										<div v-if="scope.row.theAction == 2" class="text-warning">不通过</div>
+									</template>
+								</el-table-column>
+								<el-table-column prop='theContent' label="审批评语" min-width="120"></el-table-column>
+								<el-table-column label="附件" min-width="350">
+									<template scope="scope">
+										<div v-for="item in scope.row.sm_attachmentCfgList">
+											<el-upload
+													class="upload-demo prohibitDelete"
+													:file-list="item.attchmentList"
+													:on-remove="approvalHandlerRemove">
+											</el-upload>
+											<button v-if="item.attchmentList.length > 0" class="btn btn-all" @click="approvalBatchDownload(item.attchmentList)">全部下载</button>
+										</div>
+									</template>
+								</el-table-column>
+							</el-table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer" v-if="selectState == 1 && sourcePage == 1 && !isNeedBackup">
+				<button type="button" class="btn foot-sure" @click="approvalHandle" :disabled="commitBtn">
+					确定
+				</button>
+				<button type="button" class="btn foot-cancel" data-dismiss="modal" @click="approvalModalCancle" :disabled="commitBtn">
+					取消
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+<!-- 审批弹窗结束 -->
+
+<!-- 高拍仪弹框开始 -->
+<div id="modalHighMeter" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog examine-dialog" style="width:1040px;">
+         <div class="modal-content">
+             <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h4 class="modal-title csm-title">高拍仪附件</h4>
+              </div>
+              <div class="modal-body">
+                 <div  style="height:540px"><!-- id="highMeterDiv -->
+                     <object id="view1" type="application/x-eloamplugin" width="700" height="528" name="view" vspace="10" ></object>
+                     <object id="thumb1" type="application/x-eloamplugin" width="300" height="528" name="thumb" style="left:720px"></object> 
+                  </div>
+                  <tr><td>
+                      <label id="lab1"  style="display:none">设备1</label><!-- //ref="lab1"  -->
+                      <select id="subType1" style="width: 90px;display:none" name="subType1" ></select>
+                      <select id="selRes1" style="width: 90px;display:none" name="selRes"></select>
+                      <span style="font-size:18px">附件类型：</span>
+                     <select style="width: 600px;font-size:18px;border:1px solid #18c25b;padding-left:10px" @change="changeFileType" id="fileType">
+                           <option v-for="item in loaduploadlist" :value="item.eCode">{{item.theName}}</option>
+                      </select>
+                      <label id="lab2" style="display:none">设备2</label>
+                      <select id="subType2" style="width: 90px;display:none" name="subType2" onchange="changesubTypeAssist()" ></select>
+                      <select id="selRes2" style="width: 90px;display:none" name="selRes" ></select>	
+                         <input class="submit_01" style="background-color:#18c25b;color:white;padding:2px 20px;font-size:18px;border:1px solid #cdcdcd;margin:0px 50px" type="button" value="拍照"	 @click="Scan()"/><!--   -->
+                         <input class="submit_01" style="background-color:white;padding:2px 20px;font-size:18px;border:1px solid #cdcdcd" type="button" value="删除" @click="deletePhoto()"/><!--  -->
+                         <img src=""  id="idcardimg" alt="二代证图像" width=20 height=20/>
+                      </td>
+                   </tr>
+               </div>
+               <div class="modal-footer" style="text-align:center">
+                    <button type="button" class="btn foot-sure"  @click="savePhoto">确定</button><!--  -->
+                    <button type="button" class="btn foot-cancel" data-dismiss="modal">取消</button>
+               </div>
+       </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!-- messageModal 开始 -->
+<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-del">
+		<div class="modal-content">
+			<div class="modal-body csm-body">
+				<div class="del-info">
+					<div class="del-text1 font-bold">录入信息未保存,是否确认关闭窗口?</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn foot-sure" onclick="closeCurrentPage()">确定</button>
+				<button type="button" class="btn foot-cancel" data-dismiss="modal">取消</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+<!-- messageModal 结束 -->
+
+<!-- waiting modal -->
+	<div class="modal fade xszModel" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-del">
+			<div class="modal-content">
+				<div class="modal-body csm-body">
+					<div class="loading">
+					    <span></span>
+					</div>
+					<div id="signWarningText"style="text-align: center;color: #B6232A;font-weight: bold;font-size: 18px;margin-top: 30px;">
+						正在签章中，请等待...
+					</div>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal -->
+	</div>
+
+<!-- Vendor JS-->
+		<script src="../assets/vue/vue.min.js" type="text/javascript"></script>
+		<script src="../assets/jquery/jquery.min.js" type="text/javascript"></script>
+		<script src="../assets/element/js/element.js" type="text/javascript"></script>
+		<script src="../assets/bootstrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="../assets/bootstrap-tab-master/js/bootstrap-tab.js" type="text/javascript"></script>
+		<script src="../assets/laydate/laydate.js"></script>
+		
+		<script src="http://api.map.baidu.com/api?v=2.0&ak=bRDM3ArCMTrS2feha86zlSD2kfeRGrfy" type="text/javascript"></script>
+		
+		<!-- Noty Js -->
+		<script src="../assets/noty/jquery.noty.js"></script>
+		<script src="../assets/noty/layouts/top.js"></script>
+		<script src="../assets/noty/layouts/center.js"></script>
+		<script src="../assets/noty/themes/default.js"></script>
+		
+		<!-- Pushlet Js -->
+		<script src="../assets/pushlet/ajax-pushlet-client.js"></script>
+		
+		<script src="../js/ServerInterface.js" type="text/javascript"></script>
+		<script src="../assets/moment/moment.js"></script>
+		<script src="../js/BaseJs.js"></script>
+		
+		<!--图表插件引用-->
+		<script src="../js/echarts.min.js"></script>
+		
+		<script src="../components/vue-components.js"></script>
+		<script src="../js/froala_editor.min.js"></script>
+		<!--[if lt IE 9]>
+		    <script src="../js/froala_editor_ie8.min.js"></script>
+		  <![endif]-->
+		<script src="../js/tables.min.js"></script>
+		<script src="../js/lists.min.js"></script>
+		<script src="../js/colors.min.js"></script>
+		<script src="../js/media_manager.min.js"></script>
+		<script src="../js/font_family.min.js"></script>
+		<script src="../js/font_size.min.js"></script>
+		<script src="../js/block_styles.min.js"></script>
+		<script src="../js/video.min.js"></script>
+		<script>
+		    var height = document.body.clientHeight;
+		    $(".sidebar").css("height",(height-56)+"px");
+		    
+			/**
+			 * 监听后台推送
+			 */
+		    PL._init();
+			function onData(event) { 
+				if(event && event.hasOwnProperty("get")) {
+					var theTitle = decodeURIComponent(event.get("theTitle"));//推送标题
+					var theMessage = decodeURIComponent(event.get("theMessage"));//推送内容
+					
+					indexVue.$notify({
+			         /*  title: theTitle,
+			          message: theMessage,
+			          position: 'bottom-right' */
+			            message:"<img src='../image/notification_icon.png' width='38px' height='38px' align='top'/><h2 style='display:inline-block;padding-left:10px;font-weight:700;font-size:16px'>"+theTitle +"</h2><br/><div style='padding-left:48px'>"+ theMessage +"</div>",
+	                    dangerouslyUseHTMLString: true,
+		               position: 'bottom-right',
+		               duration : 0
+			        });
+				}
+			}
+			
+			function addListen(sm_User){
+				var id = sm_User.tableId;
+				
+				PL.joinListen('/noty/'+id);
+				
+				//监听后回调
+				onData();
+			}
+			$("#switchBtn1").click(function(){
+			    document.getElementById("myTab").style.width = "100%";
+			    var tabHeight = $("#myTab").height();
+				var height = 15 + [(tabHeight / 43) - 1] * 43;
+				$(".content-wrap").css("padding-top",height + "px");
+				$(".cs-sidebar").animate({
+					width:'0'
+				});
+				$(".cs-main").animate({
+					paddingLeft:'0'
+				});
+				$("#switchBtn1").hide();
+				$("#switchBtn2").show();
+			});
+			$("#switchBtn2").click(function(){
+			    document.getElementById("myTab").style.width = "88.5%";
+			    var tabHeight = $("#myTab").height();
+				var height = 15 + [(tabHeight / 43) - 1] * 43;
+				$(".content-wrap").css("padding-top",height + "px");
+				$(".cs-sidebar").animate({
+					width:'220px'
+				});
+				$(".cs-main").animate({
+					paddingLeft:'220px'
+				});
+				$("#switchBtn1").show();
+				$("#switchBtn2").hide();
+			});
+			
+		</script>
+		<script src="../js/admin/index.js"></script>
+		<script type="text/javascript">
+			var tim = setInterval(run,500);
+			function run() {
+				clearInterval(tim);
+				if($("#pageHome").html() != "") {
+					$("#tabContainer").tabs({
+						data: [{
+							id: 'home',
+							text: '首页',
+							url: $("#pageHome").html(),
+						}
+						],
+						showIndex: 0,
+						loadAll: true
+					});
+					$("#myTab").contextmenu(function(e){
+					    oObj = e.target;
+					    $("#menuText").show();
+						//取消默认的浏览器自带右键
+						e.preventDefault();
+						
+						//获取自定义的右键菜单
+						var menu = document.getElementById("menuText");
+						
+						//根据事件对象中鼠标点击的位置，进行定位
+						menu.style.left = e.clientX + 'px';
+						menu.style.top = e.clientY +'px';
+						
+						//改变自定义菜单的宽，用于显示自定义菜单
+						menu.style.width='94px';
+				    });
+					
+				}else {
+					var tim = setInterval(run,500);
+				}
+			}
+		     //对于未保存的新增的或者修改
+		    function closeCurrentPage(){
+		       $("#messageModal").modal('hide');
+		        // 获取前一个tab页的li标签的下标
+                var index = $("#myTab li.active").index() - 1;
+                var currentTableId = $("#tabContainer").data("tabs").getCurrentTabId();
+                var href = $("#myTab li.active a").attr("href").substring(1);
+                $("#myTab li.active").remove();
+                $("#" + href).remove(); 
+             // 激活前一页tab页显示数据
+                console.log("currentTableId" +currentTableId)
+                console.log("href" +href);
+                
+                $("#myTab li:eq('"+index+"')").addClass("active");
+                $(".tab-pane:eq('"+index+"')").addClass("active");
+                $(".tab-pane:eq('"+index+"')").addClass("in"); 
+                $("#myTab li").each(function(){
+                   	if($(this).attr("class") == "active") {
+                   		var oSpan = $(this).find("span").html();
+                   		var oUrl = $(this).find("a").attr("href");
+           		        oUrl = oUrl.replace(new RegExp("#"),"");
+           		        console.log(oUrl);
+                   		var str = oUrl.split("_");
+   			        	var reg = /^[0-9]+.?[0-9]*$/;
+                   		if(oUrl != "home") {
+           			        if(str.length > 3) {
+           			        	var tableIdStr = "";
+           			        	if(!reg.test(str[2])) {
+               			        	oUrl = str[0] + "_" + str[1] + "_" + str[2];
+               			            //传递参数多余1个，需要进行拼接
+         	                		for(var m = 3;m<str.length;m++){
+             	                		tableIdStr += str[m]+"_";
+         	                		}
+           			        	}else {
+               			        	oUrl = str[0] + "_" + str[1];
+               			            //传递参数多余1个，需要进行拼接
+         	                		for(var m = 2;m<str.length;m++){
+             	                			tableIdStr += str[m]+"_";
+         	                		}
+           			        	}
+           			            oUrl = str[0].toLowerCase() + "/" + oUrl + ".shtml";
+     	                		enterNewTab(tableIdStr.slice(0,tableIdStr.length-1), oSpan, oUrl);
+           			        }else {
+           			            oUrl = str[0] + "_" + str[1];
+           			            oUrl = str[0].toLowerCase() + "/" + oUrl + ".shtml";
+           			            enterNewTab(str[2], oSpan, oUrl);
+           			        }
+           		        }else {
+           		           $("#tabContainer").find(".nav-tabs li:eq('"+ ($("#myTab li").length-1) +"') a").tab("show");
+           					
+           		        }
+                   	}
+                   });
+                loadTabHeight();
+		    }
+		    
+		    function getIndexTab() {
+		        // 左侧菜单点击首页，切换首页tab激活
+		        $(".nav-tabs li:eq(0) a").tab("show");
+				$(".tab-pane:eq(0)").addClass("active");
+                $(".tab-pane:eq(0)").addClass("in");
+			}
+			
+			var isEncrypt = $("#isEncrypt").html();
+			if(isEncrypt == 1) { // 判断是否需要加密验证
+			    setInterval(getUkey,5000);
+			}
+			//监听UKEY插入拔出
+			var timer =  (getUkey, 5000);
+			function getUkey() {
+				var urlPath =  window.location.pathname;
+				urlPath = urlPath.split("/");
+				if(urlPath[urlPath.length - 1] != "login.shtml") {
+					var ikey;
+					phKey = TZKeyOcxIndex.TZ_Connect(-1,0);
+					ikey = TZKeyOcxIndex.Tz_ReadKeyID(phKey);
+					
+					if(ikey == 0) {
+				        $("#fm1").modal({
+				            backdrop :'static'
+				        });
+					    clearInterval(timer);
+				    }
+				}else {
+					clearInterval(timer);
+				}
+			}
+			//若拔出Ukey则跳转至登录页面
+			function getIndexPage() {
+				$("#fm1").hide();
+				clearInterval(timer);
+				window.location.href = "login.shtml";
+			}
+		</script>
+		<script type="text/javascript">
+			/* bug639-需要提供“全部关闭”、“其他关闭”功能  */
+			var oObj;
+		   /*  $("#myTab").contextmenu(function(e){
+			    oObj = e.target;
+			    $("#menuText").show();
+				//取消默认的浏览器自带右键
+				e.preventDefault();
+				
+				//获取自定义的右键菜单
+				var menu = document.getElementById("menuText");
+				
+				//根据事件对象中鼠标点击的位置，进行定位
+				menu.style.left = e.clientX + 'px';
+				menu.style.top = e.clientY +'px';
+				
+				//改变自定义菜单的宽，用于显示自定义菜单
+				menu.style.width='94px';
+		    }); */
+			//关闭右键菜单
+			window.onclick=function(e){
+				$("#menuText").hide();
+		    }
+		    
+		    // 全部关闭
+		    function allClose() {
+		        $("#myTab li").remove();
+		        $("#tabContainer").data("tabs").addTab({
+					id: 'home',
+					text: '首页',
+					url: $("#pageHome").html(),
+				});
+		    }
+		    
+		    // 关闭其他
+		    function otherClose() {
+		        var flag = $(oObj).parent().is(':has(a)');
+		        var ovar, oSpan, oUrl;
+		        if(flag) {
+		            ovar = $(oObj).parent();
+		        }else {
+		            ovar = $(oObj).parent().parent();
+		        }
+		        oSpan = $(ovar).find("span").html();
+		        oUrl = $(ovar).find("a").attr("href");
+		        oUrl = oUrl.replace(new RegExp("#"),"");
+		        var str = oUrl.split("_");
+		        if(oUrl != "home") {
+			        $(ovar).siblings().not($("#myTab li:eq(0)")).remove();
+			        $(ovar).remove();
+			        if(str.length > 3) {
+			            oUrl = str[0] + "_" + str[1] + "_" + str[2];
+			            oUrl = str[0].toLowerCase() + "/" + oUrl + ".shtml";
+			            enterNewTab(str[3], oSpan, oUrl);
+			        }else {
+			            oUrl = str[0] + "_" + str[1];
+			            oUrl = str[0].toLowerCase() + "/" + oUrl + ".shtml";
+			            enterNewTab(str[2], oSpan, oUrl);
+			        }
+		        }else {
+		            $("#myTab li").remove();
+		            $("#tabContainer").data("tabs").addTab({
+						id: 'home',
+						text: '首页',
+						url: $("#pageHome").html(),
+					});
+		        }
+		    }
+		    console.log(sideBarVue)
+		    if(sideBarVue.pageHomeStr == "homeCooperativeAgency"){
+		    	setTimeout(function(){ 
+		    		 document.getElementById("myTab").style.width = "100%";
+		    	}, 1000);
+		    }else{
+		    	 document.getElementById("myTab").style.width = "88.5%";
+		    }
+		    
+		    
+		    
+		</script>
+	</body>
+</html>

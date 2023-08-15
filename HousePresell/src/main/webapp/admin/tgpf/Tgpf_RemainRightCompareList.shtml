@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-留存权益比对表</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="Tgpf_RemainRightCompareListDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-info"  @click="commitCalculation()">
+						<img src="../image/detail_btn_ico_count.png" width="18">
+						<span>重新计算</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">留存权益计算编号：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="" disabled="" v-model="buildingRemainRightLogDetail.eCode"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">施工编号：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="" disabled="" v-model="buildingRemainRightLogDetail.building.eCodeFromConstruction"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">托管标准（元/m²）：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="" disabled="" v-model="buildingRemainRightLogDetail.escrowStandard"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">初始受限额度（元）：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="" disabled="" v-model="buildingRemainRightLogDetail.buildingAccount.orgLimitedAmount"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">现金受限额度（元）：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="" disabled="" v-model="buildingRemainRightLogDetail.buildingAccount.cashLimitedAmount"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">可拨付金额（元）：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="" disabled="" v-model="buildingRemainRightLogDetail.buildingAccount.allocableAmount"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">已退房退款金额（元）：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="" disabled="" v-model="buildingRemainRightLogDetail.buildingAccount.refundAmount"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">记账日期：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="" disabled="" v-model="buildingRemainRightLogDetail.billTimeStamp"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">项目名称：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="" disabled="" v-model="buildingRemainRightLogDetail.theNameOfProject"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">公安编号：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="" disabled="" v-model="buildingRemainRightLogDetail.eCodeFromPublicSecurity"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">交付类型：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" value="毛坯房" class="form-control" v-if="buildingRemainRightLogDetail.building.deliveryType == '1'"/>
+									<input disabled="" type="text" value="成品房" class="form-control" v-if="buildingRemainRightLogDetail.building.deliveryType == '2'"/>
+									<input disabled="" type="text" value="暂无数据" class="form-control" v-if="buildingRemainRightLogDetail.building.deliveryType == null || buildingRemainRightLogDetail.building.deliveryType == ''"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">当前形象进度：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="" disabled="" v-model="buildingRemainRightLogDetail.buildingAccount.currentFigureProgress"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">有效受限额度（元）：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="" disabled="" v-model="buildingRemainRightLogDetail.buildingAccount.effectiveLimitedAmount"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">总入账金额（元）：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="" disabled="" v-model="buildingRemainRightLogDetail.buildingAccount.totalAccountAmount"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">溢出金额（元）：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="" disabled="" v-model="buildingRemainRightLogDetail.buildingAccount.spilloverAmount"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">拨付冻结金额（元）：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="" disabled="" v-model="buildingRemainRightLogDetail.buildingAccount.appropriateFrozenAmount"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">开发企业名称：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="" disabled="" v-model="buildingRemainRightLogDetail.theNameOfCompany"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">托管面积（m²）：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="" disabled="" v-model="buildingRemainRightLogDetail.buildingAccount.escrowArea"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">托管状态：</span>
+							<div class="detail-info3">
+								<button  v-if="buildingRemainRightLogDetail.escrowState == '未托管'" class="btn btn-state-danger">未托管</button>
+								<button  v-if="buildingRemainRightLogDetail.escrowState == '已托管'" class="btn btn-state-success">已托管</button>
+								<button  v-if="buildingRemainRightLogDetail.escrowState == '申请托管终止'" class="btn btn-state-warning">申请托管终止</button>
+								<button  v-if="buildingRemainRightLogDetail.escrowState == '托管终止'" class="btn btn-state-danger">托管终止</button>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">节点受限额度（元）：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="" disabled="" v-model="buildingRemainRightLogDetail.nodeLimitedAmount"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">托管余额（元）：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="" disabled="" v-model="buildingRemainRightLogDetail.buildingAccount.currentEscrowFund"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">已拨付金额（元）：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="" disabled="" v-model="buildingRemainRightLogDetail.buildingAccount.payoutAmount"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">退房退款冻结金额（元）：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" disabled="" disabled="" v-model="buildingRemainRightLogDetail.buildingAccount.applyRefundPayoutAmount"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="detail-title">
+				<h1 class="inline">户留存权益</h1>
+				<div class="inline title-btns" v-if="!hasConstrast">
+					<div class="file_up" @click="remaindRightImportHandle()" style="display:inline;cursor:pointer">
+						<input type="file" id="uploadFilePath" style="width:80px;position: absolute;opacity: 0;display:inline;cursor:pointer"/>
+						<button class="btn btn-success">
+							<img src="../image/list_btn_ico_update.png" width="18">
+							<span>比对</span>
+						</button>
+					</div>
+					<button class="btn btn-green"  @click="templateDownload()">
+						<img src="../image/detail_btn_ico_download.png"/>
+						<span>比对模版</span>
+					</button>
+				</div>
+				<div class="inline title-btns" v-if="hasConstrast">
+					<button class="btn btn-success" @click="dataCorrect()">
+						<img src="../image/list_btn_ico_update.png" width="18">
+						<span>数据修正</span>
+					</button>
+					<button class="btn btn-green"  @click="templateDownload()">
+						<img src="../image/detail_btn_ico_download.png"/>
+						<span>比对模版</span>
+					</button>
+					<button class="btn btn-excel" @click="remaindRightDifferenceExportExcelHandle()" v-if="hasConstrast">
+						<img src="../image/export_ico_excel.png"/>
+						<span>导出为Excel</span>
+					</button>
+					
+				</div>
+			</div>
+			
+			<div class="cs-content">
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="Tgpf_RemainRightCompareList" :header-cell-style="headClass" height="640px">
+							<el-table-column type="index" align="center" :index="indexMethod" label="序号" width="60"></el-table-column>
+							<el-table-column prop="eCodeOfBuildingUnit" label="单元号"></el-table-column>
+							<el-table-column prop="eCodeFromRoom" label="房间号"></el-table-column>
+							<el-table-column prop="eCodeOfTripleAgreement" align="left" label="三方协议号" width="220"></el-table-column>
+							<el-table-column label="托管系统留存权益" align="center">
+								<el-table-column label="留存权益总金额（元）" width="190">
+									<template scope="scope">
+										<div class="text-right">{{scope.row.theAmountAddThousands}}</div>
+									</template>
+								</el-table-column>
+								<el-table-column label="受限权益（元）" width="190">
+									<template scope="scope">
+										<div class="text-right">{{scope.row.limitedRetainRightAddThousands}}</div>
+									</template>
+								</el-table-column>
+								<el-table-column label="可支取权益（元）" width="190">
+									<template scope="scope">
+										<div class="text-right">{{scope.row.withdrawableRetainRightAddThousands}}</div>
+									</template>
+								</el-table-column>
+							</el-table-column>
+							
+							<el-table-column label="数据上传留存权益" align="center" v-if="hasConstrast">
+								<el-table-column label="留存权益总金额（元）" width="190">
+									<template scope="scope">
+										<div class="text-right">{{scope.row.theAmount_UploadAddThousands}}</div>
+									</template>
+								</el-table-column>
+								<el-table-column label="受限权益（元）" width="190">
+									<template scope="scope">
+										<div class="text-right">{{scope.row.limitedRetainRight_UploadAddThousands}}</div>
+									</template>
+								</el-table-column>
+								<el-table-column label="可支取权益（元）" width="190">
+									<template scope="scope">
+										<div class="text-right">{{scope.row.withdrawableRetainRight_UploadAddThousands}}</div>
+									</template>
+								</el-table-column>
+							</el-table-column>
+							
+							<el-table-column label="差异" width="140" align="center" v-if="hasConstrast">
+								<el-table-column label="留存权益总金额（元）" width="190">
+									<template scope="scope">
+										<div class="text-right">{{scope.row.theAmount_CompareAddThousands}}</div>
+									</template>
+								</el-table-column>
+								<el-table-column label="受限权益（元）" width="190">
+									<template scope="scope">
+										<div class="text-right">{{scope.row.limitedRetainRight_CompareAddThousands}}</div>
+									</template>
+								</el-table-column>
+								<el-table-column label="可支取权益（元）" width="190">
+									<template scope="scope">
+										<div class="text-right">{{scope.row.withdrawableRetainRight_CompareAddThousands}}</div>
+									</template>
+								</el-table-column>
+							</el-table-column>
+							
+							<el-table-column prop="buyer" align="left" label="买受人" width="280"></el-table-column>
+							<el-table-column prop="theNameOfCreditor" align="left" label="借款人" width="280"></el-table-column>
+							<el-table-column prop="idNumberOfCreditor" align="left" label="借款人证件号码" width="220"></el-table-column>
+							<el-table-column prop="eCodeOfContractRecord" align="left" label="合同备案号" width="220"></el-table-column>
+							<el-table-column label="实际入账金额" width="140">
+								<template scope="scope">
+									<div class="text-right">{{scope.row.actualDepositAmountAddThousands}}</div>
+								</template>
+							</el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"></vue-nav>
+					</div>
+				</div>
+			</div>
+			
+			<!-- commit modal -->
+			<div class="modal fade" id="commitModalRemainRightCompareList" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_warning.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1">是否确定重新计算？</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure"  @click="reCalculation">
+								确定
+							</button>
+							<button type="button" class="btn foot-cancel" data-dismiss="modal">
+								取消
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!-- waiting modal -->
+			<div class="modal fade" id="waitingModalRemainRightCompareList" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<div class="loading">
+							    <span></span>
+							</div>
+							<div style="text-align: center;color: #B6232A;font-weight: bold;font-size: 18px;margin-top: 30px;">
+								留存权益重新计算中...
+							</div>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+		</div>
+		
+		<script src="../assets/fileupload/jquery.ui.widget.js" type="text/javascript"></script>
+		<script src="../assets/fileupload/jquery.fileupload.js" type="text/javascript"></script>
+		
+		<!-- Pages JS -->
+		<script src="../js/admin/tgpf/Tgpf_RemainRightCompareList.js"></script>
+	</body>
+</html>	

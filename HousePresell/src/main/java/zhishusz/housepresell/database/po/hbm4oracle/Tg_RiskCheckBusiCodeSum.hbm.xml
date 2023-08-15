@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tg_RiskCheckBusiCodeSum" table="Tg_RiskCheckBusiCodeSum" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_RiskCheckBusiCodeSum</param>
+			</generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<property name="spotTimeStamp">
+			<column name="spotTimeStamp">
+				<comment>抽查日期</comment>
+			</column>
+		</property>
+		<property name="bigBusiType">
+			<column name="bigBusiType">
+				<comment>业务大类</comment>
+			</column>
+		</property>
+		<property name="smallBusiType">
+			<column name="smallBusiType">
+				<comment>业务小类</comment>
+			</column>
+		</property>
+		<property name="sumCheckCount">
+			<column name="sumCheckCount">
+				<comment>业务</comment>
+			</column>
+		</property>
+		<property name="qualifiedCount">
+			<column name="qualifiedCount">
+				<comment>合格</comment>
+			</column>
+		</property>
+		<property name="unqualifiedCount">
+			<column name="unqualifiedCount">
+				<comment>不合格</comment>
+			</column>
+		</property>
+		<property name="pushCount">
+			<column name="pushCount">
+				<comment>整改推送</comment>
+			</column>
+		</property>
+		<property name="feedbackCount">
+			<column name="feedbackCount">
+				<comment>整改反馈</comment>
+			</column>
+		</property>
+		<property name="handleCount">
+			<column name="handleCount">
+				<comment>完成整改</comment>
+			</column>
+		</property>
+		<property name="entryState">
+			<column name="entryState">
+				<comment>录入状态</comment>
+			</column>
+		</property>
+		<property name="rectificationState">
+			<column name="rectificationState">
+				<comment>整改状态</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

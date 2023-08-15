@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tg_LoanProjectCountM_View" table="Tg_LoanProjectCountM_View" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_Tgpf_BuildPayout_View</param>
+			</generator>
+		</id>
+		<property name="cityRegion">
+			<column name="cityRegion">
+				<comment>区域</comment>
+			</column>
+		</property>
+		<property name="companyName">
+			<column name="companyName">
+				<comment>企业信息</comment>
+			</column>
+		</property>
+		<property name="projectName">
+			<column name="projectName">
+				<comment>项目名称</comment>
+			</column>
+		</property>
+		<property name="upTotalFloorNumber">
+			<column name="upTotalFloorNumber">
+				<comment>地上楼层数（总）</comment>
+			</column>
+		</property>
+		<property name="contractSigningDate">
+			<column name="contractSigningDate">
+				<comment>托管合作协议签订日期</comment>
+			</column>
+		</property>
+		<property name="preSaleCardDate">
+			<column name="preSaleCardDate">
+				<comment>预售证日期</comment>
+			</column>
+		</property>
+		<property name="preSalePermits">
+			<column name="preSalePermits">
+				<comment>预售许可证</comment>
+			</column>
+		</property>
+		<property name="eCodeOfAgreement">
+			<column name="eCodeOfAgreement">
+				<comment>协议编号</comment>
+			</column>
+		</property>
+		<property name="remark">
+			<column name="remark" length="4000">
+				<comment>备注</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

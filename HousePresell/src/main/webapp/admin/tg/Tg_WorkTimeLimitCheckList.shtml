@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-工作时限检查</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/admin/tg/Tg_WorkTimeLimitCheckList.css"/>
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="tg_WorkTimeLimitCheckListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<a class="btn btn-primary" @click="handleTimeLimitConfig()" data-editNum="21020101_OST_01">
+						<img src="../image/home_ico_setting.png"/>
+						<span>办理时限配置</span>
+					</a>
+				</div>
+				<!--顶部搜索结束-->
+				<div class="chart-rel">
+					<div class="chart-pos">
+						<h1 class="inline">业务超时统计</h1>
+						<div class="inline">
+							<span>统计日期：</span>
+							<input type="text" value="" class="form-control cs-input-date" id="date2102010101" placeholder="起始日期 ~ 终止日期" />
+							<img src="../image/list_search_calendar.png" class="ico-date"/>
+						</div>
+					</div>
+					<div id="chart" style="height: 330px;width: calc(100vw - 280px);"></div>
+				</div>
+				<!--表格开始-->
+				<div class="cs-table">
+					<el-table :data="tg_WorkTimeLimitCheckList" stripe border>
+						<el-table-column type="index" align="center" label="序号" width="60"></el-table-column>
+						<el-table-column prop="typeName" label="业务类型" align='center'></el-table-column>
+						<el-table-column prop="size" align="right" label="总业务量" width="140">
+							<template scope="scope">
+						        <a @click="workTimeDetail(scope.row.busiCode)" class="td-sum">{{scope.row.size}}</a>
+							</template>
+						</el-table-column>
+						<el-table-column prop="timeOutCount" align="right" label="超时业务量" width="140">
+							<template scope="scope">
+						        <a @click="workTimeDetail(scope.row.busiCode)" class="td-over">{{scope.row.timeOutCount}}</a>
+							</template>
+						</el-table-column>
+					</el-table>
+				</div>
+			</div>
+		</div>
+		
+	
+		<!-- Pages JS -->
+		<script src="../assets/echarts/echarts.js"></script>
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/tg/Tg_WorkTimeLimitCheckList.js"></script>
+	</body>
+</html>	

@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Sm_ApprovalProcess_Workflow" table="Sm_ApprovalProcess_Workflow" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_ApprProWf</param>
+			</generator>
+		</id>
+		<version name="version" type="java.lang.Long"></version>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userOperate" foreign-key="null">
+			<column name="userOperate">
+				<comment>操作人</comment>
+			</column>
+		</many-to-one>
+		<property name="operateTimeStamp">
+			<column name="operateTimeStamp">
+				<comment>操作时间点</comment>
+			</column>
+		</property>
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>结点编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_Permission_Role" name="role" foreign-key="null">
+			<column name="roleId">
+				<comment>角色</comment>
+			</column>
+		</many-to-one>
+		<property name="theName">
+			<column name="theName">
+				<comment>节点名称</comment>
+			</column>
+		</property>
+		<property name="nodeType">
+			<column name="nodeType">
+				<comment>结点类型</comment>
+			</column>
+		</property>
+		<property name="sourceId">
+			<column name="sourceId">
+				<comment>来源结点</comment>
+			</column>
+		</property>
+		<property name="sendId">
+			<column name="sendId">
+				<comment>发送结点</comment>
+			</column>
+		</property>
+		<property name="rejectNodeId">
+			<column name="rejectNodeId">
+				<comment>驳回结点</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_ApprovalProcess_AF" name="approvalProcess_AF" foreign-key="null">
+			<column name="approvalProcess_AF_Id">
+				<comment>申请单</comment>
+			</column>
+		</many-to-one>
+		<many-to-one class="Sm_ApprovalProcess_Workflow" name="lastWorkFlow" foreign-key="null">
+			<column name="lastWorkFlow">
+				<comment>上一个流程</comment>
+			</column>
+		</many-to-one>
+		<many-to-one class="Sm_ApprovalProcess_Workflow" name="nextWorkFlow" foreign-key="null">
+			<column name="nextWorkFlow">
+				<comment>下一个流程</comment>
+			</column>
+		</many-to-one>
+		<property name="lastAction">
+			<column name="lastAction">
+				<comment>最后审批动作</comment>
+			</column>
+		</property>
+		<property name="approvalModel">
+			<column name="approvalModel">
+				<comment>审批模式</comment>
+			</column>
+		</property>
+		<property name="finishPercentage">
+			<column name="finishPercentage">
+				<comment>会签完成阀值</comment>
+			</column>
+		</property>
+		<property name="passPercentage">
+			<column name="passPercentage">
+				<comment>会签通过阀值</comment>
+			</column>
+		</property>
+		<property name="rejectModel">
+			<column name="rejectModel">
+				<comment>驳回模式</comment>
+			</column>
+		</property>
+
+		<list name="workflowConditionList" cascade="all" inverse="false" lazy="true">
+			<key column="sm_ApprovalProcess_Workflow"/>
+			<list-index column="theIndex"/>
+			<one-to-many class="Sm_ApprovalProcess_WorkflowCondition"/>
+		</list>
+
+		<list name="sm_messageTemplate_cfgList" cascade="all" table="Rel_Workflow_MessageTemplate">
+			<key column="sm_ApprovalProcess_Workflow"/>
+			<list-index column="theIndex"/>
+			<many-to-many class="Sm_MessageTemplate_Cfg" column="sm_MessageTemplate_Cfg"/>
+		</list>
+		<list name="approvalProcess_recordList" cascade="all" inverse="false" lazy="true">
+			<key column="approvalProcess_Id"/>
+			<list-index column="theIndex"/>
+			<one-to-many class="Sm_ApprovalProcess_Record"/>
+		</list>
+	</class>
+</hibernate-mapping>

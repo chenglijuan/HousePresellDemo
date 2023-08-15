@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tgpf_FundAppropriated_AFDtl" table="Tgpf_FundAppropriated_AFDtl" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_FundApprAFDtl</param>
+			</generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_BuildingInfo" name="building" foreign-key="null">
+			<column name="building">
+				<comment>关联楼幢</comment>
+			</column>
+		</many-to-one>
+		<property name="eCodeOfBuilding">
+			<column name="eCodeOfBuilding">
+				<comment>楼幢编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Tgpf_FundAppropriated_AF" name="mainTable" foreign-key="null">
+			<column name="mainTable">
+				<comment>用款主表</comment>
+			</column>
+		</many-to-one>
+		<many-to-one class="Tgpj_BankAccountSupervised" name="bankAccountSupervised" foreign-key="null">
+			<column name="bankAccountSupervised">
+				<comment>关联监管账号</comment>
+			</column>
+		</many-to-one>
+		<property name="supervisedBankAccount">
+			<column name="supervisedBankAccount">
+				<comment>监管账号</comment>
+			</column>
+		</property>
+		<property name="appliedAmount">
+			<column name="appliedAmount">
+				<comment>本次划款申请金额（元）</comment>
+			</column>
+		</property>
+		<property name="payoutState">
+			<column name="payoutState">
+				<comment>拨付状态</comment>
+			</column>
+		</property>
+
+		<property name="allocableAmount">
+			<column name="allocableAmount">
+				<comment>当前可划拨金额（元）</comment>
+			</column>
+		</property>
+		<property name="escrowStandard">
+			<column name="escrowStandard">
+				<comment>托管标准（元/㎡）</comment>
+			</column>
+		</property>
+		<property name="orgLimitedAmount">
+			<column name="orgLimitedAmount">
+				<comment>初始受限额度（元）</comment>
+			</column>
+		</property>
+		<property name="currentFigureProgress">
+			<column name="currentFigureProgress">
+				<comment>当前形象进度</comment>
+			</column>
+		</property>
+		<property name="currentLimitedRatio">
+			<column name="currentLimitedRatio">
+				<comment>当前受限比例（%）</comment>
+			</column>
+		</property>
+		<property name="currentLimitedAmount">
+			<column name="currentLimitedAmount">
+				<comment>当前受限额度（元）</comment>
+			</column>
+		</property>
+		<property name="totalAccountAmount">
+			<column name="totalAccountAmount">
+				<comment>总入账金额（元）</comment>
+			</column>
+		</property>
+		<property name="appliedPayoutAmount">
+			<column name="appliedPayoutAmount">
+				<comment>已申请拨付金额（元）</comment>
+			</column>
+		</property>
+		<property name="currentEscrowFund">
+			<column name="currentEscrowFund">
+				<comment>当前托管余额（元）</comment>
+			</column>
+		</property>
+		<property name="refundAmount">
+			<column name="refundAmount">
+				<comment>退房退款金额（元）</comment>
+			</column>
+		</property>
+		<property name="cashLimitedAmount">
+			<column name="cashLimitedAmount">
+				<comment>现金受限额度（元）</comment>
+			</column>
+		</property>
+		<property name="effectiveLimitedAmount">
+			<column name="effectiveLimitedAmount">
+				<comment>有效受限额度（元）</comment>
+			</column>
+		</property>
+		<property name="actualReleaseAmount">
+			<column name="actualReleaseAmount">
+				<comment>实际可释放金额/实际可替代保证额度（元）</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,28 @@
+.detail-info1{
+	cursor: not-allowed;
+	min-height: 62px;
+}
+.basic-ellipsis{
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+	width: 100%;
+    display: inline-block;
+}
+.text-danger.basic-ellipsis{
+	width: calc(100% - 30px);
+}
+
+.ztree li a.curSelectedNode{
+	background: transparent;
+}
+.ztree li a:hover{
+	text-decoration: none;
+	cursor: default;
+}
+.ztree li span.button.chk{
+	cursor: pointer;
+}
+.detail-content{
+	padding-bottom: 25px;
+}

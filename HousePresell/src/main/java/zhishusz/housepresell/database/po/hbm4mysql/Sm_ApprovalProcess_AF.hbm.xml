@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Sm_ApprovalProcess_AF" table="Sm_ApprovalProcess_AF" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<property name="theme">
+			<column name="theme">
+				<comment>主题</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_ApprovalProcess_Cfg" name="configuration" foreign-key="null">
+			<column name="configuration">
+				<comment>流程配置</comment>
+			</column>
+		</many-to-one>
+		<many-to-one class="Sm_Permission_Role" name="permissionRole" foreign-key="null">
+			<column name="permissionRole">
+				<comment>发起该流程的用户角色</comment>
+			</column>
+		</many-to-one>
+		<property name="busiCode">
+			<column name="busiCode">
+				<comment>业务编码</comment>
+			</column>
+		</property>
+		<property name="busiType">
+			<column name="busiType">
+				<comment>业务类型</comment>
+			</column>
+		</property>
+		<many-to-one class="Emmp_CompanyInfo" name="companyInfo" foreign-key="null">
+			<column name="companyInfo">
+				<comment>归属企业</comment>
+			</column>
+		</many-to-one>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<property name="startTimeStamp">
+			<column name="startTimeStamp">
+				<comment>开始时间</comment>
+			</column>
+		</property>
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="sourceId">
+			<column name="sourceId">
+				<comment>数据源Id</comment>
+			</column>
+		</property>
+		<property name="sourceType">
+			<column name="sourceType">
+				<comment>数据源类型</comment>
+			</column>
+		</property>
+		<property name="orgObjJsonFilePath">
+			<column name="orgObjJsonFilePath">
+				<comment>修改前数据Json文件路径</comment>
+			</column>
+		</property>
+		<property name="expectObjJsonFilePath">
+			<column name="expectObjJsonFilePath">
+				<comment>修改后数据Json文件路径</comment>
+			</column>
+		</property>
+		
+		<list name="attachmentList" cascade="all">
+			<key column="approvalProcess_AF_Id"/>
+			<list-index column="theIndex"/>
+			<one-to-many class="Sm_Attachment"/>
+		</list>
+		
+		<list name="workFlowList" cascade="all" >
+			<key column="approvalProcess_AF_Id"/>
+			<list-index column="theIndex"/>
+			<one-to-many class="Sm_ApprovalProcess_Workflow"/>
+		</list>
+		
+		<property name="currentIndex">
+			<column name="currentIndex">
+				<comment>当前审批进度</comment>
+			</column>
+		</property>
+		<property name="isNeedBackup">
+			<column name="isNeedBackup">
+				<comment>是否需要备案</comment>
+			</column>
+		</property>
+		<property name="applicant">
+			<column name="applicant">
+				<comment>申请人</comment>
+			</column>
+		</property>
+		<property name="theNameOfCompanyInfo">
+			<column name="theNameOfCompanyInfo">
+				<comment>申请机构</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

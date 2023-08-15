@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-管理角色详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="sm_Permission_RoleDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-primary" @click="sm_Permission_RoleEdit">
+						<img src="../image/list_btn_ico_edit.png" width="18">
+						<span>修改</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">角色编码：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text"  disabled v-model="sm_Permission_RoleModel.eCode" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">是否启用：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<select v-model="sm_Permission_RoleModel.busiType" class="form-control" disabled>
+										<option value="0">是</option>
+										<option value="1">否</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">创建人：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" disabled  v-model="sm_Permission_RoleModel.userStart" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">角色名称：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="sm_Permission_RoleModel.theName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">启用日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" disabled  v-model="sm_Permission_RoleModel.enableTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">创建时间：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" disabled  v-model="sm_Permission_RoleModel.createTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">机构类型：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="sm_Permission_RoleModel.parameterName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">停用日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" disabled  v-model="sm_Permission_RoleModel.downTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<span class="detail-text1">备注：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<textarea type="text" disabled v-model="sm_Permission_RoleModel.remark" class="form-control"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--表格开始-->
+			<div class="detail-title">
+				<h1 class="inline">用户信息表</h1>
+			</div>
+			<div class="cs-content">
+				<div class="detail-content">
+					<el-table :data="sm_UserList" stripe :default-sort = "{prop: 'index'}">
+						<el-table-column type="index" :index="indexMethod" label="序号" sortable width="60" align="center"></el-table-column>
+						<el-table-column prop="theAccount" label="账户名" min-width="360"></el-table-column>
+						<el-table-column prop="theName" label="真实姓名" min-width="280"></el-table-column>
+						<el-table-column prop="theNameOfCompany" label="所属机构" min-width="360"></el-table-column>
+						<el-table-column prop="idType" label="证件类型" width="120">
+							<template scope="scope">
+								<span v-if="scope.row.idType=='1'">身份证</span>
+								<span v-if="scope.row.idType=='2'">护照</span>
+								<span v-if="scope.row.idType=='3'">军官证</span>
+								<span v-if="scope.row.idType=='4'">港澳台居民通行证</span>
+								<span v-if="scope.row.idType=='5'">户口簿</span>
+								<span v-if="scope.row.idType=='6'">其他证件</span>
+							</template>
+						</el-table-column>
+						<el-table-column prop="idNumber" label="证件号码" width="220"></el-table-column>
+					</el-table>
+					<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+				</div>
+			</div>
+			<!--表格结束-->
+		</div>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/sm/Sm_Permission_RoleDetail.js"></script>
+	</body>
+</html>	

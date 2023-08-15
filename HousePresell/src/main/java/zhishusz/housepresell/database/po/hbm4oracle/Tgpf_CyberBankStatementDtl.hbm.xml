@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tgpf_CyberBankStatementDtl" table="Tgpf_CyberBankStatementDtl"
+		dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_CyberBankStDtl</param>
+			</generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate"
+			foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord"
+			foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Tgpf_CyberBankStatement" name="mainTable"
+			foreign-key="null">
+			<column name="mainTable">
+				<comment>关联‘网银对账’主表</comment>
+			</column>
+		</many-to-one>
+		<property name="tradeTimeStamp">
+			<column name="tradeTimeStamp">
+				<comment>交易日期</comment>
+			</column>
+		</property>
+		<property name="recipientAccount">
+			<column name="recipientAccount">
+				<comment>对方账号</comment>
+			</column>
+		</property>
+		<property name="recipientName">
+			<column name="recipientName">
+				<comment>对方账户名称</comment>
+			</column>
+		</property>
+		<property name="remark">
+			<column name="remark" length="4000">
+				<comment>备注摘要</comment>
+			</column>
+		</property>
+		<property name="income">
+			<column name="income">
+				<comment>收入</comment>
+			</column>
+		</property>
+		<property name="payout">
+			<column name="payout">
+				<comment>支出</comment>
+			</column>
+		</property>
+		<property name="balance">
+			<column name="balance">
+				<comment>余额</comment>
+			</column>
+		</property>
+		<property name="reconciliationState">
+			<column name="reconciliationState">
+				<comment>网银对账状态</comment>
+			</column>
+		</property>
+		<property name="reconciliationUser">
+			<column name="reconciliationUser">
+				<comment>对账人</comment>
+			</column>
+		</property>
+		<property name="tradeAmount">
+			<column name="tradeAmount">
+				<comment>发生额</comment>
+			</column>
+		</property>
+		<property name="reconciliationStamp">
+			<column name="reconciliationStamp">
+				<comment>网银对账时间</comment>
+			</column>
+		</property>
+		<property name="coreNo">
+			<column name="coreNo">
+				<comment>核心流水号</comment>
+			</column>
+		</property>
+		<property name="uploadTimeStamp">
+			<column name="uploadTimeStamp">
+				<comment>文件上传时间</comment>
+			</column>
+		</property>
+		<property name="uploadUser">
+			<column name="uploadUser">
+				<comment>文件上传人</comment>
+			</column>
+		</property>
+		<property name="tgpf_DepositDetailId">
+			<column name="tgpf_DepositDetailId">
+				<comment>资金归集明细主键</comment>
+			</column>
+		</property>
+		<property name="sourceType">
+			<column name="sourceType">
+				<comment>数据来源 0-手动 1-接口</comment>
+			</column>
+		</property>
+		<property name="detailedId">
+			<column name="detailedId">
+				<comment>接收明细Id</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台开发企业首页</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<!-- Page CSS -->
+		<link rel="stylesheet" type="text/css" href="../css/admin/sm/Sm_Management_Menu.css"/>
+		<!-- zTree CSS -->
+		<link rel="stylesheet" type="text/css" href="../assets/zTree/css/zTreeStyle/zTreeStyle.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/admin/empj/Empj_BuildingInfoTable.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/chosen.css"/>
+		<style>
+            .moreClass {
+                cursor:pointer;
+                position:absolute;
+                top:0px;
+                right:1px;
+                background:#F5F7FA;
+                height:39px;
+                width:2.3vw;
+                border-bottom:1px solid #e4e7ed;
+                padding:9px 0px 0px 10px;
+            }
+            .moreNew {
+                width:1vw;
+            }
+		    .tabBox {
+		        position:relative;
+		    }
+		    .el-tabs {
+		        width:92%!important;
+		    }
+		    .el-tabs--border-card {
+		        box-shadow:none!important;
+		    }
+		    .el-tabs__content {
+		        width:108.5%;
+		        min-height: 185px;
+		    }
+		    .seldiv {
+				width: 402px;  
+			    height: 34px;  
+				padding:0;
+				position:relative;
+				margin-top:-8px;
+			}
+			.seldiv input {  
+			    width: 400px;  
+			    height: 30px;  
+			    line-height: 30px;  
+				font:14px arial;
+				color:#333;
+			    border: 1px solid #dedede;
+				padding:2px 0px 2px 8px;
+				border-radius:5px;
+				box-shadow:1px 1px 10px #dedede;
+			}
+			#search-button {
+				position: absolute;
+			    height: 12px;
+			    width: 23px;
+				top: 12px;
+			    right: 4px;
+			    background-color: #fff;
+			    cursor: pointer;
+			} 
+			.search-img {
+				position: absolute;
+			    height: 0px;
+			    width: 0px;
+			    top: 13px;
+			    right: 10px;
+			    overflow: hidden;
+			    cursor: pointer;
+			    border-width: 5px;
+			    border-style: solid dashed dashed;
+			    border-color: #acacac transparent transparent;
+				background-repeat: no-repeat;
+			    opacity: .6;
+			}
+			.seldiv span.up {
+				border-width: 5px;
+			    border-style: dashed dashed solid;
+			    border-color: transparent transparent #acacac;
+			    top: 7px;
+			}
+			.seldiv select {  
+			    width: 400px;  
+			    height: 200px;  
+			    margin: 0px;  
+				padding: 2px 0px;
+			    outline: none;  
+			    border: 1px solid #b8b8b8;  
+			    position:absolute;
+				top:40px;
+				left:0;
+				box-shadow:0 0 16px 0 rgba(53,53,53,.2);
+			}  
+			.seldiv select option {
+				height:18px;
+				line-height:18px;
+				cursor: default;
+				font:14px arial;
+				padding: 2px 8px;
+			}
+			.seldiv select option:hover{
+				background:#f0f0f0;
+			}
+		
+		    .heightBox {
+		        height:100%!important;
+		        width:100%!important;
+		    }
+		    .el-table {
+		        height:auto!important;
+		    }
+		    .el-table__body-wrapper {
+		        height:auto!important;
+		    }
+			.fullScreenBox {
+				cursor: pointer;
+			}
+			.fullScreen {
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 1000;
+				width: 100%!important;
+				height: 100%!important;
+			}
+			.dataBox {
+				padding: 10px;
+			}
+			.dataBox>div {
+				padding: .5rem 10px;
+				border-bottom: 1px dashed #D1DBE5;
+				font-size: 1rem;
+			}
+			.dataBox div div img {
+				width: 0px;
+				margin-left: 40%;
+			}
+			.dataBox div div span {
+				font-size: 1.3rem;
+				font-weight: bold;
+			}
+			.dataBox div img {
+				margin-right: 10px;
+				margin-bottom: 5px;
+				margin-left: -10px;
+			}
+			.el-input__inner {
+				height: 30px!important;
+			}
+			.el-tabs--border-card {
+				border: none;
+				box-shadow: 1px 1px 1px 1px #dedede;
+			}
+			.home-top-right {
+				padding:0!important;
+			}
+			.btn-quick-navigation{
+				display: inline-block;
+			    padding: 4px 12px;
+			    margin-bottom: 0;
+			    font-size: 14px;
+			    font-weight: 400;
+			    line-height: 1.42857143;
+			    text-align: center;
+			    white-space: nowrap;
+			    vertical-align: middle;
+			    -ms-touch-action: manipulation;
+			    touch-action: manipulation;
+			    cursor: pointer;
+			    -webkit-user-select: none;
+			    -moz-user-select: none;
+			    -ms-user-select: none;
+			    user-select: none;
+			    background-image: none;
+			    border: 1px solid transparent;
+			    border-radius: 4px;
+			}
+			.home-top{
+				width: 100%;
+				margin-bottom: 20px;
+				/*height: 227px;*/
+			}
+			.home-top-left{
+				width: 66%;
+				background-color: #fff; 
+				display: inline-block;
+				border: 1px solid #d6d6d6;
+				border-radius: 4px;
+				padding: 0px 15px;
+			}
+			.home-top-right{
+				width: 33%;
+				background-color: #fff;
+				display: inline-block;
+				border: 1px solid #d6d6d6;
+				border-radius: 4px;
+				padding: 0px 15px;
+			}
+			.home-top-title{
+				border-bottom: 3px solid #cf000d;
+				color: #cf000d;
+				line-height: 46px;
+				font-weight: bold;
+			}
+			.home-top-content{
+				height: 48px;
+				line-height: 48px;
+				border-bottom: 1px solid #d6d6d6;
+			}
+			.fast-entrance{
+				padding-top:32px;
+				overflow:hidden;
+				width:100%;
+			}
+			.fast-entrance li{
+				width: 14%;
+				height: 144px; 
+				text-align: center;
+				float:left;
+				margin-right: 2.5%;
+				cursor: pointer;
+			}
+			.fast-entrance-name{
+				padding-top: 20px;
+				/* white-space:nowrap; */
+			}
+			.wait-color{
+				background-color: #ff5454;
+			}
+			.notice-color{
+				background-color: #0aa7ec;
+			}
+			.warning-color{
+				background-color: #fbbb3d;
+			}
+			.notice-num{
+				position: absolute;
+				border-radius: 16px;
+				min-width: 26px;
+				font-size: 14px;
+				color: white;
+				line-height: 16px;
+				text-align: center;
+				top: -10px;
+				left:30px;
+				border: 1px solid white;
+				padding:2px 5px ;
+			}
+			.page-left{
+				cursor: pointer;
+			}
+			.home-top-page{
+				padding-right: 15px;font-size: 14px;
+			}
+			.page-right{
+				cursor: pointer; 
+				padding-right: 15px;
+			}
+			.home-more{
+				cursor: pointer;
+			}
+			.home-notice{
+				padding: 10px 0px;
+				line-height: 30px; 
+				border-bottom: 1px solid #d6d6d6;
+			}
+			.icon-content{
+				overflow: hidden;
+				padding: 26px 0px;
+				display:flex;
+				justify-content:center;
+				align-items:center;
+			}
+			.icon-content li{
+				float: left;
+				width: 34%;
+				display:flex;
+			}
+			.icon-parent{
+				position: relative;
+				cursor:pointer;
+				display: inline-block;
+				margin-left: 10px;
+			}
+			.icon-name{
+				font-weight: bold;
+				display: inline-block;
+				margin-left: 10px;
+				margin-top:10px;
+				font-size:.98rem;
+			}
+			.modal-header .close{
+				height: 40px;
+				line-height: 40px;
+				font-size: 24px;
+			}
+			.info-window{
+				line-height: 30px;
+				width: 360px;
+			}
+			.info-window-title{
+				color: #CE0A14;
+			}
+			.ztree>.level0{
+				border: none;
+			}
+			.home-notice-box {
+			    width:100%;
+			    overflow: hidden;
+			    text-overflow:ellipsis;
+			    white-space: nowrap;
+			}
+			.testDIV{
+                height:31px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                border-bottom:1px dashed #ddd;
+                padding: 3px 0px;
+                margin: 0px 10px;
+                cursor: pointer;
+            }
+            .testDIV img {
+            	margin: 0px 5px 3px 0px;
+            }
+            .downPull {
+            	margin-top: 10px;
+            }
+            .unit {
+                font-weight:none!important;
+                font-size:13px!important;
+            }
+		</style>
+	</head>
+	<body >
+	    <div class="content-wrap" id="homeDeveloperDiv">
+		<div class="home-top">
+			<div class="pull-left home-top-left">
+				<div class="home-top-content">
+					<div class="pull-left home-top-title">
+						快捷导航
+					</div>
+					<div class="pull-right">				
+						<span class="home-top-page">{{pageNumber}}/{{totalPage}}</span>
+						
+						<span class="page-left">
+							<img src="../image/home_ico_arrow_left.png" @click="fastLeft"/>
+						</span>
+						<span class="page-right">
+							<img src="../image/home_ico_arrow_right.png" @click="fastRight"/>
+						</span>
+						<button class="btn-quick-navigation btn-primary" @click="showMenuModel">
+	                        <img src="../image/home_ico_setting.png"/>
+	                        <span>快捷导航设置</span>
+	                    </button>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<div style="height:176px;">
+					<ul class="fast-entrance" v-if="showFastEntrance == true"><!--padding: 34px 0px;-->
+						<li v-for="en in fastEntranceList" @click="enterPage(en)">
+							<div v-if="en.iconPath">
+								<img :src="en.iconPath" width="60px" height="60px"/>
+							</div>
+							<div v-else>
+								<img src="../image/home_ico_pic.png" width="60px" height="60px"/>
+							</div>
+							<div class="fast-entrance-name">
+								{{en.theNameOfMenu}}
+							</div>
+						</li>
+					</ul>
+					 <div v-else style="text-align:center;">
+						 <div style="display:inline-block">
+						    <p style="color:#2E6DCC;padding-top:60px;line-height:24px">
+						                       您还未设置快捷导航，点击这儿可以马上去设置
+						    </p>
+					        <p style="color:#C2CEE0;line-height:24px">
+						                      设置快捷导航，您可以更快捷的访问页面
+						    </p>   
+						 </div>  
+						 <div style="display:inline-block;text-align:right;line-height:160px; float:right;margin-right: 100px;">
+						     <img src="../image/home_ico_arrow_yel.png" />
+						 </div>         
+				    </div>
+				</div>
+			</div>
+			<div class="pull-right home-top-right">
+				<div class="tabBox">
+				    <el-tabs type="border-card" v-model="noticeTab" @tab-click="getNoticeData">
+					    <el-tab-pane :label="item.theName" v-for="item in policyRecordTypeList" :name="item.theValue">
+						    <template>
+						        <div class="row">
+						            <div v-for="item1 in sm_PolicyRecordList" :title="item1.policyTitle" @click="openDetailNew(item1.tableId)" class="testDIV" >
+										   <img src="../image/gonggao.png" /><span style="margin:0px 10px 0px 5px">[{{ item1.policyDate }}]</span>{{ item1.policyTitle }}
+								    </div>
+	                            </div>
+						    </template>
+					    </el-tab-pane>
+					</el-tabs>
+					<span class="moreClass" @click="openMoreNew" title="更多">
+					    <img class="moreNew" alt="" src="../image/moreNew1.png">
+					</span>
+				</div>
+			</div>
+			<div class="clearfix"></div>			
+			<div class="clearfix"></div>
+			
+		</div>
+	    
+		<!-- menu modal -->
+		<div class="modal fade" id="menuDeveloperModel" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="row"><!--modal-dialog-->
+				<div class="modal-content col-md-6 col-md-offset-3" style="padding-left: 0px;padding-right: 0px;">
+					<div class="modal-header" style="height: 40px;line-height: 40px;">
+		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		                <h4 class="modal-title" style="line-height: 40px;">快捷导航设置</h4>
+		            </div>
+		            <div class="clearfix"></div>
+					<div class="modal-body" style="max-height: 500px;overflow-y: scroll;">
+						<!--<ul>
+							<li>
+								<div>
+									<span style="display: inline-block;width: 6px;height: 6px;border-radius: 50%;background-color: #CC010C;"></span>
+								</div>
+							</li>
+						</ul>-->
+						<div class="col-md-12 menu-left">
+							<div class="zTreeDemoBackground left">
+								<ul id="treeDeveloperDemo" class="ztree"></ul>
+							</div>
+							<div id="rDeveloperMenu">
+								<ul class="menu-add">
+									<li id="m_add" @click="addNextMenu();">新建下级菜单</li>
+									<li id="m_del" @click="delNowMenu();">删除</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn foot-sure" @click="subFastEntrance">
+							确定
+						</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal -->
+		</div>
+		</div>
+	    <!-- zTree Js -->
+		<script type="text/javascript" src="../assets/zTree/js/jquery.ztree.core.js"></script>
+		<script type="text/javascript" src="../assets/zTree/js/jquery.ztree.excheck.js"></script>
+		<script type="text/javascript" src="../assets/zTree/js/jquery.ztree.exedit.js"></script>
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/homeSaler.js"></script>
+		<script src="../js/chosen.jquery.js"></script>
+		<script>
+		
+			/* if(!ace.vars['touch']) {
+				$('.chosen-select').chosen({allow_single_deselect:true}); 
+				$(window)
+				.off('resize.chosen')
+				.on('resize.chosen', function() {
+					$('.chosen-select').each(function() {
+						 var $this = $(this);
+						 $this.next().css({'width': $this.parent().width()});
+					});
+				}).trigger('resize.chosen');
+				$(document).on('settings.ace.chosen', function(e, event_name, event_val) {
+					if(event_name != 'sidebar_collapsed') return;
+					$('.chosen-select').each(function() {
+						 var $this = $(this);
+						 $this.next().css({'width': $this.parent().width()});
+					});
+				});
+				$('#chosen-multiple-style .btn').on('click', function(e){
+					var target = $(this).find('input[type=radio]');
+					var which = parseInt(target.val());
+					if(which == 2) $('#form-field-select-4').addClass('tag-input-style');
+					 else $('#form-field-select-4').removeClass('tag-input-style');
+				});
+			}
+		
+			$("select").chosen({width:"98%"}); */
+			
+			init();
+			$(".testDIV").hover(function(){
+				$(this).animate({
+					"font-size":"16px"
+				},500);
+			},function() {
+				$(this).css("font-size", "14px");
+			});
+			
+			function init() {
+				var docHeight = document.documentElement.clientHeight || document.body.clientHeight;
+				var targetHeight = docHeight - $(".cs-title").outerHeight() - $(".nav-tabs").outerHeight() - $(".home-top-left").outerHeight() - 40;
+				$(".downPull").css("height",targetHeight + "px");
+			} 
+		</script>
+	</body>
+</html>	

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-资金归集-明细表详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tgpf_DepositDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="update()">
+						<img src="../image/list_btn_ico_edit.png" width="18">
+						<span>修改</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">三方协议号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_DepositDetailModel.theState" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">房屋坐落：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_DepositDetailModel.busiState" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">合同备案号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_DepositDetailModel.createTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">合同状态：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_DepositDetailModel.eCodeFromPayment" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">买受人名称：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_DepositDetailModel.theState" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">楼幢施工编号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_DepositDetailModel.busiState" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">合同金额(元)：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_DepositDetailModel.createTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">企业名称：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_DepositDetailModel.createTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">楼幢公安编号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_DepositDetailModel.createTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">贷款金额(元)：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_DepositDetailModel.createTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">项目名称：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_DepositDetailModel.eCodeFromPayment" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">室号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_DepositDetailModel.eCodeFromPayment" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">托管入账总金额(元)：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_DepositDetailModel.eCodeFromPayment" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
+			</div>
+			<!--基本信息结束-->
+			<!--附件材料开始-->
+			<div class="detail-title">
+				<h1 class="inline">附件材料</h1>
+			</div>
+			<div class="cs-content detail-content">
+				<div>
+					<button class="btn btn-success">
+						<img src="../image/list_btn_ico_add.png"/>
+						<span>新增</span>
+					</button>
+					<hr />
+				</div>
+				<div class="form-group">
+					<div class="detail-text2">
+						<span class="text-danger">*</span>
+						<span>户口本：</span>
+					</div>
+					<div class="row attachments-wrap">
+						<div class="col-md-2">
+							<div class="attachments1">
+								<img src="../image/test.jpg" width="100%"/>
+								<img src="../image/detail_pic_del.png" class="ico-close"/>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="attachments1">
+								<img src="../image/test2.jpg" width="100%"/>
+								<img src="../image/detail_pic_del.png" class="ico-close"/>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="attachments1">
+								<img src="../image/detail_pic_add.png" class="ico-up"/>
+								<input type="file" value="" class="ico-input" />
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="detail-explain">jpg、png格式的图片，单张不超过2M</div>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			<!--附件材料结束-->
+		</div>
+		
+		<script src="../components/vue-components.js"></script>
+		
+		<script src="../js/admin/Tgpf_DepositDetailDetail.js"></script>
+	</body>
+</html>	

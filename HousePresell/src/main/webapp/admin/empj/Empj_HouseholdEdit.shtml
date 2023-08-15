@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-编辑户信息</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+		<style>
+		</style>
+	</head>
+	<body>
+		<div class="content-wrap" id="Empj_HouseholdEditDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">项目名称：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="Empj_HouseholdEditModel1.theNameOfProject" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">地上层数：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="Empj_HouseholdEditModel1.upfloorNumber" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">楼幢施工编号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="Empj_HouseholdEditModel1.eCodeFromConstruction"  class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">地下层数：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="Empj_HouseholdEditModel1.downfloorNumber" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">单元名称：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="Empj_HouseholdEditModel.theName" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">总户数：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="Empj_HouseholdEditModel1.sumFamilyNumber" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div> 
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			
+			<!--户信息开始-->
+			<div class="detail-title">
+				<h1 class="inline">户信息</h1>
+			</div>
+			<div class="cs-content"><!-- @click="paymentGuaranteeApplicationDetailHandle(scope.row.tableId)" v-model="selectItem"-->
+				<div class="content-top">
+					<button class="btn btn-success" @click="addHouseholdHadle">
+						<img src="../image/list_btn_ico_add.png"/>
+						<span>新增</span>
+					</button>
+					<button class="btn btn-primary" @click="editHouseholdHadle" :disabled="editDisabled">
+						<img src="../image/list_btn_ico_edit.png"/>
+						<span>修改</span>
+					</button>
+					<button class="btn btn-danger" :disabled="delDisabled" @click="showDeleteModel">
+						<img src="../image/list_btn_ico_del.png"/>
+						<span>删除</span>
+					</button>
+				</div>
+				<div class="detail-content">
+					<el-table :data="Empj_HouseholdEditList" stripe :default-sort = "{prop: 'index'}" @selection-change="handleSelectionChange">
+						<el-table-column type="selection"  width="55"  fixed></el-table-column>
+						<el-table-column type="index" :index="indexMethod" label="序号"  width="60" sortable fixed></el-table-column>
+						<el-table-column label="室号" width="140" prop="roomId"></el-table-column>
+						<el-table-column prop="position" label="房屋坐落" width="200"></el-table-column>
+						<el-table-column prop="floor" label="所在楼层" width="140"></el-table-column>
+						<el-table-column prop="forecastArea" label="建筑面积（预测）（㎡）" width="180"></el-table-column>
+						<el-table-column prop="shareConsArea" label="分摊面积（预测）（㎡）" width="180"></el-table-column>
+						<el-table-column prop="innerconsArea" label="套内面积（预测）（㎡）" width="180"></el-table-column>
+						<el-table-column prop="purpose" label="房屋用途" width="150">
+							<template scope="scope">
+							       <span v-if="scope.row.purpose == '1'" class="btn btn-state-warning">住宅</span>
+							       <span v-if="scope.row.purpose == '2'" class="btn btn-state-success">非住宅</span>
+							</template>
+						</el-table-column>
+						<el-table-column prop="recordPrice" label="物价备案价格（元）" width="150"></el-table-column>
+						<el-table-column prop="lastTimeStampSyncRecordPriceToPresellSystem" label="物价备案时间" width="150"></el-table-column>
+						<el-table-column prop="theHouseState" label="房屋状态" width="200"></el-table-column>
+						<el-table-column prop="eCodeOfTripleAgreement" label="三方协议编号" width="200"></el-table-column>		
+					</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :countperpage="countPerPage" :totalcount="totalCount" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+				</div>
+			</div>	
+			<!--户信息结束-->
+			<!--新增户信息模态框-->
+			<div class="modal fade" id="addHouseholdModel" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="col-md-8 col-md-offset-2"><!--modal-dialog-->
+					<div class="modal-content">
+						<div class="modal-header" style="height: 40px;line-height: 40px;">
+			                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			                <h4 class="modal-title" style="line-height: 40px;">新增户信息</h4>
+			            </div>
+			            <div class="clearfix"></div>
+						<div class="modal-body">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<span class="detail-text1">室号：</span>
+										<div class="detail-info4">
+											<div class="detail-edit">
+												<input type="text" v-model="roomId" class="form-control"  placeholder="请输入室号"/>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<span class="detail-text1">建筑面积（预测）（㎡）：</span>
+										<div class="detail-info4">
+											<div class="detail-edit">
+												<input type="text" v-model="forecastArea" class="form-control"  placeholder="请输入建筑面积（预测）"/>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<span class="detail-text1">房屋用途：</span>
+										<div class="detail-info4">
+											<div class="detail-edit">
+<!-- 												<input type="text" v-model="purpose" class="form-control"  placeholder="请输入房屋用途"/>
+ -->											<select class="form-control" v-model="purpose">
+												    <option value="1" selected>住宅</option>
+												    <option value="2">非住宅</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="form-group" v-if="flag == true">
+										<span class="detail-text1">房屋状态：</span>
+										<div class="detail-info4">
+											<div class="detail-unEdit">
+												<input type="text" v-model="theHouseState" class="form-control" disabled="disabled"/>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<span class="detail-text1">房屋坐落：</span>
+										<div class="detail-info4">
+											<div class="detail-edit">
+												<input type="text" v-model="position" class="form-control"  placeholder="请输入房屋坐落"/>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<span class="detail-text1">分摊面积（预测）（㎡）：</span>
+										<div class="detail-info4">
+											<div class="detail-edit">
+												<input type="text" v-model="shareConsArea" class="form-control"  placeholder="请输入分摊面积（预测）"/>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<span class="detail-text1">物价备案价格（元）：</span>
+										<div class="detail-info4">
+											<div class="detail-edit">
+												<input type="text" v-model="recordPrice" class="form-control"  placeholder="请输入物价备案价格"/>
+											</div>
+										</div>
+									</div>
+									<div class="form-group" v-if="flag == true">
+										<span class="detail-text1">托管状态：</span>
+										<div class="detail-info4">
+											<div class="detail-unEdit">
+												<input type="text" v-model="busiState" class="form-control"  disabled="disabled"/>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<span class="detail-text1">所在楼层：</span>
+										<div class="detail-info4">
+											<div class="detail-edit">
+												<input type="text" v-model="floor" class="form-control"  placeholder="请输入所在楼层"/>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<span class="detail-text1">套内面积（预测）（㎡）：</span>
+										<div class="detail-info4">
+											<div class="detail-edit">
+												<input type="text" v-model="innerconsArea" class="form-control"  placeholder="请输入套内面积（预测）"/>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<span class="detail-text1">物价备案时间：</span>
+										<div class="detail-info4">
+											<div class="detail-edit">
+												<input type="text" v-model="lastTimeStampSyncRecordPriceToPresellSystem" class="form-control"  placeholder="请输入物价备案时间" id="priceFilingDate"/>
+												<img src="../image/list_search_calendar.png" class="ico-date"/>
+											</div>
+										</div>
+									</div>
+									<div class="form-group" v-if="flag == true">
+										<span class="detail-text1">三方协议编号：</span>
+										<div class="detail-info4">
+											<div class="detail-unEdit">
+												<input type="text" v-model="eCodeOfTripleAgreement" class="form-control" disabled="disabled"/>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<span class="detail-text1">备注：</span>
+										<div class="detail-info4">
+											<div class="detail-edit">
+												<textarea rows="3" v-model="remark" class="form-control"></textarea>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" @click="add()"><!--data-dismiss="modal"-->
+								确定
+							</button>
+							<button type="button" class="btn foot-cancel" data-dismiss="modal">
+								取消
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!-- del modal -->
+			<div class="modal fade" id="deleteHousehold" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_warning.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1">确认要删除这条信息吗？</div>
+								<div class="del-text2">删除后不可恢复</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure"  @click="delHouseholdHandle">
+								确定
+							</button>
+							<button type="button" class="btn foot-cancel" data-dismiss="modal">
+								取消
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			<!-- error modal -->
+			<div class="modal fade" id="ed1Model" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">{{errMsg}}</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!-- success modal -->
+			<div class="modal fade" id="sd1Model" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作成功</div>
+								<div class="del-text2">保存成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		</div>
+		<script src="../components/vue-components.js"></script>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/empj/Empj_HouseholdEdit.js"></script>
+	</body>
+</html>	

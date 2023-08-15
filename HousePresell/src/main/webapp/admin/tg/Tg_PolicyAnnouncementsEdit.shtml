@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-政策公告编辑</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="policyAnnouncementsEditDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="update()">
+						<img src="../image/detail_btn_ico_save.png" width="18">
+						<span>保存</span>
+					</button>
+					<button class="btn btn-primary" @click="issueHandle">
+						<img src="../image/detail_btn_ico_submit.png" width="18">
+						<span>发布</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">政策公告名称：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<span class="required">*</span>
+									<vue-select defaultname="请选择政策公告名称" :thevalue="policyType" :optionlist="sm_BaseParameterList" @callbackfun="getPolicyType"></vue-select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">发布时间：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<span class="required">*</span>
+									<input type="text" id="policyDate" v-model="policyDate" class="form-control" placeholder="">
+									<img src="../image/list_search_calendar.png" class="ico-date" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">政策公告标题：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+									<input type="text" v-model="policyTitle" class="form-control">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr style="margin: 0;" />
+
+
+				<div class="row">
+					<div class="form-group">
+						<span class="detail-text1">&nbsp;&nbsp;&nbsp;&nbsp;公告内容：</span>
+						<div class="col-md-11">
+							<section id="editorAdd">
+								<textarea style="margin-top: 20px; margin-left: 5%; height: 500px;width: 80%; border-color: #a6b9c3" v-model="policyContent" ></textarea>
+							</section>
+						</div>
+					</div>
+				</div>
+
+
+<!--				-->
+<!--				<div class="row">-->
+<!--					<div class="col-md-12">-->
+<!--						<section id="editorEdit">-->
+<!--							<div id='editEdit' style="margin-top: 20px;">-->
+<!--							</div>-->
+<!--						</section>-->
+<!--					</div>-->
+<!--				</div>-->
+			</div>
+			<!--基本信息结束-->
+		</div>
+		
+		<script src="../components/vue-components.js"></script>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tg/Tg_PolicyAnnouncementsEdit.js"></script>
+		<script>
+			$(function(){
+		        $('#editEdit').editable({inlineMode: false, alwaysBlank: true})
+		    });
+		</script>
+	</body>
+</html>	

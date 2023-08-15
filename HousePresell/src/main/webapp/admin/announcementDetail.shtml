@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-公告详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css" />
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+		<style type="text/css">
+		    .parentBox {
+		        margin:5px 30px; 
+		        font-family:"微软雅黑";
+		        letter-space:2em;
+		    }
+		    .title {
+		        margin:0 auto;
+		        text-align:center;
+		        border-bottom:1px solid #dcdcdc;
+		        font-weight:bold;
+		        font-size:16px;
+		    }
+		    .content {
+		        margin:0 auto;
+		    }
+		</style>
+	</head>
+
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="index_ToDoList1Div">
+			    <div class="parentBox">
+			        <div class="title">{{ title }}</div><br>
+			        <div class="content">
+			            <div class="row">
+			                <div class="col-md-12 text-right">{{ date }}</div>
+			            </div><br>
+			            <div class="row">
+			                <div class="col-md-12 text-center">{{ content }}</div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+
+		
+		<script src="../components/vue-components.js"></script>
+
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/announcementDetail.js"></script>
+	</body>
+
+</html>

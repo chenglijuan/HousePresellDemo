@@ -1,0 +1,15 @@
+.switch-wrap{
+	border-bottom: 1px solid #dfdfdf;
+}
+.switch-wrap .pull-right{
+	margin-top: 8px;
+	margin-right: 15px;
+}
+.info-switch{
+	padding: 13px 20px;
+	cursor: pointer;
+}
+.info-switch.active{
+	border-bottom:2px solid #cc010c;
+	color: #cc010c;
+}

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-版本管理-受限节点设置</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="tgpj_BldLimitAmountVer_AFListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input"  v-model="keyword" @keyup.enter="search" placeholder="请输入受限额度节点版本号、版本名称搜索">
+							</div>
+							<div class="inline">
+								<span>审批状态：</span>
+								<!-- <select class="form-control cs-select" v-model="approvalState" @change="changeApprovalState">
+									<option value="">全部</option>
+									<option value="待提交">待提交</option>
+									<option value="审核中">审核中</option>
+									<option value="已完结">已完结</option>
+								</select> -->
+								 <vue-listselect defaultname="请选择审批状态" :thevalue="approvalState"
+												:optionlist="approvalStateList"
+												@callbackfun="changeApprovalState"
+												@emptybackfun="approvalStateEmpty"></vue-listselect>
+							</div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="resetSearch">重置</button>
+
+						</div>
+						<div class="top-btns">
+							<button class="btn btn-success" @click="mainAddHandle" data-editNum="06010102_ADD_01">
+								<img src="../image/list_btn_ico_add.png"/>
+								<span>新增</span>
+							</button>
+							<!--<button class="btn btn-success">-->
+								<!--<img src="../image/list_btn_ico_import.png"/>-->
+								<!--<span>导入</span>-->
+							<!--<button class="btn btn-primary" @click="mainEditHandle" v-if="selectItem.length == 1">-->
+								<!--<img src="../image/list_btn_ico_edit.png"/>-->
+								<!--<span>修改</span>-->
+							<!--</button>-->
+							<!--<button class="btn btn-primary" disabled="disabled" v-if="selectItem.length != 1">-->
+								<!--<img src="../image/list_btn_ico_edit.png"/>-->
+								<!--<span>修改</span>-->
+							<!--</button>-->
+							<button class="btn btn-primary" @click="mainEditHandle" :disabled="upDisabled" data-editNum="06010102_MOD_01">
+								<img src="../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+							<!--&lt;!&ndash;<button class="btn btn-info">&ndash;&gt;-->
+								<!--<img src="../image/list_btn_ico_see.png"/>-->
+								<!--<span>日志</span>-->
+							<!--</button>-->
+							<button class="btn btn-danger" @click="mainDeleteHandle" :disabled="deleteDisabled" data-editNum="06010102_DEL_01">
+							<img src="../image/list_btn_ico_del.png"/>
+							<span>删除</span>
+							</button>
+							<!--<button class="btn btn-danger" @click="mainDeleteHandle" v-if="selectItem.length > 0">-->
+								<!--<img src="../image/list_btn_ico_del.png"/>-->
+								<!--<span>删除</span>-->
+							<!--</button>-->
+							<!--<button class="btn btn-danger" disabled="disabled" v-if="selectItem.length == 0">-->
+								<!--<img src="../image/list_btn_ico_del.png"/>-->
+								<!--<span>删除</span>-->
+							<!--</button>-->
+						</div>
+					</div>
+					<!--<div class="pull-right text-right">-->
+						<!--<div class="top-excel">-->
+							<!--<button class="btn btn-excel" @click="mainExportExcelHandle">-->
+								<!--<img src="../image/export_ico_excel.png"/>-->
+								<!--<span>导出为Excel</span>-->
+							<!--</button>-->
+						<!--</div>-->
+						<!--<div class="top-batch">-->
+							<!--<button class="btn btn-pass">-->
+								<!--<img src="../image/list_check_yes.png"/>-->
+								<!--<span>审批通过</span>-->
+							<!--</button>-->
+							<!--<button class="btn btn-fail">-->
+								<!--<img src="../image/list_check_no.png"/>-->
+								<!--<span>审批退回</span>-->
+							<!--</button>-->
+						<!--</div>-->
+					<!--</div>-->
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="tgpj_BldLimitAmountVer_AFList" stripe :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle" @sort-change='sortChange'>>
+							<el-table-column type="selection"  width="50" fixed></el-table-column>
+							<el-table-column align="center" type="index" :index="indexMethod" label="序号" width="60" fixed></el-table-column>
+							<el-table-column prop="eCode" label="受限额度节点版本号" width="220" sortable='custom'>
+								<template scope="scope">
+									<el-button type="text" size="small" @click="mainDetailHandle(scope.row.tableId)">{{scope.row.eCode}}</el-button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="theName" label="版本名称" min-width="315"></el-table-column>
+							<el-table-column prop="theTypeString" label="房屋类型" width="315"></el-table-column>
+							<el-table-column align="center" prop="beginExpirationDate" label="启用日期" width="120" sortable='custom'>
+								<template scope="scope">
+									<el-text type="text" size="small">{{scope.row.beginExpirationDateString}}</el-text>
+								</template>
+							</el-table-column>
+							<el-table-column align="center" prop="endExpirationDateString" label="停用日期" width="120"></el-table-column>
+							<el-table-column align="center" label="备案状态" width="100">
+								<template scope="scope">
+									<button v-if="scope.row.busiState == '已备案'" class="btn btn-state-success">已备案</button>
+									<button v-if="scope.row.busiState == '未备案'" class="btn btn-state-warning">未备案</button>
+								</template>
+							</el-table-column>
+							<el-table-column align="center" label="审批状态" width="100">
+								<template scope="scope">
+									<button v-if="scope.row.approvalState == '审核中'" class="btn btn-state-warning">审核中</button>
+									<button v-if="scope.row.approvalState == '已完结'" class="btn btn-state-success">已完结</button>
+									<button v-if="scope.row.approvalState == '待提交'" class="btn btn-state-danger">待提交</button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount"
+								 :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"
+								 v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/tgpj/Tgpj_BldLimitAmountVer_AFList.js"></script>
+	</body>
+</html>	

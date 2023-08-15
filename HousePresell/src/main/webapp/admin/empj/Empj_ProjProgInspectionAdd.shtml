@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta charset="UTF-8">
+	<title>housepresell管理后台-申请表-受限额度变更添加</title>
+	<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	<style>
+	    .model-width{
+	       width:80%
+	    }
+	    .csm-body .detail-title{
+	       display:none;
+	    }
+	    .date-style .el-input__inner{
+		   background : white
+		}
+	</style>
+</head>
+<body>
+<div class="content-wrap" id="Empj_ProjProgInspectionAddDiv">
+	<div class="detail-title cs-mt-0">
+		<h1 class="inline">基本信息</h1>
+		<div class="inline title-btns">
+			<button class="btn btn-success" @click="add('1')">
+				<img src="../image/detail_btn_ico_save.png" width="18">
+				<span>保存</span>
+			</button>
+			<span style="color:red;font-weight:bold;font-size:20px;display:inline-block;margin-left:300px">一个单号可以同时申请多个楼幢，请勿分开申请。</span>
+		</div>
+	</div>
+	<!--基本信息开始-->
+	<div class="cs-content detail-content">
+		<div class="row">
+					<div class="col-md-4">
+					   <div class="form-group">
+							<span class="detail-text1">巡查单号：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text"  placeholder="请输入巡查单号" v-model="empj_ProjProgInspectionModel.eCode" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">区域名称：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" placeholder="请选择区域名称"  v-model="empj_ProjProgInspectionModel.areaName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="form-group">
+							<span class="detail-text1">操作日期：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" placeholder="请选择操作日期"  class="form-control"  v-model="empj_ProjProgInspectionModel.lastUpdateTimeStamp"/>
+								</div>
+							</div>
+						</div> -->
+						<!-- <div class="form-group">
+							<span class="detail-text1">单据状态：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+								   <input type="text" v-model="empj_ProjProgInspectionModel.approvalState"  class="form-control" disabled="disabled"/>
+								   <input type="text" v-if="empj_ProjProgInspectionModel.approvalState == 1" value="申请中" class="form-control" disabled="disabled"/>
+								   <input type="text" v-if="empj_ProjProgInspectionModel.approvalState == 2" value="已审核" class="form-control" disabled="disabled"/>
+								   <input type="text" v-if="empj_ProjProgInspectionModel.approvalState == 3" value="撤销审核中" class="form-control" disabled="disabled"/>
+								   <input type="text" v-if="empj_ProjProgInspectionModel.approvalState == 4" value="已撤销" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div> -->
+					</div>
+					<div class="col-md-4">
+					   <div class="form-group">
+							<span class="detail-text1">巡查时间：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" placeholder="请选择巡查时间"  class="form-control"  v-model="empj_ProjProgInspectionModel.forcastTime"/>
+								</div>
+							</div>
+						</div> 
+						<div class="form-group">
+							<span class="detail-text1">项目名称：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" placeholder="请选择项目名称"  v-model="empj_ProjProgInspectionModel.projectName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="form-group">
+							<span class="detail-text1">备案人：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit" >
+									<input type="text" disabled v-model="empj_ProjProgInspectionModel.userRecord" class="form-control"/>
+								</div>
+							</div>
+						</div> -->
+					</div>
+					<div class="col-md-4">
+					   <div class="form-group">
+							<span class="detail-text1">巡查人：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" placeholder="请输入巡查人"  v-model="empj_ProjProgInspectionModel.forcastPeople" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">巡查机构：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" placeholder="请输入巡查机构"   v-model="empj_ProjProgInspectionModel.companyName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="form-group">
+							<span class="detail-text1">操作人：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit" >
+									<input type="text" disabled v-model="empj_ProjProgInspectionModel.userUpdate" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">备案日期：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled  class="form-control"  v-model="empj_ProjProgInspectionModel.recordTimeStamp"/>
+								</div>
+							</div>
+						</div> -->
+					</div>
+		</div>
+	</div>
+	<!--基本信息结束-->
+	<!-- 楼幢信息开始 -->
+	<div class="detail-title">
+		<h1 class="inline">楼幢信息</h1>
+	</div>
+	<div class="cs-content detail-content">
+	     <el-table :data="buildingList" stripe :default-sort="{prop: 'index'}"
+                   @selection-change="listItemSelectHandle" @sort-change='sortChange'>
+             <el-table-column type="selection" width="50" fixed></el-table-column>
+             <el-table-column align="center" type="index" label="序号" width="60" fixed></el-table-column>
+             <el-table-column prop="afCode" label="主表编号"  width="140">
+                 <template scope="scope">
+                    <el-button  type="text" size="small"@click='showLimit(scope.row)'>{{scope.row.afCode}}</el-button>
+                 </template>
+             </el-table-column>
+             <el-table-column prop="afEntity" label="主表信息" width="140"></el-table-column>
+             <el-table-column prop="hasAchieve" label="是否达到正负零" width="200">
+             	<template scope="scope">
+					  <el-radio v-model="scope.row.hasAchieve" label="1" >是</el-radio>
+					  <el-radio v-model="scope.row.hasAchieve" label="2" >否</el-radio>
+				</template>
+             </el-table-column>
+             <el-table-column prop="buildCode" label="施工编号" width="140"></el-table-column>
+             <el-table-column prop="buildInfo" label="楼幢信息" width="140"></el-table-column>
+             <el-table-column prop="floorUpNumber" label="地上层数" width="140"></el-table-column>
+             <el-table-column prop="nowNodeName" label="当前进度节点" width="220"></el-table-column>
+             <el-table-column prop="nowNode" label="进度节点实体" width="220"></el-table-column>
+             <el-table-column prop="buildProgress" label="当前建设进度" width="220"></el-table-column>
+            <!--  <el-table-column prop="deliveryType" label="交付类型" min-width="100" >
+                 <template scope="scope">
+                     <div v-if="scope.row.deliveryType == '1'">毛坯房</div>
+                     <div v-else>成品房</div>
+                 </template>
+             </el-table-column>
+              -->
+       <!--       <el-table-column prop="nowLimitedAmount" label="当前形象进度" min-width="150" align="center"></el-table-column>
+             <el-table-column prop="escrowArea" label="变更形象进度" min-width="200">
+                <template scope="scope">
+                    <el-select v-model="scope.row.limitedId" filterable placeholder="请选择" @change="changeVersionListener(scope.row)" :disabled="scope.row.disabled" class="block">
+					    <el-option value="">请选择拟变更形象进度</el-option>
+					    <el-option
+					      v-for="item in scope.row.versionList"
+					      :label="item.theName"
+					      :value="item.tableId">
+					    </el-option>
+					 </el-select>
+                </template>
+             </el-table-column>
+             <el-table-column prop="limitedAmount" label="变更受限比例(%)" min-width="150" align="center"></el-table-column>
+             <el-table-column prop="escrowStandard" label="托管标准" min-width="180" ></el-table-column>
+             <el-table-column prop="signingDate" label="签约时间" width="100" align="center"></el-table-column>
+             <el-table-column prop="bldLimitAmountName" label="受限额度版本" width="260"></el-table-column>
+             <el-table-column prop="expectLimitedAmount" align="center" label="附件信息" width="140">
+                 <template scope="scope">
+                     <div v-if="scope.row.disabled == true">附件信息</div>
+                     <el-button v-else type="text" size="small" @click="openFileModel(scope.row)">附件信息</el-button>
+                 </template>
+             </el-table-column> -->
+         </el-table>
+	</div>
+	
+	<!-- 附件模态框开始 -->
+    <div class="modal fade" id="fileNodeModel" tabindex="-1" role="dialog" aria-hidden="true" >
+        <div class="modal-dialog model-width">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title csm-title">附件信息</h4>
+                </div>
+                <div class="modal-body csm-body">
+	                <!--附件材料开始-->
+					<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+					<!--附件材料结束-->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn foot-sure" @click="dialogSave">确定</button>
+                    <button type="button" class="btn foot-cancel" data-dismiss="modal" ><!-- @click="refresh" --> 取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- 附件模态框结束 -->
+    
+    
+	<!-- 显示施工编号开始 -->
+    <div class="modal fade" id="showLimitModel" tabindex="-1" role="dialog" aria-hidden="true" >
+        <div class="modal-dialog model-width">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title csm-title">楼幢进度节点</h4>
+                </div>
+                <div class="modal-body csm-body">
+	                <!--显示施工编号开始-->
+					<el-table :data="versionList" stripe :default-sort="{prop: 'index'}">
+			             <el-table-column prop="theName" label="进度节点名称" min-width="120"></el-table-column>
+			             <el-table-column prop="limitedAmount" label="受限比例" min-width="120"></el-table-column>
+			             <el-table-column prop="completeDate" label="预测完成日期" min-width="120">
+			                 <template scope = 'scope'>
+		                         <el-date-picker class='date-style'
+							      v-model="scope.row.completeDate"
+							      align="right"
+							      type="date"
+							      placeholder="选择日期"
+							      ><!-- :picker-options="pickerOptions" -->
+							    </el-date-picker>
+			                 </template>
+			             </el-table-column>
+			        </el-table>
+					<!--显示施工编号结束-->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn foot-sure" @click="dialogSaveLimit">确定</button>
+                    <button type="button" class="btn foot-cancel" data-dismiss="modal" ><!-- @click="refresh" --> 取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- 显示施工编号结束 -->
+	
+	<!-- 楼幢信息结束 -->
+	
+</div>
+<script src="../js/tabCommon.js"></script>
+<script src="../js/admin/empj/Empj_ProjProgInspectionAdd.js"></script>
+</body>
+</html>	

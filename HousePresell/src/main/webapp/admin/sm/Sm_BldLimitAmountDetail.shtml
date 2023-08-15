@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-申请表-进度节点变更详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+		<style>
+		    .model-width{
+		       width:80%
+		    }
+		    .csm-body .detail-title{
+		       display:none;
+		    }
+		    .date-style .el-input__inner{
+		       background : white
+		    }
+		</style>
+	</head>
+	<body>
+		<div class="content-wrap" id="sm_BldLimitAmountDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button  v-if="isNeedBackup" class="btn btn-warning" data-toggle="modal" data-target="#examine" @click="showModal" data-backdrop="static" data-keyboard=false>
+						<img src="../image/list_btn_ico_examine.png" width="18">
+						<span>审批记录</span>
+					</button>
+					<button  v-if="isNeedBackup && sourcePage == 1" class="btn btn-warning" @click="approvalHandle">
+						<img src="../image/detail_btn_ico_record.png" width="18">
+						<span>备案</span>
+					</button>
+					<button v-if="!isNeedBackup && userType != 'Z'" class="btn btn-warning" data-toggle="modal" data-target="#examine" @click="showModal" data-backdrop="static" data-keyboard=false>
+						<img src="../image/list_btn_ico_examine.png" width="18">
+						<span>审批</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+					   <div class="form-group">
+							<span class="detail-text1">工程进度节点单号：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.eCode" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">申请日期：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled  class="form-control" placeholder="请选择申请日期" v-model="empj_BldLimitAmountModel.applyDate"/>
+									<img src="../image/list_search_calendar.png" class="ico-date"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">现场联系人A：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled placeholder="请输入联系人A" v-model="empj_BldLimitAmountModel.contactOne" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<span class="detail-text1">现场联系人B：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled placeholder="请输入联系人B" v-model="empj_BldLimitAmountModel.contactTwo" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="form-group">
+							<span class="detail-text1">预约时间：</span>
+							<div class="detail-info2">
+								<div :class="isAppointTimeDisable? 'detail-unEdit':'detail-edit'">
+									<input type="text" :disabled="isAppointTimeDisable" class="form-control" placeholder="请选择申请日期" v-model="empj_BldLimitAmountModel.appointTimeStamp" id="date0303010003"/>
+									<img src="../image/list_search_calendar.png" class="ico-date"/>
+								</div>
+							</div>
+						</div> -->
+						<div class="form-group" v-if = "userType == 'A' || userType == 'all'">
+							<span class="detail-text1">预约时间A：</span>
+							<div class="detail-info2">
+								<div :class="isAppointTimeDisable? 'detail-unEdit':'detail-edit'">
+									<input type="text" :disabled="isAppointTimeDisable" class="form-control" placeholder="请选择预约日期A" v-model="empj_BldLimitAmountModel.appointmentDateOne" id="date030301000A"/>
+									<img src="../image/list_search_calendar.png" class="ico-date"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group" v-if = "userType == 'B' || userType == 'all'">
+							<span class="detail-text1">预约时间B：</span>
+							<div class="detail-info2">
+								<div :class="isAppointTimeDisable? 'detail-unEdit':'detail-edit'">
+									<input type="text" :disabled="isAppointTimeDisable" class="form-control" placeholder="请选择预约日期B" v-model="empj_BldLimitAmountModel.appointmentDateTwo" id="date030301000B"/>
+									<img src="../image/list_search_calendar.png" class="ico-date"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group" v-if = "userType == 'Z'">
+							<span class="detail-text1">预约时间A：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.appointmentDateOne" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group" v-if = "userType == 'Z'">
+							<span class="detail-text1">预约时间B：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.appointmentDateTwo" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group" v-if = "userType == 'all'">
+							<span class="detail-text1">上传人A：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.uploadOne" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group" v-if = "userType == 'all'">
+							<span class="detail-text1">上传人B：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.uploadTwo" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="col-md-4">
+					    <div class="form-group">
+							<span class="detail-text1">企业名称：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit" >
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.developName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<span class="detail-text1">项目名称：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.theNameOfProject" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group" >
+							<span class="detail-text1">联系方式A：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled placeholder="请输入联系方式A" v-model="empj_BldLimitAmountModel.telephoneOne" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">联系方式B：</span>
+							<div class="detail-info2">
+							   <div class="detail-unEdit">
+									<input type="text" disabled placeholder="请输入联系方式B" v-model="empj_BldLimitAmountModel.telephoneTwo" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group" v-if = "userType == 'all'">
+							<span class="detail-text1">监理机构A：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit" >
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.companyOne" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group" v-if = "userType == 'all'">
+							<span class="detail-text1">监理机构B：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit" >
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.companyTwo" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+						
+						<div class="form-group" v-if = "userType == 'all'">
+							<span class="detail-text1">上传时间A：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.returnTimeOne" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group" v-if = "userType == 'all'">
+							<span class="detail-text1">上传时间B：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.returnTimeTwo" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+						<!-- <div class="form-group">
+							<span class="detail-text1">预约时间A：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled  class="form-control" v-model="empj_BldLimitAmountModel.appointmentDateOne"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">预约时间B：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled  class="form-control" v-model="empj_BldLimitAmountModel.appointmentDateTwo"/>
+								</div>
+							</div>
+						</div> -->
+						
+					</div>
+					<div class="col-md-4">
+					
+						<div class="form-group" v-if = "userType == 'A' || userType == 'all' || userType == 'Z'">
+							<span class="detail-text1">业务办理码A：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.businessCodeA" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group" v-if = "userType == 'B' || userType == 'all' || userType == 'Z'">
+							<span class="detail-text1">业务办理码B：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.businessCodeB" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">总包单位：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.countUnit" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					    <div class="form-group" v-if = "userType == 'Z'">
+							<span class="detail-text1">操作人：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.userUpdateName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作时间：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.updateDate" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group" v-if = "userType == 'all'">
+							<span class="detail-text1">任务分派时间A：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.assignTasksTimeOne" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group" v-if = "userType == 'all'">
+							<span class="detail-text1">任务分派时间B：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.assignTasksTimeTwo" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group" v-if = "userType == 'all'">
+							<span class="detail-text1">现场签到时间A：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.signTimeOne" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group" v-if = "userType == 'all'">
+							<span class="detail-text1">现场签到时间B：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.signTimeTwo" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+						
+						<!-- <div class="form-group">
+							<span class="detail-text1">备案人：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.userRecordName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<span class="detail-text1">备案时间：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" disabled v-model="empj_BldLimitAmountModel.recordDate" class="form-control"/>
+								</div>
+							</div>
+						</div> -->
+					</div>
+				</div>
+				
+			</div>
+			<!--基本信息结束-->
+			<div class="detail-title">
+				<h1 class="inline">楼幢信息</h1>
+			</div>
+			<div class="cs-content detail-content">
+			     <el-table :data="buildingList" stripe :default-sort="{prop: 'index'}">
+		             <el-table-column align="center" type="index" label="序号" width="60" fixed></el-table-column>
+		             <el-table-column prop="eCodeFromConstruction" label="施工编号" width="220" sortable='custom'></el-table-column>
+		             
+		             <el-table-column prop="deliveryType" label="交付类型" width="200" sortable='custom'>
+		                 <template scope="scope">
+		                     <div v-if="scope.row.deliveryType == '1'">毛坯房</div>
+		                     <div v-else>成品房</div>
+		                 </template>
+		             </el-table-column>
+		             <el-table-column prop="nowLimitedAmount" label="当前形象进度" min-width="150" align="center"></el-table-column>
+		             
+
+		             <el-table-column align="right" prop="limitedName" label="拟变更形象进度" width="200"> </el-table-column>
+		             <el-table-column prop="limitedAmount" label="拟变更受限比例" width="140"></el-table-column>
+			 <el-table-column prop="upfloorNumber" label="地上层数" width="100"></el-table-column>
+			<el-table-column align="center" label="附件信息" width="140">
+		                 <template scope="scope">
+		                     <el-button type="text" size="small" @click="openFileModel(scope.row)">附件信息</el-button>
+		                 </template>
+		             </el-table-column><el-table-column  prop="predictionNodeName" label="预测节点名称" width="120" align="center" ></el-table-column>
+		             <el-table-column  prop="completeDateOne" label="A预测完成时间" width="260" align="center" v-if = "userType == 'A' || userType == 'all' && workflowCode != 'WQCS'" >
+		                 <template scope="scope">
+		                     <el-date-picker v-if = " workflowCode == 'JDJZ'" class="date-style"  v-model="scope.row.completeDateOne"  align="right"  type="date" placeholder="选择日期" format="yyyy-MM-dd" value-format="yyyy-MM-dd"></el-date-picker>
+		                     <div v-else>{{scope.row.completeDateOne}}</div>
+		                 </template>
+		             </el-table-column>
+		             <el-table-column  prop="completeDateTwo" label="B预测完成时间"  width="260"  align="center" v-if = "userType == 'B' || userType == 'all' && workflowCode != 'WQCS'">
+		                  <template scope="scope">
+		                     <el-date-picker v-if = " workflowCode == 'JDJZ'" class="date-style"  v-model="scope.row.completeDateTwo"  align="right"  type="date" placeholder="选择日期" format="yyyy-MM-dd" value-format="yyyy-MM-dd"></el-date-picker>
+		                     <div v-else>{{scope.row.completeDateTwo}}</div>
+		                 </template>
+		             </el-table-column>
+		             
+		             <el-table-column prop="resultOne" label="A是否通过" width="140" v-if = " (userType == 'A' || userType == 'all' ) && workflowCode != 'WQCS'">
+			             <template scope="scope">
+			                 <el-select v-model="scope.row.resultOne" filterable placeholder="请选择" class="block" @change="changeApprovalResultAHandle(scope.row)">
+							    <el-option label="通过" value="1"></el-option>
+							    <el-option label="不通过" value="0"></el-option>
+							 </el-select>
+						  </template>
+		             </el-table-column>
+		             <el-table-column prop="resultInfoOne" label="A评语" width="280" v-if = "(userType == 'A' || userType == 'all' ) && workflowCode != 'WQCS'"></el-table-column>
+		             
+		             <el-table-column prop="resultTwo" label="B是否通过" width="140" v-if = "(userType == 'B' || userType == 'all' ) && workflowCode != 'WQCS'">
+			             <template scope="scope">
+			                 <el-select v-model="scope.row.resultTwo" filterable placeholder="请选择" class="block" @change="changeApprovalResultBHandle(scope.row)">
+							    <el-option label="通过" value="1"></el-option>
+							    <el-option label="不通过" value="0"></el-option>
+							 </el-select>
+						  </template>
+		             </el-table-column>
+		             <el-table-column prop="resultInfoTwo" label="B评语" width="280" v-if = "(userType == 'B' || userType == 'all' ) && workflowCode != 'WQCS'"></el-table-column>
+		             
+		             
+		             <el-table-column prop="approvalResult" label="是否通过" width="140" v-if = "userType == 'all'">
+			             <template scope="scope">
+			                 <el-select v-model="scope.row.approvalResult" filterable placeholder="请选择" class="block" @change="changeApprovalResultHandle(scope.row)">
+							    <el-option label="通过" value="1"></el-option>
+							    <el-option label="不通过" value="0"></el-option>
+							 </el-select>
+						  </template>
+		             </el-table-column>
+		             <el-table-column prop="approvalInfo" label="评语" width="280" v-if = "userType == 'all'"></el-table-column>
+		            
+			<el-table-column prop="escrowStandard" label="托管标准" width="220" sortable='custom'></el-table-column>
+			<el-table-column prop="orgLimitedAmount" label="初始受限额度（元）" width="200" align="right">
+		                 <template scope="scope">
+		                     <div class="text-right">{{addThousands(scope.row.orgLimitedAmount)}}</div>
+		                 </template>
+		             </el-table-column>
+		             <el-table-column  prop="signingDate" label="签约时间" width="120" align="center"></el-table-column>
+		             <el-table-column prop="bldLimitAmountName" label="受限额度版本" width="280"></el-table-column>
+		             
+		             
+		             
+		         </el-table>
+			</div>
+			
+			<!-- 附件模态框开始 -->
+		    <div class="modal fade" id="fileNodeModelDetailSub" tabindex="-1" role="dialog" aria-hidden="true" >
+		        <div class="modal-dialog model-width">
+		            <div class="modal-content">
+		                <div class="modal-header">
+		                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+		                        &times;
+		                    </button>
+		                    <h4 class="modal-title csm-title">附件信息</h4>
+		                </div>
+		                <div class="modal-body csm-body">
+			                <!--附件材料开始-->
+							<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+							<!--附件材料结束-->
+		                </div>
+		                <div class="modal-footer">
+		                    <button type="button" class="btn foot-sure" @click="dialogSave">确定</button>
+		                    <button type="button" class="btn foot-cancel" data-dismiss="modal" ><!-- @click="refresh" --> 取消</button>
+		                </div>
+		            </div><!-- /.modal-content -->
+		        </div><!-- /.modal -->
+		    </div>
+		    <!-- 附件模态框结束 -->
+			<!-- 评语开始 -->
+		    <div class="modal fade" id="commentModel" tabindex="-1" role="dialog" aria-hidden="true" >
+		        <div class="modal-dialog model-width">
+		            <div class="modal-content">
+		                <div class="modal-header">
+		                    <button type="button" class="close"  aria-hidden="true" @click="closeCommentModel">
+		                        &times;
+		                    </button>
+		                    <h4 class="modal-title csm-title">评语</h4>
+		                </div>
+		                <div class="modal-body csm-body">
+			                <div class="form-group">
+		                        <span class="detail-text1"><strong class="red-icon">*</strong>评语：</span>
+		                        <div class="detail-info1">
+		                            <div class="detail-edit">
+		                                <textarea type="text" rows="6" value="" class="form-control" placeholder="请输入评语信息" v-model="approvalInfo"></textarea>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="modal-footer">
+		                    <button type="button" class="btn foot-sure" @click="dialogSaveComment">确定</button>
+		                    <button type="button" class="btn foot-cancel" @click="closeCommentModel"> 取消</button>
+		                </div>
+		            </div><!-- /.modal-content -->
+		        </div><!-- /.modal -->
+		    </div>
+		    <!-- 评语结束 -->
+		    
+		    <!-- A评语开始 -->
+		    <div class="modal fade" id="commentModelA" tabindex="-1" role="dialog" aria-hidden="true" >
+		        <div class="modal-dialog model-width">
+		            <div class="modal-content">
+		                <div class="modal-header">
+		                    <button type="button" class="close"  aria-hidden="true" @click="closeCommentModelA">
+		                        &times;
+		                    </button>
+		                    <h4 class="modal-title csm-title">评语</h4>
+		                </div>
+		                <div class="modal-body csm-body">
+			                <div class="form-group">
+		                        <span class="detail-text1"><strong class="red-icon">*</strong>评语：</span>
+		                        <div class="detail-info1">
+		                            <div class="detail-edit">
+		                                <textarea type="text" rows="6" value="" class="form-control" placeholder="请输入评语信息" v-model="resultInfoOne"></textarea>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="modal-footer">
+		                    <button type="button" class="btn foot-sure" @click="dialogSaveCommentA">确定</button>
+		                    <button type="button" class="btn foot-cancel" @click="closeCommentModelA"> 取消</button>
+		                </div>
+		            </div><!-- /.modal-content -->
+		        </div><!-- /.modal -->
+		    </div>
+		    <!-- A评语结束 -->
+		    
+		    <!-- B评语开始 -->
+		    <div class="modal fade" id="commentModelB" tabindex="-1" role="dialog" aria-hidden="true" >
+		        <div class="modal-dialog model-width">
+		            <div class="modal-content">
+		                <div class="modal-header">
+		                    <button type="button" class="close"  aria-hidden="true" @click="closeCommentModelB">
+		                        &times;
+		                    </button>
+		                    <h4 class="modal-title csm-title">评语</h4>
+		                </div>
+		                <div class="modal-body csm-body">
+			                <div class="form-group">
+		                        <span class="detail-text1"><strong class="red-icon">*</strong>评语：</span>
+		                        <div class="detail-info1">
+		                            <div class="detail-edit">
+		                                <textarea type="text" rows="6" value="" class="form-control" placeholder="请输入评语信息" v-model="resultInfoTwo"></textarea>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="modal-footer">
+		                    <button type="button" class="btn foot-sure" @click="dialogSaveCommentB">确定</button>
+		                    <button type="button" class="btn foot-cancel" @click="closeCommentModelB"> 取消</button>
+		                </div>
+		            </div><!-- /.modal-content -->
+		        </div><!-- /.modal -->
+		    </div>
+		    <!-- B评语结束 -->
+			<!-- 			
+			<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+			附件材料结束 -->
+			
+		</div>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/sm/Sm_BldLimitAmountDetail.js"></script>
+	</body>
+</html>	

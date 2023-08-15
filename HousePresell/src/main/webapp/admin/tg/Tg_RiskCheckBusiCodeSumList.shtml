@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-风控抽查结果处理</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tg_RiskCheckBusiCodeSumListDiv">
+			<div class="cs-content">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>抽查月份：</span>
+							    <input type="text" class="form-control cs-input-date" id="date2102010301" placeholder="请选择抽查月份"/>
+							</div>
+							<div class="inline">
+							    <span>业务大类：</span>
+							    <!--  <select class="form-control cs-select" v-model="bigBusiType">
+							    	<option value="">请选择业务大类</option>
+							    	<option value="030301">受限额度管理</option>
+							    	<option value="061102">合作协议</option>
+							    	<option value="061103">三方协议</option>
+							    	<option value="061203">托管一般拨付管理</option>
+							    	<option value="061202">退房退款管理</option>
+							    	<option value="2101">决策支持管理</option>
+							    	<option value="061204">支付保证业务</option>
+							    </select> -->
+							     <vue-listselect defaultname="请选择业务大类" :thevalue="bigBusiType"
+												:optionlist="bigBusiTypeList"
+												@callbackfun="changeBigBusiType"
+												@emptybackfun="bigBusiTypeEmpty"></vue-listselect>
+							</div>
+							<div class="inline">
+							    <span>业务小类：</span>
+							    <!-- <select class="form-control cs-select" v-model="smallBusiType">
+							    	<option value="">请选择业务小类</option>
+							    	<option value="03030101">受限额度变更</option>
+							    	<option value="03030102">托管终止</option>
+							    	<option value="06110203">全额托管合作协议签署</option>
+							    	<option value="06110201">贷款托管合作协议签署</option>
+							    	<option value="06110302">全额三方托管协议签署</option>
+							    	<option value="06110301">贷款三方托管协议签署</option>
+							    	<option value="06120301">用款申请与复核</option>
+							    	<option value="06120201">退房退款申请-贷款已结清</option>
+							    	<option value="06120202">退房退款申请-贷款未结清</option>
+							    	<option value="210104">存单存入管理</option>
+							    	<option value="06120401">支付保证申请与复核</option>
+							    </select> -->
+							     <vue-listselect defaultname="请选择业务大类" :thevalue="smallBusiType"
+												:optionlist="smallBusiTypeList"
+												@callbackfun="changeSmallBusiType"
+												@emptybackfun="smallBusiTypeEmpty"></vue-listselect>
+							</div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="reset">重置</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="tg_RiskCheckBusiCodeSumList" stripe :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle">
+							<!-- <el-table-column type="selection"  width="55" fixed></el-table-column> -->
+							<el-table-column type="index" :index="indexMethod" label="序号" width="60" fixed align="center"></el-table-column>
+							<el-table-column prop="bigBusiName" label="业务大类" min-width="200"></el-table-column>
+							<el-table-column label="业务小类" min-width="200">
+								<template scope="scope">
+									<el-button type="text" size="small" @click="rishCheckHandleResultDetailPageOpen(scope.row)">{{scope.row.smallBusiName}}</el-button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="spotTimeStamp" label="抽查月份" width="120" align="center"></el-table-column>
+							<el-table-column prop="unqualifiedCount" label="不合格笔数" width="140" align="right"></el-table-column>
+							<!-- <el-table-column prop="pushCount" label="待处理总笔数" width="140" align="right"></el-table-column>
+							<el-table-column prop="feedbackCount" label="已反馈总笔数" width="140" align="right"></el-table-column> -->
+							<el-table-column prop="handleCount" label="已确认总笔数" width="140" align="right"></el-table-column>
+							<el-table-column prop="rectificationState" label="抽查状态" align="center"></el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<!-- Pages JS -->
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tg/Tg_RiskCheckBusiCodeSumList.js"></script>
+	</body>
+</html>	

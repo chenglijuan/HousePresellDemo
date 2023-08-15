@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-项目信息编辑</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="empj_ProjectInfoEditDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="update('1')">
+						<img src="../image/detail_btn_ico_save.png" width="18">
+						<span>保存</span>
+					</button>
+					<button class="btn btn-primary" @click="update('2')" v-if="showSubFlag">
+						<img src="../image/detail_btn_ico_submit.png" width="18">
+						<span>提交</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-lg-8">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<span class="detail-text1">开发企业：</span>
+									<div class="detail-info3">
+										<div class="detail-edit">
+										    <span class="required">*</span>
+											<vue-select :avail="isNotZhengtaiUser" defaultname="请选择企业" :thevalue="developCompanyId"
+														 :optionlist="emmp_CompanyInfoList" @callbackfun="getDevelopCompanyId"></vue-select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<span class="detail-text1">项目名称：</span>
+									<div class="detail-info3">
+										<div class="detail-edit">
+										    <span class="required">*</span>
+											<input type="text" v-model="theName" class="form-control"/>
+										</div>
+										<div class="change-info" v-if="oldProject != null && theName != oldProject.theName">
+											<img src="../image/detail_ico_warning.png" width="15"/>
+											<span class="text-danger vertical-m">变更前：{{oldProject.theName}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<span class="detail-text1">所属区域：</span>
+									<div class="detail-info3">
+										<div class="detail-edit">
+										    <span class="required">*</span>
+											<vue-select defaultname="请选择所属区域" :thevalue="cityRegionId"
+														:optionlist="sm_CityRegionInfoList"
+														@callbackfun="cityRegionChange"
+														@emptybackfun="resetCityRegionChange"></vue-select>
+										</div>
+										<div class="change-info" v-if="oldProject != null && cityRegionId != oldProject.cityRegionId">
+											<img src="../image/detail_ico_warning.png" width="15"/>
+											<span class="text-danger vertical-m">变更前：{{oldProject.cityRegionName}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<span class="detail-text1">街道：</span>
+									<div class="detail-info3">
+										<div class="detail-edit">
+										    <span class="required">*</span>
+											<vue-select defaultname="请选择所属街道" :thevalue="streetId" :optionlist="sm_StreetInfoList" @callbackfun="getStreetId"></vue-select>
+										</div>
+										<div class="change-info" v-if="oldProject != null && streetId != oldProject.streetId">
+											<img src="../image/detail_ico_warning.png" width="15"/>
+											<span class="text-danger vertical-m">变更前：{{oldProject.streetName}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<span class="detail-text1">项目负责人：</span>
+									<div class="detail-info3">
+										<div class="detail-edit">
+										    <span class="required">*</span>
+											<input type="text" v-model="projectLeader" class="form-control"/>
+										</div>
+										<div class="change-info" v-if="oldProject != null && projectLeader != oldProject.projectLeader">
+											<img src="../image/detail_ico_warning.png" width="15"/>
+											<span class="text-danger vertical-m">变更前：{{oldProject.projectLeader}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<span class="detail-text1">项目负责人联系电话：</span>
+									<div class="detail-info3">
+										<div class="detail-edit">
+										    <span class="required">*</span>
+											<input type="text" v-model="leaderPhone" class="form-control"/>
+										</div>
+										<div class="change-info" v-if="oldProject != null && leaderPhone != oldProject.leaderPhone">
+											<img src="../image/detail_ico_warning.png" width="15"/>
+											<span class="text-danger vertical-m">变更前：{{oldProject.leaderPhone}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<span class="detail-text1">百度地图坐标（经度）：</span>
+									<div class="detail-info3">
+										<div class="detail-edit">
+											<input @change="longitudeChange" type="number" v-model="longitude"
+												   class="form-control"/>
+										</div>
+										<div class="change-info" v-if="oldProject != null && longitude != oldProject.longitude">
+											<img src="../image/detail_ico_warning.png" width="15"/>
+											<span class="text-danger vertical-m">变更前：{{oldProject.longitude}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<span class="detail-text1">百度地图坐标（维度）：</span>
+									<div class="detail-info3">
+										<div class="detail-edit">
+											<input @change="latitudeChange" type="number" v-model="latitude"
+												   class="form-control"/>
+										</div>
+										<div class="change-info" v-if="oldProject != null && latitude != oldProject.latitude">
+											<img src="../image/detail_ico_warning.png" width="15"/>
+											<span class="text-danger vertical-m">变更前：{{oldProject.latitude}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<span class="detail-text1">项目地址：</span>
+									<div class="detail-info3">
+										<div class="detail-edit">
+										    <span class="required">*</span>
+											<input type="text" v-model="address" class="form-control"/>
+										</div>
+										<div class="change-info" v-if="oldProject != null && address != oldProject.address">
+											<img src="../image/detail_ico_warning.png" width="15"/>
+											<span class="text-danger vertical-m">变更前：{{oldProject.address}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<span class="detail-text1">项目简介：</span>
+									<div class="detail-info3">
+										<div class="detail-edit">
+										    <span class="required">*</span>
+											<textarea v-model="introduction" class="form-control"></textarea>
+										</div>
+										<div class="change-info" v-if="oldProject != null && oldProject.introduction != null && introduction != oldProject.introduction">
+											<img src="../image/detail_ico_warning.png" width="15"/>
+											<span class="text-danger vertical-m">变更前：{{oldProject.introduction}}</span>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<span class="detail-text1">备注：</span>
+									<div class="detail-info3">
+										<div class="detail-edit">
+											<textarea v-model="remark" class="form-control"></textarea>
+										</div>
+										<!--  && oldProject.remark != null && remark != null -->
+										<div class="change-info"
+											 v-if="oldProject != null && remark != oldProject.remark">
+											<img src="../image/detail_ico_warning.png" width="15"/>
+											<span class="text-danger vertical-m">变更前：{{oldProject.remark}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="projectEditMap" style="height: 385px;" class="col-lg-4"></div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--附件材料开始-->
+			<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+			<!--附件材料结束-->
+		</div>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/empj/Empj_ProjectInfoEdit.js"></script>
+		<script>
+			// var map = new BMap.Map("projectEditMap");
+			// var point1 = new BMap.Point(pMapEditVue.longitude, pMapEditVue.latitude);
+			// var icon1 = new BMap.Icon("../image/map_ico_location.png", new BMap.Size(22,25));
+            // var marker1 = new BMap.Marker(point1, {icon:icon1});  // 创建标注
+            // map.addOverlay(marker1);            				  // 将标注添加到地图中
+			//
+            // map.centerAndZoom(point1, 14);
+            // map.enableScrollWheelZoom();	  //开启鼠标滚轮缩放
+
+			/* var mp = new BMap.Map("projectEditMap");
+			console.log(pMapEditVue.longitude+","+pMapEditVue.latitude)
+			var point = new BMap.Point(pMapEditVue.longitude, pMapEditVue.latitude);
+			mp.centerAndZoom(point, 11);
+			mp.enableScrollWheelZoom();			//开启鼠标滚轮缩放
+			var marker = new BMap.Marker(point);// 创建标注
+			mp.addOverlay(marker);				// 将标注添加到地图中
+			function showInfo(e)
+			{
+				mp.clearOverlays();
+				pMapEditVue.longitude = e.point.lng;
+				pMapEditVue.latitude = e.point.lat;
+				var marker = new BMap.Marker(new BMap.Point(pMapEditVue.longitude, pMapEditVue.latitude));
+				mp.addOverlay(marker); 
+			}
+			mp.addEventListener("click", showInfo); */
+
+		</script>
+	</body>
+</html>	

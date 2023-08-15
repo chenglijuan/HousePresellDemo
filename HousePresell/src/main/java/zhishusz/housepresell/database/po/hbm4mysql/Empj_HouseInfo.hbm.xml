@@ -1,0 +1,368 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Empj_HouseInfo" table="Empj_HouseInfo" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_BuildingInfo" name="building" foreign-key="null">
+			<column name="building">
+				<comment>关联楼幢</comment>
+			</column>
+		</many-to-one>
+		<property name="eCodeOfBuilding">
+			<column name="eCodeOfBuilding">
+				<comment>楼幢编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_UnitInfo" name="unitInfo" foreign-key="null">
+			<column name="unitInfo">
+				<comment>关联单元</comment>
+			</column>
+		</many-to-one>
+		<property name="unitNumber">
+			<column name="unitNumber">
+				<comment>单元序号</comment>
+			</column>
+		</property>
+		<property name="eCodeOfUnitInfo">
+			<column name="eCodeOfUnitInfo">
+				<comment>楼幢单元</comment>
+			</column>
+		</property>
+		<property name="eCodeFromPresellSystem">
+			<column name="eCodeFromPresellSystem">
+				<comment>预售系统户编号</comment>
+			</column>
+		</property>
+		<property name="eCodeFromEscrowSystem">
+			<column name="eCodeFromEscrowSystem">
+				<comment>托管系统户编号</comment>
+			</column>
+		</property>
+		<property name="eCodeFromPublicSecurity">
+			<column name="eCodeFromPublicSecurity">
+				<comment>公安编号</comment>
+			</column>
+		</property>
+		<property name="addressFromPublicSecurity">
+			<column name="addressFromPublicSecurity">
+				<comment>公安坐落</comment>
+			</column>
+		</property>
+		<property name="recordPrice">
+			<column name="recordPrice">
+				<comment>物价备案价格</comment>
+			</column>
+		</property>
+		<property name="lastTimeStampSyncRecordPriceToPresellSystem">
+			<column name="lastTSSRPToPS">
+				<comment>预售系统物价备案价格最后一次同步时间</comment>
+			</column>
+		</property>
+		<property name="settlementStateOfTripleAgreement">
+			<column name="settlementSOfTA">
+				<comment>三方协议结算状态</comment>
+			</column>
+		</property>
+		<many-to-one class="Tgxy_TripleAgreement" name="tripleAgreement" foreign-key="null">
+			<column name="tripleAgreement">
+				<comment>关联三方协议</comment>
+			</column>
+		</many-to-one>
+		<property name="eCodeFromPresellCert">
+			<column name="eCodeFromPresellCert">
+				<comment>预售证号-来源于楼栋</comment>
+			</column>
+		</property>
+		<property name="floor">
+			<column name="floor">
+				<comment>所在楼层</comment>
+			</column>
+		</property>
+		<property name="roomId">
+			<column name="roomId">
+				<comment>室号</comment>
+			</column>
+		</property>
+		<property name="theNameOfRoomId">
+			<column name="theNameOfRoomId">
+				<comment>室号名称</comment>
+			</column>
+		</property>
+		<property name="rowNumber">
+			<column name="rowNumber">
+				<comment>所在行，导入时维护</comment>
+			</column>
+		</property>
+		<property name="colNumber">
+			<column name="colNumber">
+				<comment>所在列，导入时维护</comment>
+			</column>
+		</property>
+		<property name="colIndex">
+			<column name="colIndex">
+				<comment>该户室在该层满编情况下的下标，导入时维护</comment>
+			</column>
+		</property>
+		<property name="rowSpan">
+			<column name="rowSpan">
+				<comment>合并楼层数，纵向合并数，导入时维护</comment>
+			</column>
+		</property>
+		<property name="colSpan">
+			<column name="colSpan">
+				<comment>合并同层下的户室数，横向合并数，导入时维护</comment>
+			</column>
+		</property>
+		<property name="isOverFloor">
+			<column name="isOverFloor">
+				<comment>是否跃层</comment>
+			</column>
+		</property>
+		<property name="overFloors">
+			<column name="overFloors">
+				<comment>跃层数</comment>
+			</column>
+		</property>
+		<property name="position">
+			<column name="position">
+				<comment>房屋坐落</comment>
+			</column>
+		</property>
+		<property name="purpose">
+			<column name="purpose">
+				<comment>房屋用途</comment>
+			</column>
+		</property>
+		<property name="property">
+			<column name="property">
+				<comment>房屋性质</comment>
+			</column>
+		</property>
+		<property name="deliveryType">
+			<column name="deliveryType">
+				<comment>交付类型</comment>
+			</column>
+		</property>
+		<property name="forecastArea">
+			<column name="forecastArea">
+				<comment>建筑面积（预测）</comment>
+			</column>
+		</property>
+		<property name="actualArea">
+			<column name="actualArea">
+				<comment>建筑面积（实测）</comment>
+			</column>
+		</property>
+		<property name="innerconsArea">
+			<column name="innerconsArea">
+				<comment>套内建筑面积（㎡）</comment>
+			</column>
+		</property>
+		<property name="shareConsArea">
+			<column name="shareConsArea">
+				<comment>分摊建筑面积（㎡）</comment>
+			</column>
+		</property>
+		<property name="useArea">
+			<column name="useArea">
+				<comment>使用面积（㎡）</comment>
+			</column>
+		</property>
+		<property name="balconyArea">
+			<column name="balconyArea">
+				<comment>阳台面积（㎡）</comment>
+			</column>
+		</property>
+		<property name="heigh">
+			<column name="heigh">
+				<comment>层高</comment>
+			</column>
+		</property>
+		<property name="unitType">
+			<column name="unitType">
+				<comment>户型</comment>
+			</column>
+		</property>
+		<property name="roomNumber">
+			<column name="roomNumber">
+				<comment>室</comment>
+			</column>
+		</property>
+		<property name="hallNumber">
+			<column name="hallNumber">
+				<comment>厅</comment>
+			</column>
+		</property>
+		<property name="kitchenNumber">
+			<column name="kitchenNumber">
+				<comment>厨</comment>
+			</column>
+		</property>
+		<property name="toiletNumber">
+			<column name="toiletNumber">
+				<comment>卫</comment>
+			</column>
+		</property>
+		<property name="eCodeOfOriginalHouse">
+			<column name="eCodeOfOriginalHouse">
+				<comment>原房屋编号</comment>
+			</column>
+		</property>
+		<property name="isOpen">
+			<column name="isOpen">
+				<comment>是否开户</comment>
+			</column>
+		</property>
+		<property name="isPresell">
+			<column name="isPresell">
+				<comment>是否预售</comment>
+			</column>
+		</property>
+		<property name="isMortgage">
+			<column name="isMortgage">
+				<comment>是否抵押</comment>
+			</column>
+		</property>
+		<property name="limitState">
+			<column name="limitState">
+				<comment>限制状态</comment>
+			</column>
+		</property>
+		<property name="eCodeOfRealBuidingUnit">
+			<column name="eCodeOfRealBuidingUnit">
+				<comment>不动产单元号</comment>
+			</column>
+		</property>
+		<property name="eCodeOfBusManage1">
+			<column name="eCodeOfBusManage1">
+				<comment>业务管理号1-预留字段</comment>
+			</column>
+		</property>
+		<property name="eCodeOfBusManage2">
+			<column name="eCodeOfBusManage2">
+				<comment>业务管理号2-预留字段</comment>
+			</column>
+		</property>
+		<property name="eCodeOfMapping">
+			<column name="eCodeOfMapping">
+				<comment>测绘编号</comment>
+			</column>
+		</property>
+		<property name="eCodeOfPicture">
+			<column name="eCodeOfPicture">
+				<comment>图幅号(分层分户图号)</comment>
+			</column>
+		</property>
+		<property name="remark">
+			<column name="remark" length="4000">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<property name="externalCode">
+			<column name="externalCode">
+				<comment>外来数据关联字段</comment>
+			</column>
+		</property>
+		<property name="externalId">
+			<column name="externalId">
+				<comment>外来数据关联主键</comment>
+			</column>
+		</property>
+		<property name="resourceNote">
+			<column name="resourceNote">
+				<comment>数据来源说明</comment>
+			</column>
+		</property>
+		<property name="logId">
+			<column name="logId">
+				<comment>关联日志Id</comment>
+			</column>
+		</property>
+		<many-to-one class="Tgxy_ContractInfo" name="contractInfo" foreign-key="null">
+			<column name="contractInfo">
+				<comment>关联预售系统买卖合同</comment>
+			</column>
+		</many-to-one>
+		
+		<property name="theHouseState">
+			<column name="theHouseState">
+				<comment>房屋状态</comment>
+			</column>
+		</property>
+		
+		<property name="isLimit">
+			<column name="isLimit">
+				<comment>是否限制 0否1是</comment>
+			</column>
+		</property>
+		
+		<property name="isManagement">
+			<column name="isManagement">
+				<comment>是否处置 0否1是</comment>
+			</column>
+		</property>
+		
+		<property name="isSequestration">
+			<column name="isSequestration">
+				<comment>是否查封 0否1是</comment>
+			</column>
+		</property>
+		
+		<many-to-one class="Empj_HouseExtendInfo" name="houseExtendInfo" foreign-key="null">
+			<column name="houseExtendInfo">
+				<comment>关联房屋拓展表</comment>
+			</column>
+		</many-to-one>
+
+	</class>
+</hibernate-mapping>

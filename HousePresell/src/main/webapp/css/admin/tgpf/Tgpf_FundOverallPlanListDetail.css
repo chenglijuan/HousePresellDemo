@@ -1,0 +1,17 @@
+.el-table thead.is-group th {
+    background: #e4f1fe;
+}
+.el-table__fixed-footer-wrapper tbody td {
+    background-color: #fcf5de;
+}
+.el-table__footer-wrapper tbody td, .el-table__header-wrapper tbody td {
+    background-color: #fcf5de;
+    text-align:right;
+}
+.el-table__footer tbody td:nth-child(4),td:nth-child(12){
+    text-align: right;
+}
+.el-table__header thead tr:nth-child(4) th
+{
+    text-align: right;
+}

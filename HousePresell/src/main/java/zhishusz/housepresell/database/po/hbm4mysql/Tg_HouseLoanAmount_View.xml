@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tg_HouseLoanAmount_View" table="Tg_HouseLoanAmount_View" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_Tg_HouseLoanAmount_View_View</param>
+			</generator>
+		</id>
+		<property name="billTimeStamp">
+			<column name="billTimeStamp">
+				<comment>记账日期</comment>
+			</column>
+		</property>
+		<property name="companyName">
+			<column name="companyName">
+				<comment>开发企业</comment>
+			</column>
+		</property>
+		<property name="projectName">
+			<column name="projectName">
+				<comment>项目</comment>
+			</column>
+		</property>
+		<property name="eCodeFroMconstruction">
+			<column name="eCodeFroMconstruction">
+				<comment>施工楼幢号</comment>
+			</column>
+		</property>
+		<property name="eCodeFromPublicSecurity">
+			<column name="eCodeFromPublicSecurity">
+				<comment>公安编号</comment>
+			</column>
+		</property>
+		<property name="unitCode">
+			<column name="unitCode">
+				<comment>单元</comment>
+			</column>
+		</property>
+		<property name="roomId">
+			<column name="roomId">
+				<comment>房间号</comment>
+			</column>
+		</property>
+		<property name="forEcastArea">
+			<column name="forEcastArea">
+				<comment>建筑面积</comment>
+			</column>
+		</property>
+		<property name="contractStatus">
+			<column name="contractStatus">
+				<comment>合同状态</comment>
+			</column>
+		</property>
+		<property name="buyerName">
+			<column name="buyerName">
+				<comment>买受人名称</comment>
+			</column>
+		</property>
+		<property name="eCodeOfcertificate">
+			<column name="eCodeOfcertificate">
+				<comment>买受人证件号</comment>
+			</column>
+		</property>
+		<property name="contractSumPrice">
+			<column name="contractSumPrice">
+				<comment>合同总价</comment>
+			</column>
+		</property>
+		<property name="paymentMethod">
+			<column name="paymentMethod">
+				<comment>付款方式</comment>
+			</column>
+		</property>
+		<property name="loanAmount">
+			<column name="loanAmount">
+				<comment>按揭金额</comment>
+			</column>
+		</property>
+		<property name="eCodeOfTripleagreement">
+			<column name="eCodeOfTripleagreement">
+				<comment>三方协议号</comment>
+			</column>
+		</property>
+		<property name="loanAmountIn">
+			<column name="loanAmountIn">
+				<comment>入账金额</comment>
+			</column>
+		</property>
+		<property name="fundProperty">
+			<column name="fundProperty">
+				<comment>资金性质</comment>
+			</column>
+		</property>
+		<property name="reconciliationTSFromOB">
+			<column name="reconciliationTSFromOB">
+				<comment>入账日期</comment>
+			</column>
+		</property>
+		<property name="loanBank">
+			<column name="loanBank">
+				<comment>贷款银行</comment>
+			</column>
+		</property>
+		<property name="theNameOfCreditor">
+			<column name="theNameOfCreditor">
+				<comment>主借款人姓名</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

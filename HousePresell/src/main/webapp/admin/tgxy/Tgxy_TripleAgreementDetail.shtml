@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-三方协议详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tgxy_TripleAgreementDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<!-- <div class="inline title-btns">
+					<button class="btn btn-success" @click="goToEditHandle">
+						<img src="../image/list_btn_ico_edit.png" width="18">
+						<span>修改</span>
+					</button>
+				</div>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="goToSPHandle">
+						<img src="../image/detail_btn_ico_submit.png" width="18">
+						<span>提交</span>
+					</button>
+				</div> -->
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="goToEditHandle" v-if="flag">
+						<img src="../image/list_btn_ico_edit.png" width="18">
+						<span>修改</span>
+					</button>
+					<button class="btn btn-success" @click="goToSPHandle"  v-if="flag" data-editNum="06110301_OST_01">
+						<img src="../image/detail_btn_ico_submit.png" width="18">
+						<span>提交</span>
+					</button>
+				</div>
+<!--				<button class="btn btn-success" @click="goToSign" >-->
+<!--					<img src="../image/detail_btn_ico_submit.png" width="18">-->
+<!--					<span>生成签章</span>-->
+<!--				</button>-->
+<!--				<a class="btn btn-success" @click="gotoPreview">-->
+<!--					<img src="../image/detail_btn_ico_submit.png" width="18">-->
+<!--					<span>查看签章</span>-->
+<!--				</a>-->
+				<!-- <div class="inline title-btns">
+					<button class="btn btn-success" @click="goToPrintHandle">
+						<img src="../image/list_btn_ico_edit.png" width="18">
+						<span>打印</span>
+					</button>
+				</div> -->
+				<div class="pull-right text-right" @click="exportPdf" v-if="print">
+					<button class="btn btn-success">
+						<img src="../image/list_btn_ico_export.png" width="18"/>
+						<span>打印</span>
+					</button>
+				</div>
+				<!-- 
+				<div class="inline commandBox">
+                    <button class="btn btnCommand" @click="preCommand">
+						<span class="glyphicon glyphicon-arrow-left" width="18"></span>
+						<span>上一条</span>
+					</button>
+					<button class="btn btnCommand" @click="nextCommand">
+						<span>下一条</span>
+						<span class="glyphicon glyphicon-arrow-right" width="18"></span>
+					</button>
+                </div> -->
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">三方协议号：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.eCodeOfTripleAgreement" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>						
+						<div class="form-group">
+							<span class="detail-text1">项目名称：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+								    <input type="text" v-model="tgxy_TripleAgreementModel.theNameOfProject" class="form-control" disabled/>
+									
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">房屋坐落：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+								    <!-- <input type="text" v-model="tgxy_TripleAgreementModel.unitRoom" class="form-control" disabled/> -->
+								    <input type="text" v-model="tgxy_TripleAgreementModel.position" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<span class="detail-text1">操作人：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.userUpdate" class="form-control" disabled/>
+									<!--字段无-->
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作时间：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.lastUpdateTimeStamp" class="form-control" disabled/>
+									<!--字段无-->
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">协议日期：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.tripleAgreementTimeStamp" class="form-control" disabled/>
+									<!--字段无-->
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">买受人名称：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.buyerName" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">施工编号：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.eCodeFromConstruction" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">开发企业：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.sellerName" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">备案人：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.userRecord" class="form-control" disabled/>
+									<!--字段无-->
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">三方协议状态：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<!--<input type="text" v-model="tgxy_TripleAgreementModel.theStateOfTripleAgreement" class="form-control" disabled/>-->
+									<select  class="form-control" v-model='tgxy_TripleAgreementModel.theStateOfTripleAgreement' disabled>
+								    	<option value="">全部</option>
+								    	<option value="0">未打印</option>
+								    	<option value="1">已打印未上传</option>
+								    	<option value="2">已上传</option>
+								    	<option value="3">已备案</option>
+								    	<option value="4">备案退回</option>
+								    </select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">三方协议归档状态：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<!--<input type="text" v-model="tgxy_TripleAgreementModel.theStateOfTripleAgreement" class="form-control" disabled/>-->
+									<select  class="form-control" v-model='tgxy_TripleAgreementModel.theStateOfTripleAgreementFiling' disabled>
+								    
+								    	<option value="0">为空</option>
+								    	<option value="1">待归档</option>
+								    	<option value="2">已归档</option>
+								    	
+								    </select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">三方协议效力状态：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<!--<input type="text" v-model="tgxy_TripleAgreementModel.theStateOfTripleAgreement" class="form-control" disabled/>-->
+									<select  class="form-control" v-model='tgxy_TripleAgreementModel.theStateOfTripleAgreementEffect' disabled>
+								       	<option value="0">为空</option>
+								    	<option value="1">生效</option>
+								    	<option value="2">退房退款待处理</option>
+								    	<option value="3">失效</option>
+								    </select>
+								</div>
+							</div>
+						</div>
+						
+						
+						<div class="form-group">
+							<span class="detail-text1">打印方式：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<!-- <input type="text" v-model="tgxy_TripleAgreementModel.printMethod" class="form-control" disabled/> -->
+									<!--字段无-->
+									<select  class="form-control" v-model='tgxy_TripleAgreementModel.printMethod' disabled>
+								    	<option value="0">机打</option>
+								    	<option value="1">手工打印</option>
+								    </select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">备案时间：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.recordTimeStamp" class="form-control" disabled/>
+									<!--字段无-->
+								</div>
+							</div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				
+			</div>
+			<div class="detail-title">
+				<h1 class="inline">合同信息</h1>
+			</div>
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">合同备案号：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementHt.eCodeOfContractRecord" class="form-control" disabled/>
+									
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">房屋坐落：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.position" class="form-control" disabled/>
+									
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">楼幢公安编号：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementHt.eCodeFromPublicSecurity" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">施工编号：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementHt.eCodeFromConstruction" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">建筑面积（㎡）：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementHt.buildingArea" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">买受人：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.buyerName" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">同步人：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementHt.syncPerson" class="form-control" disabled/>
+									
+								</div>
+							</div>
+						</div>
+						
+					</div>
+						
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">备案系统合同编号：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementHt.bano" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">付款方式：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementHt.paymentMethod" class="form-control" disabled/>
+									
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">合同总价（元）：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.contractSumPrice" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">户室号：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementHt.roomIdOfHouseInfo" class="form-control" disabled/>
+									
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">开发企业名称：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementHt.theNameFormCompany" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">项目名称：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementHt.theNameOfProject" class="form-control" disabled/>
+									
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<span class="detail-text1">合同备案时间：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementHt.contractRecordDate" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>				
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">贷款金额：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.loanAmount" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">贷款银行：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementHt.loanBank" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">首付款金额：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.firstPaymentAmount" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">交付日期：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementHt.payDate" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">合同签订日期：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementHt.contractSignDate" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">同步时间：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementHt.syncDate" class="form-control" disabled/>
+									<!--字段无-->
+								</div>
+							</div>
+						</div>	
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--买受人信息开始-->
+			<div class="detail-title">
+				<h1 class="inline">买受人信息</h1>
+			</div>
+			<!--表格开始-->
+				<div class="cs-table cs-content">
+					<div >
+						<el-table :data="tgxy_TripleAgreementDetaillist" stripe :default-sort = "{prop: 'index'}">
+							<el-table-column type="index" :index="indexMethod" label="序号" width="80" fixed></el-table-column>
+							
+							<el-table-column prop="buyerName" label="买受人姓名" width="315"></el-table-column>
+							<!--<el-table-column prop="buyerType" label="买受人类型" width="315"></el-table-column>-->
+							<el-table-column prop="certificateTypeName" label="证件类型" width="315"></el-table-column>
+							<el-table-column prop="eCodeOfcertificate" label="证件号码" width="315"></el-table-column>
+							<!--字段 关联买受人是否就是买受人名称-->
+							<el-table-column prop="contactPhone" label="联系电话" width="315"></el-table-column>
+							<el-table-column prop="contactAdress" label="联系地址" width="315"></el-table-column>  
+						<!--	<el-table-column prop="theNameOfProject" label="代理人类型" width="315"></el-table-column>--> <!--无代理人类型字段-->
+							<el-table-column prop="agentName" label="代理人姓名" width="315"></el-table-column>
+							<el-table-column prop="agentCertTypeName" label="代理人证件类型" width="315"></el-table-column>
+							<el-table-column prop="agentCertNumber" label="代理人证件号" width="315"></el-table-column>
+							<el-table-column prop="agentPhone" label="代理人联系电话" width="315"></el-table-column>
+							<el-table-column prop="agentAddress" label="代理人联系地址" width="315"></el-table-column>
+							
+						</el-table>
+						<!--<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"></vue-nav>-->
+					</div>
+				</div>
+			<!--<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">买受人姓名：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.buyerName" class="form-control" disabled/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">证件号码：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.eCodeOfcertificate" class="form-control" disabled/>
+									
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">代理人：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.agentName" class="form-control" disabled/>
+									
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">代理人证件号：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.agentCertNumber" class="form-control" disabled/>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">买受人类型：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.buyerType" class="form-control" disabled/>
+									
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">联系电话：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.contactPhone" class="form-control" disabled/>
+									
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">代理人姓名：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.agentName" class="form-control" disabled/>
+									
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">代理人联系电话：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.agentPhone" class="form-control" disabled/>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">证件类型：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.certificateType" class="form-control" disabled/>
+									
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">联系地址：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.contactAdress" class="form-control" disabled/>
+									
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">代理人证件类型：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.agentCertType" class="form-control" disabled/>
+									
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">代理人联系地址：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgxy_TripleAgreementModel.agentAddress" class="form-control" disabled/>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>	-->
+			<!--买受人信息结束-->
+			<!--附件材料开始-->
+			<my-uploadcomponent :loaduploadlist="loadUploadList"  :showdelete ="showDelete"  ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+			<!--附件材料结束-->
+			<!-- error modal -->
+			<div class="modal fade" id="errorTripleDetail" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">{{errtips}}</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!-- success modal -->
+			<div class="modal fade" id="successTripleDetail" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作成功</div>
+								<div class="del-text2">保存成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div><!-- /.modal结束 -->
+		</div>
+		
+		<script src="../components/vue-components.js"></script>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tgxy/Tgxy_TripleAgreementDetail.js"></script>
+	</body>
+</html>	

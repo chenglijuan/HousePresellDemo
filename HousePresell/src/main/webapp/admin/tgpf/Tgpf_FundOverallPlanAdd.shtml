@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-资金统筹添加</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tgpf_FundOverallPlanAddDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">用款申请列表</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="tgpf_FundOverallPlanAdd" :disabled="disabled">
+						<img src="../image/detail_btn_ico_statistical.png">
+						<span>统筹</span>
+					</button>
+				</div>
+				<div class="inline">（请先勾选需要统筹的用款申请，再点击统筹按钮）</div>
+			</div>
+			<div class="cs-content">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+								<span>用款申请日期：</span>
+								<input type="text" class="form-control cs-input-date" id="date061203020201" placeholder="起始日期 ~ 终止日期" />
+								<img src="../image/list_search_calendar.png" class="ico-date"/>
+							</div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="reset">重置</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="tgpf_FundAppropriated_AFList" stripe :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle">
+							<el-table-column align="center" type="selection" width="50" v-model="selectItem"></el-table-column>
+							<el-table-column align="center" type="index" :index="indexMethod" label="序号" width="60"></el-table-column>
+							<el-table-column prop="eCode" label="用款申请单号" width="220">
+								<template scope="scope">
+									<el-button type="text" size="small" @click="tgpf_FundAppropriated_AFDetail(scope.row.tableId , scope.row.projectId)">{{scope.row.eCode}}</el-button>
+								</template>
+							</el-table-column>
+							<el-table-column align="center" prop="createTimeStamp" label="用款申请日期" width="120"></el-table-column>
+							<el-table-column prop="theNameOfProject" label="项目名称" min-width="200"></el-table-column>
+							<el-table-column prop="totalApplyAmount" label="申请总金额(元)" sortable width="200">
+								<template scope="scope">
+									<div class="text-right">{{scope.row.totalApplyAmount}}</div>
+								</template>
+							</el-table-column>
+							<el-table-column align="center" prop="busiState" label="申请类型" width="160" sortable='custom'>
+								<template scope="scope">
+									<button v-if="scope.row.applyType == '0'" class="btn btn-state-warning" >一般拨付申请</button>
+									<button v-if="scope.row.applyType == '1'" class="btn btn-state-success" >支付保函申请</button>
+								</template>
+							</el-table-column>
+							<el-table-column align="center" prop="applyState" label="申请单状态" width="200">
+								<template scope="scope">
+									<button  v-if="scope.row.applyState == 1" class="btn btn-state-danger">申请中</button>
+									<button  v-if="scope.row.applyState == 2" class="btn btn-state-success">已受理</button>
+									<button  v-if="scope.row.applyState == 3" class="btn btn-state-warning">统筹中</button>
+									<button  v-if="scope.row.applyState == 4" class="btn btn-state-warning">已统筹</button>
+									<button  v-if="scope.row.applyState == 5" class="btn btn-state-warning">拨付中</button>
+									<button  v-if="scope.row.applyState == 6" class="btn btn-state-success">已拨付</button>
+									<button  v-if="scope.row.applyState == 9" class="btn btn-state-danger">已撤销</button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<!--<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber"></vue-nav>-->
+					</div>
+				</div>
+			</div>
+		</div>
+        <script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tgpf/Tgpf_FundOverallPlanAdd.js"></script>
+	</body>
+</html>	

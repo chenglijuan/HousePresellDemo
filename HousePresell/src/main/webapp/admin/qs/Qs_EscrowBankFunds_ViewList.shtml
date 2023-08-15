@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-楼幢账户报表</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<style type="text/css">
+		    .el-input__inner {
+		        height:28px;
+		        line-height:28px;
+		    }
+		    .el-input__icon {
+		        line-height: 25px;
+		    }
+		</style>
+	</head>
+	<body>
+		<div class="content-wrap" id="Qs_EscriowBankFunds_viewListDiv">
+			<div class="cs-content">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left content-top-left">
+						<div class="top-input" style="display:flex">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input"  placeholder="请输入开户行名称" v-model="keyword">
+							</div>
+							<div class="inline">
+							    <span>日期：</span>
+							    <input type="text" name="" id="EscrowBankFunds_listDate" class="form-control cs-input" v-model="timeStamp"/>
+							    <img src="../image/list_search_calendar.png" class="ico-date"/> 
+							</div>
+							<div class="inline">
+							    <span style="float:left">开户行：</span>						    
+							    <!-- <vue-select style="float:left" defaultname="请选择银行名称" :thevalue="theNameOfBank" :optionlist="bankNames" @callbackfun="getTheNameOfBankId"></vue-select> -->
+							    <vue-listselect defaultname="请选择银行名称" :thevalue="theNameOfBank" :optionlist="bankNames" @callbackfun="getTheNameOfBankId" @emptybackfun="emptyTheNameofBankId"></vue-listselect>
+							    <span style="clear:both"></span>
+							</div>
+							
+							<button class="btn btn-search" style="height:28px" @click="search">搜索</button>
+							<button class="btn btn-reset" style="height:28px" @click="resetSearch">重置</button>
+						</div>
+					
+					</div>
+					<div class="pull-right">
+						<div class="top-excel">
+							<button class="btn btn-excel" @click="exportForm">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="EscriowBankFunds_viewList" stripe :default-sort = "{prop: 'index'}" >  <!--合计:summary-method="getSummaries" show-summary-->
+							<el-table-column type="index" :index="indexMethod"  label="序号" width="60" fixed align="center"></el-table-column><!---->
+							
+							<el-table-column prop="theNameOfDepositBank" label="开户行简称" width="220"  fixed></el-table-column>
+							<el-table-column prop="timeStamp" label="日期" width="120"  align="center"></el-table-column>
+							<el-table-column prop="income" label="托管收入（元）" width="160"   header-align="center" align="right"></el-table-column>
+							<el-table-column prop="payout" label="托管支出（元）" width="160"   header-align="center" align="right"></el-table-column>
+							<el-table-column prop="certOfDeposit" label="大额存单（元）" width="160"   header-align="center" align="right"></el-table-column>
+							<el-table-column prop="structuredDeposit" label="结构性存款（元）" width="180"   header-align="center" align="right"></el-table-column>
+							<el-table-column prop="breakEvenFinancial" label="保本理财（元）" width="160"   header-align="center" align="right"></el-table-column>
+							<el-table-column prop="currentBalance" label="活期余额（元）" width="160"   header-align="center" align="right"></el-table-column>
+							<el-table-column prop="largeRatio" label="大额占比（%）" width="200"   header-align="center" align="right"></el-table-column>
+							<el-table-column prop="largeAndCurrentRatio" label="大额+活期占比（%）" width="220"   header-align="center" align="right"></el-table-column>
+							<el-table-column prop="financialRatio" label="理财占比（%）" width="200"   header-align="center" align="right"></el-table-column>
+							<el-table-column prop="totalFundsRatio" label="总资金沉淀占比（%）" width="230"   header-align="center" align="right"></el-table-column>
+							<el-table-column prop="inProgressAccount" label="正在办理中（元）" width="180"   header-align="center" align="right"></el-table-column>
+							<el-table-column prop="transferOutAmount" label="转出金额（元）" width="180"   header-align="center" align="right"></el-table-column>
+							<el-table-column prop="transferInAmount" label="转入金额（元）" width="180"   header-align="center" align="right"></el-table-column>
+							
+							<!-- <el-table-column prop="inProgress" label="资金性质" width="130"  align="center">
+				                <template scope="scope">
+				                      <button  v-if="scope.row.inProgress ==  0" class="btn btn-state-warning">自有资金</button>
+				                    <button  v-if="scope.row.inProgress == 1" class="btn btn-state-success">商业贷款</button>
+				                    <button  v-if="scope.row.inProgress == 2" class="btn btn-state-success">公积金贷款</button>
+				                    <button  v-if="scope.row.inProgress == 3" class="btn btn-state-success">公转商贷款</button>
+				                    <button  v-if="scope.row.inProgress == 4" class="btn btn-state-success">公积金首付款</button>
+				                </template>
+				            </el-table-column> -->
+				
+						</el-table>
+					    <vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+			<!-- error modal -->
+			<div class="modal fade" id="edModelEscriowBankFunds_view" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">{{errMsg}}</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		</div>
+		<!-- success modal -->
+			<div class="modal fade" id="sdModelEscriowBankFunds_view" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		<script src="../components/vue-components.js"></script>
+	
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/qs/Qs_EscrowBankFunds_ViewList.js"></script>
+	</body>
+</html>	

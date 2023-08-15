@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-系统用户+机构用户编辑</title>
+		<!-- Vendor CSS-->
+		<link rel="stylesheet" href="../../assets/bootstrap-3.3.7/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="../../assets/bootstrap-tab-master/css/font-awesome.css">
+		<link rel="stylesheet" href="../../assets/bootstrap-tab-master/css/bootstrap-tab.css">
+		<!-- Page CSS-->
+		<link rel="stylesheet" type="text/css" href="../../css/main.css"/>
+		<link rel="stylesheet" type="text/css" href="../../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/detail.css"/>
+
+        <script src="../../js/admin/md5.js"></script>
+		<object id="CInfControl" classid="clsid:FF5A75DB-B1E2-46D3-856A-2FC65BA51A92" class="secretDog"></object>
+		<OBJECT class="secretDog" ID="TZKeyOcxTestUserEdit" CLASSID="CLSID:C28F551F-2616-4FB0-BCC3-ED208B6FC58F" ></OBJECT>
+	</head>
+	<body>
+		<div class="content-wrap" id="sm_UserEditDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">用户信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="updateSm_User">
+						<img src="../../image/detail_btn_ico_save.png" width="18">
+						<span>保存</span>
+					</button>
+				</div>
+			</div>
+			<!--用户信息开始-->
+			<div class="cs-content">
+				<div class="content-top">
+					<div class="detai-btns">
+						<button class="btn btn-success" @click="unLock">
+							<img src="../../image/detail_btn_ico_unlock.png">
+							<span>解锁</span>
+						</button>
+						<button class="btn btn-primary" @click="resetPassword">
+							<img src="../../image/detail_btn_ico_reset.png"/>
+							<span>重置密码</span>
+						</button>
+					</div>
+				</div>
+				<div class="detail-content">
+					<div class="row">
+						<div class="col-md-4">
+<!-- 							<div class="form-group">
+								<span class="detail-text1">用户编码：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<input type="text" class="form-control" v-model="sm_UserModel.eCode" disabled/>
+									</div>
+								</div>
+							</div> -->
+							<div class="form-group">
+								<span class="detail-text1">用户登录名称：</span>
+								<div class="detail-info1">
+									<div class="detail-edit">
+										<input type="text" class="form-control" v-model="sm_UserModel.theAccount"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">证件号码：</span>
+								<div class="detail-info1">
+									<div class="detail-edit">
+										<input type="text" class="form-control" v-model="sm_UserModel.idNumber"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">真实姓名：</span>
+								<div class="detail-info1">
+									<div class="detail-edit">
+										<input type="text" class="form-control" v-model="sm_UserModel.theName"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">是否启用：</span>
+								<div class="detail-info1">
+									<div class="detail-edit">
+										<select name="" class="form-control" v-model="sm_UserModel.busiState" >
+											<option value="1">是</option>
+											<option value="0">否</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">创建人：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<input type="text" class="form-control" v-model="sm_UserModel.userStart" disabled/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+						    <div class="form-group">
+								<span class="detail-text1">所属机构：</span>
+								<div class="detail-info1">
+									<div class="detail-edit">
+										<vue-select defaultname="请选择企业" :thevalue="developCompanyId" :optionlist="emmp_CompanyInfoList" @callbackfun="getDevelopCompanyId" @emptybackfun="getAllCompanyType"></vue-select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">联系电话：</span>
+								<div class="detail-info1">
+									<div class="detail-edit">
+										<input type="text" class="form-control" v-model="sm_UserModel.phoneNumber"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">邮箱：</span>
+								<div class="detail-info1">
+									<div class="detail-edit">
+										<input type="text" class="form-control" v-model="sm_UserModel.email"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">是否加密设备：</span>
+								<div class="detail-info1">
+									<div class="detail-edit" style="box-sizing:border-box;">
+										<select name="" class="form-control" v-model="sm_UserModel.isEncrypt" style="width:60%;display:inline-block">
+											<option value="1">是</option>
+											<option value="0">否</option>
+										</select>
+										<button style="display:inline-block" class="btn btn-primary text-right" @click="getIkey" v-if="sm_UserModel.isEncrypt == 1">
+											<img src="../../image/detail_btn_ico_key.png">
+											<span>读取加密设备</span>
+										</button>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">生效日期：</span>
+								<div class="detail-info1">
+									<div class="detail-edit">
+										<input type="text" value="" class="form-control" id="date0101010201" placeholder="起始日期 ~ 终止日期" />
+										<img src="../../image/list_search_calendar.png" class="ico-date"/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<span class="detail-text1">证件类型：</span>
+								<div class="detail-info1">
+									<div class="detail-edit">
+										<select name="" class="form-control" v-model="sm_UserModel.idType">
+											<option value="1">居民身份证</option>
+											<option value="2">护照</option>
+											<option value="3">军官证</option>
+											<option value="4">港澳台居民通行证</option>
+											<option value="5">户口簿</option>
+											<option value="6">其他证件</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">初始密码：</span>
+								<div class="detail-info1">
+									<div class="detail-edit">
+										<input :type="torpType" class="form-control" v-model="sm_UserModel.pwd" />
+										<img @click="showPwdEvent" v-show="showPwd" src="../../image/detail_ico_eyes_show.png" class="ico-date"/>
+										<img @click="hidePwdEvent" v-show="hidePwd" src="../../image/detail_ico_eyes_hide.png" class="ico-date"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">是否锁定：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<select disabled name="" class="form-control"  v-model="sm_UserModel.applyState">
+											<option value="1">锁定</option>
+											<option value="2">正常</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group" v-if="sm_UserModel.isEncrypt == 1">
+								<span class="detail-text1">加密设备序列号：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<input type="text" class="form-control" v-model="ukeyNumber"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<span class="detail-text1">创建时间：</span>
+								<div class="detail-info1">
+									<div class="detail-unEdit">
+										<input type="text" class="form-control" v-model="sm_UserModel.createTimeStamp"  disabled/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--用户信息结束-->
+			<!--附件材料开始-->
+			<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete"  ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+			<!--附件材料结束-->
+			
+			<div class="modal fade" id="WarningM2" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../../image/popup_ico_warning.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">用户未选择角色，是否确认保存信息？</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal" @click="saveClose2">
+								确定
+							</button>
+							<button type="button" class="btn foot-cancel"  data-dismiss="modal" @click="cancelClose2">
+								取消
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			
+			<!-- 用户角色维护开始 -->
+			<div class="detail-title">
+				<h1 class="inline">用户角色维护</h1>
+			</div>
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-3" v-for="sm_Permission_Role in sm_Permission_RoleList">
+						<div class="cs-checkbox">
+							<input type="checkbox" name="val" :id="'val'+sm_Permission_Role.tableId" :value="sm_Permission_Role.tableId" v-model="sm_Permission_RoleIdArr"/>
+							<label :for="'val'+sm_Permission_Role.tableId">{{sm_Permission_Role.theName}}</label>
+							<button v-if="sm_Permission_Role.busiType == '0'" class="btn btn-state-success cs-pb-0 cs-pt-0">启用</button>
+							<button v-if="sm_Permission_Role.busiType == '1'" class="btn btn-state-danger cs-pb-0 cs-pt-0">停用</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 用户角色维护结束 -->
+		</div>
+
+		<script src="../../assets/jquery/jquery.min.js" type="text/javascript"></script>
+		<!-- Pages JS -->
+		<script src="../../assets/vue/vue.min.js" type="text/javascript"></script>
+		<script src="../../assets/element/js/element.js" type="text/javascript"></script>
+		<script src="../../assets/bootstrap-3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="../../assets/bootstrap-tab-master/js/bootstrap-tab.js" type="text/javascript"></script>
+		<script src="../../assets/laydate/laydate.js"></script>
+
+		<!-- Noty Js -->
+		<script src="../../assets/noty/jquery.noty.js"></script>
+		<script src="../../assets/noty/layouts/top.js"></script>
+		<script src="../../assets/noty/layouts/center.js"></script>
+		<script src="../../assets/noty/themes/default.js"></script>
+
+		<!-- Pushlet Js -->
+		<script src="../../assets/pushlet/ajax-pushlet-client.js"></script>
+
+		<script src="../../js/ServerInterface.js"></script>
+		<script src="../../assets/moment/moment.js"></script>
+		<script src="../../js/admin/test/Test_BaseJs.js"></script>
+		<script src="../../js/viewer.min.js"></script>
+
+		<script src="../../components/vue-componentsTest.js"></script>
+
+		<script src="../../js/admin/test/Test_UserEdit.js"></script>
+	</body>
+</html>	

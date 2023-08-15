@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-特殊资金拨付详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tgpf_FundAppropriatedDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">拨付申请基本信息</h1>
+				<div class="inline title-btns" v-show="showButton == true">
+					<button class="btn btn-success" @click="SpecialFundAppropriatedEditHandle" v-if="isEdit">
+						<img src="../image/detail_btn_ico_save.png" width="18">
+						<span>修改</span>
+					</button>
+					<button class="btn btn-primary" @click="SpecialFundAppropriatedCommitHandle"  v-if="isEdit">
+					<img src="../image/detail_btn_ico_submit.png" width="18" >
+					<span>提交</span>
+					</button>
+				</div>
+				<div class="inline title-btns pull-right">
+					<button class="btn btn-success" @click="exportPdf">
+						<img src="../image/list_btn_ico_edit.png" width="18" >
+						<span>打印</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">开发企业名称：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.theNameOfDevelopCompany" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">公安编号：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.eCodeFromPublicSecurity" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">当前形象进度：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.currentFigureProgress" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">现金受限额度（元）：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.cashLimitedAmount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">已申请拨付金额（元）：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.payoutAmount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">当前可拨付金额（元）：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.allocableAmount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<span class="detail-text1">用款申请日期：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.applyDate" class="form-control" id="applyDate" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">备案人：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.userRecord" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">备案时间：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.recordTimeStamp" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">项目名称：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" v-model="tgpf_SpecialFundAppropriatedDetailModel.theNameOfProject" disabled="disabled" />
+								</div>
+							</div> 
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">托管标准：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.escrowStandard" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">当前受限比例（%）：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.currentLimitedRatio" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">有效受限额度（元）：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.effectiveLimitedAmount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">退房退款金额（元）：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.appropriateFrozenAmount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+<!--							<span class="detail-text1">预售资金监管账号：</span>-->
+							<span class="detail-text1">收款方账号：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.theAccountOfBankAccount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">本次划款申请金额（元）：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.totalApplyAmount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作人：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.userUpdate" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">施工编号：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.eCodeFromConstruction" class="form-control" disabled="disabled" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<span class="detail-text1">初始受限额度（元）：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.orgLimitedAmount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">节点受限额度（元）：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.nodeLimitedAmount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">总入账金额（元）：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.totalAccountAmount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">当前托管余额（元）：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.currentEscrowFund" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+<!--							<span class="detail-text1">监管账户开户行：</span>-->
+							<span class="detail-text1">收款方开户行：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.theNameOfBankBranch" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="form-group">
+							<span class="detail-text1">预售资金监管银行：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.theNameOfBank" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div> -->
+						<div class="form-group">
+<!--							<span class="detail-text1">监管账号名称：</span>-->
+							<span class="detail-text1">收款方名称：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.theNameOfBankAccount" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">特殊拨付类型：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<select class="form-control" v-model="tgpf_SpecialFundAppropriatedDetailModel.appropriatedType" disabled="disabled">
+										<option value="1">定向支付</option>
+										<option value="2">特殊拨付</option>
+										<option value="3">其他支付</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作时间：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<input type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.lastUpdateTimeStamp" class="form-control" disabled="disabled"/>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<span class="detail-text1">特殊说明：</span>
+							<div class="detail-info4">
+								<div class="detail-unEdit">
+									<textarea type="text" v-model="tgpf_SpecialFundAppropriatedDetailModel.appropriatedRemark" class="form-control" disabled="disabled"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--表格开始-->
+			<div class="detail-title" v-show="showHk == true">
+				<h1 class="inline">特殊拨付划款信息</h1>
+			</div>
+			<div class="cs-content" v-show="showHk == true">
+				<div class="detail-content">
+					<el-table :data="tgpf_SpacialFundAppropriatedAddList" stripe :default-sort = "{prop: 'index'}">
+							<!-- <el-table-column type="selection"  width="55" fixed></el-table-column> -->
+							<el-table-column type="index" label="序号" width="80" fixed></el-table-column>
+							<el-table-column prop="theCodeOfAf" label="用款申请单号" min-width="220"></el-table-column>
+							<el-table-column prop="accountOfEscrowed" label="托管账户" min-width="220"></el-table-column>
+							<el-table-column prop="bankAccountEscrowed.shortNameOfBank" label="托管银行" min-width="200"></el-table-column>
+							<el-table-column prop="accountBalance" label="账户余额（元）" min-width="200" header-align="center" align="right"></el-table-column>
+							<el-table-column prop="appliedAmount" label="本次划款金额（元）" min-width="200"  header-align="center" align="right"></el-table-column>
+							<el-table-column prop="payoutChannel" label="拨付渠道" min-width="120">
+								<template scope="scope">
+							        <button  v-if="scope.row.payoutChannel == 1" class="btn btn-state-warning">网银</button>
+							    	<button  v-if="scope.row.payoutChannel == 2" class="btn btn-state-success">柜面</button>
+								</template>
+							</el-table-column>
+							<el-table-column prop="payoutDate" label="拨付日期" min-width="200"></el-table-column>
+							<el-table-column prop="billNumber" label="票据号" min-width="200"></el-table-column>
+						</el-table>
+				</div>
+			</div>
+			<!--表格结束-->
+			<!--附件材料开始-->
+			<my-uploadcomponent :loaduploadlist="loadUploadList"  :showdelete ="showDelete"  ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+			<!--附件材料结束-->
+			
+		</div>
+		
+		<script src="../components/vue-components.js"></script>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tgpf/Tgpf_SpecialFundAppropriatedDetail.js"></script>
+	</body>
+</html>	

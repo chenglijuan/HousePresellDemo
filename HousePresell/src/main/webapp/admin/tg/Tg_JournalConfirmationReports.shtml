@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-日记账确认统计</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="journalConfirmationReportsDiv">
+			<div class="cs-content">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left content-top-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" name="" class="form-control cs-input" v-model="keyword" placeholder="请输入关键字搜索"/>
+							</div>
+							<div class="inline">
+							    <span>入账日期：</span>
+							    <input type="text" name="" id="journalConfirmationSearchStart" class="form-control cs-input-date" placeholder="开始日期     ~    结束日期" v-model="rangeDate"/>
+							    <img src="../image/list_search_calendar.png" class="ico-date"/> 
+							</div>
+							<div class="inline">
+							    <span>托管账户名称：</span>
+							    <input type="text" class="form-control cs-input"  placeholder="请输入托管账户名称搜索" v-model="escrowAcountName">
+							</div>
+							<button class="btn btn-search" @click="search">搜索</button>
+							<button class="btn btn-reset" @click="resetSearch">重置</button>
+						</div>
+					</div>
+					<div class="pull-right">
+						<div class="top-excel">
+							<button class="btn btn-excel" @click="exportForm">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table 	:data="journalConfirmationReportsList"  stripe  :default-sort = "{prop: 'index'}" >
+							<el-table-column type="index" :index="indexMethod"  label="序号" width="80" fixed></el-table-column>
+							<el-table-column prop="loanInDate" label="入账日期" width="130" sortable></el-table-column>
+							<el-table-column prop="escrowAcountName" label="托管账户名称" width="200" sortable></el-table-column>
+							<el-table-column prop="tradeCount" label="确认总笔数" width="220" sortable></el-table-column>
+							<el-table-column prop="totalTradeAmount" label="确认总金额（元）" width="220" sortable></el-table-column>
+							<el-table-column prop="aToatlLoanAmoutCount" label="公积金贷款总笔数" width="220" sortable></el-table-column>
+							<el-table-column prop="aToatlLoanAmout" label="公积金贷款总金额（元）" width="220" sortable></el-table-column>
+							<el-table-column prop="bToatlLoanAmoutCount" label="商业贷款总笔数" width="220" sortable></el-table-column>
+							<el-table-column prop="bToatlLoanAmout" label="商业贷款总金额（元）" width="220" sortable></el-table-column>
+							<el-table-column prop="oToatlLoanAmoutCount" label="自有资金总笔数" width="220" sortable></el-table-column>
+							<el-table-column prop="oToatlLoanAmout" label="自有资金总金额（元）" width="220" sortable></el-table-column>
+							<el-table-column prop="aFristToatlLoanAmoutCount" label="公积金首付款总笔数" width="220" sortable></el-table-column>
+							<el-table-column prop="aFristToatlLoanAmout" label="公积金首付款总金额（元）" width="240" sortable></el-table-column>
+							<el-table-column prop="aToBusinessToatlLoanAmoutCount" label="公转商贷款总笔数" width="220" sortable></el-table-column>
+							<el-table-column prop="aToBusinessToatlLoanAmout" label="公转商贷款总金额（元）" width="220" sortable></el-table-column>
+						</el-table>
+					</div>
+				</div>
+			</div>
+			<!-- error modal -->
+			<div class="modal fade" id="edModel" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_failure.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作失败，请重试</div>
+								<div class="del-text2">{{errMsg}}</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		</div>
+		<!-- success modal -->
+			<div class="modal fade" id="sdModel" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-del">
+					<div class="modal-content">
+						<div class="modal-body csm-body">
+							<img src="../image/popup_ico_succeed.png" class="pull-left"/>
+							<div class="del-info">
+								<div class="del-text1 font-bold">操作成功</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn foot-sure" data-dismiss="modal">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			<style scope="scope">
+			.el-upload-list__item-actions .el-upload-list__item-delete{
+				display: none;
+			}
+		</style>
+		
+		<script src="../components/vue-components.js"></script>
+	
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/tg/Tg_JournalConfirmationReports.js"></script>
+	</body>
+</html>	

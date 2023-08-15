@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tg_ProjectRiskView" table="Tg_ProjectRiskView" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_BldEComplDtl</param>
+			</generator>
+		</id>
+		
+		<property name="managedProjects">
+			<column name="managedProjects">
+				<comment>托管项目</comment>
+			</column>
+		</property>
+		
+		<property name="floorBuilding">
+			<column name="floorBuilding">
+				<comment>托管楼幢</comment>
+			</column>
+		</property>
+		
+		<property name="managedArea">
+			<column name="managedArea">
+				<comment>托管面积(平方米)</comment>
+			</column>
+		</property>
+		
+		<property name="dateOfPresale">
+			<column name="dateOfPresale">
+				<comment>预售许可批准日期</comment>
+			</column>
+		</property>
+		
+		<property name="totalOfoverground">
+			<column name="totalOfoverground">
+				<comment>地上总层数</comment>
+			</column>
+		</property>
+		
+		<property name="currentConstruction">
+			<column name="currentConstruction">
+				<comment>当前建设进度</comment>
+			</column>
+		</property>
+		
+		<property name="updateTime">
+			<column name="updateTime">
+				<comment>进度更新时间</comment>
+			</column>
+		</property>
+		
+		<property name="appointedTime">
+			<column name="appointedTime">
+				<comment>合同约定交付时间</comment>
+			</column>
+		</property>
+		
+		<property name="progressEvaluation">
+			<column name="progressEvaluation">
+				<comment>进度评定</comment>
+			</column>
+		</property>
+		
+		<property name="signTheEfficiency">
+			<column name="signTheEfficiency">
+				<comment>合同签订率</comment>
+			</column>
+		</property>
+		
+		<property name="contractFilingRate">
+			<column name="contractFilingRate">
+				<comment>合同备案率</comment>
+			</column>
+		</property>
+		
+		<property name="contractLoanRatio">
+			<column name="contractLoanRatio">
+				<comment>合同贷款率</comment>
+			</column>
+		</property>
+		
+		<property name="hostingFullRate">
+			<column name="hostingFullRate">
+				<comment>托管满额率</comment>
+			</column>
+		</property>
+		
+		<property name="unsignedContract">
+			<column name="unsignedContract">
+				<comment>未签订合同查封</comment>
+			</column>
+		</property>
+		
+		<property name="alreadyUnsignedContract">
+			<column name="alreadyUnsignedContract">
+				<comment>已签订合同查封</comment>
+			</column>
+		</property>
+		
+		<property name="astrict">
+			<column name="astrict">
+				<comment>限制</comment>
+			</column>
+		</property>
+
+		<property name="landMortgage">
+			<column name="landMortgage">
+				<comment>土地抵押情况(有/无)</comment>
+			</column>
+		</property>
+		
+		<property name="otherRisks">
+			<column name="otherRisks">
+				<comment>其他风险</comment>
+			</column>
+		</property>
+		
+		<property name="riskRating">
+			<column name="riskRating">
+				<comment>风险评级(高/中/低)</comment>
+			</column>
+		</property>
+		
+		<property name="area">
+			<column name="area">
+				<comment>所属区域</comment>
+			</column>
+		</property>
+		
+		<property name="dateQuery">
+			<column name="dateQuery">
+				<comment>日期</comment>
+			</column>
+		</property>
+		
+		<property name="attachment">
+			<column name="attachment">
+				<comment>查封情况</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

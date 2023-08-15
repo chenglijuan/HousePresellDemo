@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-存单管理编辑</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tg_DepositManagementEditDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-success" @click="update('1')">
+						<img src="../image/detail_btn_ico_save.png" width="18">
+						<span>保存</span>
+					</button>
+					<button class="btn btn-primary" @click="update('2')" v-if="showSubFlag">
+						<img src="../image/detail_btn_ico_submit.png" width="18">
+						<span>提交</span>
+					</button>
+				</div>
+			</div>
+			<div class="cs-content detail-content">
+				<div class="row">				
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">存单号：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_DepositManagementModel.eCode" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">托管账号：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<vue-select defaultname="请选择托管账号" :thevalue="escrowAcountId" :optionlist="tgxy_BankAccountEscrowedList" @callbackfun="getEscrowAcountId"></vue-select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">存期单位：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<vue-select defaultname="请选择存期单位" :thevalue="tg_DepositManagementModel.storagePeriodCompany" :optionlist="storagePeriodCompanyList" @callbackfun="changeStoragePeriodCompany"></vue-select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">到期日：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<input type="text" id="date2101040202" class="form-control" placeholder="请选择到期日"/>
+									<img src="../image/list_search_calendar.png" class="ico-date"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">预计利息：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+								   <span class="required">*</span>
+									<input type="text" disabled v-model="tg_DepositManagementModel.expectedInterest" placeholder="请输入预计利息 " class="form-control" @keyup="changeNumber('expectedInterest')" @blur="changeThousands('expectedInterest')" @focus="changeNumber('expectedInterest')"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作人：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_DepositManagementModel.userUpdateName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">						
+						<div class="form-group">
+							<span class="detail-text1">银行名称：</span>
+							<div class="detail-info2">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+							 		<vue-select defaultname="请选择银行名称" :thevalue="bankInfoId" :optionlist="emmp_BankInfoList" @callbackfun="bankInfoChange"></vue-select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">存款性质：</span>
+							<div class="detail-info2">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<vue-select defaultname="请选择存款性质" :thevalue="tg_DepositManagementModel.depositProperty" :optionlist="depositPropertyList" @callbackfun="changeDepositProperty"></vue-select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">存期：</span>
+							<div class="detail-info2">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<input type="text" v-model="tg_DepositManagementModel.storagePeriod" @blur="countEndDate" @keyup="accHandle" placeholder="请输入存期" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">本金金额（元）：</span>
+							<div class="detail-info2">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<input type="text" v-model="tg_DepositManagementModel.principalAmount" placeholder="请输入本金金额" class="form-control" @keyup="changeNumber('principalAmount')"  @blur="changeThousands('principalAmount')" @focus="changeNumber('principalAmount')"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">浮动年利率（%）：</span>
+							<div class="detail-info2">
+								<div class="detail-edit">
+									<!-- <input type="text" v-model="tg_DepositManagementModel.floatAnnualRate" placeholder="请输入浮动年利率" class="form-control" @keyup="changeNumber('floatAnnualRate')"  @blur="changeThousands('floatAnnualRate')" @focus="changeNumber('floatAnnualRate')"/> -->
+									<input type="text" v-model="tg_DepositManagementModel.floatAnnualRate" placeholder="请输入浮动年利率" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">操作时间：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_DepositManagementModel.lastUpdateTimeStampStr" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<span class="detail-text1">开户行：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<vue-select defaultname="请选择开户行" :thevalue="bankBranchId" :optionlist="emmp_BankBranchList" @callbackfun="bankBranChange"></vue-select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">开户证实书：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<input type="text" v-model="tg_DepositManagementModel.openAccountCertificate" placeholder="请输入开户证实书" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">起息日：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<input type="text" id="date2101040201" class="form-control" placeholder="请选择起息日"/>
+									<img src="../image/list_search_calendar.png" class="ico-date"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">年利率（%）：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<input type="text" v-model="tg_DepositManagementModel.annualRate" placeholder="请输入年利率" class="form-control" @keyup="changeNumber('annualRate')" @blur="changeThousands('annualRate')" @focus="changeNumber('annualRate')"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">经办人：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<input type="text" v-model="tg_DepositManagementModel.agent" placeholder="请输入经办人" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="detail-text1">计算规则：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								    <span class="required">*</span>
+									<vue-select defaultname="请选择计算规则" :thevalue="tg_DepositManagementModel.calculationRule" :optionlist="calculationRuleList" @callbackfun="changeCalculationRule1"></vue-select>
+								</div>
+							</div>
+						</div>						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+					    <div class="form-group">
+							<span class="detail-text1">备注：</span>
+							<div class="detail-info1">
+								<div class="detail-edit">
+								   <textarea  rows="3" class="form-control"  v-model="tg_DepositManagementModel.remark" placeholder="请输入被备注"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+			    </div>
+				
+			</div>
+			<!--基本信息结束-->
+			<!--附件材料开始-->
+			<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+			<!--附件材料结束-->
+		</div>
+        <script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/tg/Tg_DepositManagementEdit.js"></script>
+	</body>
+</html>	

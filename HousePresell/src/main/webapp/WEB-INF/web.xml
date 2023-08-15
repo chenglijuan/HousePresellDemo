@@ -1,0 +1,200 @@
+<web-app
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance
+	http://www.springmodules.org/schema/cache/springmodules-cache.xsd
+	http://www.springmodules.org/schema/cache/springmodules-ehcache.xsd "
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+        version="2.5">
+    <!-- web.xml配置项目必须严格按以下排序排序 icon? display-name? description? distributable?
+        context-param* filter* filter-mapping* listener* servlet* servlet-mapping*
+        session-config? mime-mapping* welcome-file-list? error-page* taglib* resource-env-ref*
+        resource-ref* security-constraint* login-config? security-role* env-entry*
+        ejb-ref* ejb-local-ref* -->
+    <display-name>housepresell</display-name>
+
+    <!-- 配置spring IOC容器的配置文件路径 -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:applicationContext.xml,
+            classpath:applicationContext-mina.xml,
+            classpath:applicationContext-cxf.xml
+        </param-value>
+    </context-param>
+
+    <!-- Filter -->
+    <filter>
+        <filter-name>SpringOpenSessionInViewFilter</filter-name>
+        <filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SpringOpenSessionInViewFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+<!--     LoginCheckFilter-->
+    <filter>
+        <filter-name>LoginCheckFilter</filter-name>
+        <filter-class>zhishusz.housepresell.filter.LoginCheckFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginCheckFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>filterProxy</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetBeanName</param-name>
+            <param-value>loginCheckFilter</param-value>
+        </init-param>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>filterProxy</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <filter>
+        <filter-name>xssFilter</filter-name>
+        <filter-class>zhishusz.housepresell.filter.XssFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>xssFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- 配置启动spring IOC容器的Listener -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!-- 配置Session监听 -->
+    <listener>
+        <listener-class>zhishusz.housepresell.util.loginsession.SessionListener</listener-class>
+    </listener>
+
+    <!-- 配置SpringMvc DispatcherServlet -->
+    <servlet>
+        <servlet-name>spring</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!-- 配置DispatcherServlet初始化参数 -->
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring-servlet.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet>
+        <servlet-name>cxf</servlet-name>
+        <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>cxf</servlet-name>
+        <url-pattern>/webService/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>spring</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <session-config>
+        <!-- Session失效设置，单位：秒 -->
+        <session-timeout>1800</session-timeout>
+    </session-config>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <filter>
+        <async-supported>true</async-supported>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>AdminFilter</param-name>
+            <param-value>AdminFilter</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+    <!-- pushlet servlet -->
+    <servlet>
+        <servlet-name>MyPushletServlet</servlet-name>
+        <servlet-class>zhishusz.housepresell.servlet.agent.DelegatingServletProxy</servlet-class>
+        <load-on-startup>1</load-on-startup>
+        <init-param>
+            <param-name>fileSizeLimit</param-name>
+            <param-value>4</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MyPushletServlet</servlet-name>
+        <url-pattern>/pushlet.srv</url-pattern>
+    </servlet-mapping>
+
+    <!-- 文件上传servlet -->
+    <servlet>
+        <servlet-name>FileUploadServlet</servlet-name>
+        <servlet-class>zhishusz.housepresell.servlet.agent.DelegatingServletProxy</servlet-class>
+        <load-on-startup>1</load-on-startup>
+        <init-param>
+            <param-name>fileSizeLimit</param-name>
+            <param-value>4</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FileUploadServlet</servlet-name>
+        <url-pattern>/FileUploadServlet</url-pattern>
+    </servlet-mapping>
+
+    <!--druid监控页面 -->
+    <servlet>
+        <servlet-name>DruidStatView</servlet-name>
+        <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+        <init-param>
+            <!-- 不允许清空统计数据 -->
+            <param-name>resetEnable</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <!-- 用户名 -->
+            <param-name>loginUsername</param-name>
+            <param-value>zhishuJT</param-value>
+        </init-param>
+        <init-param>
+            <!-- 密码 -->
+            <param-name>loginPassword</param-name>
+            <param-value>123456</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DruidStatView</servlet-name>
+        <url-pattern>/druid/*</url-pattern>
+    </servlet-mapping>
+
+</web-app>

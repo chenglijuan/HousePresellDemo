@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-系统用户+机构用户</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+	</head>
+	<body>
+		<div class="content-wrap">
+			<div class="cs-content" id="sm_OrgUserListDiv">
+				<!--顶部搜索开始-->
+				<div class="content-top">
+					<div class="pull-left">
+						<div class="top-input">
+							<div class="inline">
+							    <span>关键字：</span>
+							    <input type="text" class="form-control cs-input"   v-model="keyword" @keyup.enter="search"   placeholder="请输入用户名称关键搜索">
+							</div>
+							<div class="inline">
+							    <span>所属机构：</span>
+							    <vue-listselect defaultname="请选择所属机构" :thevalue="developCompanyId" :optionlist="emmp_CompanyInfoList" @callbackfun="getDevelopCompanyId" @emptybackfun="emptyDevelopCompanyId"></vue-listselect>
+							</div>
+							<div class="inline">
+							    <span>是否加密：</span>
+							     <vue-listselect defaultname="请选择是否加密" :thevalue="isEncrypt" :optionlist="isEncryptList" @callbackfun="getIsEncrypt" @emptybackfun="emptyIsEncrypt"></vue-listselect>
+							    <!-- <select name="" class="form-control cs-select" v-model="isEncrypt">
+							    	<option value="">全部</option>
+							    	<option value="1">是</option>
+							    	<option value="0">否</option>
+							    </select> -->
+							</div>
+							<div class="inline">
+							    <span>是否启用：</span>
+							    <vue-listselect defaultname="请选择是否启用" :thevalue="busiState" :optionlist="busiStateList" @callbackfun="getBusiState" @emptybackfun="emptyBusiState"></vue-listselect>
+							   <!--  <select name="" class="form-control cs-select" v-model="busiState">
+							    	<option value="">全部</option>
+							    	<option value="1">启用</option>
+							    	<option value="0">停用</option>
+							    </select> -->
+							</div>
+							<div class="inline">
+							    <span>锁定状态：</span>
+							    <vue-listselect defaultname="请选择锁定状态" :thevalue="applyState" :optionlist="applyStateList" @callbackfun="getApplyState" @emptybackfun="emptyApplyState"></vue-listselect>
+							   <!--  <select name="" class="form-control cs-select" v-model="applyState">
+							    	<option value="">全部</option>
+							    	<option value="1">锁定</option>
+							    	<option value="2">正常</option>
+							    </select> -->
+							</div>
+							<button class="btn btn-search" style="height:28px" @click="search">搜索</button>
+							<button class="btn btn-reset" style="height:28px"  @click="reset">重置</button>
+						</div>
+						<div class="top-btns">
+							<button class="btn btn-success"  @click="sm_UserAdd" data-editNum="020301_ADD_01">
+								<img src="../image/list_btn_ico_add.png"/>
+								<span>新增</span>
+							</button>
+							<button class="btn btn-primary" @click="sm_UserEdit" :disabled="upDisabled" data-editNum="020301_MOD_01">
+								<img src="../image/list_btn_ico_edit.png"/>
+								<span>修改</span>
+							</button>
+							<!-- <button class="btn btn-info">
+								<img src="../image/list_btn_ico_see.png"/>
+								<span>日志</span>
+							</button> -->
+							<button class="btn btn-danger" @click="sm_UserDel" :disabled="deDisabled" data-editNum="020301_DEL_01">
+								<img src="../image/list_btn_ico_del.png"/>
+								<span>删除</span>
+							</button>
+						</div>
+					</div>
+					<!-- <div class="pull-right text-right">
+						<div class="top-excel">
+							<button class="btn btn-excel" @click="userExportExcel">
+								<img src="../image/export_ico_excel.png"/>
+								<span>导出为Excel</span>
+							</button>
+						</div>
+					</div> -->
+					<div class="clearfix"></div>
+				</div>
+				<!--顶部搜索结束-->
+				<!--表格开始-->
+				<div class="cs-table">
+					<div>
+						<el-table :data="sm_UserList" stripe :default-sort = "{prop: 'index'}" @selection-change="listItemSelectHandle" >
+							<el-table-column type="selection" width="60" align="center" v-model="selectItem" fixed></el-table-column>
+							<el-table-column type="index" :index="indexMethod" label="序号" width="80" fixed align="center"></el-table-column>
+							<!-- <el-table-column label="用户编码" width="150">
+								
+							</el-table-column> -->
+							<el-table-column prop="theName" label="用户名称" width="300">
+							    <template scope="scope">
+									<div class="el-button--text hover" @click="sm_UserDetail(scope.row.tableId)">{{scope.row.theAccount}}</div>
+								</template>
+							</el-table-column>
+							<el-table-column prop="theNameOfCompany" label="所属机构" ></el-table-column>
+							<el-table-column prop="theName" label="真实姓名" ></el-table-column>
+							
+<!-- 							<el-table-column prop="idType" label="证件类型" width="180">
+								<template scope="scope">
+									<span v-if='scope.row.idType=="1"'>居民身份证</span>
+									<span v-if='scope.row.idType=="2"'>护照</span>
+									<span v-if='scope.row.idType=="3"'>军官证</span>
+									<span v-if='scope.row.idType=="4"'>港澳台居民通行证</span>
+									<span v-if='scope.row.idType=="5"'>户口簿</span>
+									<span v-if='scope.row.idType=="6"'>其他证件</span>
+								</template>
+							</el-table-column>
+							<el-table-column prop="idNumber" label="证件号码" width="220"></el-table-column> -->
+							<el-table-column label="是否加密" width="160">
+								<template scope="scope">
+									<div v-if="scope.row.isEncrypt == 0" class="text-danger">否</div>
+									<div v-if="scope.row.isEncrypt == 1" class="text-success">是</div>
+								</template>
+							</el-table-column>
+							<el-table-column label="是否启用" width="120" align="center">
+								<template scope="scope">
+									<div v-if="scope.row.busiState == '1'" class="text-success">启用</div>
+									<div v-if="scope.row.busiState == '0'" class="text-danger">停用</div>
+								</template>
+							</el-table-column>
+							<el-table-column label="锁定状态" width="120" align="center">
+								<template scope="scope">
+							        <button  v-if="scope.row.applyState == 1" class="btn btn-state-danger">锁定</button>
+							    	<button  v-if="scope.row.applyState == 2" class="btn btn-state-success">正常</button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :countperpage="countPerPage" :sidepagecount="4" v-on:pagechange="changePageNumber" v-on:countperpagechange="changeCountPerPage"></vue-nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<!-- Pages JS -->
+		<script src="../js/ServerInterface.js"></script>
+		<script src="../js/admin/sm/Sm_OrgUserList.js"></script>
+	</body>
+</html>	

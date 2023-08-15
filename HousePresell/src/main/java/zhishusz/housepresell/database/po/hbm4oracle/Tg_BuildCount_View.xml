@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tg_BuildCount_View" table="Tg_BuildCount_View" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_Tg_BuildCount_View_View</param>
+			</generator>
+		</id>
+		<property name="billTimeStamp">
+			<column name="billTimeStamp">
+				<comment>记账日期</comment>
+			</column>
+		</property>
+		<property name="companyName">
+			<column name="companyName">
+				<comment>开发企业</comment>
+			</column>
+		</property>
+		<property name="projectName">
+			<column name="projectName">
+				<comment>项目</comment>
+			</column>
+		</property>
+		<property name="eCodeFroMconstruction">
+			<column name="eCodeFroMconstruction">
+				<comment>楼幢</comment>
+			</column>
+		</property>
+		<property name="bankName">
+			<column name="bankName">
+				<comment>银行名称</comment>
+			</column>
+		</property>
+		<property name="income">
+			<column name="income">
+				<comment>托管收入</comment>
+			</column>
+		</property>
+		<property name="payout">
+			<column name="payout">
+				<comment>托管支出</comment>
+			</column>
+		</property>
+		<property name="balance">
+			<column name="balance">
+				<comment>余额</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

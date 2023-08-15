@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Empj_PaymentGuarantee" table="Empj_PaymentGuarantee" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_PaymentGuarantee</param>
+			</generator>
+		</id>
+		
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		
+		<property name="eCode">
+			<column name="eCode">
+				<comment>支付保证申请单号</comment>
+			</column>
+		</property>
+		
+		<many-to-one  name="userStart"  class="Sm_User" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		
+		<many-to-one name="userUpdate" class="Sm_User" foreign-key="null">
+			<column name="userUpdate" >
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		
+		<many-to-one name="userRecord" class="Sm_User" foreign-key="null">
+			<column name="userRecord" >
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+			
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		
+		<property name="versionNo">
+			<column name="versionNo">
+				<comment>版本号</comment>
+			</column>
+		</property>
+		
+		
+		
+		<property name="applyDate">
+			<column name="applyDate">
+				<comment>申请日期</comment>
+			</column>
+		</property>
+		
+		<property name="companyName">
+			<column name="companyName">
+				<comment>开发企业名称</comment>
+			</column>
+		</property>
+		
+		<property name="projectName">
+			<column name="projectName">
+				<comment>项目名称</comment>
+			</column>
+		</property>
+		
+		<many-to-one name="company" class="Emmp_CompanyInfo" foreign-key="null">
+			<column name="company">
+				<comment>开发企业 </comment>
+			</column>
+		</many-to-one>
+		
+		<many-to-one name="project" class="Empj_ProjectInfo" foreign-key="null">
+			<column name="project">
+				<comment>项目名称</comment>
+			</column>
+		</many-to-one>
+		
+		<property name="eCodeFromConstruction">
+			<column name="eCodeFromConstruction">
+				<comment>施工编号</comment>
+			</column>
+		</property>
+		
+		<property name="guaranteeNo">
+			<column name="guaranteeNo">
+				<comment>支付保证单号</comment>
+			</column>
+		</property>
+		
+		<property name="revokeNo">
+			<column name="revokeNo">
+				<comment>支付保证单号</comment>
+			</column>
+		</property>
+		
+		<property name="guaranteeCompany">
+			<column name="guaranteeCompany">
+				<comment>支付保证出具单位(1-银行 2-保险公 3-担保公司 )</comment>
+			</column>
+		</property>
+		
+		<property name="guaranteeType">
+			<column name="guaranteeType">
+				<comment>支付保证类型(1-银行支付保证 ,2- 支付保险 ,3- 支付担保 )</comment>
+			</column>
+		</property>
+		
+		<property name="alreadyActualAmount">
+			<column name="alreadyActualAmount">
+				<comment>项目建设工程已实际支付金额 </comment>
+			</column>
+		</property>
+		
+		<property name="actualAmount">
+			<column name="actualAmount">
+				<comment>项目建设工程待支付承保金额 </comment>
+			</column>
+		</property>
+		
+		<property name="guaranteedAmount">
+			<column name="guaranteedAmount">
+				<comment>已落实支付保证金额</comment>
+			</column>
+		</property>
+		
+		<property name="remark">
+			<column name="remark" length="4000">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<property name="remark2">
+			<column name="remark2">
+				<comment>支付保证备注</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		
+		<property name="approvalState">
+			<column name="approvalState">
+				<comment>流程状态</comment>
+			</column>
+		</property>
+		
+	</class>
+</hibernate-mapping>

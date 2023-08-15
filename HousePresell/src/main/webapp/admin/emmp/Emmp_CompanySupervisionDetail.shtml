@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-机构信息详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body >
+		<div class="content-wrap" id="emmp_CompanySupervisionDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-primary" @click="CompanySupervisionEditHandle(emmp_CompanySupervisionModel.tableId)" :disabled="upDisabled">
+						<img src="../image/list_btn_ico_edit.png"/>
+						<span>修改</span>
+					</button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">机构编码：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" v-model="emmp_CompanySupervisionModel.eCode" disabled=""/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">成立日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" class="form-control" v-model="emmp_CompanySupervisionModel.registeredDateStr" disabled=""/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">法定代表人：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="emmp_CompanySupervisionModel.legalPerson" class="form-control" disabled=""/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">是否启用：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="isUsedStateStr" value="" class="form-control" disabled=""/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">备案人：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="emmp_CompanySupervisionModel.userRecordName" value="" class="form-control" disabled=""/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">机构类型：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="emmp_CompanySupervisionModel.parameterName" class="form-control" disabled=""/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">地址：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="emmp_CompanySupervisionModel.address" class="form-control" disabled=""/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">负责人：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="emmp_CompanySupervisionModel.contactPerson" class="form-control" disabled=""/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">操作人：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="emmp_CompanySupervisionModel.userUpdateName" value="" class="form-control" disabled=""/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">备案日期：</span>
+							<div class="detail-info1">
+								<div class="detail-unEdit">
+									<input type="text" v-model="emmp_CompanySupervisionModel.recordTimeStamp" value="" class="form-control" disabled=""/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">机构名称：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="emmp_CompanySupervisionModel.theName" class="form-control" disabled=""/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">统一社会信用代码：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="emmp_CompanySupervisionModel.unifiedSocialCreditCode" class="form-control" disabled=""/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">负责人联系电话：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="emmp_CompanySupervisionModel.contactPhone" class="form-control" disabled=""/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">操作日期：</span>
+							<div class="detail-info2">
+								<div class="detail-unEdit">
+									<input type="text" v-model="emmp_CompanySupervisionModel.lastUpdateTimeStamp" value="" class="form-control" disabled=""/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!--联系人信息开始-->
+			<div class="detail-title">
+				<h1 class="inline">机构成员列表</h1>
+			</div>
+			<div class="cs-content">
+				<!--表格开始-->
+				<div class="cs-table">
+					<div id="table2">
+						<el-table :data="orgMemberList" stripe >
+							<!--<el-table-column type="selection" width="55" v-model="selectItem" fixed></el-table-column>-->
+							<el-table-column type="index" :index="indexMethod" label="序号" width="60" fixed align="center"></el-table-column>
+							<el-table-column prop="theName" label="姓名" min-width="120"></el-table-column>
+							<el-table-column label="证件类型" min-width="120">
+								<template scope="scope">
+									<span v-if="scope.row.idType=='00'">居民身份证</span>
+									<span v-if="scope.row.idType=='01'">护照</span>
+									<span v-if="scope.row.idType=='02'">港澳台居民身份证</span>
+									<span v-if="scope.row.idType=='04'">旅行证据</span>
+									<span v-if="scope.row.idType=='05'">其他</span>
+								</template>
+							</el-table-column>
+							<el-table-column prop="idNumber" label="证件号码" min-width="220"></el-table-column>
+							<el-table-column prop="theNameOfDepartment" label="所属部门" min-width="160"></el-table-column>
+							<el-table-column prop="parameterName" label="职务" min-width="120"></el-table-column>
+							<el-table-column prop="positionName" label="职称" min-width="120"></el-table-column>
+							<el-table-column prop="phoneNumber" label="手机号" min-width="160"></el-table-column>
+							<el-table-column prop="email" label="邮箱" min-width="180"></el-table-column>
+							<el-table-column prop="qq" label="QQ" min-width="160"></el-table-column>
+							<el-table-column prop="weixin" label="微信" min-width="160"></el-table-column>
+						</el-table>
+						<vue-nav :pagenumber="pageNumber" :totalpage="totalPage" :totalcount="totalCount" :sidepagecount="4"  v-on:pagechange="changePageNumber"></vue-nav>
+					</div>
+				</div>
+			</div>
+			<!--联系人信息结束-->
+			<!--附件材料开始-->
+			<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData"></my-uploadcomponent>
+			<!--附件材料结束-->
+		</div>
+		
+		<script src="../components/vue-components.js"></script>
+		<script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/emmp/Emmp_CompanySupervisionDetail.js"></script>
+	</body>
+</html>	

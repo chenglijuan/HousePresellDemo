@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-风控抽查结果处理详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+	<body>
+		<div class="content-wrap" id="tg_RiskCheckHandleResultDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">抽查信息</h1>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">业务大类：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckBusiCodeSum.bigBusiName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="form-group cs-mb-0">
+							<span class="detail-text1">待处理总笔数：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckBusiCodeSum.pushCount" class="form-control"/>
+								</div>
+							</div>
+						</div> -->
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">抽查人：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckBusiCodeSum.checkUserName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">业务小类：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckBusiCodeSum.smallBusiName" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="form-group cs-mb-0">
+							<span class="detail-text1">已反馈总笔数：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckBusiCodeSum.feedbackCount" class="form-control"/>
+								</div>
+							</div>
+						</div> -->
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">抽查日期：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckBusiCodeSum.spotTimeStamp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">不合格总笔数：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckBusiCodeSum.unqualifiedCount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group cs-mb-0">
+							<span class="detail-text1">已确认总笔数：</span>
+							<div class="detail-info3">
+								<div class="detail-unEdit">
+									<input disabled="" type="text" v-model="tg_RiskCheckBusiCodeSum.handleCount" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			<!-- 抽查业务开始 -->
+			<div class="detail-title">
+				<h1 class="inline">抽查业务</h1>
+			</div>
+			<div class="cs-content">
+				<div class="content-top">
+					<div class="detai-btns">
+						<button class="btn btn-primary" @click="handleRiskCheckResult" :disabled="selectItem.length == 0" data-editNum="21020103_OST_01">
+							<img src="../image/list_btn_ico_comfirm.png">
+							<span>确认</span>
+						</button>
+						<button class="btn btn-primary" @click="retractRiskCheckResult" :disabled="selectItem.length == 0" data-editNum="21020103_OST_02">
+							<img src="../image/list_btn_ico_withdraw.png"/>
+							<span>撤回</span>
+						</button>
+						<button class="btn btn-success" @click="saveCheckHandleResult" :disabled="selectItem.length == 0" data-editNum="21020103_OST_03">
+							<img src="../image/detail_btn_ico_save.png">
+							<span>保存</span>
+						</button>
+						<button class="btn btn-success" @click="backRiskCheckResult" :disabled="selectItem.length == 0" data-editNum="21020103_OST_04">
+							<img src="../image/list_btn_ico_ withdraw.png">
+							<span>退回</span>
+						</button>
+					</div>
+				</div>
+				<div class="cs-table">
+					<div id="table2">
+						<el-table :data="tg_RiskRoutineCheckInfoList" stripe :default-sort = "{prop: 'theName'}" @selection-change="listItemSelectHandle">
+							<el-table-column type="selection"  width="50" fixed align="center"></el-table-column>
+							<el-table-column type="index" :index="indexMethod" label="序号" width="60" fixed align="center"></el-table-column>
+							
+							<el-table-column label="单据号" width="280">
+								<template scope="scope">
+									<el-button type="text" size="small" @click="riskcheck(scope.row.relatedTableId,scope.row.smallBusiType)">{{scope.row.eCodeOfBill}}</el-button>
+								</template>
+							</el-table-column>
+							
+							<!-- <el-table-column prop="eCodeOfBill" label="单据号" width="280"></el-table-column> -->
+							<el-table-column prop="unqualifiedReasons" label="不合格原因" min-width="150"></el-table-column>
+							<!-- <el-table-column prop="roleName" label="推送角色" width="120"></el-table-column>
+							<el-table-column label="操作人员反馈" width="300">
+								<template scope="scope">
+									<input placeholder="请输入内容" v-model="scope.row.modifyFeedback" class="form-control"/>
+								</template>
+							</el-table-column>
+							<el-table-column prop="lastUpdateTimeStamp" label="操作人员反馈时间" width="180" align="center"></el-table-column> -->
+							<el-table-column label="法务部门确认" width="500">
+								<template scope="scope">
+									<!-- <input v-if="scope.row.isHandle == '1'" :value="scope.row.forensicConfirmation" class="form-control" disabled/>
+									<input v-if="scope.row.isHandle == '0'" placeholder="请输入内容" v-model="scope.row.forensicConfirmation" class="form-control"/> -->
+									<input placeholder="请输入内容" v-model="scope.row.forensicConfirmation" class="form-control"/>
+								</template>
+							</el-table-column>
+							<el-table-column prop="recordTimeStamp" label="法务部门确认时间"  align="center"></el-table-column>
+							<el-table-column label="处理状态" align="center">
+								<template scope="scope">
+									<button v-if="scope.row.isHandle == '0'" class="btn btn-state-warning">待确认</button>
+									<button v-if="scope.row.isHandle == '1'" class="btn btn-state-success">已确认</button>
+								</template>
+							</el-table-column>
+						</el-table>
+					</div>
+				</div>
+			</div>
+			<!-- 抽查业务结束 -->
+		</div>
+		<script src="../js/admin/tg/Tg_RiskCheckHandleResultDetail.js"></script>
+	</body>
+</html>	

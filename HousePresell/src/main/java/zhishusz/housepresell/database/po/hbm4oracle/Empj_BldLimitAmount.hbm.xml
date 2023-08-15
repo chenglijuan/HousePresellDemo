@@ -1,0 +1,255 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Empj_BldLimitAmount" table="Empj_BldLimitAmount" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_BldLimitAmt</param>
+			</generator>
+		</id>
+
+		<property name="theState">
+			<column name="theState">
+				<comment>状态 S_TheState 初始为Normal</comment>
+			</column>
+		</property>
+		<property name="busiState">
+			<column name="busiState">
+				<comment>业务状态</comment>
+			</column>
+		</property>
+		<property name="approvalState">
+			<column name="approvalState">
+				<comment>流程状态</comment>
+			</column>
+		</property>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userStart" foreign-key="null">
+			<column name="userStart">
+				<comment>创建人</comment>
+			</column>
+		</many-to-one>
+		<property name="createTimeStamp">
+			<column name="createTimeStamp">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userUpdate" foreign-key="null">
+			<column name="userUpdate">
+				<comment>修改人</comment>
+			</column>
+		</many-to-one>
+		<property name="lastUpdateTimeStamp">
+			<column name="lastUpdateTimeStamp">
+				<comment>最后修改日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Sm_User" name="userRecord" foreign-key="null">
+			<column name="userRecord">
+				<comment>备案人</comment>
+			</column>
+		</many-to-one>
+		<property name="recordTimeStamp">
+			<column name="recordTimeStamp">
+				<comment>备案日期</comment>
+			</column>
+		</property>
+		<many-to-one class="Emmp_CompanyInfo" name="developCompany" foreign-key="null">
+			<column name="developCompany">
+				<comment>关联开发企业</comment>
+			</column>
+		</many-to-one>
+		<property name="eCodeOfDevelopCompany">
+			<column name="eCodeOfDevelopCompany">
+				<comment>开发企业编号</comment>
+			</column>
+		</property>
+		<many-to-one class="Empj_ProjectInfo" name="project" foreign-key="null">
+			<column name="project">
+				<comment>关联项目</comment>
+			</column>
+		</many-to-one>
+		<property name="theNameOfProject">
+			<column name="theNameOfProject">
+				<comment>项目名称-冗余</comment>
+			</column>
+		</property>
+		<property name="eCodeOfProject">
+			<column name="eCodeOfProject">
+				<comment>项目编号</comment>
+			</column>
+		</property>
+		<property name="remark">
+			<column name="remark" length="4000">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<property name="acceptTimeStamp">
+			<column name="acceptTimeStamp">
+				<comment>受理时间</comment>
+			</column>
+		</property>
+		<property name="acceptExplain">
+			<column name="acceptExplain">
+				<comment>受理说明</comment>
+			</column>
+		</property>
+		<property name="appointTimeStamp">
+			<column name="appointTimeStamp">
+				<comment>预约时间</comment>
+			</column>
+		</property>
+		<property name="appointExplain">
+			<column name="appointExplain">
+				<comment>预约说明</comment>
+			</column>
+		</property>
+		<property name="sceneInvestigationTimeStamp">
+			<column name="sceneInvestigationTimeStamp">
+				<comment>现场勘查时间</comment>
+			</column>
+		</property>
+		<property name="sceneInvestigationExplain">
+			<column name="sceneInvestigationExplain">
+				<comment>现场勘查说明</comment>
+			</column>
+		</property>
+		
+		<property name="contactOne">
+			<column name="contactOne">
+				<comment>联系人A</comment>
+			</column>
+		</property>
+		<property name="telephoneOne">
+			<column name="telephoneOne">
+				<comment>A联系方式</comment>
+			</column>
+		</property>
+		<property name="contactTwo">
+			<column name="contactTwo">
+				<comment>联系人B</comment>
+			</column>
+		</property>
+		<property name="telephoneTwo">
+			<column name="telephoneTwo">
+				<comment>B联系方式</comment>
+			</column>
+		</property>
+		
+		
+		<property name="returnTimeOne">
+			<column name="returnTimeOne">
+				<comment>回传时间A</comment>
+			</column>
+		</property>
+		<property name="returnTimeTwo">
+			<column name="returnTimeTwo">
+				<comment>回传时间B</comment>
+			</column>
+		</property>
+		<property name="assignTasksTimeOne">
+			<column name="assignTasksTimeOne">
+				<comment>任务分配时间A</comment>
+			</column>
+		</property>
+		<property name="assignTasksTimeTwo">
+			<column name="assignTasksTimeTwo">
+				<comment>任务分配时间B</comment>
+			</column>
+		</property>
+		<property name="signTimeOne">
+			<column name="signTimeOne">
+				<comment>现场签到时间A</comment>
+			</column>
+		</property>
+		<property name="signTimeTwo">
+			<column name="signTimeTwo">
+				<comment>现场签到时间B</comment>
+			</column>
+		</property>
+		
+		<property name="applyDate">
+			<column name="applyDate">
+				<comment>提交时间</comment>
+			</column>
+		</property>
+		
+		
+		<property name="businessCode">
+			<column name="businessCode">
+				<comment>业务办理码</comment>
+			</column>
+		</property>
+		<property name="countUnit">
+			<column name="countUnit">
+				<comment>总包单位</comment>
+			</column>
+		</property>
+		<many-to-one class="Emmp_CompanyInfo" name="companyOne" foreign-key="null">
+			<column name="companyOne">
+				<comment>监理机构A</comment>
+			</column>
+		</many-to-one>
+		<property name="companyOneName">
+			<column name="companyOneName">
+				<comment>监理机构A名称</comment>
+			</column>
+		</property>
+		<property name="appointmentDateOne">
+			<column name="appointmentDateOne">
+				<comment>预约时间A</comment>
+			</column>
+		</property>
+		<many-to-one class="Emmp_CompanyInfo" name="companyTwo" foreign-key="null">
+			<column name="companyTwo">
+				<comment>监理机构B</comment>
+			</column>
+		</many-to-one>
+		<property name="companyTwoName">
+			<column name="companyTwoName">
+				<comment>监理机构B名称</comment>
+			</column>
+		</property>
+		<property name="appointmentDateTwo">
+			<column name="appointmentDateTwo">
+				<comment>预约时间B</comment>
+			</column>
+		</property>
+		
+		<property name="buildCount">
+			<column name="buildCount">
+				<comment>楼幢数</comment>
+			</column>
+		</property>
+		
+		<property name="uploadOne">
+			<column name="uploadOne">
+				<comment>上传人A</comment>
+			</column>
+		</property>
+		
+		<property name="uploadTwo">
+			<column name="uploadTwo">
+				<comment>上传人A</comment>
+			</column>
+		</property>
+		
+		<property name="approvalOne">
+			<column name="approvalOne">
+				<comment>审核A</comment>
+			</column>
+		</property>
+		<property name="approvalTwo">
+			<column name="approvalTwo">
+				<comment>审核B</comment>
+			</column>
+		</property>
+
+	</class>
+</hibernate-mapping>

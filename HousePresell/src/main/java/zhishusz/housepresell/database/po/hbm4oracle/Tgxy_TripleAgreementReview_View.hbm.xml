@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="zhishusz.housepresell.database.po">
+	<class name="Tgxy_TripleAgreementReview_View" table="Tgxy_TripleAgreementReview" dynamic-update="true" dynamic-insert="true">
+		<id name="tableId">
+			<generator class="sequence">
+				<param name="sequence">Seq_Tgxy_TripleAgreementReview_View</param>
+			</generator>
+		</id>
+		<property name="eCode">
+			<column name="eCode">
+				<comment>协议编号</comment>
+			</column>
+		</property>
+		<property name="projectName">
+			<column name="projectName">
+				<comment>项目名称</comment>
+			</column>
+		</property>
+		<property name="position">
+			<column name="position">
+				<comment>房屋坐落</comment>
+			</column>
+		</property>
+		<property name="buyerName">
+			<column name="buyerName">
+				<comment>买受人姓名</comment>
+			</column>
+		</property>
+		<property name="areaManager">
+			<column name="areaManager">
+				<comment>区域负责人</comment>
+			</column>
+		</property>
+		<property name="rejectReason">
+			<column name="rejectReason">
+				<comment>退回原因</comment>
+			</column>
+		</property>
+		<property name="rejectTimeStamp">
+			<column name="rejectTimeStamp">
+				<comment>退回时间</comment>
+			</column>
+		</property>
+		<property name="proxyCompany">
+			<column name="proxyCompany">
+				<comment>代理公司</comment>
+			</column>
+		</property>
+		<property name="changeTimeStamp">
+			<column name="changeTimeStamp">
+				<comment>整改时间</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

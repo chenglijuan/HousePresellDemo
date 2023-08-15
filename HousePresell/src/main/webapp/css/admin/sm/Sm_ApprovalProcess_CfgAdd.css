@@ -1,0 +1,60 @@
+.detail-info1 .el-select{
+	width: 100%;
+}
+@media (min-width: 900px){
+	.examine-add-dialog{
+		width: 900px;
+	}
+}
+.condition-table table th{
+	background: #e4f1fe;
+	text-align: center;
+}
+.condition-table table td input,.condition-table table td select{
+	color: #0a5cd9;
+}
+.examine-list .hover-row td {
+  	background: transparent!important;
+}
+input[type="checkbox"]{
+	position: absolute;
+	top: -2px;
+	left: 0px;
+	opacity: 0;
+	width: 16px;
+	height: 16px;
+	z-index: 1;
+	cursor: pointer;
+}
+input[type="checkbox"] + label::before{
+	content: '';
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	left: 0px;
+	top: 2px;
+	box-sizing: border-box;
+	background: url(../../../image/list_choose_box.png) no-repeat;
+	background-size: contain;
+}
+input[type="checkbox"]:checked + label::before {
+	content: "";
+	background: url(../../../image/list_choose_box_selected.png) no-repeat;
+	background-size: contain;
+}
+.select{
+	display: block;
+	position: relative;
+	margin-bottom: 10px;
+	text-decoration: underline;
+}
+.select label{
+	padding-left:25px;
+	color: #797979;
+	cursor: pointer;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

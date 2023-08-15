@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta charset="UTF-8">
+		<title>housepresell管理后台-项目信息详情</title>
+		<link rel="stylesheet" type="text/css" href="../assets/element/css/element.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/admin/empj/Empj_ProjectInfoDetail.css"/>
+		<style>
+		    .heightBox {
+		        height:100%!important;
+		        width:100%!important;
+		    }
+		    .el-table {
+		        height:auto!important;
+		    }
+		    .el-table__body-wrapper {
+		        height:auto!important;
+		    }
+			.fullScreenBox {
+				cursor: pointer;
+			}
+			.fullScreen {
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 9999999;
+				width: 100%!important;
+				height: 100%!important;
+			}
+			.dataBox {
+				padding: 10px;
+			}
+			.dataBox>div {
+				padding: .5rem 10px;
+				border-bottom: 1px dashed #D1DBE5;
+				font-size: 1rem;
+			}
+			.dataBox div div img {
+				width: 0px;
+				margin-left: 40%;
+			}
+			.dataBox div div span {
+				font-size: 1.3rem;
+				font-weight: bold;
+			}
+			.dataBox div img {
+				margin-right: 10px;
+				margin-bottom: 5px;
+				margin-left: -10px;
+			}
+			.el-input__inner {
+				height: 30px!important;
+			}
+			.el-tabs--border-card {
+				border: none;
+				box-shadow: 1px 1px 1px 1px #dedede;
+			}
+			.home-top-right {
+				padding:0!important;
+			}
+			.btn-quick-navigation{
+				display: inline-block;
+			    padding: 4px 12px;
+			    margin-bottom: 0;
+			    font-size: 14px;
+			    font-weight: 400;
+			    line-height: 1.42857143;
+			    text-align: center;
+			    white-space: nowrap;
+			    vertical-align: middle;
+			    -ms-touch-action: manipulation;
+			    touch-action: manipulation;
+			    cursor: pointer;
+			    -webkit-user-select: none;
+			    -moz-user-select: none;
+			    -ms-user-select: none;
+			    user-select: none;
+			    background-image: none;
+			    border: 1px solid transparent;
+			    border-radius: 4px;
+			}
+			.home-top{
+				width: 100%;
+				margin-bottom: 20px;
+				/*height: 227px;*/
+			}
+			.home-top-left{
+				width: 66%;
+				background-color: #fff; 
+				display: inline-block;
+				border: 1px solid #d6d6d6;
+				border-radius: 4px;
+				padding: 0px 15px;
+			}
+			.home-top-right{
+				width: 33%;
+				background-color: #fff;
+				display: inline-block;
+				border: 1px solid #d6d6d6;
+				border-radius: 4px;
+				padding: 0px 15px;
+			}
+			.home-top-title{
+				border-bottom: 3px solid #cf000d;
+				color: #cf000d;
+				line-height: 46px;
+				font-weight: bold;
+			}
+			.home-top-content{
+				height: 48px;
+				line-height: 48px;
+				border-bottom: 1px solid #d6d6d6;
+			}
+			.fast-entrance{
+				padding-top:32px;
+				overflow:hidden;
+				width:100%;
+			}
+			.fast-entrance li{
+				width: 14%;
+				height: 144px; 
+				text-align: center;
+				float:left;
+				margin-right: 2.5%;
+				cursor: pointer;
+			}
+			.fast-entrance-name{
+				padding-top: 20px;
+				/* white-space:nowrap; */
+			}
+			.wait-color{
+				background-color: #ff5454;
+			}
+			.notice-color{
+				background-color: #0aa7ec;
+			}
+			.warning-color{
+				background-color: #fbbb3d;
+			}
+			.notice-num{
+				position: absolute;
+				border-radius: 16px;
+				min-width: 26px;
+				font-size: 14px;
+				color: white;
+				line-height: 16px;
+				text-align: center;
+				top: -10px;
+				left:30px;
+				border: 1px solid white;
+				padding:2px 5px ;
+			}
+			.page-left{
+				cursor: pointer;
+			}
+			.home-top-page{
+				padding-right: 15px;font-size: 14px;
+			}
+			.page-right{
+				cursor: pointer; 
+				padding-right: 15px;
+			}
+			.home-more{
+				cursor: pointer;
+			}
+			.home-notice{
+				padding: 10px 0px;
+				line-height: 30px; 
+				border-bottom: 1px solid #d6d6d6;
+			}
+			.icon-content{
+				overflow: hidden;
+				padding: 26px 0px;
+				display:flex;
+				justify-content:center;
+				align-items:center;
+			}
+			.icon-content li{
+				float: left;
+				width: 34%;
+				display:flex;
+			}
+			.icon-parent{
+				position: relative;
+				cursor:pointer;
+				display: inline-block;
+				margin-left: 10px;
+			}
+			.icon-name{
+				font-weight: bold;
+				display: inline-block;
+				margin-left: 10px;
+				margin-top:10px;
+				font-size:.98rem;
+			}
+			.modal-header .close{
+				height: 40px;
+				line-height: 40px;
+				font-size: 24px;
+			}
+			.info-window{
+				line-height: 30px;
+				width: 360px;
+			}
+			.info-window-title{
+				color: #CE0A14;
+			}
+			.ztree>.level0{
+				border: none;
+			}
+			.home-notice-box {
+			    width:100%;
+			    overflow: hidden;
+			    text-overflow:ellipsis;
+			    white-space: nowrap;
+			}
+			.testDIV{
+                height:31px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                border-bottom:1px dashed #ddd;
+                padding: 3px 0px;
+                margin: 0px 10px;
+                cursor: pointer;
+            }
+            .testDIV img {
+            	margin: 0px 5px 3px 0px;
+            }
+            .downPull {
+            	margin-top: 10px;
+            }
+		</style>
+	</head>
+	<body>
+		<div class="content-wrap" id="empj_ProjectInfoDetailDiv">
+			<div class="detail-title cs-mt-0">
+				<h1 class="inline">基本信息</h1>
+				<div class="inline title-btns">
+					<button class="btn btn-primary" :disabled="empj_ProjectInfoModel.approvalState == '审核中'"
+							@click="projectInfoEditHandle">
+						<img src="../image/list_btn_ico_edit.png" width="18">
+						<span>修改</span>
+					</button>
+				</div>
+				<div class="pull-right detail-btnR">
+					<button class="btn btn-info" @click="openMapDetail">
+					    <span>查看“项目楼盘表”</span>
+				   </button>
+				</div>
+			</div>
+			<!--基本信息开始-->
+			<div class="cs-content detail-content">
+				<div class="row">
+					<div class="col-md-8">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group cs-mb-0">
+									<span class="detail-text1">开发企业：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<input disabled="" type="text" v-model="empj_ProjectInfoModel.developCompanyName" class="form-control"/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group cs-mb-0">
+									<span class="detail-text1">项目编号：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<input disabled="" type="text" v-model="empj_ProjectInfoModel.eCode" class="form-control"/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group cs-mb-0">
+									<span class="detail-text1">街道：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<input disabled="" type="text" v-model="empj_ProjectInfoModel.streetName" class="form-control"/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group cs-mb-0">
+									<span class="detail-text1">经度：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<input disabled="" type="text" v-model="empj_ProjectInfoModel.longitude" class="form-control"/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group cs-mb-0">
+									<span class="detail-text1">项目负责人：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<input disabled="" type="text" v-model="empj_ProjectInfoModel.projectLeader" class="form-control"/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group cs-mb-0">
+									<span class="detail-text1">操作人：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<input disabled="" type="text" v-model="empj_ProjectInfoModel.userUpdateName" class="form-control"/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group cs-mb-0">
+									<span class="detail-text1">备案人：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<input disabled="" type="text" v-model="empj_ProjectInfoModel.userRecordName" class="form-control"/>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group cs-mb-0">
+									<span class="detail-text1">项目名称：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<input disabled="" type="text" v-model="empj_ProjectInfoModel.theName" class="form-control"/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group cs-mb-0">
+									<span class="detail-text1">所属区域：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<input disabled="" type="text" v-model="empj_ProjectInfoModel.cityRegionName" class="form-control"/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group cs-mb-0">
+									<span class="detail-text1">项目地址：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<input disabled="" type="text" v-model="empj_ProjectInfoModel.address" class="form-control"/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group cs-mb-0">
+									<span class="detail-text1">纬度：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<input disabled="" type="text" v-model="empj_ProjectInfoModel.latitude" class="form-control"/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group cs-mb-0">
+									<span class="detail-text1">项目负责人电话：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<input disabled="" type="text" v-model="empj_ProjectInfoModel.leaderPhone" class="form-control"/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group cs-mb-0">
+									<span class="detail-text1">操作时间：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<input disabled="" type="text" v-model="empj_ProjectInfoModel.lastUpdateTimeStamp" class="form-control"/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group cs-mb-0">
+									<span class="detail-text1">备案时间：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<input disabled="" type="text" v-model="empj_ProjectInfoModel.recordTimeStamp" class="form-control"/>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="form-group cs-mb-0">
+									<span class="detail-text1">项目简介：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<textarea rows="3" type="text" disabled v-model="empj_ProjectInfoModel.introduction" class="form-control"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="form-group cs-mb-0">
+									<span class="detail-text1">备注：</span>
+									<div class="detail-info1">
+										<div class="detail-unEdit">
+											<textarea rows="3" type="text" disabled v-model="empj_ProjectInfoModel.remark" class="form-control"></textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="projectDetailMap" style="height: 385px; display: block" class="col-md-4"></div>
+				</div>
+			</div>
+			<!--基本信息结束-->
+			
+			<div class="detail-title">
+				<div class="pull-right detail-btnR">
+					<button class="btn btn-info" @click="openDetail">
+					    <span>查看“楼幢楼盘表”</span>
+				   </button>
+				</div>
+			</div>
+			
+			<!--图表信息开始-->
+			<!-- <div class="content-wrap" id="homeDeveloperDiv"> -->
+				<div class="clearfix"></div>
+				<div class="pull-left home-top-left downPull" style="height:590px;">
+					<div class="home-top-content">
+						<div class="pull-left home-top-title" style="margin-right: 20px;">
+							楼幢托管情况
+						</div>
+						<div class="pull-right">
+							<!-- <vue-listselect defaultname="请选择项目名称" :thevalue="projectId1" :optionlist="qs_projectNameList" @callbackfun="getProjectId" @emptybackfun = "emptyProjectId"></vue-listselect> -->
+							<button class="btn-quick-navigation" @click="pictureHandle" style="background: #EBF5FF;">
+		                        <img src="../image/picture.png" style="margin-right: 3px;margin-bottom: 2px;"/>
+		                        <span>图</span>
+		                    </button>
+							<button class="btn-quick-navigation" @click="tableHandle" style="background: #EBF5FF;height: 33px;">
+		                        <img src="../image/table.png" style="width: 18px;margin-bottom: 4px;"/>
+		                        <span>表</span>
+		                    </button>
+							<span title="全屏显示" class="fullScreenBox" @click="fullScreen"><img src="../image/fullScreen.png"/></span>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="clearfix"></div>
+					<div id="chartForPro" style="width:100%;height:94%;margin-top: 10px;"></div>
+					<div class="tableContent" style="display: none;">
+						<div class="" style="padding:13px 0px">
+							<div class="cs-table">
+								<el-table :data="floorAccountReportsList" stripe :default-sort = "{prop: 'index'}">
+									<el-table-column type="index" :index="indexMethod"  label="序号" width="60" fixed align="center"></el-table-column>
+									<!-- <el-table-column prop="theNameOfCompany" label="开发企业" width="360" ></el-table-column>
+									<el-table-column prop="theNameOfProject" label="项目" width="360" ></el-table-column> -->
+									<el-table-column prop="eCodeFromConstruction" label="施工楼幢" width="200" fixed >
+								    <template scope="scope">
+										<el-button type="text" size="small" @click="openDetails(scope.row.tableId)">{{scope.row.eCodeFromConstruction}}</el-button>
+									</template>
+								</el-table-column>
+								<el-table-column prop="escrowStandard" label="托管标准" width="170" ></el-table-column>
+								<el-table-column prop="escrowArea" label="托管面积（㎡）" width="140"  header-align="center" align="right"></el-table-column>
+								<el-table-column prop="buildingArea" label="建筑面积（㎡）" width="140"  header-align="center" align="right"></el-table-column>
+								<el-table-column prop="deliveryType" label="支付类型" width="120"  align="center"></el-table-column>
+								<el-table-column prop="orgLimitedAmount" label="初始受限额度（元）" width="180"  header-align="center" align="right"></el-table-column>
+								<el-table-column prop="currentFigureProgress" label="当前形象进度" width="140"  ></el-table-column>
+								<el-table-column prop="currentLimitedRatio" label="当前受限比例（%）" width="180"  header-align="center" align="right"></el-table-column>
+								<el-table-column prop="currentLimitedAmount" label="当前受限额度（元）" width="180"  header-align="center" align="right"></el-table-column>
+								<el-table-column prop="totalAccountAmount" label="总入账金额（元）" width="160"  header-align="center" align="right"></el-table-column>
+								<el-table-column prop="spilloverAmount" label="溢出金额（元）" width="160"  header-align="center" align="right"></el-table-column>
+								<el-table-column prop="payoutAmount" label="已拨付金额（元）" width="160"  header-align="center" align="right"></el-table-column>
+								<!-- <el-table-column prop="appliedNoPayoutAmount" label="已申请未拨付金额（元）" width="140"  header-align="center" align="right"></el-table-column>
+								<el-table-column prop="applyRefundPayoutAmount" label="已申请退款未拨付金额（元）" width="180"  header-align="center" align="right"></el-table-column> -->
+								<el-table-column prop="refundAmount" label="已退款金额（元）" width="200"  header-align="center" align="right"></el-table-column>
+								<el-table-column prop="currentEscrowFund" label="当前托管余额（元）" width="200"  header-align="center" align="right"></el-table-column>
+								<el-table-column prop="allocableAmount" label="可划拨金额（元）" width="200"  header-align="center" align="right"></el-table-column>
+								<!-- <el-table-column prop="recordAvgPriceBldPS" label="预售系统楼幢住宅备案均价" width="140"  header-align="center" align="right"></el-table-column> -->
+								<!-- <el-table-column prop="recordAvgPriceOfBuilding" label="楼幢住宅备案均价（元）" width="180"  header-align="center" align="right"></el-table-column> -->
+								<el-table-column prop="zfbzPrice" label="支付保证金额（元）" width="180"  header-align="center" align="right"></el-table-column>
+								<el-table-column prop="xjsxPrice" label="现金受限金额（元）" width="180"  header-align="center" align="right"></el-table-column>
+								<el-table-column prop="yxsxPrice" label="有效受限额度（元）" width="180"  header-align="center" align="right"></el-table-column>
+								<!-- <el-table-column prop="accountType" label="托管状态" width="120">
+									<template scope="scope">
+								        <button  v-if="scope.row.accountType == 0" class="btn btn-state-warning">未对账</button>
+								    	<button  v-if="scope.row.accountType == 1" class="btn btn-state-success">已对账</button>
+									</template>
+								</el-table-column> -->
+								</el-table>
+								<vue-nav :pagenumber="pageNumber1" :totalpage="totalPage1" :totalcount="totalCount1" :countperpage="countPerPage1" :sidepagecount="4" v-on:pagechange="changePageNumber1" v-on:countperpagechange="changeCountPerPage1"></vue-nav>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="pull-right home-top-right downPull" style="height:590px">
+					<div class="home-top-content" style="margin-left: 10px;margin-right: 10px;">
+						<div class="pull-left home-top-title">
+							项目托管情况
+						</div>
+					</div>
+					<div class="dataBox">
+						<div>
+							<img src="../image/01.png"/>可拨付总金额（万元）
+							<div>
+								<img src="../image/circle.png" /><span>{{ projectAccount.kbfAmount }}</span>
+							</div>
+						</div>
+						<div>
+							<img src="../image/02.png"/>拨付中（万元）
+							<div>
+								<img src="../image/circle.png" /><span>{{ projectAccount.bfzAmount }}</span>
+							</div>
+						</div>
+						<div>
+							<img src="../image/03.png"/>托管余额（万元）
+							<div>
+								<img src="../image/circle.png" /><span>{{ projectAccount.tgyeAmount }}</span>
+							</div>
+						</div>
+						<div>
+							<img src="../image/04.png"/>总入账金额（万元）
+							<div>
+								<img src="../image/circle.png" /><span>{{ projectAccount.zrzAmount }}</span>
+							</div>
+						</div>
+						<div>
+							<img src="../image/05.png"/>总拨付金额（万元）
+							<div>
+								<img src="../image/circle.png" /><span>{{ projectAccount.zbfAmount }}</span>
+							</div>
+						</div>
+						<div>
+							<img src="../image/06.png"/>协议签约量（件）
+							<div>
+								<img src="../image/circle.png" /><span>{{ projectAccount.qyCount }}</span>
+							</div>
+						</div>
+						<div>
+							<img src="../image/07.png"/>贷款放款量（笔）
+							<div>
+								<img src="../image/circle.png" /><span>{{ projectAccount.fkCount }}</span>
+							</div>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="clearfix"></div>
+			<!-- </div> -->
+			<!--图表信息结束-->
+			
+			
+			<!-- 楼幢信息开始 -->
+			<div class="detail-title">
+				<h1 class="inline">楼幢信息</h1>
+				<i class="el-icon-arrow-down icon-normal" @click="showContentInfo" v-show="iconshow == 0"></i>
+				<i class="el-icon-arrow-up icon-normal" @click="hideContentInfo" v-show="iconshow == 1"></i>
+				<!-- <div class="pull-right detail-btnR">
+					<button class="btn btn-info" @click="openDetail">
+					    <span>查看“楼幢楼盘表”</span>
+				   </button>
+				</div> -->
+			</div>
+			<div class="cs-content" v-show="theContentInfo == 1">
+				<div class="switch-wrap">
+					<div class="inline info-switch" :class="{'active': theSwitchInfo=='1'}" @click="theSwitchInfo = 1">楼幢信息</div><!-- theSwitchInfo = 1 -->
+					<div class="inline info-switch" :class="{'active': theSwitchInfo=='2'}" @click="theSwitchInfoHadle(2)">单元信息</div><!-- theSwitchInfo = 2 -->
+					<div class="inline info-switch" :class="{'active': theSwitchInfo=='3'}" @click="theSwitchInfoHadle(3)">户室信息</div><!-- theSwitchInfo = 3 -->
+					<div class="pull-right">
+						<!-- <button class="btn btn-success">
+							<img src="../image/list_btn_ico_export.png" width="18">
+							<span>同步</span>
+						</button> -->
+						<button class="btn btn-primary" @click="projectInfoDetailExportExcelHandle"
+								:disabled="allBuildingIdArr.length < 1">
+							<img src="../image/list_btn_ico_import.png" width="18">
+							<span>导出</span>
+						</button>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="cs-table" v-if="theSwitchInfo == 1">
+					<el-table :data="empj_BuildingInfoList" key="firstTable" stripe :default-sort = "{prop: 'index'}"
+							  @selection-change="buildingListItemSelectHandle">
+						<el-table-column type="selection"  width="50" v-model="buildingSelectItem" align="center"
+										 fixed></el-table-column>
+						<el-table-column type="index" :index="buildingindexMethod" label="序号" width="60" align="center"
+										 fixed></el-table-column>
+						<el-table-column prop="eCode" label="楼幢编号" min-width="220"></el-table-column>
+						<el-table-column prop="eCodeFromConstruction" label="施工编号" min-width="200"></el-table-column>
+						<el-table-column prop="eCodeFromPublicSecurity" label="公安编号" min-width="200"></el-table-column>
+						<el-table-column prop="buildingArea" label="建筑面积（㎡）" min-width="140" align="right"></el-table-column>
+						<el-table-column prop="escrowArea" label="托管面积（㎡）" min-width="140" align="right"></el-table-column>
+						<el-table-column prop="escrowStandard" label="托管标准" min-width="160"></el-table-column>
+						<el-table-column prop="purpose" label="房屋用途" min-width="120"></el-table-column>
+						<el-table-column prop="upfloorNumber" label="地上层数" min-width="140" align="right"></el-table-column>
+						<el-table-column prop="downfloorNumber" label="地下层数" min-width="140" align="right"></el-table-column>
+						<el-table-column prop="eCodeFromPresellCert" label="预售证号" min-width="220"></el-table-column>
+						<el-table-column prop="landMortgageState" label="土地抵押状态" min-width="120" align="center">
+							<template scope="scope">
+								<button  v-if="scope.row.landMortgageState == 0" class="btn btn-state-danger">无</button>
+								<button  v-if="scope.row.landMortgageState == 1" class="btn btn-state-success">有</button>
+							</template>
+						</el-table-column>
+						<el-table-column prop="landMortgagor" label="土地抵押权人" min-width="360"></el-table-column>
+					</el-table>
+					<vue-nav :pagenumber="buildingpageNumber" :totalpage="buildingtotalPage"
+							 :totalcount="buildingtotalCount" :countperpage="buildingcountPerPage" :sidepagecount="4" v-on:pagechange="buildingChangePageNumber" v-on:countperpagechange="buildingchangeCountPerPage"></vue-nav>
+				</div>
+				<div class="cs-table" v-if="theSwitchInfo == 2">
+					<el-table :data="empj_UnitInfoList" key="secondTable" stripe :default-sort = "{prop: 'index'}"
+							  @selection-change="unitListItemSelectHandle">
+						<el-table-column type="selection" width="50" align="center" v-model="unitSelectItem" fixed></el-table-column>
+						<el-table-column type="index" :index="unitindexMethod" label="序号" width="60" align="center"
+										 fixed></el-table-column>
+						<el-table-column prop="eCode" label="单元编号" min-width="240"></el-table-column>
+						<el-table-column prop="buildingECode" label="楼幢编号" min-width="200"></el-table-column>
+						<el-table-column prop="theName" label="单元名称" min-width="120"></el-table-column>
+						<el-table-column prop="upfloorNumber" label="地上楼层数" min-width="140" align="right"></el-table-column>
+						<el-table-column prop="upfloorHouseHoldNumber" label="地上每层户数" min-width="140" align="right"></el-table-column>
+						<el-table-column prop="downfloorNumber" label="地下楼层数" min-width="140" align="right"></el-table-column>
+						<el-table-column prop="downfloorHouseHoldNumber" label="地下每层户数" min-width="140" align="right"></el-table-column>
+						<el-table-column prop="iselevator" label="有无电梯" min-width="90" align="center"></el-table-column>
+						<el-table-column prop="elevatorNumber" label="电梯数" min-width="140" align="right"></el-table-column>
+						<el-table-column prop="hasSecondaryWaterSupply" label="有无二次供水" min-width="90" align="center"></el-table-column>
+						<el-table-column prop="busiState" label="单元状态" min-width="100" align="center"></el-table-column>
+						<el-table-column prop="remark" label="备注" min-width="870"></el-table-column>
+					</el-table>
+					<vue-nav :pagenumber="unitpageNumber" :totalpage="unittotalPage" :totalcount="unittotalCount"
+							 :countperpage="unitcountPerPage" :sidepagecount="4" v-on:pagechange="unitchangePageNumber" v-on:countperpagechange="unitchangeCountPerPage"></vue-nav>
+				</div>
+				<div class="cs-table" v-if="theSwitchInfo == 3">
+					<el-table :data="empj_HouseInfoList" key="thirdTable" stripe :default-sort = "{prop: 'index'}"
+							  @selection-change="houseListItemSelectHandle">
+						<el-table-column type="selection" width="50" align="center" v-model="houseSelectItem" fixed></el-table-column>
+						<el-table-column type="index" :index="houseindexMethod" label="序号" width="60" align="center"
+										 fixed></el-table-column>
+						<el-table-column prop="eCodeFromPresellSystem" label="预售系统户编号" min-width="360"></el-table-column>
+						<el-table-column prop="eCodeFromEscrowSystem" label="托管系统户编号" min-width="220"></el-table-column>
+						<el-table-column prop="eCodeFromConstruction" label="户施工编号" min-width="200"></el-table-column>
+						<el-table-column prop="position" label="户施工坐落" min-width="540"></el-table-column>
+						<el-table-column prop="actualArea" label="建筑面积（㎡）" min-width="140" align="right"></el-table-column>
+						<el-table-column prop="shareConsArea" label="分摊面积（㎡）" min-width="140" align="right"></el-table-column>
+						<el-table-column prop="innerconsArea" label="套内面积（㎡）" min-width="140" align="right"></el-table-column>
+						<el-table-column prop="UnitName" label="单元号" min-width="120"></el-table-column>
+						<el-table-column prop="eCodeFromPublicSecurity" label="户公安编号" min-width="200"></el-table-column>
+						<el-table-column prop="" label="户公安坐落" min-width="540"></el-table-column>
+						<el-table-column prop="floor" label="所在楼层" min-width="140" align="right"></el-table-column>
+						<el-table-column prop="purpose" label="房屋用途" min-width="120" align="center">
+							<template scope="scope">
+								<button  v-if="scope.row.purpose == 1" class="btn btn-state-danger">住宅</button>
+								<button  v-if="scope.row.purpose == 3" class="btn btn-state-success">商业</button>
+								<button  v-if="scope.row.purpose == 4" class="btn btn-state-success">办公</button>
+								<button  v-if="scope.row.purpose == 5" class="btn btn-state-success">车库</button>
+								<button  v-if="scope.row.purpose == 9" class="btn btn-state-success">其他</button>
+							</template>
+						</el-table-column>
+						<!-- <el-table-column prop="purpose" label="房屋用途" min-width="120"></el-table-column> -->
+						<el-table-column prop="busiState" label="房屋状态" min-width="120" align="center">
+							<template scope="scope">
+								<button  v-if="scope.row.busiState == 1" class="btn btn-state-danger">已搭建</button>
+								<button  v-if="scope.row.busiState == 2" class="btn btn-state-success">已批准预售</button>
+								<button  v-if="scope.row.busiState == 3" class="btn btn-state-success">合同已签订</button>
+								<button  v-if="scope.row.busiState == 4" class="btn btn-state-success">合同已备案</button>
+								<button  v-if="scope.row.busiState == 5" class="btn btn-state-success">已办产权</button>
+							</template>
+						</el-table-column>
+						<!-- <el-table-column prop="busiState" label="房屋状态" min-width="100" align="center"></el-table-column> -->
+						<el-table-column prop="recordPrice" label="户物价备案价格（元）" min-width="140"></el-table-column>
+						<el-table-column prop="lastTimeStampSyncRecordPriceToPresellSystem" label="预售系统备案最后一次同步时间"
+										 min-width="180" align="center"></el-table-column>
+						<el-table-column prop="tripleAgreementState" label="三方协议结算状态" min-width="100" align="center"></el-table-column>
+					</el-table>
+					<vue-nav :pagenumber="housepageNumber" :totalpage="housetotalPage" :totalcount="housetotalCount"
+							 :countperpage="housecountPerPage" :sidepagecount="4" v-on:pagechange="housechangePageNumber" v-on:countperpagechange="housechangeCountPerPage"></vue-nav>
+				</div>
+			</div>
+			<!-- 楼幢信息结束-->
+			<!--附件材料开始-->
+			<my-uploadcomponent :loaduploadlist="loadUploadList" :showdelete ="showDelete" ref="listenUploadData" :busitype="busiType"></my-uploadcomponent>
+			<!--附件材料结束-->
+		</div>
+        <script src="../js/tabCommon.js"></script>
+		<script src="../js/admin/empj/Empj_ProjectInfoDetail.js"></script>
+
+		<script>
+			// var point = new BMap.Point(projectMapVue.longitude, projectMapVue.latitude);
+            // var icon = new BMap.Icon("../image/map_ico_location.png", new BMap.Size(21,33));
+            // var marker = new BMap.Marker(point, {icon:icon});		// 创建标注
+            // map.centerAndZoom(point, 14);
+            // map.enableScrollWheelZoom();//开启鼠标滚轮缩放
+
+			/* function showInfo(e)
+			{
+				alert(e.point.lng + ", " + e.point.lat);
+			}
+			mp.addEventListener("click", showInfo); */
+			
+			// var polygon = new BMap.Polygon(
+			// [
+			// 	new BMap.Point(projectMapVue.empj_ProjectInfoModel.eastLongitude, projectMapVue.empj_ProjectInfoModel.eastLatitude),
+			// 	new BMap.Point(projectMapVue.empj_ProjectInfoModel.westLongitude, projectMapVue.empj_ProjectInfoModel.westLatitude),
+			// 	new BMap.Point(projectMapVue.empj_ProjectInfoModel.southLongitude, projectMapVue.empj_ProjectInfoModel.southLatitude),
+			// 	new BMap.Point(projectMapVue.empj_ProjectInfoModel.northLongitude, projectMapVue.empj_ProjectInfoModel.northLatitude)
+			// ],
+			// {
+			// 	strokeColor:"transparent",
+			// 	strokeWeight:2,
+			// 	strokeOpacity:0.5,
+			// 	fillColor:"#ecbcbf"
+			// });							//创建多边形
+            // map.addOverlay(polygon);	//增加多边形
+            
+           init();
+			$(".testDIV").hover(function(){
+				$(this).animate({
+					"font-size":"16px"
+				},500);
+			},function() {
+				$(this).css("font-size", "14px");
+			});
+			
+			function init() {
+				/* var docHeight = document.documentElement.clientHeight || document.body.clientHeight;
+				var targetHeight = docHeight - $(".cs-title").outerHeight() - $(".nav-tabs").outerHeight() - $(".home-top-left").outerHeight() - 150;
+				$(".downPull").css("height",targetHeight + "px"); */
+			}
+            
+		</script>
+	</body>
+</html>	
